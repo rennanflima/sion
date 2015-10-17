@@ -6,9 +6,16 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cargo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -16,6 +23,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CargoFacade extends AbstractFacade<Cargo, Long> implements CargoFacadeLocal {
+
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
@@ -27,5 +35,21 @@ public class CargoFacade extends AbstractFacade<Cargo, Long> implements CargoFac
     public CargoFacade() {
         super(Cargo.class);
     }
-    
+
+    @Override
+    public List<Cargo> findByDescricaoAndNivel(Cargo filtro) {
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Cargo.class);
+
+        if (StringUtils.isNotBlank(filtro.getDescricao())) {
+            criteria.add(Restrictions.ilike("descricao", filtro.getDescricao(), MatchMode.ANYWHERE));
+        }
+
+        if (filtro.getNivel() != null) {
+            criteria.add(Restrictions.eq("nivel", filtro.getNivel()));
+        }
+
+        return criteria.addOrder(Order.asc("descricao")).list();
+    }
+
 }

@@ -59,4 +59,7 @@ public class CadastroLocalidadeBean implements Serializable {
         this.localidade = new Localidade();
     }
 
+    public boolean isEditando(){
+        return this.localidade.getId() != null;
+    }
 }

@@ -8,16 +8,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">Nova Vaga</ui:define>
+    <ui:define name="titulo">#{cadastroVagaBean.editando ? 'Edição de vaga' : 'Novo vaga'}</ui:define>
 
     <ui:define name="corpo">
         <f:metadata>
             <o:viewParam name="vaga" value="#{cadastroVagaBean.vaga}" />
         </f:metadata>
-        
+
         <h:form>
-            <h1>Nova vaga</h1>
-            
+            <h1>#{cadastroVagaBean.editando ? 'Edição de vaga' : 'Novo vaga'}</h1>
+
             <p:messages autoUpdate="true" closable="true" />
 
             <p:toolbar style="margin-top: 20px">
@@ -32,9 +32,6 @@
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
                          columnClasses="rotulo, campo">
-                <p:outputLabel value="Código" for="codigo"/>
-                <p:inputText id="codigo" size="20" maxlength="20" value="#{cadastroVagaBean.vaga.id}" disabled="true"/>
-                
                 <p:outputLabel value="Tipo de vaga" for="vaga"/>
                 <p:inputText id="vaga" size="60" maxlength="80" value="#{cadastroVagaBean.vaga.tipo}"/>
 

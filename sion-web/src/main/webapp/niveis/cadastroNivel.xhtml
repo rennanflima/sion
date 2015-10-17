@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">Novo Nível</ui:define>
+    <ui:define name="titulo">#{cadastroNivelBean.editando ? 'Edição de nível' : 'Novo nível'}</ui:define>
 
     <ui:define name="corpo">
         <f:metadata>
@@ -16,7 +16,7 @@
         </f:metadata>
 
         <h:form>
-            <h1>Novo nível</h1>
+            <h1>#{cadastroNivelBean.editando ? 'Edição de nível' : 'Novo nível'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
@@ -32,8 +32,6 @@
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
                          columnClasses="rotulo, campo">
-                <p:outputLabel value="Código" for="codigo"/>
-                <p:inputText id="codigo" size="20" maxlength="20" value="#{cadastroNivelBean.nivel.id}" disabled="true"/>
 
                 <p:outputLabel value="Descrição" for="descricao"/>
                 <p:inputText id="descricao" size="60" maxlength="80" value="#{cadastroNivelBean.nivel.descricao}"/>

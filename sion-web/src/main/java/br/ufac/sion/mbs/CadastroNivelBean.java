@@ -58,4 +58,8 @@ public class CadastroNivelBean implements Serializable {
     public void limpar() {
         this.nivel = new Nivel();
     }
+
+    public boolean isEditando(){
+        return this.nivel.getId() != null;
+    }
 }

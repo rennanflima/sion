@@ -23,5 +23,6 @@ public interface CargoFacadeLocal {
     public Cargo findById(Long id);
 
     public List<Cargo> findAll();
-
+    
+    public List<Cargo> findByDescricaoAndNivel(Cargo cargo);
 }

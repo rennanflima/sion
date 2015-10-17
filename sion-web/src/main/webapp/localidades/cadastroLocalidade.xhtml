@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">Nova Localidade</ui:define>
+    <ui:define name="titulo">#{cadastroLocalidadeBean.editando ? 'Edição de localidade' : 'Novo localidade'}</ui:define>
 
     <ui:define name="corpo">
 
@@ -17,7 +17,7 @@
         </f:metadata>
         
         <h:form>
-            <h1>Nova localidade</h1>
+            <h1>#{cadastroLocalidadeBean.editando ? 'Edição de localidade' : 'Novo localidade'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
             
@@ -33,9 +33,6 @@
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
                          columnClasses="rotulo, campo">
-                <p:outputLabel value="Código" for="codigo"/>
-                <p:inputText id="codigo" size="20" maxlength="20" value="#{cadastroLocalidadeBean.localidade.id}" disabled="true"/>
-                
                 <p:outputLabel value="Localidade" for="vaga"/>
                 <p:inputText id="vaga" size="60" maxlength="80" value="#{cadastroLocalidadeBean.localidade.nome}"/>
 

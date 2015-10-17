@@ -22,17 +22,19 @@
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
-                <p:outputLabel value="Descrição" for="descricao"/>
-                <p:inputText id="descricao" size="60"/>
-            </p:panelGrid>
-
             <p:dataTable id="localTable" var="local" 
                          style="margin-top: 20px;" emptyMessage="Nenhuma localidade encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                <p:column headerText="Descrição">
+                <p:column headerText="Razão Social">
+                    <h:outputText value="Nível Fundamental"/>
+                </p:column>
+                
+                <p:column headerText="Nome Fantasia">
+                    <h:outputText value="Nível Fundamental"/>
+                </p:column>
+                
+                <p:column headerText="CNPJ" style="text-align: center; width: 120px;">
                     <h:outputText value="Nível Fundamental"/>
                 </p:column>
 
