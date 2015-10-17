@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class NivelFacade extends AbstractFacade<Nivel> implements NivelFacadeLocal {
+public class NivelFacade extends AbstractFacade<Nivel, Long> implements NivelFacadeLocal {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
@@ -27,5 +27,4 @@ public class NivelFacade extends AbstractFacade<Nivel> implements NivelFacadeLoc
     public NivelFacade() {
         super(Nivel.class);
     }
-    
 }

@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface LocalidadeFacadeLocal {
 
-    void create(Localidade localidade);
+    public void save(Localidade localidade);
 
-    void edit(Localidade localidade);
+    public void remove(Localidade localidade);
 
-    void remove(Localidade localidade);
+    public Localidade findById(Long id);
 
-    Localidade find(Object id);
-
-    List<Localidade> findAll();
-
-    List<Localidade> findRange(int[] range);
-
-    int count();
+    public List<Localidade> findAll();
     
 }

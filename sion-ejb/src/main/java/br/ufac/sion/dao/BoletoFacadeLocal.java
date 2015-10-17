@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface BoletoFacadeLocal {
 
-    void create(Boleto boleto);
+    public void save(Boleto boleto);
 
-    void edit(Boleto boleto);
+    public void remove(Boleto boleto);
 
-    void remove(Boleto boleto);
+    public Boleto findById(Long id);
 
-    Boleto find(Object id);
+    public List<Boleto> findAll();
 
-    List<Boleto> findAll();
-
-    List<Boleto> findRange(int[] range);
-
-    int count();
-    
 }

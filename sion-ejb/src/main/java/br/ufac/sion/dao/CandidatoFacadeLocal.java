@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface CandidatoFacadeLocal {
 
-    void create(Candidato candidato);
+    public void save(Candidato candidato);
 
-    void edit(Candidato candidato);
+    public void remove(Candidato candidato);
 
-    void remove(Candidato candidato);
+    public Candidato findById(Long id);
 
-    Candidato find(Object id);
+    public List<Candidato> findAll();
 
-    List<Candidato> findAll();
-
-    List<Candidato> findRange(int[] range);
-
-    int count();
-    
 }

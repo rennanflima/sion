@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class BoletoFacade extends AbstractFacade<Boleto> implements BoletoFacadeLocal {
+public class BoletoFacade extends AbstractFacade<Boleto, Long> implements BoletoFacadeLocal {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 

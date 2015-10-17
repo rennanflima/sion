@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface VagaFacadeLocal {
 
-    void create(Vaga vaga);
+    public void save(Vaga vaga);
 
-    void edit(Vaga vaga);
+    public void remove(Vaga vaga);
 
-    void remove(Vaga vaga);
+    public Vaga findById(Long id);
 
-    Vaga find(Object id);
+    public List<Vaga> findAll();
 
-    List<Vaga> findAll();
-
-    List<Vaga> findRange(int[] range);
-
-    int count();
-    
 }

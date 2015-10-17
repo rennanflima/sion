@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface InscricaoFacadeLocal {
 
-    void create(Inscricao inscricao);
+    public void save(Inscricao inscricao);
 
-    void edit(Inscricao inscricao);
+    public void remove(Inscricao inscricao);
 
-    void remove(Inscricao inscricao);
+    public Inscricao findById(Long id);
 
-    Inscricao find(Object id);
+    public List<Inscricao> findAll();
 
-    List<Inscricao> findAll();
-
-    List<Inscricao> findRange(int[] range);
-
-    int count();
-    
 }

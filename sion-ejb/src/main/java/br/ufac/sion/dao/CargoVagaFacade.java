@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class CargoVagaFacade extends AbstractFacade<CargoVaga> implements CargoVagaFacadeLocal {
+public class CargoVagaFacade extends AbstractFacade<CargoVaga, Long> implements CargoVagaFacadeLocal {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 

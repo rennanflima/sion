@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class InscricaoFacade extends AbstractFacade<Inscricao> implements InscricaoFacadeLocal {
+public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements InscricaoFacadeLocal {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 

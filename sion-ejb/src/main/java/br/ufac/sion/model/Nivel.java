@@ -7,25 +7,26 @@ package br.ufac.sion.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.NamedQuery;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Entity
-@Table(name = "nivel")
+@NamedQuery(name = "Nivel.buscarTodos", query = "from Nivel")
 public class Nivel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 60, nullable = false)
     private String descricao;
@@ -58,19 +59,21 @@ public class Nivel implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Nivel)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Nivel other = (Nivel) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Nivel other = (Nivel) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;

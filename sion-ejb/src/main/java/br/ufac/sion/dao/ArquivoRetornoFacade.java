@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class ArquivoRetornoFacade extends AbstractFacade<ArquivoRetorno> implements ArquivoRetornoFacadeLocal {
+public class ArquivoRetornoFacade extends AbstractFacade<ArquivoRetorno, Long> implements ArquivoRetornoFacadeLocal {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 

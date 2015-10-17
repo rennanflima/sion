@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface CargoVagaFacadeLocal {
 
-    void create(CargoVaga cargoVaga);
+    public void save(CargoVaga cargoVaga);
 
-    void edit(CargoVaga cargoVaga);
+    public void remove(CargoVaga cargoVaga);
 
-    void remove(CargoVaga cargoVaga);
+    public CargoVaga findById(Long id);
 
-    CargoVaga find(Object id);
+    public List<CargoVaga> findAll();
 
-    List<CargoVaga> findAll();
-
-    List<CargoVaga> findRange(int[] range);
-
-    int count();
-    
 }

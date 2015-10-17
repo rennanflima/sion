@@ -18,37 +18,36 @@
                     <p:commandButton value="Pesquisar"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:button value="Novo" outcome="/niveis/cadastroNivel"/>
+                    <p:button value="Novo" outcome="cadastroVaga"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
-                <p:outputLabel value="Descrição" for="descricao"/>
-                <p:inputText id="descricao" size="60"/>
-            </p:panelGrid>
-
-            <p:dataTable id="vagasTable" var="vaga" 
+            <p:dataTable id="vagasTable" var="vaga" value="#{pesquisaVagaBean.vagas}"
                          style="margin-top: 20px;" emptyMessage="Nenhuma vaga encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                 <p:column headerText="Descrição">
-                    <h:outputText value="Nível Fundamental"/>
+                    <h:outputText value="#{vaga.tipo}"/>
                 </p:column>
 
                 <p:column style="width: 100px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir"/>
+                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroVaga">
+                        <f:param name="vaga" value="#{vaga.id}"/>
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
+                        <f:setPropertyActionListener target="#{pesquisaVagaBean.vagaSelecionadaParaExcluir}" value="#{vaga}"/>
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:confirmDialog header="Exclusão de vaga" 
-                             message="Tem certeza que deseja excluir o produto ?"
+            <p:confirmDialog header="Exclusão de produto" 
+                             message="Tem certeza que deseja excluir a vaga '#{pesquisaVagaBean.vagaSelecionadaParaExcluir.tipo}' ?"
                              widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                <p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide();"
-                                 process="@this"
+                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                 process="@this" action="#{pesquisaVagaBean.excluir()}"
                                  update=":frmPesquisa:vagasTable" />
-                <p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
                 
             </p:confirmDialog>
         </h:form>

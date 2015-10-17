@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface ArquivoRetornoFacadeLocal {
 
-    void create(ArquivoRetorno arquivoRetorno);
+    public void save(ArquivoRetorno arquivoRetorno);
 
-    void edit(ArquivoRetorno arquivoRetorno);
+    public void remove(ArquivoRetorno arquivoRetorno);
 
-    void remove(ArquivoRetorno arquivoRetorno);
+    public ArquivoRetorno findById(Long id);
 
-    ArquivoRetorno find(Object id);
+    public List<ArquivoRetorno> findAll();
 
-    List<ArquivoRetorno> findAll();
-
-    List<ArquivoRetorno> findRange(int[] range);
-
-    int count();
-    
 }

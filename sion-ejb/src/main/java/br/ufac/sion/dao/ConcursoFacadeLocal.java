@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface ConcursoFacadeLocal {
 
-    void create(Concurso concurso);
+    public void save(Concurso concurso);
 
-    void edit(Concurso concurso);
+    public void remove(Concurso concurso);
 
-    void remove(Concurso concurso);
+    public Concurso findById(Long id);
 
-    Concurso find(Object id);
+    public List<Concurso> findAll();
 
-    List<Concurso> findAll();
-
-    List<Concurso> findRange(int[] range);
-
-    int count();
-    
 }

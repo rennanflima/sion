@@ -4,12 +4,12 @@
     <parent>
         <artifactId>sion</artifactId>
         <groupId>br.ufac</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>br.ufac</groupId>
     <artifactId>sion-ear</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
     <name>sion-ear</name>
@@ -29,6 +29,16 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
@@ -45,13 +55,14 @@
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>sion-ejb</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
+    
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>sion-web</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
     </dependencies>

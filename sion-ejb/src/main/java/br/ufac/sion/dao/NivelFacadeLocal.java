@@ -11,23 +11,17 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Local
 public interface NivelFacadeLocal {
 
-    void create(Nivel nivel);
+    public void save(Nivel nivel);
 
-    void edit(Nivel nivel);
+    public void remove(Nivel nivel);
 
-    void remove(Nivel nivel);
+    public Nivel findById(Long id);
 
-    Nivel find(Object id);
-
-    List<Nivel> findAll();
-
-    List<Nivel> findRange(int[] range);
-
-    int count();
+    public List<Nivel> findAll();
     
 }
