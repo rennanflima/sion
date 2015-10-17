@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Nova Empresa</ui:define>
+
+    <ui:define name="corpo">
+        <h:form>
+            <h1>Nova empresa</h1>
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="/empresas/cadastroEmpresa"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="pesquisaEmpresas"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+                <p:outputLabel value="Nome fantasia" for="nomeFantasia"/>
+                <p:inputText id="nomeFantasia" size="60" maxlength="80"/>
+
+                <p:outputLabel value="Razão social" for="razaoSocial"/>
+                <p:inputText id="razaoSocial" size="60" maxlength="80"/>
+
+                <p:outputLabel value="CNPJ" for="cnpj"/>
+                <p:inputText id="cnpj" size="60" maxlength="80"/>
+            </p:panelGrid>
+            
+            <p:fieldset legend="Endereço" >
+                <p:panelGrid columns="4" id="painelEnd" style="width: 100%"
+                             columnClasses="rotulo, campo, rotulo, campo">
+                    <p:outputLabel value="Logradouro" for="logradouro"/>
+                    <p:inputText id="logradouro" size="50"/>
+
+                    <p:outputLabel value="Número" for="numero"/>
+                    <p:inputText id="numero" size="5"/>
+
+                    <p:outputLabel value="Complemento" for="complemento"/>
+                    <p:inputText id="complemento" size="50"/>
+
+                    <p:outputLabel value="CEP" for="cep"/>
+                    <p:inputText id="cep" size="10"/>
+
+                    <p:outputLabel value="Bairro" for="bairro"/>
+                    <p:inputText id="bairro" size="50"/>
+                    
+                    <p:spacer/>
+                    <p:spacer/>
+
+                    <p:outputLabel value="Cidade" for="cidade"/>
+                    <p:selectOneMenu id="cidade">
+                        <f:selectItem itemLabel="Selecione um nível..." itemValue=""/>
+                        <f:selectItem itemLabel="Rio Branco" itemValue=""/>
+                        <f:selectItem itemLabel="São Paulo" itemValue=""/>
+                        <f:selectItem itemLabel="Rio de Janeiro" itemValue=""/>
+                        <f:selectItem itemLabel="Cruzeiro do Sul" itemValue=""/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Estado" for="estado"/>
+                    <p:selectOneMenu id="estado">
+                        <f:selectItem itemLabel="Selecione um estado..." itemValue=""/>
+                        <f:selectItem itemLabel="AC" itemValue=""/>
+                        <f:selectItem itemLabel="RJ" itemValue=""/>
+                        <f:selectItem itemLabel="SP" itemValue=""/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

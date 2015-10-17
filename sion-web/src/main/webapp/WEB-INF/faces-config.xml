@@ -5,8 +5,18 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <application>
+        <message-bundle>
+            br.ufac.sion.Messages
+        </message-bundle>
+        
         <locale-config>
             <default-locale>pt_BR</default-locale>
         </locale-config>
     </application>
+    
+    <factory>
+        <exception-handler-factory>
+            br.ufac.sion.util.jsf.JsfExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
 </faces-config>

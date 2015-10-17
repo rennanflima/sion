@@ -25,34 +25,36 @@
 
         <header>
             <div style="float: left">
-                <h:link outcome="/Home">
+                <h:link outcome="/home">
                     <h:graphicImage library="images" name="logo-algaworks.png" />
                 </h:link>
             </div>
 
-<!--            <div style="float: right; margin-right: 110px">
+            <div style="float: right; margin-right: 110px">
+                <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+                    Olá usuário!
+                </span>
                 <h:form style="display: inline-block">
                     <p:menubar styleClass="menu-sistema">
                         <p:submenu label="Cadastros">
-                            <p:menuitem value="Fabricante" outcome="/fabricante/PesquisaFabricantes.xhtml"/>
-                            <p:menuitem value="Modelo Carro" outcome="/modeloCarro/PesquisaModeloCarro.xhtml" />
-                            <p:menuitem value="Acessório" outcome="/acessorio/PesquisaAcessorios.xhtml"/>
-                            <p:menuitem value="Carro"  outcome="/carro/PesquisaCarros.xhtml" />
+                            <p:menuitem value="Localidade" outcome="/localidades/pesquisaLocalidades"/>
+                            <p:menuitem value="Tipo de vaga" outcome="/vagas/pesquisaVagas"/>
+                            <p:menuitem value="Nível" outcome="/niveis/pesquisaNiveis"/>
+                            <p:menuitem value="Cargo" outcome="/cargos/pesquisaCargos"/>
                             <p:separator/>
-                            <p:menuitem value="Funcionário" outcome="/funcionario/PesquisaFuncionarios.xhtml" />
-                            <p:menuitem value="Motorista"  outcome="/motorista/PesquisaMotoristas.xhtml" />
+                            <p:menuitem value="Usuários"/>
                         </p:submenu>
-                        <p:menuitem value="Novo Aluguel" outcome="/aluguel/NovoAluguel.xhtml"/>
-                        <p:submenu label="Relatórios">
-                            <p:menuitem value="Aluguel por carro" outcome="/aluguel/PesquisaAluguel.xhtml"/>
-                            <p:menuitem value="Aluguel por carro - Criteria" outcome="/aluguel/PesquisaAluguelCriteria.xhtml"/>
-                            <p:menuitem value="Total ganho em aluguéis no mês" outcome="/relatorios/TotalGanhoAlugueisNoMes.xhtml"/>
-                            <p:menuitem value="Carros nunca alugados" outcome="/relatorios/CarrosNuncaAlugados.xhtml"/>
-                            <p:menuitem value="Total de alugueis por carro" outcome="/relatorios/TotalAlugueisPorCarro.xhtml"/>
+                        <p:submenu label="Concurso">
+                            <p:menuitem value="Novo concurso" outcome="/concursos/cadastroConcurso"/>
+                            <p:menuitem value="Pesquisa" outcome="/concursos/pesquisaConcursos"/>
                         </p:submenu>
+                        <p:submenu label="Configurações">
+                            <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
+                        </p:submenu>
+                        <p:menuitem value="Sair" />
                     </p:menubar>
                 </h:form>
-            </div>-->
+            </div>
 
             <div style="clear: both"></div>
         </header>
@@ -67,13 +69,13 @@
             Sistema de Inscricao Online (SION) -
             <a href="http://www.sescacre.com.br" target="_blank">www.sescacre.com.br</a>
         </footer>
-        
+
         <script>
-            function configurarMoeda(){
-                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});    
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
             }
-            
-            $(document).ready(function(){
+
+            $(document).ready(function () {
                 configurarMoeda();
             });
         </script>

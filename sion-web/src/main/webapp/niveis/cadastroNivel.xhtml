@@ -5,31 +5,45 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
 
     <ui:define name="titulo">Novo Nível</ui:define>
 
     <ui:define name="corpo">
-        <h1>Novo nível</h1>
-        
-        <p:toolbar style="margin-top: 20px">
-            <p:toolbarGroup>
-                <p:button value="Novo" outcome="/niveis/cadastroNivel"/>
-                <p:commandButton value="Salvar" id="botaoSalvar"/>
-            </p:toolbarGroup>
-            <p:toolbarGroup align="right">
-                <p:commandButton value="Pesquisa"/>
-            </p:toolbarGroup>
-        </p:toolbar>
-        
-        <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                     columnClasses="rotulo, campo">
-            <p:outputLabel value="Descrição" for="descricao"/>
-            <p:inputText id="descricao" size="60" maxlength="80"/>
-            
-            <p:outputLabel value="Valor" for="valor"/>
-            <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda"/>
-        </p:panelGrid>
+        <f:metadata>
+            <o:viewParam name="nivel" value="#{cadastroNivelBean.nivel}" />
+        </f:metadata>
+
+        <h:form>
+            <h1>Novo nível</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="/niveis/cadastroNivel"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroNivelBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="pesquisaNiveis"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+                <p:outputLabel value="Código" for="codigo"/>
+                <p:inputText id="codigo" size="20" maxlength="20" value="#{cadastroNivelBean.nivel.id}" readonly="true"/>
+
+                <p:outputLabel value="Descrição" for="descricao"/>
+                <p:inputText id="descricao" size="60" maxlength="80" value="#{cadastroNivelBean.nivel.descricao}"/>
+
+                <p:outputLabel value="Valor" for="valor"/>
+                <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda" value="#{cadastroNivelBean.nivel.valor}">
+                    <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                </p:inputText>
+            </p:panelGrid>
+        </h:form>
     </ui:define>
 
 </ui:composition>

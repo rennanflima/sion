@@ -35,7 +35,7 @@ h1 {
     font-size: 24px;
     font-weight: 500;
     padding: 0px;
-    margin: 0px;
+    margin: 0px
 }
 
 #login-dialog{
@@ -52,14 +52,70 @@ h1 {
     padding: 10px;
 }
 
-.ui-panelgrid td{
-    height: 34px;
+.rotulo {
+    width: 150px
 }
 
-.ajax-status{
+.ui-panelgrid td {
+    height: 34px
+}
+
+.ajax-status {
     position: fixed;
     top: 55px;
     right: 10px;
     width: 35px;
-    height: 35px;
+    height: 35px
+}
+
+.ui-selectmanycheckbox td {
+    border-width: 0px !important;
+    padding: 0px !important;
+}
+
+.ui-selectmanycheckbox td label {
+    padding-right: 10px;
+}
+
+/* Customiza TabView - início */
+.ui-tabs .ui-tabs-panel {
+    padding: 0.5em 0.2em !important;
+}
+
+.ui-tabs {
+    padding: 0px !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+    margin: -1px !important;
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav {
+    padding: 0px !important;
+}
+/* Customiza TabView - fim */
+
+/* Menu sistema inicio */
+.menu-sistema {
+    border: 0px !important;
+    padding: 0px !important;
+    background: none !important;
+}
+
+.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
+    color: #ffffff !important;
+}
+
+.menu-sistema .ui-icon-triangle-1-s {
+    background: url(#{resource['images:seta-para-baixo.png']}) no-repeat;
+}
+/* Menu sistema fim */
+
+.many-checkbox td {
+    border-width: 0px !important;
+    padding: 0px !important;
+}
+
+.many-checkbox td label {
+    padding-right: 10px;
 }
