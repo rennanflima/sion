@@ -5,21 +5,23 @@
  */
 package br.ufac.sion.model;
 
-import br.ufac.sion.model.util.LocalDateConverter;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -35,9 +37,10 @@ public class Concurso implements Serializable {
     private String titulo;
     private String descricao;
     private String localInscricao;
-    private LocalDate dataInicioInscricao;
-    private LocalDate dataTerminoIncricao;
+    private LocalDateTime dataInicioInscricao;
+    private LocalDateTime dataTerminoIncricao;
     private List<CargoConcurso> cargos = new ArrayList<>();
+    private StatusConcurso status = StatusConcurso.ABERTO;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,33 +79,53 @@ public class Concurso implements Serializable {
         this.localInscricao = localInscricao;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_inicio_inscricao")
-    public LocalDate getDataInicioInscricao() {
+    public LocalDateTime getDataInicioInscricao() {
         return dataInicioInscricao;
     }
 
-    public void setDataInicioInscricao(LocalDate dataInicioInscricao) {
+    public void setDataInicioInscricao(LocalDateTime dataInicioInscricao) {
         this.dataInicioInscricao = dataInicioInscricao;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_termino_inscricao")
-    public LocalDate getDataTerminoIncricao() {
+    public LocalDateTime getDataTerminoIncricao() {
         return dataTerminoIncricao;
     }
 
-    public void setDataTerminoIncricao(LocalDate dataTerminoIncricao) {
+    public void setDataTerminoIncricao(LocalDateTime dataTerminoIncricao) {
         this.dataTerminoIncricao = dataTerminoIncricao;
     }
 
-    @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public List<CargoConcurso> getCargos() {
         return cargos;
     }
 
     public void setCargos(List<CargoConcurso> cargos) {
         this.cargos = cargos;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public StatusConcurso getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusConcurso status) {
+        this.status = status;
+    }
+
+    public void adicionaCargo(CargoConcurso cargoConcurso, Integer linha) {
+        if (linha == null) {
+            this.cargos.add(cargoConcurso);
+        } else {
+            this.cargos.set(linha, cargoConcurso);
+        }
+    }
+
+    @Transient
+    public boolean isNovo() {
+        return getId() == null;
     }
 
     @Override

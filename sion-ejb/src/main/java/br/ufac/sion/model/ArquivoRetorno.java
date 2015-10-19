@@ -8,6 +8,7 @@ package br.ufac.sion.model;
 import br.ufac.sion.model.util.LocalDateConverter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class ArquivoRetorno implements Serializable {
     private Long id;
     private String nome;
     private Integer numero;
-    private LocalDate dataUpload;
+    private LocalDateTime dataUpload;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,13 +56,12 @@ public class ArquivoRetorno implements Serializable {
         this.numero = numero;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_upload")
-    public LocalDate getDataUpload() {
+    public LocalDateTime getDataUpload() {
         return dataUpload;
     }
 
-    public void setDataUpload(LocalDate dataUpload) {
+    public void setDataUpload(LocalDateTime dataUpload) {
         this.dataUpload = dataUpload;
     }
 

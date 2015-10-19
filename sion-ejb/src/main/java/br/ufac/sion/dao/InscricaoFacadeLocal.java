@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface InscricaoFacadeLocal {
 
-    public void save(Inscricao inscricao);
+    public Inscricao save(Inscricao inscricao);
 
     public void remove(Inscricao inscricao);
 

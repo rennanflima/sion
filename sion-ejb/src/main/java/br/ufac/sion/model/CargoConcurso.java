@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -31,9 +32,11 @@ public class CargoConcurso implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private BigDecimal valor;
+    private String codigo;
+    private BigDecimal valor = BigDecimal.ZERO;
     private Cargo cargo;
     private Concurso concurso;
+    private Localidade localidade;
     private List<CargoVaga> vagas = new ArrayList<>();
 
     @Id
@@ -44,6 +47,16 @@ public class CargoConcurso implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @NotBlank
+    @Column(nullable = false, length = 10)
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -74,7 +87,17 @@ public class CargoConcurso implements Serializable {
     public void setConcurso(Concurso concurso) {
         this.concurso = concurso;
     }
-    
+
+    @ManyToOne
+    @JoinColumn(name = "localidade_id", nullable = false)
+    public Localidade getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(Localidade localidade) {
+        this.localidade = localidade;
+    }
+
     @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<CargoVaga> getVagas() {
         return vagas;
@@ -82,6 +105,10 @@ public class CargoConcurso implements Serializable {
 
     public void setVagas(List<CargoVaga> vagas) {
         this.vagas = vagas;
+    }
+
+    public void adicionaVaga(CargoVaga vaga) {
+        this.vagas.add(vaga);
     }
 
     @Override
@@ -106,7 +133,7 @@ public class CargoConcurso implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ufac.sion.model.CargoConcurso[ id=" + id + " ]";
+        return this.codigo + " - " + this.cargo.getDescricao();
     }
 
 }

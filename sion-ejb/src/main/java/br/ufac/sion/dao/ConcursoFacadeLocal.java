@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface ConcursoFacadeLocal {
 
-    public void save(Concurso concurso);
+    public Concurso save(Concurso concurso);
 
     public void remove(Concurso concurso);
 
@@ -24,4 +24,5 @@ public interface ConcursoFacadeLocal {
 
     public List<Concurso> findAll();
 
+    public Concurso findConcursoWithCargo(Long id);
 }

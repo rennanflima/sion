@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.CargoConcurso;
+import br.ufac.sion.model.Concurso;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,7 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface CargoConcursoFacadeLocal {
 
-    public void save(CargoConcurso cargoConcurso);
+    public CargoConcurso save(CargoConcurso cargoConcurso);
 
     public void remove(CargoConcurso cargoConcurso);
 

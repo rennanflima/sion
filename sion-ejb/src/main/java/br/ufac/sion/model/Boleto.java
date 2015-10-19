@@ -5,12 +5,10 @@
  */
 package br.ufac.sion.model;
 
-import br.ufac.sion.model.util.LocalDateConverter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -56,7 +54,6 @@ public class Boleto implements Serializable {
         this.valor = valor;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_vencimento")
     public LocalDate getDataVencimento() {
         return dataVencimento;
@@ -66,7 +63,6 @@ public class Boleto implements Serializable {
         this.dataVencimento = dataVencimento;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_pagamento")
     public LocalDate getDataPagamento() {
         return dataPagamento;

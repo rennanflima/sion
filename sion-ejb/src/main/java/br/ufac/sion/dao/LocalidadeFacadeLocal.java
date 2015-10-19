@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface LocalidadeFacadeLocal {
 
-    public void save(Localidade localidade);
+    public Localidade save(Localidade localidade);
 
     public void remove(Localidade localidade);
 

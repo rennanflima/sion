@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface ArquivoRetornoFacadeLocal {
 
-    public void save(ArquivoRetorno arquivoRetorno);
+    public ArquivoRetorno save(ArquivoRetorno arquivoRetorno);
 
     public void remove(ArquivoRetorno arquivoRetorno);
 

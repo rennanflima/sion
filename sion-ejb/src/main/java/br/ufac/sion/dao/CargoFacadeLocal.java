@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cargo;
+import br.ufac.sion.model.Nivel;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,7 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface CargoFacadeLocal {
 
-    public void save(Cargo cargo);
+    public Cargo save(Cargo cargo);
 
     public void remove(Cargo cargo);
 
@@ -25,4 +26,6 @@ public interface CargoFacadeLocal {
     public List<Cargo> findAll();
     
     public List<Cargo> findByDescricaoAndNivel(Cargo cargo);
+    
+    public List<Cargo> findByNivel(Nivel nivel);
 }

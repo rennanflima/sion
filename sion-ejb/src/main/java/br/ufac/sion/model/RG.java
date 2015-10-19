@@ -5,10 +5,8 @@
  */
 package br.ufac.sion.model;
 
-import br.ufac.sion.model.util.LocalDateConverter;
 import java.time.LocalDate;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 
 /**
@@ -40,7 +38,6 @@ public class RG {
         this.orgaoExpedidor = orgaoExpedidor;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "rg_data_expedicao")
     public LocalDate getDataExpedicao() {
         return dataExpedicao;

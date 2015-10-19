@@ -54,7 +54,6 @@ public class Inscricao implements Serializable {
         this.numero = numero;
     }
 
-    @Convert(converter = LocalDateConverter.class)
     @Column(name = "data_inscricao")
     public LocalDate getDataInscricao() {
         return dataInscricao;

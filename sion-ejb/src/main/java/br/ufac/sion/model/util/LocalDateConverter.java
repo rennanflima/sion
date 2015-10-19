@@ -5,32 +5,26 @@
  */
 package br.ufac.sion.model.util;
 
-import java.time.Instant;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
 import javax.persistence.AttributeConverter;
-import javax.persistence.Convert;
+import javax.persistence.Converter;
 
 /**
  *
  * @author Rennan
  */
-@Convert
-public class LocalDateConverter implements AttributeConverter<LocalDate, Date>{
+@Converter(autoApply = true)
+public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
-	@Override
-	public Date convertToDatabaseColumn(LocalDate attribute) {
-		Instant instant = attribute.atStartOfDay(ZoneId.systemDefault()).toInstant();
-		return Date.from(instant);
-	}
+    @Override
+    public Date convertToDatabaseColumn(LocalDate attribute) {
+        return (attribute == null ? null : Date.valueOf(attribute));
+    }
 
-	@Override
-	public LocalDate convertToEntityAttribute(Date dbData) {
-		Instant instant = Instant.ofEpochMilli(dbData.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
-	}
-
+    @Override
+    public LocalDate convertToEntityAttribute(Date dbData) {
+        return (dbData == null ? null : dbData.toLocalDate());
+    }
 }

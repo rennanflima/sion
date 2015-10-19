@@ -5,117 +5,34 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">Novo Concurso</ui:define>
+    <ui:define name="titulo">#{cadastroConcursoBean.editando ? 'Edição de concurso' : 'Novo concurso'}</ui:define>
 
     <ui:define name="corpo">
-        <h:form>
-            <h1>Novo concurso</h1>
+        <f:metadata>
+            <o:viewParam name="concurso" value="#{cadastroConcursoBean.concurso}" />
+            <f:event listener="#{cadastroConcursoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
 
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:button value="Novo" outcome="/concursos/cadastroConcurso"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar"/>
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="pesquisaConcursos"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+        <h:form id="frmConcurso">
+            <h1>#{cadastroConcursoBean.editando ? 'Edição de concurso' : 'Novo concurso'}</h1>
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
+            <p:messages autoUpdate="true" closable="true" />
 
-                <p:outputLabel value="Título" for="titulo"/>
-                <p:inputText id="titulo" size="60" maxlength="80"/>
+            <ui:include src="/WEB-INF/template/concursos/BotoesConcurso.xhtml" />
 
-                <p:outputLabel value="Descrição" for="descricao"/>
-                <p:inputTextarea id="descricao"/>
+            <!--            Painel-->
+            <ui:include src="/WEB-INF/template/concursos/CapaConcurso.xhtml" />
 
-                <p:outputLabel value="Data de início" for="dtInicioInscricao"/>
-                <p:calendar id="dtInicioInscricao" />
+            <!-- listagem-->
+            <ui:include src="/WEB-INF/template/concursos/CargosConcurso.xhtml" />
 
-                <p:outputLabel value="Data de termino" for="dtTerminoInscricao"/>
-                <p:calendar id="dtTerminoInscricao" />
-            </p:panelGrid>
-
-            <p:button value="Adicionar cargo" onclick="PF('inclusaoCargoDialog').show(); return false;" style="margin-top: 20px;"/>
-
-            <p:dataTable id="cargosConcursoTable" var="cargoConcurso" 
-                         style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20"
-                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-
-                <p:column headerText="#" style="width: 50px;">
-                    <h:outputText value="CÓD03" />
-                </p:column>
-
-                <p:column headerText="Descrição">
-                    <h:outputText value="Encarregado Administrativo" />
-                </p:column>
-
-                <p:column headerText="Carga Horária" style="text-align: right; width: 120px;">
-                    <h:outputText value="44h"/>
-                </p:column>
-
-                <p:column headerText="Localidade" style="width: 300px">
-                    <h:outputText value="Feijó - Projeto Sesc Ler" />
-                </p:column>
-
-                <p:column headerText="Tipo de vaga" style="width: 100px">
-                    <h:outputText value="Vagas efetivas" />
-                </p:column>
-
-                <p:column headerText="Número de vaga" style="text-align: center; width: 100px">
-                    <h:outputText value="1" />
-                </p:column>
-
-                <p:column headerText="Nível" style="width: 140px;">
-                    <h:outputText value="Nível Superior"/>
-                </p:column>
-
-                <p:column style="width: 100px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir"/>
-                </p:column>
-            </p:dataTable>
-
-            <p:dialog header="Inclusão do cargo" widgetVar="inclusaoCargoDialog" modal="true" resizable="false">
-                <h:panelGroup id="inclusaoPanel">
-                    <p:messages/>
-                    <h:panelGrid columns="2">
-                        <p:outputLabel value="Código"/>
-                        <p:inputText size="10" maxlength="20"/>
-
-                        <p:outputLabel value="Nível"/>
-                        <p:selectOneMenu>
-                            <f:selectItem itemLabel="Selecione um nível..." itemValue=""/>
-                            <f:selectItem itemLabel="Nível Fundamental" itemValue=""/>
-                            <f:selectItem itemLabel="Nível Médio" itemValue=""/>
-                            <f:selectItem itemLabel="Nível Superior" itemValue=""/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Cargo"/>
-                        <p:autoComplete/>
-
-                        <p:outputLabel value="Localidade"/>
-                        <p:selectManyMenu var="l" filter="true" filterMatchMode="contains" showCheckbox="true">
-                            <f:selectItems var="local"/>
-                        </p:selectManyMenu>
-
-                        <p:outputLabel value="Tipo de vaga"/>
-                        <p:selectManyCheckbox>
-                            <f:selectItem itemLabel="Vagas Efetivas" itemValue="Vagas Efetivas"/>
-                            <f:selectItem itemLabel="Cadastro Reserva" itemValue="Cadastro Reserva"/>
-                        </p:selectManyCheckbox>
-
-                        <p:outputLabel value="Número de vagas"/>
-                        <p:inputText size="10" maxlength="20"/>
-                    </h:panelGrid>
-                    
-                    <p:commandButton value="Incluir"/>
-                </h:panelGroup>
-            </p:dialog> 
         </h:form>
+        
+        <ui:include src="/WEB-INF/template/concursos/DialogCargoConcurso.xhtml" /> 
+        
     </ui:define>
 
 </ui:composition>

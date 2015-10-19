@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements ConcursoFacadeLocal {
+
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
@@ -27,5 +28,12 @@ public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements Co
     public ConcursoFacade() {
         super(Concurso.class);
     }
-    
+
+    @Override
+    public Concurso findConcursoWithCargo(Long id) {
+        return em.createQuery("SELECT c FROM Concurso c LEFT JOIN FETCH c.cargos cc WHERE c.id = :codigo", Concurso.class)
+                .setParameter("codigo", id)
+                .getSingleResult();
+    }
+
 }

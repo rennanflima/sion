@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog header="#{cadastroConcursoBean.editandoCargo ? 'Edição de cargo' : 'Inclusão de cargo'}" widgetVar="inclusaoCargoDialog" modal="true" resizable="false">
+        <h:form id="inclusaoPanel">
+            <h:panelGrid columns="2" columnClasses="rotulo, campo">
+                <p:outputLabel for="codigo" value="Código"/>
+                <p:inputText id="codigo" size="10" maxlength="20" value="#{cadastroConcursoBean.cargoConcurso.codigo}"/>
+
+                <p:outputLabel for="nivelCargo" value="Nível"/>
+                <p:selectOneMenu id="nivelCargo" value="#{cadastroConcursoBean.nivel}">
+                    <f:selectItem itemLabel="Selecione um nível..."/>
+                    <f:selectItems value="#{cadastroConcursoBean.niveis}" var="nivel"
+                                   itemValue="#{nivel}" itemLabel="#{nivel.descricao}"/>
+                    <p:ajax listener="#{cadastroConcursoBean.carregarCargos()}" update="cargo"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="cargo" value="Cargo"/>
+                <p:selectOneMenu id="cargo" value="#{cadastroConcursoBean.cargoConcurso.cargo}">
+                    <f:selectItem itemLabel="Selecione um cargo..."/>
+                    <f:selectItems value="#{cadastroConcursoBean.cargos}" var="cargo"
+                                   itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="localidade" value="Localidade"/>
+                <p:selectOneMenu id="localidade" value="#{cadastroConcursoBean.cargoConcurso.localidade}">
+                    <f:selectItem itemLabel="Selecione uma localidade..."/>
+                    <f:selectItems value="#{cadastroConcursoBean.localidades}" var="local"
+                                   itemValue="#{local}" itemLabel="#{local.nome}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:commandButton style="float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}"
+                             update="inclusaoPanel :frmConcurso:cargosConcursoTable"/>
+        </h:form>
+    </p:dialog> 
+</ui:composition>

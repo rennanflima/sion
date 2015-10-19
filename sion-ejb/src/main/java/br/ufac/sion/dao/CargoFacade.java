@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cargo;
+import br.ufac.sion.model.Nivel;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -52,4 +53,16 @@ public class CargoFacade extends AbstractFacade<Cargo, Long> implements CargoFac
         return criteria.addOrder(Order.asc("descricao")).list();
     }
 
+    @Override
+    public List<Cargo> findByNivel(Nivel nivel) {
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Cargo.class)
+                .add(Restrictions.eq("nivel", nivel));
+        
+        return criteria.addOrder(Order.asc("descricao")).list();
+        
+    }
+
+    
+    
 }

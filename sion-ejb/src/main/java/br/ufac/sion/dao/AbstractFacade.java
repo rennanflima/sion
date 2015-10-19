@@ -21,8 +21,8 @@ public abstract class AbstractFacade<T, ID> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void save(T entity) {
-        getEntityManager().merge(entity);
+    public T save(T entity) {
+        return getEntityManager().merge(entity);
     }
 
     public void remove(T entity) {

@@ -27,7 +27,6 @@ public class CargoVaga implements Serializable {
     private Long id;
     private Integer quatidade;
     private Vaga tipoVaga;
-    private Localidade localidade;
     private CargoConcurso cargo;
 
     @Id
@@ -46,16 +45,6 @@ public class CargoVaga implements Serializable {
 
     public void setQuatidade(Integer quatidade) {
         this.quatidade = quatidade;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "localidade_id", nullable = false)
-    public Localidade getLocalidade() {
-        return localidade;
-    }
-
-    public void setLocalidade(Localidade localidade) {
-        this.localidade = localidade;
     }
 
     @ManyToOne

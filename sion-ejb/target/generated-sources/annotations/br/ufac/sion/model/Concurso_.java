@@ -17,6 +17,7 @@ public abstract class Concurso_ {
 	public static volatile SingularAttribute<Concurso, Long> id;
 	public static volatile ListAttribute<Concurso, CargoConcurso> cargos;
 	public static volatile SingularAttribute<Concurso, String> descricao;
+	public static volatile SingularAttribute<Concurso, StatusConcurso> status;
 
 }
 

@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface BoletoFacadeLocal {
 
-    public void save(Boleto boleto);
+    public Boleto save(Boleto boleto);
 
     public void remove(Boleto boleto);
 

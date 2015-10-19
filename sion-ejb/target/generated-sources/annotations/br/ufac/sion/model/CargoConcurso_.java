@@ -10,7 +10,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(CargoConcurso.class)
 public abstract class CargoConcurso_ {
 
+	public static volatile SingularAttribute<CargoConcurso, String> codigo;
 	public static volatile ListAttribute<CargoConcurso, CargoVaga> vagas;
+	public static volatile SingularAttribute<CargoConcurso, Localidade> localidade;
 	public static volatile SingularAttribute<CargoConcurso, BigDecimal> valor;
 	public static volatile SingularAttribute<CargoConcurso, Long> id;
 	public static volatile SingularAttribute<CargoConcurso, Cargo> cargo;

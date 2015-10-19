@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface NivelFacadeLocal {
 
-    public void save(Nivel nivel);
+    public Nivel save(Nivel nivel);
 
     public void remove(Nivel nivel);
 

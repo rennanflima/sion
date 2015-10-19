@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface CargoVagaFacadeLocal {
 
-    public void save(CargoVaga cargoVaga);
+    public CargoVaga save(CargoVaga cargoVaga);
 
     public void remove(CargoVaga cargoVaga);
 

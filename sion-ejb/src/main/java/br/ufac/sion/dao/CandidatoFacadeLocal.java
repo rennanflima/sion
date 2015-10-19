@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface CandidatoFacadeLocal {
 
-    public void save(Candidato candidato);
+    public Candidato save(Candidato candidato);
 
     public void remove(Candidato candidato);
 
