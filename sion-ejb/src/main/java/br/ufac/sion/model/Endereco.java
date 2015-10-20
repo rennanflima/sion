@@ -6,11 +6,8 @@
 package br.ufac.sion.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -18,38 +15,29 @@ import javax.persistence.ManyToOne;
  *
  * @author Rennan
  */
+@Embeddable
 public class Endereco implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(length = 100)
-    private String logadouro;
+    @Column(name = "end_logradouro", length = 100)
+    private String logradouro;
+    @Column(name = "end_numero")
     private Integer numero;
-    @Column(length = 60)
+    @Column(name = "end_complemento", length = 60)
     private String complemento;
-    @Column(length = 30)
+    @Column(name = "end_bairro", length = 30)
     private String bairro;
-    @Column(length = 10)
+    @Column(name = "end_cep", length = 10)
     private String cep;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "cidade_id", nullable = false)
     private Cidade cidade = new Cidade();
 
-    public Long getId() {
-        return id;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLogadouro() {
-        return logadouro;
-    }
-
-    public void setLogadouro(String logadouro) {
-        this.logadouro = logadouro;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public Integer getNumero() {
@@ -91,28 +79,5 @@ public class Endereco implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Endereco other = (Endereco) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
-    }
-
 
 }

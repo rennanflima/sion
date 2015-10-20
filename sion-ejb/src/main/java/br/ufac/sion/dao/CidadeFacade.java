@@ -6,6 +6,8 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cidade;
+import br.ufac.sion.model.Estado;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,10 +33,17 @@ public class CidadeFacade extends AbstractFacade<Cidade, Long> implements Cidade
 
     @Override
     public Cidade findByNomeAndIdEstado(String nome, Long id) {
-        return em.createQuery("from Cidades cid where cid.nome like :cidade and cid.estado.id = :estado order by cid.nome", Cidade.class)
+        return em.createQuery("from Cidade cid where cid.nome like :cidade and cid.estado.id = :estado order by cid.nome", Cidade.class)
                 .setParameter("cidade", nome)
                 .setParameter("estado", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Cidade> findByEstado(Estado estado) {
+        return em.createQuery("from Cidade where estado = :estado", Cidade.class)
+                .setParameter("estado", estado)
+                .getResultList();
     }
 
 }

@@ -14,12 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author rennan.lima
  */
 @Entity
+@Table(name = "nivel")
 @NamedQuery(name = "Nivel.buscarTodos", query = "from Nivel")
 public class Nivel implements Serializable {
 

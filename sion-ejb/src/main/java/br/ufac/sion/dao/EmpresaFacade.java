@@ -5,17 +5,18 @@
  */
 package br.ufac.sion.dao;
 
-import br.ufac.sion.model.Estado;
+import br.ufac.sion.model.Empresa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Stateless
-public class EstadoFacade extends AbstractFacade<Estado, Long> implements EstadoFacadeLocal{
+public class EmpresaFacade extends AbstractFacade<Empresa, Long> implements EmpresaFacadeLocal {
+
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
@@ -24,15 +25,8 @@ public class EstadoFacade extends AbstractFacade<Estado, Long> implements Estado
         return em;
     }
 
-    public EstadoFacade() {
-        super(Estado.class);
+    public EmpresaFacade() {
+        super(Empresa.class);
     }
 
-    @Override
-    public Estado findByUf(String uf) {
-        return em.createQuery("from Estado e where e.sigla = :uf", Estado.class)
-                .setParameter("uf", uf)
-                .getSingleResult();
-    }
-    
 }

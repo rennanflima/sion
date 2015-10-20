@@ -5,18 +5,25 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">Nova Empresa</ui:define>
+    <ui:define name="titulo">#{cadastroConcursoBean.editando ? 'Edição de empresa' : 'Nova empresa'}</ui:define>
 
     <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="empresa" value="#{cadastroEmpresaBean.empresa}" />
+            <f:event listener="#{cadastroEmpresaBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+
         <h:form>
-            <h1>Nova empresa</h1>
+            <h1>#{cadastroConcursoBean.editando ? 'Edição de empresa' : 'Nova empresa'}</h1>
 
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/empresas/cadastroEmpresa"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroEmpresaBean.salvar()}" update="@form"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Pesquisa" outcome="pesquisaEmpresas"/>
@@ -28,13 +35,13 @@
                     <p:panelGrid columns="2" id="painel" style="width: 100%;"
                                  columnClasses="rotulo, campo">
                         <p:outputLabel value="Nome fantasia" for="nomeFantasia"/>
-                        <p:inputText id="nomeFantasia" size="80" maxlength="80"/>
+                        <p:inputText id="nomeFantasia" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.nomeFantasia}"/>
 
                         <p:outputLabel value="Razão social" for="razaoSocial"/>
-                        <p:inputText id="razaoSocial" size="80" maxlength="80"/>
+                        <p:inputText id="razaoSocial" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.nomeFantasia}"/>
 
                         <p:outputLabel value="CNPJ" for="cnpj"/>
-                        <p:inputMask id="cnpj" size="20" mask="99.999.999/9999-99"/>
+                        <p:inputMask id="cnpj" size="20" mask="99.999.999/9999-99" value="#{cadastroEmpresaBean.empresa.cnpj}"/>
                     </p:panelGrid>
                 </p:tab>
 
@@ -42,42 +49,42 @@
                     <p:panelGrid columns="4" id="painelEnd" style="width: 100%"
                                  columnClasses="rotulo, campo">
                         <p:outputLabel value="CEP" for="cep"/>
-                        <p:inputMask id="cep" mask="99.999-999"/>
+                        <p:inputMask id="cep" mask="99.999-999" value="#{cadastroEmpresaBean.empresa.endereco.cep}">
+                            <p:ajax event="blur" listener="#{cadastroEmpresaBean.consultaCep()}" update="painelEnd"/>
+                        </p:inputMask>
                         <p:spacer/>
                         <p:spacer/>
 
                         <p:outputLabel value="Logradouro" for="logradouro"/>
-                        <p:inputText id="logradouro" size="80" maxlength="80" />
+                        <p:inputText id="logradouro" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.endereco.logradouro}" />
 
                         <p:outputLabel value="Número" for="numero"/>
-                        <p:inputText id="numero" size="10" maxlength="20"/>
+                        <p:inputText id="numero" size="10" maxlength="20" value="#{cadastroEmpresaBean.empresa.endereco.numero}"/>
 
                         <p:outputLabel value="Complemento" for="complemento"/>
-                        <p:inputText id="complemento" size="60" maxlength="60"/>
+                        <p:inputText id="complemento" size="60" maxlength="60" value="#{cadastroEmpresaBean.empresa.endereco.complemento}"/>
                         <p:spacer/>
                         <p:spacer/>
 
 
                         <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText id="bairro" size="30" maxlength="60"/>
+                        <p:inputText id="bairro" size="30" maxlength="60" value="#{cadastroEmpresaBean.empresa.endereco.bairro}"/>
                         <p:spacer/>
                         <p:spacer/>
-
-                        <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:selectOneMenu id="cidade">
-                            <f:selectItem itemLabel="Selecione um nível..." itemValue=""/>
-                            <f:selectItem itemLabel="Rio Branco" itemValue=""/>
-                            <f:selectItem itemLabel="São Paulo" itemValue=""/>
-                            <f:selectItem itemLabel="Rio de Janeiro" itemValue=""/>
-                            <f:selectItem itemLabel="Cruzeiro do Sul" itemValue=""/>
-                        </p:selectOneMenu>
 
                         <p:outputLabel value="Estado" for="estado"/>
-                        <p:selectOneMenu id="estado">
-                            <f:selectItem itemLabel="Selecione um estado..." itemValue=""/>
-                            <f:selectItem itemLabel="AC" itemValue=""/>
-                            <f:selectItem itemLabel="RJ" itemValue=""/>
-                            <f:selectItem itemLabel="SP" itemValue=""/>
+                        <p:selectOneMenu id="estado" value="#{cadastroEmpresaBean.estado}" >
+                            <f:selectItem itemLabel="Selecione um estado..."/>
+                            <f:selectItems value="#{cadastroEmpresaBean.estados}" var="estado"
+                                           itemValue="#{estado}" itemLabel="#{estado.nome}"/>
+                            <p:ajax event="change" process="@this" update="cidade" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Cidade" for="cidade"/>
+                        <p:selectOneMenu id="cidade" value="#{cadastroEmpresaBean.empresa.endereco.cidade}">
+                            <f:selectItem itemLabel="Selecione uma cidade..." itemValue=""/>
+                            <f:selectItems value="#{cadastroEmpresaBean.cidades}" var="cidade"
+                                           itemValue="#{cidade}" itemLabel="#{cidade.nome}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                 </p:tab>

@@ -16,11 +16,14 @@
         <p:outputLabel value="Status"/>
         <h:outputText value="#{cadastroConcursoBean.concurso.status.descricao}"/>
 
-        <p:outputLabel value="Data de início" for="dtInicioInscricao"/>
-        <p:calendar id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConverter"/>
+        <p:outputLabel for="dtInicioInscricao" value="Data de início"/>
+        <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor">
+            <p:ajax update="dtTerminoInscricao"/>
+        </p:calendar>
 
-        <p:outputLabel value="Data de termino" for="dtTerminoInscricao"/>
-        <p:calendar id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConverter" />
+        <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
+        <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
+                    disabled="#{cadastroConcursoBean.concurso.dataInicioInscricao == null}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" />
     </p:panelGrid>
 
 </ui:composition>

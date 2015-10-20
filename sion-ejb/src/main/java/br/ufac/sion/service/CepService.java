@@ -35,7 +35,7 @@ public class CepService {
         Endereco endereco = new Endereco();
         if (webServiceCep.wasSuccessful()) {
             endereco.setCep(webServiceCep.getCep());
-            endereco.setLogadouro(webServiceCep.getLogradouroFull());
+            endereco.setLogradouro(webServiceCep.getLogradouroFull());
             endereco.setBairro(webServiceCep.getBairro());
             Estado e = estadoFacade.findByUf(webServiceCep.getUf());
             Cidade c = cidadeFacade.findByNomeAndIdEstado(webServiceCep.getCidade(), e.getId());

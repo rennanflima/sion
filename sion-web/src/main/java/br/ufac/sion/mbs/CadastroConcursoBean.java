@@ -15,9 +15,11 @@ import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.util.jsf.DateConverter;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -66,11 +68,6 @@ public class CadastroConcursoBean implements Serializable {
 
             if (isEditando()) {
                 this.concurso = concursoService.buscarConcursoComCargos(concurso.getId());
-                System.out.println("------------------------------");
-                System.out.println("Inicializar - metodo");
-                System.out.println("Tamanhao lista: " + this.concurso.getCargos().size());
-                System.out.println("Lista vazia: " + this.concurso.getCargos().isEmpty());
-                System.out.println("------------------------------");
             }
         }
     }
@@ -161,11 +158,6 @@ public class CadastroConcursoBean implements Serializable {
         this.cargoConcurso.setConcurso(concurso);
         this.concurso.adicionaCargo(this.cargoConcurso, this.linha);
         FacesUtil.addSuccessMessage("Cargo salvo com sucesso!");
-        System.out.println("-------------------------------------------");
-        System.out.println("Depois de inserir");
-        System.out.println("Tamanhao lista: " + this.concurso.getCargos().size());
-        System.out.println("Lista vazia: " + this.concurso.getCargos().isEmpty());
-        System.out.println("-------------------------------------------");
         limparCargo();
     }
 

@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cidade;
+import br.ufac.sion.model.Estado;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,4 +27,6 @@ public interface CidadeFacadeLocal {
     public List<Cidade> findAll();
     
     public Cidade findByNomeAndIdEstado(String nome, Long id);
+    
+    public List<Cidade> findByEstado(Estado estado);
 }

@@ -32,11 +32,11 @@
 
                 <p:column headerText="Período de Inscrição" style="text-align: right; width: 400px;">
                     <h:outputText value="#{concurso.dataInicioInscricao}">
-                        <f:converter converterId="localDateTimeConverter"/>
+                        <f:converter converterId="localDateTimeConversor"/>
                     </h:outputText>
                     -
                     <h:outputText value="#{concurso.dataTerminoIncricao}">
-                        <f:converter converterId="localDateTimeConverter"/>
+                        <f:converter converterId="localDateTimeConversor"/>
                     </h:outputText>
                 </p:column>
 
