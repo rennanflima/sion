@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
  * @author rennan.lima
  */
 @Entity
-@Table()
+@Table(name = "empresa")
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,6 +31,8 @@ public class Empresa implements Serializable {
     private String nomeFantasia;
     @Column(name = "razao_social", length = 80)
     private String razaoSocial;
+    @Column(length = 20)
+    private String sigla;
     @CNPJ
     @NotBlank
     @Column(nullable = false, unique = true, length = 20)
@@ -61,6 +63,14 @@ public class Empresa implements Serializable {
 
     public void setRazaoSocial(String razaoSocial) {
         this.razaoSocial = razaoSocial;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     public String getCnpj() {

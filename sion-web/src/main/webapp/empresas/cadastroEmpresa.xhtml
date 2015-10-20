@@ -20,6 +20,8 @@
         <h:form>
             <h1>#{cadastroConcursoBean.editando ? 'Edição de empresa' : 'Nova empresa'}</h1>
 
+            <p:messages autoUpdate="true" closable="true" />
+
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/empresas/cadastroEmpresa"/>
@@ -38,7 +40,10 @@
                         <p:inputText id="nomeFantasia" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.nomeFantasia}"/>
 
                         <p:outputLabel value="Razão social" for="razaoSocial"/>
-                        <p:inputText id="razaoSocial" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.nomeFantasia}"/>
+                        <p:inputText id="razaoSocial" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.razaoSocial}"/>
+                        
+                        <p:outputLabel value="Sigla" for="sigla"/>
+                        <p:inputText id="sigla" size="15" maxlength="20" value="#{cadastroEmpresaBean.empresa.sigla}"/>
 
                         <p:outputLabel value="CNPJ" for="cnpj"/>
                         <p:inputMask id="cnpj" size="20" mask="99.999.999/9999-99" value="#{cadastroEmpresaBean.empresa.cnpj}"/>
@@ -77,7 +82,7 @@
                             <f:selectItem itemLabel="Selecione um estado..."/>
                             <f:selectItems value="#{cadastroEmpresaBean.estados}" var="estado"
                                            itemValue="#{estado}" itemLabel="#{estado.nome}"/>
-                            <p:ajax event="change" process="@this" update="cidade" />
+                            <p:ajax event="change" process="@this" update="cidade" listener="#{cadastroEmpresaBean.carregarCidades()}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Cidade" for="cidade"/>

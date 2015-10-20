@@ -93,6 +93,7 @@ public class CadastroEmpresaBean implements Serializable {
         try {
             this.empresaFacade.save(empresa);
             FacesUtil.addSuccessMessage("Empresa salva com sucesso!");
+            limpar();
             inicializar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao salvar a empresa: " + e.getMessage());
@@ -119,5 +120,6 @@ public class CadastroEmpresaBean implements Serializable {
         String cep = this.empresa.getEndereco().getCep();
         this.empresa.setEndereco(cepService.consultarCep(cep));
         this.estado = this.empresa.getEndereco().getCidade().getEstado();
+        carregarCidades();
     }
 }

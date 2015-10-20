@@ -22,35 +22,40 @@
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable id="localTable" var="local" 
+            <p:dataTable id="empresaTable" var="empresa" value="#{pesquisaEmpresaBean.empresas}"
                          style="margin-top: 20px;" emptyMessage="Nenhuma localidade encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                 <p:column headerText="Razão Social">
-                    <h:outputText value="Nível Fundamental"/>
+                    <h:outputText value="#{empresa.razaoSocial}"/>
                 </p:column>
                 
                 <p:column headerText="Nome Fantasia">
-                    <h:outputText value="Nível Fundamental"/>
+                    <h:outputText value="#{empresa.nomeFantasia}"/>
                 </p:column>
                 
                 <p:column headerText="CNPJ" style="text-align: center; width: 120px;">
-                    <h:outputText value="Nível Fundamental"/>
+                    <h:outputText value="#{empresa.cnpj}"/>
                 </p:column>
 
                 <p:column style="width: 100px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir"/>
+                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroEmpresa">
+                        <f:param name="empresa" value="#{empresa.id}"/>
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
+                        <f:setPropertyActionListener target="#{pesquisaEmpresaBean.empresaParaExcluir}" value="#{empresa}"/>
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:confirmDialog header="Exclusão de localidade" 
-                             message="Tem certeza que deseja excluir a localidade ?"
+            <p:confirmDialog header="Exclusão de produto" 
+                             message="Tem certeza que deseja excluir a empresa '#{pesquisaEmpresaBean.empresaParaExcluir.nomeFantasia}' ?"
                              widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                <p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide();"
-                                 process="@this"
-                                 update=":frmPesquisa:localTable" />
-                <p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                 process="@this" action="#{pesquisaEmpresaBean.excluir()}"
+                                 update=":frmPesquisa:empresaTable" />
+                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
                 
             </p:confirmDialog>
         </h:form>
