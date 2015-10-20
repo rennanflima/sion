@@ -107,8 +107,12 @@ public class CargoConcurso implements Serializable {
         this.vagas = vagas;
     }
 
-    public void adicionaVaga(CargoVaga vaga) {
-        this.vagas.add(vaga);
+    public void adicionaVaga(CargoVaga vaga, Integer linha) {
+        if (linha == null) {
+            this.vagas.add(vaga);
+        } else {
+            this.vagas.set(linha, vaga);
+        }
     }
 
     @Override

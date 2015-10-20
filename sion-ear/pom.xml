@@ -66,4 +66,14 @@
             <type>war</type>
         </dependency>
     </dependencies>
+    
+    <repositories>
+        <repository>
+            <id>jrimum.org</id>
+            <url>http://jrimum.org/maven/content/groups/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

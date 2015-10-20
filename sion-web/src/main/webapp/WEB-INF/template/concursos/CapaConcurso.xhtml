@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+    <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
                  columnClasses="rotulo, campo">
 
         <p:outputLabel value="Título" for="titulo"/>
@@ -18,12 +18,12 @@
 
         <p:outputLabel for="dtInicioInscricao" value="Data de início"/>
         <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor">
-            <p:ajax update="dtTerminoInscricao"/>
+            <p:ajax event="blur" process="@this" update="dtTerminoInscricao"/>
         </p:calendar>
 
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
-                    disabled="#{cadastroConcursoBean.concurso.dataInicioInscricao == null}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" />
+                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" />
     </p:panelGrid>
 
 </ui:composition>

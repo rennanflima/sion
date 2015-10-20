@@ -22,17 +22,22 @@
             <p:messages autoUpdate="true" closable="true" />
 
             <ui:include src="/WEB-INF/template/concursos/BotoesConcurso.xhtml" />
-
-            <!--            Painel-->
-            <ui:include src="/WEB-INF/template/concursos/CapaConcurso.xhtml" />
-
-            <!-- listagem-->
-            <ui:include src="/WEB-INF/template/concursos/CargosConcurso.xhtml" />
-
+            
+            <p:wizard style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar">
+                <p:tab id="dadosConcurso" title="Dados Gerais">
+                    <ui:include src="/WEB-INF/template/concursos/CapaConcurso.xhtml" />
+                </p:tab>
+                <p:tab id="dadosCargos" title="Cargos do concurso">
+                    <ui:include src="/WEB-INF/template/concursos/CargosConcurso.xhtml" />
+                </p:tab>
+                <p:tab id="dadosVagas" title="Vagas dos cargos">
+                    <ui:include src="/WEB-INF/template/concursos/VagasCargosConcurso.xhtml" />
+                </p:tab>
+            </p:wizard>
         </h:form>
-        
-        <ui:include src="/WEB-INF/template/concursos/DialogCargoConcurso.xhtml" /> 
-        
+
+
+
     </ui:define>
 
 </ui:composition>

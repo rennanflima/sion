@@ -31,4 +31,11 @@ public class CargoConcursoFacade extends AbstractFacade<CargoConcurso, Long> imp
         super(CargoConcurso.class);
     }
 
+    @Override
+    public List<CargoConcurso> findByConcurso(Concurso concurso) {
+        return em.createQuery("from CargoConcurso where concurso = :concurso", CargoConcurso.class)
+                .setParameter("concurso", concurso)
+                .getResultList();
+    }
+
 }

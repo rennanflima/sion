@@ -5,22 +5,21 @@
  */
 package br.ufac.sion.model;
 
-import br.ufac.sion.model.util.LocalDateConverter;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rennan
  */
 @Entity
+@Table(name = "arquivo_retorno")
 public class ArquivoRetorno implements Serializable {
 
     private static final long serialVersionUID = 1L;

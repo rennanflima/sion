@@ -4,12 +4,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:button value="Adicionar cargo" onclick="PF('inclusaoCargoDialog').show();
-            return false;" 
-              style="margin-top: 20px;"/>
+    <p:commandButton value="Adicionar cargo" actionListener="#{cadastroConcursoBean.preparaCargoConcurso()}" oncomplete="PF('inclusaoCargoDialog').show(); return false;" 
+                     style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel"/>
 
     <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"
-                 style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
+                 style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
                  paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
         <p:column headerText="#" style="width: 50px;">
@@ -28,9 +27,13 @@
             <h:outputText value="#{cargoConcurso.cargo.nivel.descricao}"/>
         </p:column>
 
+        <p:column headerText="Localidade">
+            <h:outputText value="#{cargoConcurso.localidade.nome}"/>
+        </p:column>
+
         <p:column style="width: 100px; text-align: center;">
             <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoCargoDialog').show()"
-                             update=":inclusaoPanel" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}">
+                             update=":frmConcurso:inclusaoPanel" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}">
                 <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoConcurso}" value="#{cargoConcurso}"/>
             </p:commandButton>
             <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
@@ -50,4 +53,8 @@
                 return false;" />
 
     </p:confirmDialog>
+
+    <ui:include src="/WEB-INF/template/concursos/DialogCargoConcurso.xhtml" /> 
+
+
 </ui:composition>

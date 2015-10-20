@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dataTable id="cargosVagaConcursoTable" var="cargoVaga" value="#{cadastroConcursoBean.cargosVaga}"
+                 style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
+                 paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+        <p:column headerText="#" style="width: 50px;">
+            <h:outputText value="#{cargoConcurso.codigo}" />
+        </p:column>
+
+        <p:column headerText="Descrição">
+            <h:outputText value="#{cargoVaga.cargo.cargo.descricao}" />
+        </p:column>
+
+        <p:column headerText="Localidade">
+            <h:outputText value="#{cargoVaga.cargo.localidade.nome}"/>
+        </p:column>
+        
+        <p:column headerText="Tipo de Vaga" style="width: 140px;">
+            <h:outputText value="#{cargoVaga.tipoVaga.tipo}"/>
+        </p:column>
+        
+        <p:column headerText="Quantidade" style="width: 140px;">
+            <h:outputText value="#{cargoVaga.quatidade}"/>
+        </p:column>
+
+        <p:column style="width: 100px; text-align: center;">
+<!--            <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoCargoDialog').show()"
+                             update=":frmConcurso:inclusaoPanel" actionListener="#{cadastroConcursoBean.atualizaLinhaCV(linha)}">
+                <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoVagaConcurso}" value="#{cargoVaga}"/>
+            </p:commandButton>-->
+            <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusaoVaga').show()"
+                             update=":frmConcurso:confirmacaoExclusaoVagaDialog" actionListener="#{cadastroConcursoBean.atualizaLinhaCV(linha)}">
+                <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoVagaConcursoParaExcluir}" value="#{cargoVaga}"/>
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+
+    <p:confirmDialog header="Exclusão de produto" 
+                     message="Tem certeza que deseja excluir a vaga #{cadastroConcursoBean.cargoVagaConcursoParaExcluir} ?"
+                     widgetVar="confirmacaoExclusaoVaga"	id="confirmacaoExclusaoVagaDialog">
+        <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                         process="@this" action="#{cadastroConcursoBean.removerCargoConcurso()}"
+                         update=":frmConcurso:cargosConcursoTable" />
+        <p:button value="Não" onclick="PF('confirmacaoExclusao').hide();
+                return false;" />
+
+    </p:confirmDialog>
+
+</ui:composition>

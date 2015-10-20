@@ -38,15 +38,19 @@
                 </p:selectOneMenu>
             </p:panelGrid>
             
-            <p:dataTable id="cargosTable" var="cargo" value="#{pesquisaCargoBean.cargos}" 
+            <p:dataTable id="cargosTable" var="cargo" value="#{pesquisaCargoBean.cargos}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                
+                <p:column headerText="#" style="text-align: center; width: 20px;">
+                    <h:outputText value="#{linha + 1}"/>
+                </p:column>
                 
                 <p:column headerText="Descrição">
                     <h:outputText value="#{cargo.descricao}"/>
                 </p:column>
                 
-                <p:column headerText="Carga Horária" style="text-align: right; width: 200px;">
+                <p:column headerText="Carga Horária" style="text-align: center; width: 150px;">
                     <h:outputText value="#{cargo.cargaHoraria}h"/>
                 </p:column>
                 

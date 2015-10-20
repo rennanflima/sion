@@ -22,10 +22,14 @@
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable id="localTable" var="local" value="#{pesquisaLocalidadeBean.localidades}"
+            <p:dataTable id="localTable" var="local" value="#{pesquisaLocalidadeBean.localidades}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhuma localidade encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
+                <p:column headerText="#" style="text-align: center; width: 20px;">
+                    <h:outputText value="#{linha + 1}"/>
+                </p:column>
+                
                 <p:column headerText="Descrição">
                     <h:outputText value="#{local.nome}"/>
                 </p:column>

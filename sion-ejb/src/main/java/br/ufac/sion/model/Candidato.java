@@ -23,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -31,6 +32,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Rennan
  */
 @Entity
+@Table(name = "candidato")
 public class Candidato implements Serializable {
 
     private static final long serialVersionUID = 1L;

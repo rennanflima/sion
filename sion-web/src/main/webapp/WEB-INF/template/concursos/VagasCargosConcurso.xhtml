@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid id="inclusaoVaga" columns="2" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
+                 columnClasses="rotulo, campo">
+
+
+        <p:outputLabel value="Cargos"/>
+        <p:selectManyCheckbox layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}">
+            <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
+                           itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
+        </p:selectManyCheckbox>
+
+        <p:outputLabel value="Tipo de vaga" for="vagas"/>
+        <p:selectOneMenu id="vagas" value="#{cadastroConcursoBean.addQuantidadeVaga.tipoVaga}">
+            <f:selectItem itemLabel="Selecione ums vaga..."/>
+            <f:selectItems value="#{pesquisaVagaBean.vagas}" var="vaga"
+                           itemValue="#{vaga}" itemLabel="#{vaga.tipo}"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
+        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"/>
+
+        <p:commandButton value="Salvar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}"
+                         update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
+    </p:panelGrid>
+
+    <ui:include src="/WEB-INF/template/concursos/ListaVagasCargosConcurso.xhtml" /> 
+</ui:composition>

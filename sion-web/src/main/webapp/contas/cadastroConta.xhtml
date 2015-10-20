@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroContaBean.editando ? 'Edição de conta bancária' : 'Nova conta bancária'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="conta" value="#{cadastroContaBean.contaBancaria}" />
+            <f:event listener="#{cadastroContaBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h:form>
+            <h1>#{cadastroContaBean.editando ? 'Edição de conta bancária' : 'Nova conta bancária'}</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="cadastroConta"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroContaBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="pesquisaContas"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+
+                <p:outputLabel value="Banco" for="banco"/>
+                <p:selectOneMenu id="banco" value="#{cadastroContaBean.contaBancaria.banco}">
+                    <f:selectItem itemLabel="Selecione um banco..." />
+                    <f:selectItems value="#{cadastroContaBean.bancos}" var="banco"
+                                   itemValue="#{banco}" itemLabel="#{banco.descricao}" />
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Descrição" for="descricao"/>
+                <p:inputText id="descricao" size="60" maxlength="80" value="#{cadastroContaBean.contaBancaria.descricao}"/>
+
+                <p:outputLabel value="Agência" for="agencia"/>
+                <h:panelGroup>
+                    <p:inputText id="agencia" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.agencia}"/>
+                    <p:inputText id="digitoAgencia" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoAgencia}"/>
+                </h:panelGroup>
+
+                <p:outputLabel value="Conta" for="conta"/>
+                <h:panelGroup>
+                    <p:inputText id="conta" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.numero}"/>
+                    <p:inputText id="digitoConta" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoConta}"/>
+                </h:panelGroup>
+                
+                <p:outputLabel value="Carteira" for="carteira"/>
+                <p:inputText id="carteira" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.codigoCarteira}"/>
+                
+                <p:outputLabel value="Empresa" for="empresa"/>
+                <p:selectOneMenu id="empresa" value="#{cadastroContaBean.contaBancaria.cedente}">
+                    <f:selectItem itemLabel="Selecione uma empresa..." />
+                    <f:selectItems value="#{cadastroContaBean.empresas}" var="empresa"
+                                   itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

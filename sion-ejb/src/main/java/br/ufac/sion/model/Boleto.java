@@ -17,12 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rennan
  */
 @Entity
+@Table(name = "boleto")
 public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +35,7 @@ public class Boleto implements Serializable {
     private LocalDate dataPagamento;
     private BigDecimal valorPago;
     private SituacaoBoleto situacao;
+    private Inscricao sacado;
     private ArquivoRetorno arquivo;
 
     @Id
@@ -88,6 +91,14 @@ public class Boleto implements Serializable {
 
     public void setSituacao(SituacaoBoleto situacao) {
         this.situacao = situacao;
+    }
+
+    public Inscricao getSacado() {
+        return sacado;
+    }
+
+    public void setSacado(Inscricao sacado) {
+        this.sacado = sacado;
     }
 
     @ManyToOne

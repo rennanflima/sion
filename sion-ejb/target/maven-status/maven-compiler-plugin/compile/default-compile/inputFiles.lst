@@ -7,6 +7,7 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Insencao.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CargoFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/InscricaoFacade.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/ContaBancaria.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/NivelFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/RG.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Sexo.java
@@ -18,6 +19,7 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CidadeFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ConcursoFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CargoConcursoFacade.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ContaBancariaFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CandidatoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/CargoConcurso.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Inscricao.java
@@ -52,7 +54,9 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ArquivoRetornoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CargoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EstadoFacade.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ContaBancariaFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EmpresaFacadeLocal.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/BancosSuportados.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/BoletoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Boleto.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EmpresaFacade.java

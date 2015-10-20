@@ -5,11 +5,10 @@
  */
 package br.ufac.sion.model;
 
-import br.ufac.sion.model.util.LocalDateConverter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +17,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rennan
  */
 @Entity
+@Table(name = "inscricao")
 public class Inscricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,7 +82,7 @@ public class Inscricao implements Serializable {
         this.NecessidadeEspecial = NecessidadeEspecial;
     }
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
     @JoinColumn(name = "boleto_id")
     public Boleto getBoleto() {
         return boleto;

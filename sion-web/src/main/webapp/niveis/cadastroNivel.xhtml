@@ -23,7 +23,7 @@
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/niveis/cadastroNivel"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroNivelBean.salvar()}" update="@form"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroNivelBean.salvar()}" update="@form" oncomplete="configurarMoeda()"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Pesquisa" outcome="pesquisaNiveis"/>

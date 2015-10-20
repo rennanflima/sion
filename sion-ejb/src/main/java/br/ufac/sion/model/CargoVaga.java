@@ -89,7 +89,7 @@ public class CargoVaga implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ufac.sion.model.CargoVaga[ id=" + id + " ]";
+        return this.cargo.getCodigo() + " - " + this.cargo.getCargo().getDescricao();
     }
 
 }

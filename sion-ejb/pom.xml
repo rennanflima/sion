@@ -78,6 +78,52 @@
             <version>3.1</version>
             <scope>compile</scope>
         </dependency>
+        
+        <!-- commons beanutils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Bopepo -->
+        <dependency>
+            <groupId>org.jrimum</groupId>
+            <artifactId>jrimum-bopepo</artifactId>
+            <version>0.2.3-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Texgit para arquivo de retorno -->
+        <dependency>
+            <groupId>org.jrimum</groupId>
+            <artifactId>jrimum-texgit</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jrimum</groupId>
+                    <artifactId>jrimum-utilix</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		
+        <!-- Commons I/O -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
