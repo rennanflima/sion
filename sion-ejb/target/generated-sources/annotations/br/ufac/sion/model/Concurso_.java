@@ -10,6 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Concurso.class)
 public abstract class Concurso_ {
 
+	public static volatile SingularAttribute<Concurso, ContaBancaria> contaBancaria;
 	public static volatile SingularAttribute<Concurso, LocalDateTime> dataTerminoIncricao;
 	public static volatile SingularAttribute<Concurso, String> titulo;
 	public static volatile SingularAttribute<Concurso, LocalDateTime> dataInicioInscricao;

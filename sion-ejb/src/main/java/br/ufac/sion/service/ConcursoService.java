@@ -23,6 +23,7 @@ public class ConcursoService {
     private ConcursoFacadeLocal concursoFacade;
 
     public Concurso salvar(Concurso concurso) throws NegocioException{
+        
         if(concurso.isNovo()){
             concurso.setStatus(StatusConcurso.ABERTO);
         }
@@ -30,7 +31,11 @@ public class ConcursoService {
         if(concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())){
             throw new NegocioException("A data de termíno das inscrição deve ser maior que a data de início das inscrições");
         }
-        return concursoFacade.save(concurso);
+        try {
+            return concursoFacade.save(concurso);
+        } catch (Exception e) {
+            throw new NegocioException(e.getLocalizedMessage());
+        }
     }
 
     public Concurso buscarConcursoComCargos(Long id){

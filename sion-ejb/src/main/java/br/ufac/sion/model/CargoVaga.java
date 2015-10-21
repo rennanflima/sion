@@ -13,21 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Rennan
  */
 @Entity
-@Table(name = "cargo_vaga")
+@Table(name = "cargo_vaga", uniqueConstraints={@UniqueConstraint(columnNames={"quantidade","vaga_id", "cargo_concurso_id"})})
 public class CargoVaga implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Integer quatidade;
+    private Integer quantidade;
     private Vaga tipoVaga;
-    private CargoConcurso cargo;
+    private CargoConcurso cargoConcurso;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,22 +40,22 @@ public class CargoVaga implements Serializable {
         this.id = id;
     }
 
-    public Integer getQuatidade() {
-        return quatidade;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuatidade(Integer quatidade) {
-        this.quatidade = quatidade;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
     @ManyToOne
-    @JoinColumn(name = "cargo_concurso_id", nullable = false)
-    public CargoConcurso getCargo() {
-        return cargo;
+    @JoinColumn(name = "cargo_concurso_id")
+    public CargoConcurso getCargoConcurso() {
+        return cargoConcurso;
     }
 
-    public void setCargo(CargoConcurso cargo) {
-        this.cargo = cargo;
+    public void setCargoConcurso(CargoConcurso cargoConcurso) {
+        this.cargoConcurso = cargoConcurso;
     }
 
     @ManyToOne
@@ -89,7 +90,7 @@ public class CargoVaga implements Serializable {
 
     @Override
     public String toString() {
-        return this.cargo.getCodigo() + " - " + this.cargo.getCargo().getDescricao();
+        return this.cargoConcurso.getCodigo() + " - " + this.cargoConcurso.getCargo().getDescricao();
     }
 
 }

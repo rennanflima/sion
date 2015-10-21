@@ -6,6 +6,8 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.CargoVaga;
+import br.ufac.sion.model.Concurso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +29,13 @@ public class CargoVagaFacade extends AbstractFacade<CargoVaga, Long> implements 
     public CargoVagaFacade() {
         super(CargoVaga.class);
     }
+
+    @Override
+    public List<CargoVaga> findByConcurso(Concurso concurso) {
+        return em.createQuery("from CargoVaga where cargoConcurso.concurso = :concurso", CargoVaga.class)
+                .setParameter("concurso", concurso)
+                .getResultList();
+    }
+
     
 }

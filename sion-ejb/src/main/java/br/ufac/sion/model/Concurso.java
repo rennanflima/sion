@@ -18,7 +18,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -41,6 +43,7 @@ public class Concurso implements Serializable {
     private LocalDateTime dataTerminoIncricao;
     private List<CargoConcurso> cargos = new ArrayList<>();
     private StatusConcurso status = StatusConcurso.ABERTO;
+    private ContaBancaria contaBancaria;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -113,6 +116,16 @@ public class Concurso implements Serializable {
 
     public void setStatus(StatusConcurso status) {
         this.status = status;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "conta_bancaria_id", nullable = false)
+    public ContaBancaria getContaBancaria() {
+        return contaBancaria;
+    }
+
+    public void setContaBancaria(ContaBancaria contaBancaria) {
+        this.contaBancaria = contaBancaria;
     }
 
     public void adicionaCargo(CargoConcurso cargoConcurso, Integer linha) {

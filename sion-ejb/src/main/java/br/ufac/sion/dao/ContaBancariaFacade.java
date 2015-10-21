@@ -6,6 +6,8 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.ContaBancaria;
+import br.ufac.sion.model.Empresa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,13 @@ public class ContaBancariaFacade extends AbstractFacade<ContaBancaria, Long> imp
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    @Override
+    public List<ContaBancaria> findByEmpresa(Empresa empresa) {
+        return em.createQuery("from ContaBancaria where cedente = :empresa", ContaBancaria.class)
+                .setParameter("empresa", empresa)
+                .getResultList();
     }
 
 }

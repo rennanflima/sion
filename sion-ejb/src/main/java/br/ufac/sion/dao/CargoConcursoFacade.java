@@ -7,6 +7,7 @@ package br.ufac.sion.dao;
 
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
+import br.ufac.sion.model.Localidade;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,13 @@ public class CargoConcursoFacade extends AbstractFacade<CargoConcurso, Long> imp
     public List<CargoConcurso> findByConcurso(Concurso concurso) {
         return em.createQuery("from CargoConcurso where concurso = :concurso", CargoConcurso.class)
                 .setParameter("concurso", concurso)
+                .getResultList();
+    }
+
+    @Override
+    public List<CargoConcurso> findByLocalidade(Localidade localidade) {
+        return em.createQuery("from CargoConcurso where localidade = :local", CargoConcurso.class)
+                .setParameter("local", localidade)
                 .getResultList();
     }
 

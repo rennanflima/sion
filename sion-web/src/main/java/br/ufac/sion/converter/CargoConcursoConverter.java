@@ -21,10 +21,10 @@ import javax.naming.NamingException;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = CargoConcurso.class)
+@FacesConverter(forClass = CargoConcurso.class, value = "cargoConcursoConverter")
 public class CargoConcursoConverter implements Converter {
 
-    private CargoConcursoFacadeLocal cargoConcursoFacade;
+    private CargoConcursoFacadeLocal cargoConcursoFacade ;
 
     public CargoConcursoConverter() {
         this.cargoConcursoFacade = lookupCargoConcursoFacadeLocal();
@@ -33,20 +33,19 @@ public class CargoConcursoConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         CargoConcurso retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.cargoConcursoFacade.findById(new Long(value));
+        
+        if(value != null){
+            retorno = cargoConcursoFacade.findById(new Long(value));
         }
+        
         return retorno;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null) {
+        if(value != null){
             Long codigo = ((CargoConcurso) value).getId();
-            String retorno = (codigo == null ? null : codigo.toString());
-
-            return retorno;
+            return (codigo == null ? null : codigo.toString());
         }
         return "";
     }
@@ -60,4 +59,5 @@ public class CargoConcursoConverter implements Converter {
             throw new RuntimeException(ne);
         }
     }
+
 }

@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.ContaBancaria;
+import br.ufac.sion.model.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,4 +25,5 @@ public interface ContaBancariaFacadeLocal {
 
     public List<ContaBancaria> findAll();
 
+    public List<ContaBancaria> findByEmpresa(Empresa empresa);
 }

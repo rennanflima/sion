@@ -11,7 +11,7 @@
         <p:inputText id="titulo" size="60" maxlength="80" value="#{cadastroConcursoBean.concurso.titulo}"/>
 
         <p:outputLabel value="Descrição" for="descricao"/>
-        <p:inputTextarea id="descricao" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%"/>
+        <p:editor id="descricao" widgetVar="descricaoWidget" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%" />
 
         <p:outputLabel value="Status"/>
         <h:outputText value="#{cadastroConcursoBean.concurso.status.descricao}"/>
@@ -24,6 +24,21 @@
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
                     pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" />
+
+        <p:outputLabel value="Empresa" for="empresa"/>
+        <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" >
+            <f:selectItem itemLabel="Selecione uma empresa..."/>
+            <f:selectItems value="#{pesquisaEmpresaBean.empresas}" var="empresa"
+                           itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}"/>
+            <p:ajax event="change" process="@this" update="conta" listener="#{cadastroConcursoBean.carregarContasBancaria()}"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Conta Bancária" for="conta"/>
+        <p:selectOneMenu id="conta" value="#{cadastroConcursoBean.concurso.contaBancaria}">
+            <f:selectItem itemLabel="Selecione uma conta bancária..." itemValue=""/>
+            <f:selectItems value="#{cadastroConcursoBean.contasBancaria}" var="cb"
+                           itemValue="#{cb}" itemLabel="#{cb.descricao}"/>
+        </p:selectOneMenu>
     </p:panelGrid>
 
 </ui:composition>

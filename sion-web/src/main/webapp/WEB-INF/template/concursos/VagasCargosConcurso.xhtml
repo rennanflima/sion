@@ -8,12 +8,18 @@
                  columnClasses="rotulo, campo">
 
 
-        <p:outputLabel value="Cargos"/>
-        <p:selectManyCheckbox layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}">
-            <f:attribute name="collectionType" value="java.util.ArrayList"/>
-            <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
-                           itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
-        </p:selectManyCheckbox>
+        <p:outputLabel for="cargosConcurso" value="Cargos"/>
+        <h:panelGroup>
+            <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" itemLabel="Marcar todos">
+                <p:ajax update="cargosConcurso" listener="#{cadastroConcursoBean.selecionarTodos()}" />
+            </p:selectBooleanCheckbox>
+            <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cargoConcursoConverter">
+                <f:attribute name="collectionType" value="java.util.ArrayList"/>
+                <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
+                               itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
+                <p:ajax update="marcarTodos"/>
+            </p:selectManyCheckbox>
+        </h:panelGroup>
 
         <p:outputLabel value="Tipo de vaga" for="vagas"/>
         <p:selectOneMenu id="vagas" value="#{cadastroConcursoBean.addQuantidadeVaga.tipoVaga}">
@@ -25,7 +31,8 @@
         <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
         <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"/>
 
-        <p:commandButton value="Salvar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}"
+        <p:spacer/>
+        <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}"
                          update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
     </p:panelGrid>
 

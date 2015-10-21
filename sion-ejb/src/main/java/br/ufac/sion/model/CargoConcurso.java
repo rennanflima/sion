@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -98,7 +99,7 @@ public class CargoConcurso implements Serializable {
         this.localidade = localidade;
     }
 
-    @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
     public List<CargoVaga> getVagas() {
         return vagas;
     }
