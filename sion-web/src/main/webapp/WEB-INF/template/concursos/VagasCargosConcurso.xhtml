@@ -10,6 +10,7 @@
 
         <p:outputLabel value="Cargos"/>
         <p:selectManyCheckbox layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}">
+            <f:attribute name="collectionType" value="java.util.ArrayList"/>
             <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
                            itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
         </p:selectManyCheckbox>

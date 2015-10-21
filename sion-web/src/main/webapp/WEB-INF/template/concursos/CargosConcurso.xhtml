@@ -44,7 +44,8 @@
     </p:dataTable>
 
     <p:confirmDialog header="Exclusão de produto" 
-                     message="Tem certeza que deseja excluir o cargo #{cadastroConcursoBean.cargoConcursoParaExcluir} ?"
+                     message="Tem certeza que deseja excluir o cargo 
+                     '#{cadastroConcursoBean.cargoConcursoParaExcluir.codigo} - #{cadastroConcursoBean.cargoConcursoParaExcluir.cargo.descricao}' ?"
                      widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
         <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
                          process="@this" action="#{cadastroConcursoBean.removerCargoConcurso()}"

@@ -18,11 +18,9 @@ import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.NegocioException;
-import br.ufac.sion.util.jsf.DateConverter;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -68,11 +66,11 @@ public class CadastroConcursoBean implements Serializable {
     private Nivel nivel = new Nivel();
 
     private Integer linha;
-    
+
     private Integer linhaCV;
-    
+
     private CargoVaga cargoVagaConcurso;
-    
+
     private CargoVaga cargoVagaConcursoParaExcluir;
 
     private CargoConcurso cargoConcurso;
@@ -220,7 +218,7 @@ public class CadastroConcursoBean implements Serializable {
     public void atualizaLinhaCV(int linha) {
         this.linhaCV = linha;
     }
-    
+
     public void guardaCargoConcurso() {
         this.cargoConcurso.setValor(this.cargoConcurso.getCargo().getNivel().getValor());
         this.cargoConcurso.setConcurso(concurso);
@@ -233,17 +231,25 @@ public class CadastroConcursoBean implements Serializable {
     public void guardaVagaCargoConcurso() {
         CargoVaga vc;
 
-        for (CargoConcurso cc : addQuantidadeVaga.getListaCargos()) {
-            vc = new CargoVaga();
-            vc.setCargo(cc);
-            vc.setQuatidade(addQuantidadeVaga.getQuantidade());
-            vc.setTipoVaga(addQuantidadeVaga.getTipoVaga());
-            cc.adicionaVaga(vc, linhaCV);
+        List<CargoConcurso> listaCC = addQuantidadeVaga.getListaCargos();
+        try {
+            for (CargoConcurso cc : listaCC) {
+
+                vc = new CargoVaga();
+                vc.setCargo(cc);
+                vc.setQuatidade(addQuantidadeVaga.getQuantidade());
+                vc.setTipoVaga(addQuantidadeVaga.getTipoVaga());
+                cc.adicionaVaga(vc, linhaCV);
+
+            }
+            FacesUtil.addSuccessMessage("Cargo salvo com sucesso!");
+        } catch (Exception e) {
+            FacesUtil.addErrorMessage("Erro ao salvar o a vaga no cargo: " + e.getMessage());
         }
         this.addQuantidadeVaga = new AddCargoVaga();
         this.cargoVagaConcurso = new CargoVaga();
     }
-    
+
     public void removerCargoVagaConcurso() {
         int index = linhaCV;
         this.cargosVaga.remove(index);
@@ -272,7 +278,7 @@ public class CadastroConcursoBean implements Serializable {
         this.nivel = new Nivel();
         this.linha = null;
     }
-    
+
     public boolean isEditandoCargo() {
         return this.linha != null;
     }

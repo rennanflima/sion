@@ -24,10 +24,10 @@ import javax.naming.NamingException;
 @FacesConverter(forClass = CargoConcurso.class)
 public class CargoConcursoConverter implements Converter {
 
-    private CargoConcursoFacadeLocal cargoFacade;
+    private CargoConcursoFacadeLocal cargoConcursoFacade;
 
     public CargoConcursoConverter() {
-        this.cargoFacade = lookupCargoConcursoFacadeLocal();
+        this.cargoConcursoFacade = lookupCargoConcursoFacadeLocal();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CargoConcursoConverter implements Converter {
         CargoConcurso retorno = null;
 
         if (value != null && !value.equals("")) {
-            retorno = this.cargoFacade.findById(new Long(value));
+            retorno = this.cargoConcursoFacade.findById(new Long(value));
         }
         return retorno;
     }

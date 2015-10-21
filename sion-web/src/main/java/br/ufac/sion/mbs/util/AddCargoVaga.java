@@ -7,6 +7,8 @@ package br.ufac.sion.mbs.util;
 
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Vaga;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,15 +16,15 @@ import br.ufac.sion.model.Vaga;
  */
 public class AddCargoVaga {
 
-    private CargoConcurso[] listaCargos;
+    private List<CargoConcurso> listaCargos = new ArrayList<>();
     private Vaga tipoVaga;
     private Integer quantidade;
 
-    public CargoConcurso[] getListaCargos() {
+    public List<CargoConcurso> getListaCargos() {
         return listaCargos;
     }
 
-    public void setListaCargos(CargoConcurso[] listaCargos) {
+    public void setListaCargos(List<CargoConcurso> listaCargos) {
         this.listaCargos = listaCargos;
     }
 

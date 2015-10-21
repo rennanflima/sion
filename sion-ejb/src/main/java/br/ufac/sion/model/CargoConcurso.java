@@ -137,7 +137,7 @@ public class CargoConcurso implements Serializable {
 
     @Override
     public String toString() {
-        return this.codigo + " - " + this.cargo.getDescricao();
+        return "br.ufac.sion.model.CargoConcurso[ id=" + id + " ]";
     }
 
 }
