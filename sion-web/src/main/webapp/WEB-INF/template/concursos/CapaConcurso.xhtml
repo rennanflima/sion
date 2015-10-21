@@ -28,7 +28,7 @@
         <p:outputLabel value="Empresa" for="empresa"/>
         <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" >
             <f:selectItem itemLabel="Selecione uma empresa..."/>
-            <f:selectItems value="#{pesquisaEmpresaBean.empresas}" var="empresa"
+            <f:selectItems value="#{cadastroConcursoBean.empresas}" var="empresa"
                            itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}"/>
             <p:ajax event="change" process="@this" update="conta" listener="#{cadastroConcursoBean.carregarContasBancaria()}"/>
         </p:selectOneMenu>

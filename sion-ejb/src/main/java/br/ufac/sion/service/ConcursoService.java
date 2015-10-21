@@ -9,6 +9,7 @@ import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
 import br.ufac.sion.util.NegocioException;
+import java.time.LocalDateTime;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -18,17 +19,24 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ConcursoService {
-    
+
     @EJB
     private ConcursoFacadeLocal concursoFacade;
 
-    public Concurso salvar(Concurso concurso) throws NegocioException{
-        
-        if(concurso.isNovo()){
+    public Concurso salvar(Concurso concurso) throws NegocioException {
+        LocalDateTime now = LocalDateTime.now();
+
+        if (concurso.isNovo()) {
             concurso.setStatus(StatusConcurso.ABERTO);
         }
-        
-        if(concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())){
+        if (now.isAfter(concurso.getDataInicioInscricao()) && now.isBefore(concurso.getDataTerminoIncricao())) {
+            concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
+        } else {
+            if(now.isAfter(concurso.getDataTerminoIncricao()) && concurso.getStatus().equals(StatusConcurso.INSCRICOES_ABERTAS)){
+                concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+            }
+        }
+        if (concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())) {
             throw new NegocioException("A data de termíno das inscrição deve ser maior que a data de início das inscrições");
         }
         try {
@@ -38,9 +46,9 @@ public class ConcursoService {
         }
     }
 
-    public Concurso buscarConcursoComCargos(Long id){
+    public Concurso buscarConcursoComCargos(Long id) {
         Concurso c = concursoFacade.findConcursoWithCargo(id);
         return c;
     }
-}
 
+}
