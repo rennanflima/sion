@@ -10,8 +10,15 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
 import br.ufac.sion.util.NegocioException;
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.ScheduleExpression;
 import javax.ejb.Stateless;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 
 /**
  *
@@ -19,6 +26,9 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ConcursoService {
+
+    @Resource
+    private TimerService timerService;
 
     @EJB
     private ConcursoFacadeLocal concursoFacade;
@@ -32,13 +42,19 @@ public class ConcursoService {
         if (now.isAfter(concurso.getDataInicioInscricao()) && now.isBefore(concurso.getDataTerminoIncricao())) {
             concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
         } else {
-            if(now.isAfter(concurso.getDataTerminoIncricao()) && concurso.getStatus().equals(StatusConcurso.INSCRICOES_ABERTAS)){
+            if (now.isAfter(concurso.getDataTerminoIncricao()) && concurso.getStatus().equals(StatusConcurso.INSCRICOES_ABERTAS)) {
                 concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+            } else if(now.isBefore(concurso.getDataInicioInscricao())){
+                concurso.setStatus(StatusConcurso.ABERTO);
             }
         }
         if (concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())) {
             throw new NegocioException("A data de termíno das inscrição deve ser maior que a data de início das inscrições");
         }
+
+        criarAgendamento(concurso.getDataInicioInscricao(), "abreInscricao");
+        criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao");
+
         try {
             return concursoFacade.save(concurso);
         } catch (Exception e) {
@@ -51,4 +67,45 @@ public class ConcursoService {
         return c;
     }
 
+    private void criarAgendamento(LocalDateTime dataHora, String nomeAgendamento) {
+        ScheduleExpression expression = new ScheduleExpression();
+        expression.dayOfMonth(dataHora.getDayOfMonth());
+        expression.month(dataHora.getMonth().getValue());
+        expression.year(dataHora.getYear());
+        expression.hour(dataHora.getHour());
+        expression.minute(dataHora.getMinute());
+        this.timerService.createCalendarTimer(expression, new TimerConfig(nomeAgendamento, true));
+    }
+    
+    @Timeout
+    private void timeOut(Timer timer) {
+        List<Concurso> concursos = this.concursoFacade.findAll();
+        if (timer.getInfo().equals("abreInscricao")) {
+            abreInscricao(concursos);
+        } else if (timer.getInfo().equals("fechaInscricao")) {
+            fechaInscricao(concursos);
+        }
+    }
+
+    private void abreInscricao(List<Concurso> concursos) {
+        LocalDateTime now = LocalDateTime.now();
+        for (Concurso concurso : concursos) {
+            if (concurso.getStatus().equals(StatusConcurso.ABERTO)) {
+                if (now.isAfter(concurso.getDataInicioInscricao()) && now.isBefore(concurso.getDataTerminoIncricao())) {
+                    concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
+                    this.concursoFacade.save(concurso);
+                }
+            }
+        }
+    }
+
+    private void fechaInscricao(List<Concurso> concursos) {
+        LocalDateTime now = LocalDateTime.now();
+        for (Concurso concurso : concursos) {
+            if (now.isAfter(concurso.getDataTerminoIncricao()) && concurso.getStatus().equals(StatusConcurso.INSCRICOES_ABERTAS)) {
+                concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+                this.concursoFacade.save(concurso);
+            }
+        }
+    }
 }
