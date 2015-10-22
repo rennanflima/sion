@@ -73,7 +73,8 @@ public class Concurso implements Serializable {
         this.descricao = descricao;
     }
 
-    @Column(name = "local_inscricao", length = 100)
+    @Lob
+    @Column(name = "local_inscricao")
     public String getLocalInscricao() {
         return localInscricao;
     }
@@ -141,6 +142,34 @@ public class Concurso implements Serializable {
         return getId() == null;
     }
 
+    @Transient
+    public boolean isInscricoesAberta() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(dataInicioInscricao) && now.isBefore(dataTerminoIncricao);
+    }
+
+    @Transient
+    public boolean isInscricoesFechadas() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(dataTerminoIncricao) && status.equals(StatusConcurso.INSCRICOES_ABERTAS);
+    }
+
+    @Transient
+    public boolean isAberto() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isBefore(dataInicioInscricao);
+    }
+
+    @Transient
+    public boolean isAlteravel() {
+        return this.isAberto();
+    }
+
+    @Transient
+    public boolean isNaoAlteravel() {
+        return !this.isAlteravel();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -165,5 +194,4 @@ public class Concurso implements Serializable {
     public String toString() {
         return "br.ufac.sion.model.Concurso[ id=" + id + " ]";
     }
-
 }

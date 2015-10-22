@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:commandButton value="Adicionar cargo" actionListener="#{cadastroConcursoBean.preparaCargoConcurso()}" oncomplete="PF('inclusaoCargoDialog').show(); return false;" 
-                     style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel"/>
+                     style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
     <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"
                  style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
@@ -33,11 +33,11 @@
 
         <p:column style="width: 100px; text-align: center;">
             <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoCargoDialog').show()"
-                             update=":frmConcurso:inclusaoPanel" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}">
+                             update=":frmConcurso:inclusaoPanel" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                 <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoConcurso}" value="#{cargoConcurso}"/>
             </p:commandButton>
             <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                             update=":frmConcurso:confirmacaoExclusaoDialog" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}">
+                             update=":frmConcurso:confirmacaoExclusaoDialog" actionListener="#{cadastroConcursoBean.atualizaLinha(linha)}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                 <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoConcursoParaExcluir}" value="#{cargoConcurso}"/>
             </p:commandButton>
         </p:column>

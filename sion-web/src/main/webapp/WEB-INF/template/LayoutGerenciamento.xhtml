@@ -32,26 +32,27 @@
 
             <div style="float: right; margin-right: 110px">
                 <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
-                    Olá #{seguranca.nomeUsuario}!
+                    Olá usuário!
                 </span>
                 <h:form style="display: inline-block">
                     <p:menubar styleClass="menu-sistema">
-                        <p:submenu label="Cadastros">
-                            <p:menuitem value="Localidade" outcome="/localidades/pesquisaLocalidades"/>
-                            <p:menuitem value="Tipo de vaga" outcome="/vagas/pesquisaVagas"/>
-                            <p:menuitem value="Nível" outcome="/niveis/pesquisaNiveis"/>
-                            <p:menuitem value="Cargo" outcome="/cargos/pesquisaCargos"/>
-                            <p:separator/>
-                            <p:menuitem value="Usuários"/>
+                        <p:submenu label="Inscrição">
+                            <p:menuitem value="Lista de Inscritos"/>
+                            <p:menuitem value="Inscrições confirmadas" />
+                            <p:menuitem value="Insenção Requerida" />
+                            <p:menuitem value="Nessidades Especiais"/>
                         </p:submenu>
-                        <p:submenu label="Concurso">
-                            <p:menuitem value="Novo concurso" outcome="/concursos/pesquisaConcursos"/>
+                        <p:menuitem value="Cobrança"/>
+                        <p:submenu label="Relatórios">
+                            <p:submenu label="Lista de inscritos">
+                                <p:menuitem value="Geral"/>
+                                <p:menuitem value="Por cargo e cidade"/>
+                                <p:menuitem value="Confirmados"/>
+                                <p:menuitem value="Necessidades Especiais"/>
+                            </p:submenu>
+                            <p:menuitem value="Lista de presença"/>
                         </p:submenu>
-                        <p:submenu label="Configurações">
-                            <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
-                            <p:menuitem value="Contas Bancárias" outcome="/contas/pesquisaContas"/>
-                        </p:submenu>
-                        <p:menuitem value="Sair" url="/j_spring_security_logout"/>
+                        <p:menuitem value="Sair" outcome="/concursos/pesquisaConcursos" />
                     </p:menubar>
                 </h:form>
             </div>

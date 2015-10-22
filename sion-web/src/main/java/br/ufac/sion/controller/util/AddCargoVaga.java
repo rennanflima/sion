@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.mbs.util;
+package br.ufac.sion.controller.util;
 
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Vaga;

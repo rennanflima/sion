@@ -30,11 +30,11 @@
         </p:column>
 
         <p:column style="width: 100px; text-align: center;">
-            <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoCargoVagaDialog').show()"
+            <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoCargoVagaDialog').show()" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
                              update=":frmConcurso:inclusaoPanelVaga" actionListener="#{cadastroConcursoBean.atualizaLinhaCV(linha)}">
                 <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoVagaConcurso}" value="#{cargoVaga}"/>
             </p:commandButton>
-            <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusaoVaga').show()"
+            <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusaoVaga').show()" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
                              update=":frmConcurso:confirmacaoExclusaoVagaDialog" actionListener="#{cadastroConcursoBean.atualizaLinhaCV(linha)}">
                 <f:setPropertyActionListener target="#{cadastroConcursoBean.cargoVagaConcursoParaExcluir}" value="#{cargoVaga}"/>
             </p:commandButton>

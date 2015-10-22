@@ -119,3 +119,7 @@ h1 {
 .many-checkbox td label {
     padding-right: 10px;
 }
+
+.ui-state-disabled{
+    opacity: .80 !important;
+}

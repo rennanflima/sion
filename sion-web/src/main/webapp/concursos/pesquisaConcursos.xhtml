@@ -36,7 +36,7 @@
                     <h:outputText value="#{concurso.titulo}"/>
                 </p:column>
 
-                <p:column headerText="Período de Inscrição" style="text-align: right; width: 400px;">
+                <p:column headerText="Período de Inscrição" style="text-align: center; width: 300px;">
                     <h:outputText value="#{concurso.dataInicioInscricao}">
                         <f:converter converterId="localDateTimeConversor"/>
                     </h:outputText>
@@ -50,7 +50,10 @@
                     <h:outputText value="#{concurso.status.descricao}"/>
                 </p:column>
 
-                <p:column style="width: 100px; text-align: center;">
+                <p:column style="width: 150px; text-align: center;">
+                    <p:button icon="ui-icon-gear" title="Gerenciar" outcome="/concursos/gerenciar/home">
+                        <f:param name="concurso" value="#{concurso.id}"/>
+                    </p:button>
                     <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso">
                         <f:param name="concurso" value="#{concurso.id}"/>
                     </p:button>

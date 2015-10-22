@@ -7,7 +7,8 @@
     <p:toolbar style="margin-top: 20px">
         <p:toolbarGroup>
             <p:button value="Novo" outcome="/concursos/cadastroConcurso"/>
-            <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroConcursoBean.salvar()}" update="@form"/>
+            <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroConcursoBean.salvar()}" update="@form"
+                             disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
         </p:toolbarGroup>
         <p:toolbarGroup align="right">
             <p:button value="Pesquisa" outcome="pesquisaConcursos"/>

@@ -8,25 +8,29 @@
                  columnClasses="rotulo, campo">
 
         <p:outputLabel value="Título" for="titulo"/>
-        <p:inputText id="titulo" size="60" maxlength="80" value="#{cadastroConcursoBean.concurso.titulo}"/>
+        <p:inputText id="titulo" size="60" maxlength="80" value="#{cadastroConcursoBean.concurso.titulo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:outputLabel value="Descrição" for="descricao"/>
-        <p:editor id="descricao" widgetVar="descricaoWidget" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%" />
+        <p:editor id="descricao" widgetVar="descricaoWidget" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:outputLabel value="Status"/>
         <h:outputText value="#{cadastroConcursoBean.concurso.status.descricao}"/>
 
         <p:outputLabel for="dtInicioInscricao" value="Data de início"/>
-        <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor">
+        <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor"
+                    disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" >
             <p:ajax event="blur" process="@this" update="dtTerminoInscricao"/>
         </p:calendar>
 
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
-                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" />
+                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+        
+        <p:outputLabel value="Local de inscrição" for="localInscricao" />
+        <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%" />
 
         <p:outputLabel value="Empresa" for="empresa"/>
-        <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" >
+        <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
             <f:selectItem itemLabel="Selecione uma empresa..."/>
             <f:selectItems value="#{cadastroConcursoBean.empresas}" var="empresa"
                            itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}"/>
@@ -34,7 +38,7 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Conta Bancária" for="conta"/>
-        <p:selectOneMenu id="conta" value="#{cadastroConcursoBean.concurso.contaBancaria}">
+        <p:selectOneMenu id="conta" value="#{cadastroConcursoBean.concurso.contaBancaria}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
             <f:selectItem itemLabel="Selecione uma conta bancária..." itemValue=""/>
             <f:selectItems value="#{cadastroConcursoBean.contasBancaria}" var="cb"
                            itemValue="#{cb}" itemLabel="#{cb.descricao}"/>

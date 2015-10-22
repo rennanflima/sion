@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.mbs;
+package br.ufac.sion.controller;
 
-import br.ufac.sion.mbs.util.AddCargoVaga;
+import br.ufac.sion.controller.util.AddCargoVaga;
 import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.CargoFacadeLocal;
 import br.ufac.sion.dao.CargoVagaFacadeLocal;

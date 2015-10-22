@@ -7,17 +7,17 @@
     <p:dialog header="Edição de vaga do cargo" widgetVar="inclusaoCargoVagaDialog" modal="true" resizable="false">
         <h:form id="inclusaoPanelVaga">
             <p:panelGrid columns="2" columnClasses="rotulo, campo">
-                <p:outputLabel value="Cargo"/>
-                <h:outputText value="#{cadastroConcursoBean.cargoVagaConcurso.cargoConcurso.codigo} - #{cadastroConcursoBean.cargoVagaConcurso.cargoConcurso.cargo.descricao}"/>
+                <p:outputLabel value="Cargo" for="cargoVaga"/>
+                <h:outputText id="cargoVaga" value="#{cadastroConcursoBean.cargoVagaConcurso.cargoConcurso.codigo} - #{cadastroConcursoBean.cargoVagaConcurso.cargoConcurso.cargo.descricao}"/>
 
-                <p:outputLabel value="Tipo de vaga"/>
-                <h:outputText value="#{cadastroConcursoBean.cargoVagaConcurso.tipoVaga.tipo}"/>
+                <p:outputLabel value="Tipo de vaga" for="tipoVaga"/>
+                <h:outputText id="tipoVaga" value="#{cadastroConcursoBean.cargoVagaConcurso.tipoVaga.tipo}"/>
 
                 <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
-                <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.cargoVagaConcurso.quantidade}"/>
+                <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.cargoVagaConcurso.quantidade}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
             </p:panelGrid>
 
-            <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}"
+            <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
                              update="inclusaoPanelVaga :frmConcurso:cargosVagaConcursoTable"/>
         </h:form>
     </p:dialog> 

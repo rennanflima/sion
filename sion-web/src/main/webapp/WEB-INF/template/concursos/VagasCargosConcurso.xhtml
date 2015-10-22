@@ -10,10 +10,10 @@
 
         <p:outputLabel for="cargosConcurso" value="Cargos"/>
         <h:panelGroup>
-            <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" itemLabel="Marcar todos">
+            <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" itemLabel="Marcar todos" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                 <p:ajax update="cargosConcurso" listener="#{cadastroConcursoBean.selecionarTodos()}" />
             </p:selectBooleanCheckbox>
-            <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cargoConcursoConverter">
+            <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cargoConcursoConverter" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                 <f:attribute name="collectionType" value="java.util.ArrayList"/>
                 <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
                                itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
@@ -22,17 +22,17 @@
         </h:panelGroup>
 
         <p:outputLabel value="Tipo de vaga" for="vagas"/>
-        <p:selectOneMenu id="vagas" value="#{cadastroConcursoBean.addQuantidadeVaga.tipoVaga}">
+        <p:selectOneMenu id="vagas" value="#{cadastroConcursoBean.addQuantidadeVaga.tipoVaga}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
             <f:selectItem itemLabel="Selecione ums vaga..."/>
             <f:selectItems value="#{pesquisaVagaBean.vagas}" var="vaga"
                            itemValue="#{vaga}" itemLabel="#{vaga.tipo}"/>
         </p:selectOneMenu>
 
         <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
-        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"/>
+        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:spacer/>
-        <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}"
+        <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
                          update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
     </p:panelGrid>
 
