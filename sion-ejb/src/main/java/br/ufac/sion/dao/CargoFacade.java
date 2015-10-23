@@ -7,6 +7,7 @@ package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cargo;
 import br.ufac.sion.model.Nivel;
+import br.ufac.sion.model.Setor;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -62,7 +63,4 @@ public class CargoFacade extends AbstractFacade<Cargo, Long> implements CargoFac
         return criteria.addOrder(Order.asc("descricao")).list();
         
     }
-
-    
-    
 }

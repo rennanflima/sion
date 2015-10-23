@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 /**
  *
  * @author rennan.lima
+ * @param <T> Classe
+ * @param <ID> Tipo do Id
  */
 public abstract class AbstractFacade<T, ID> {
     private Class<T> entityClass;

@@ -10,35 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Entity
-@Table(name = "cargo")
-public class Cargo implements Serializable {
-
+public class Setor implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length = 100)
-    private String descricao;
-    private Integer cargaHoraria;
-    @ManyToOne
-    @JoinColumn(name = "nivel_id", nullable = false)
-    private Nivel nivel;
-    @ManyToMany(mappedBy = "cargos")
-    private List<Setor> setores = new ArrayList<>();
+    @Column(nullable = false, length = 60, unique = true)
+    private String nome;
+    @Column(length = 10, unique = true)
+    private String sigla;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="cargo_setor", joinColumns={@JoinColumn(name="setor_id")}, inverseJoinColumns={@JoinColumn(name="cargo_id")})
+    private List<Cargo> cargos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -48,36 +44,28 @@ public class Cargo implements Serializable {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Integer getCargaHoraria() {
-        return cargaHoraria;
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setCargaHoraria(Integer cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
-    public Nivel getNivel() {
-        return nivel;
+    public List<Cargo> getCargos() {
+        return cargos;
     }
 
-    public void setNivel(Nivel nivel) {
-        this.nivel = nivel;
-    }
-
-    public List<Setor> getSetores() {
-        return setores;
-    }
-
-    public void setSetores(List<Setor> setores) {
-        this.setores = setores;
+    public void setCargos(List<Cargo> cargos) {
+        this.cargos = cargos;
     }
 
     @Override
@@ -90,10 +78,10 @@ public class Cargo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cargo)) {
+        if (!(object instanceof Setor)) {
             return false;
         }
-        Cargo other = (Cargo) object;
+        Setor other = (Setor) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +90,7 @@ public class Cargo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ufac.sion.model.Cargo[ id=" + id + " ]";
+        return "br.ufac.sion.model.Setor[ id=" + id + " ]";
     }
-
+    
 }

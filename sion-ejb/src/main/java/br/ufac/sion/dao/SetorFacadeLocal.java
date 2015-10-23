@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.dao;
 
-import br.ufac.sion.model.Usuario;
+import br.ufac.sion.model.Setor;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,16 +14,13 @@ import javax.ejb.Local;
  * @author rennan.lima
  */
 @Local
-public interface UsuarioFacadeLocal {
+public interface SetorFacadeLocal {
 
-    public Usuario save(Usuario usuario);
+    public Setor save(Setor setor);
 
-    public void remove(Usuario usuario);
+    public void remove(Setor setor);
 
-    public Usuario findById(Long id);
+    public Setor findById(Long id);
 
-    public List<Usuario> findAll();
-    
-    public Usuario findByLogin(String login);
-
+    public List<Setor> findAll();
 }

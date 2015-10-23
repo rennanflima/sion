@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="setor" value="#{cadastroSetorBean.setor}" />
+            <f:event listener="#{cadastroSetorBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h:form>
+            <h1>#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="cadastroSetor"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroSetorBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="pesquisaSetores"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+
+                <p:outputLabel for="nome" value="Nome: "/>
+                <p:inputText id="nome" required="true" value="#{cadastroSetorBean.setor.nome}" label="Nome" size="80" maxlength="60"
+                             requiredMessage="O campo 'Nome' é obrigatório"
+                             validatorMessage="É permitido apenas letras no campo 'Nome'">
+                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
+                </p:inputText>
+
+                <p:outputLabel for="sigla" value="Sigla: "/>
+                <p:inputText id="sigla" required="true" value="#{cadastroSetorBean.setor.sigla}" label="Sigla" size="15" maxlength="10"
+                             requiredMessage="O campo 'Sigla' é obrigatório"
+                             validatorMessage="É permitido apenas letras no campo 'Sigla'">
+                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
+                </p:inputText>
+
+                <p:outputLabel for="cargosSetor" value="Cargos"/>
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}" itemLabel="Marcar todos">
+                        <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
+                    </p:selectBooleanCheckbox>
+                    <p:selectManyCheckbox id="cargosSetor" layout="grid" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cargoConverter">
+                        <f:attribute name="collectionType" value="java.util.ArrayList"/>
+                        <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"
+                                       itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
+                        <p:ajax update="marcarTodos"/>
+                    </p:selectManyCheckbox>
+                </h:panelGroup>
+                
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author rennan.lima
  */
 @Stateless
-public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements UsuarioFacadeLocal {
+public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> implements FuncionarioFacadeLocal {
 
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
@@ -25,24 +26,23 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    public UsuarioFacade() {
-        super(Usuario.class);
+    
+    public FuncionarioFacade() {
+        super(Funcionario.class);
+        
     }
-
-    @Override
-    public Usuario findByLogin(String login) {
-        Usuario usuario = null;
+    
+    public Funcionario findByLogin(String login){
+        
+        Funcionario funcionario = null;
 
         try {
-            usuario = em.createQuery("from Usuario where lower(login) = :login", Usuario.class)
-                    .setParameter("login", login.toLowerCase())
+            funcionario = em.createQuery("from Funcionario where usuario.login = :login", Funcionario.class)
+                    .setParameter("login", login)
                     .getSingleResult();
         } catch (NoResultException e) {
-            //nenhum usuário econtrado com o e-mail informado
-            System.out.println("Nenhum usuário econtrado com o e-mail informado.");
+            System.out.println("Nenhum funcionario econtrado com o e-mail informado.");
         }
-        return usuario;
+        return funcionario;
     }
-
 }

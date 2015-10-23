@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.service;
 
-import br.com.sescacre.util.WebServiceCep;
+import br.ufac.sion.util.WebServiceCep;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
 import br.ufac.sion.model.Cidade;
