@@ -1,11 +1,9 @@
-package br.com.sescacre.util;
+package br.ufac.sion.util;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;

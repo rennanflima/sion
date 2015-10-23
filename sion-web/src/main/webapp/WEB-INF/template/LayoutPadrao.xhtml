@@ -41,8 +41,7 @@
                             <p:menuitem value="Tipo de vaga" outcome="/vagas/pesquisaVagas"/>
                             <p:menuitem value="Nível" outcome="/niveis/pesquisaNiveis"/>
                             <p:menuitem value="Cargo" outcome="/cargos/pesquisaCargos"/>
-                            <p:separator/>
-                            <p:menuitem value="Usuários"/>
+                            <p:menuitem value="Setor" outcome="/setores/pesquisaSetores"/>
                         </p:submenu>
                         <p:submenu label="Concurso">
                             <p:menuitem value="Novo concurso" outcome="/concursos/pesquisaConcursos"/>
@@ -50,6 +49,8 @@
                         <p:submenu label="Configurações">
                             <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
                             <p:menuitem value="Contas Bancárias" outcome="/contas/pesquisaContas"/>
+                            <p:separator/>
+                            <p:menuitem value="Usuários" outcome="/funcionarios/pesquisaFuncionarios"/>
                         </p:submenu>
                         <p:menuitem value="Sair" url="/j_spring_security_logout"/>
                     </p:menubar>

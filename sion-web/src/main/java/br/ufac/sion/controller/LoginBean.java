@@ -26,37 +26,34 @@ public class LoginBean implements Serializable {
 
     private HttpServletResponse response;
 
-    private String email;
-    
+    private String username;
+
     @PostConstruct
-    public void init(){
+    public void init() {
         facesContext = FacesProducer.getFacesContext();
         request = FacesProducer.getHttpServletRequest();
-        response = FacesProducer.getHttpServletResponse() ;
+        response = FacesProducer.getHttpServletResponse();
     }
 
     public void preRender() {
+        
         if ("true".equals(request.getParameter("invalid"))) {
             FacesUtil.addErrorMessage("Usuário ou senha inválido!");
         }
     }
 
     public void login() throws ServletException, IOException {
-        System.out.println("login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/j_spring_security_check");
         dispatcher.forward(request, response);
-        System.out.println("request: "+request);
-        System.out.println("response: "+response);
-        System.out.println("dispatcher: "+dispatcher);
         facesContext.responseComplete();
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

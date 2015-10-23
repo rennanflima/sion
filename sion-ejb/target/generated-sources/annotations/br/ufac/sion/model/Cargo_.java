@@ -1,6 +1,7 @@
 package br.ufac.sion.model;
 
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -12,6 +13,7 @@ public abstract class Cargo_ {
 	public static volatile SingularAttribute<Cargo, Nivel> nivel;
 	public static volatile SingularAttribute<Cargo, Integer> cargaHoraria;
 	public static volatile SingularAttribute<Cargo, String> descricao;
+	public static volatile ListAttribute<Cargo, Setor> setores;
 
 }
 

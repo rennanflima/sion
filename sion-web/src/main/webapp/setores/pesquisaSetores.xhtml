@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa Setors</ui:define>
+
+    <ui:define name="corpo">
+        <h:form id="frmPesquisa">
+            <h1>Pesquisa setores</h1>
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Pesquisar"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Novo" outcome="cadastroSetor"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable id="setoresTable" var="setor" value="#{pesquisaSetorBean.setores}" rowIndexVar="linha"
+                         style="margin-top: 20px;" emptyMessage="Nenhuma setor encontrada." rows="20"
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                <p:column headerText="#" style="text-align: center; width: 20px;">
+                    <h:outputText value="#{linha + 1}"/>
+                </p:column>
+                
+                <p:column headerText="Setor">
+                    <h:outputText value="#{setor.nome}"/>
+                </p:column>
+                
+                <p:column headerText="Sigla">
+                    <h:outputText value="#{setor.sigla}"/>
+                </p:column>
+
+                <p:column style="width: 100px; text-align: center;">
+                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroSetor">
+                        <f:param name="setor" value="#{setor.id}"/>
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
+                        <f:setPropertyActionListener target="#{pesquisaSetorBean.setorSelecionadaParaExcluir}" value="#{setor}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:confirmDialog header="Exclusão de produto" 
+                             message="Tem certeza que deseja excluir a setor '#{pesquisaSetorBean.setorSelecionadaParaExcluir.tipo}' ?"
+                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                 process="@this" action="#{pesquisaSetorBean.excluir()}"
+                                 update=":frmPesquisa:setoresTable" />
+                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+                
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

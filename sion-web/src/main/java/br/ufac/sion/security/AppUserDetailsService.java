@@ -3,6 +3,7 @@ package br.ufac.sion.security;
 import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.model.Grupo;
 import br.ufac.sion.model.Usuario;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,25 +23,25 @@ public class AppUserDetailsService implements UserDetailsService {
     UsuarioFacadeLocal usuarioFacade = lookupUsuarioFacadeLocal();
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = usuarioFacade.findByEmail(email);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Usuario usuario = usuarioFacade.findByLogin(login);
 
         UsuarioSistema user = null;
-
+        usuario.setUltimoAcesso(LocalDateTime.now());
+        
         if (usuario != null) {
+            usuario = usuarioFacade.save(usuario);
             user = new UsuarioSistema(usuario, getGrupos(usuario));
         }
-
         return user;
     }
 
     private Collection<? extends GrantedAuthority> getGrupos(Usuario usuario) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
+        
         for (Grupo grupo : usuario.getGrupos()) {
             authorities.add(new SimpleGrantedAuthority(grupo.getNome().toUpperCase()));
         }
-
         return authorities;
     }
 

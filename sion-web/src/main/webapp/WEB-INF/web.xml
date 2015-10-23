@@ -25,7 +25,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>home.xhtml</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
