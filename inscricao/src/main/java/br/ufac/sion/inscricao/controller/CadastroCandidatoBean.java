@@ -8,13 +8,16 @@ package br.ufac.sion.inscricao.controller;
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
+import br.ufac.sion.model.BracoDominante;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Endereco;
 import br.ufac.sion.model.Estado;
 import br.ufac.sion.model.RG;
 import br.ufac.sion.model.Sexo;
+import br.ufac.sion.model.Telefone;
 import br.ufac.sion.model.TipoTelefone;
+import br.ufac.sion.service.CandidatoService;
 import br.ufac.sion.service.CepService;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
@@ -24,6 +27,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -43,7 +47,7 @@ public class CadastroCandidatoBean implements Serializable {
     private EstadoFacadeLocal estadoFacade;
 
     @EJB
-    private CandidatoFacadeLocal candidatoFacade;
+    private CandidatoService candidatoService;
 
     private Candidato candidato;
 
@@ -52,14 +56,17 @@ public class CadastroCandidatoBean implements Serializable {
     private List<Estado> estados;
     private List<Cidade> cidades;
     private List<Sexo> sexos;
-    private List<TipoTelefone> tiposTelefone;
+    private List<BracoDominante> bracosDominante;
+
+    private Telefone celular;
+    private Telefone residencial;
+    private Telefone outro;
 
     public void inicializar() {
         this.sexos = Arrays.asList(Sexo.values());
-        this.tiposTelefone = Arrays.asList(TipoTelefone.values());
+        this.bracosDominante = Arrays.asList(BracoDominante.values());
         if (FacesUtil.isNotPostback()) {
             this.estados = estadoFacade.findAll();
-
             if (this.estado != null) {
                 carregarCidades();
             }
@@ -79,6 +86,7 @@ public class CadastroCandidatoBean implements Serializable {
 
         if (this.candidato != null) {
             this.estado = this.candidato.getEndereco().getCidade().getEstado();
+            popularTelefones();
         }
     }
 
@@ -102,13 +110,38 @@ public class CadastroCandidatoBean implements Serializable {
         return sexos;
     }
 
-    public List<TipoTelefone> getTiposTelefone() {
-        return tiposTelefone;
+    public List<BracoDominante> getBracosDominante() {
+        return bracosDominante;
+    }
+
+    public Telefone getCelular() {
+        return celular;
+    }
+
+    public void setCelular(Telefone celular) {
+        this.celular = celular;
+    }
+
+    public Telefone getResidencial() {
+        return residencial;
+    }
+
+    public void setResidencial(Telefone residencial) {
+        this.residencial = residencial;
+    }
+
+    public Telefone getOutro() {
+        return outro;
+    }
+
+    public void setOutro(Telefone outro) {
+        this.outro = outro;
     }
 
     public void salvar() {
         try {
-            this.candidatoFacade.save(candidato);
+            salvarTelefones();
+            this.candidato = this.candidatoService.salvar(candidato);
             FacesUtil.addSuccessMessage("Candidato salvo com sucesso!");
             inicializar();
         } catch (Exception e) {
@@ -120,9 +153,11 @@ public class CadastroCandidatoBean implements Serializable {
         this.candidato = new Candidato();
         this.candidato.setRg(new RG());
         this.candidato.setEndereco(new Endereco());
-        this.candidato.adicionaTelefoneVazio();
         this.estado = null;
         this.cidades = new ArrayList<>();
+        this.celular = new Telefone();
+        this.residencial = new Telefone();
+        this.outro = new Telefone();
     }
 
     public boolean isEditando() {
@@ -141,4 +176,32 @@ public class CadastroCandidatoBean implements Serializable {
         carregarCidades();
     }
 
+    public void popularTelefones() {
+        for (Telefone tel : candidato.getTelefones()) {
+            if (tel.getTipo().equals(TipoTelefone.CELULAR)) {
+                this.celular = tel;
+            }
+            if (tel.getTipo().equals(TipoTelefone.TRABALHO)) {
+                this.outro = tel;
+            }
+            if (tel.getTipo().equals(TipoTelefone.RESIDENCIAL)) {
+                this.residencial = tel;
+            }
+        }
+    }
+
+    public void salvarTelefones() {
+        if (StringUtils.isNotBlank(celular.getPrefixo()) && StringUtils.isNotBlank(celular.getNumero())) {
+            this.celular.setTipo(TipoTelefone.CELULAR);
+            this.candidato.getTelefones().add(celular);
+        }
+        if (StringUtils.isNotBlank(residencial.getPrefixo()) && StringUtils.isNotBlank(residencial.getNumero())) {
+            this.residencial.setTipo(TipoTelefone.RESIDENCIAL);
+            this.candidato.getTelefones().add(residencial);
+        }
+        if (StringUtils.isNotBlank(outro.getPrefixo()) && StringUtils.isNotBlank(outro.getNumero())) {
+            this.outro.setTipo(TipoTelefone.OUTRO);
+            this.candidato.getTelefones().add(outro);
+        }
+    }
 }

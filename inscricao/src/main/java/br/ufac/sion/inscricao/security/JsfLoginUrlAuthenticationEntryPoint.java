@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package br.ufac.sion.security;
+package br.ufac.sion.inscricao.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

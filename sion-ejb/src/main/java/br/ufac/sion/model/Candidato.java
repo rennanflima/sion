@@ -25,7 +25,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -37,22 +39,48 @@ public class Candidato implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Column(length = 100)
     private String nome;
+    @Column(name = "nome_mae", length = 100)
     private String mae;
+    @Column(name = "nome_pai", length = 100)
     private String pai;
+    @Email
+    @NotNull
+    @Column(nullable = false)
     private String email;
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+    @CPF
+    @Column(unique = true, length = 14)
     private String cpf;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "braco_dominante")
     private BracoDominante bracoDominante;
+    @Embedded
     private RG rg;
+    @Embedded
     private Endereco endereco;
+    @ElementCollection
+    @CollectionTable(name = "candidato_telefones",
+            joinColumns = @JoinColumn(name = "candidato_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "numero", column = @Column(name = "num_telefone"))
+    })
     private List<Telefone> telefones = new ArrayList<>();
+    @Column(nullable = false, length = 45)
+    private String senha;
+    @Column(nullable = false, length = 40)
+    private String permissao;
+    @OneToMany(mappedBy = "candidato")
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -61,8 +89,6 @@ public class Candidato implements Serializable {
         this.id = id;
     }
 
-    @NotBlank
-    @Column(length = 100)
     public String getNome() {
         return nome;
     }
@@ -71,7 +97,6 @@ public class Candidato implements Serializable {
         this.nome = nome;
     }
 
-    @Column(name = "nome_mae", length = 100)
     public String getMae() {
         return mae;
     }
@@ -80,7 +105,6 @@ public class Candidato implements Serializable {
         this.mae = mae;
     }
 
-    @Column(name = "nome_pai", length = 100)
     public String getPai() {
         return pai;
     }
@@ -89,8 +113,6 @@ public class Candidato implements Serializable {
         this.pai = pai;
     }
 
-    @NotNull
-    @Column(nullable = false)
     public String getEmail() {
         return email;
     }
@@ -99,7 +121,6 @@ public class Candidato implements Serializable {
         this.email = email;
     }
 
-    @Enumerated(EnumType.STRING)
     public Sexo getSexo() {
         return sexo;
     }
@@ -108,7 +129,6 @@ public class Candidato implements Serializable {
         this.sexo = sexo;
     }
 
-    @Column(name = "data_nascimento")
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
@@ -117,7 +137,6 @@ public class Candidato implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    @Column(unique = true, length = 14)
     public String getCpf() {
         return cpf;
     }
@@ -126,8 +145,6 @@ public class Candidato implements Serializable {
         this.cpf = cpf;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "braco_dominante")
     public BracoDominante getBracoDominante() {
         return bracoDominante;
     }
@@ -136,7 +153,6 @@ public class Candidato implements Serializable {
         this.bracoDominante = bracoDominante;
     }
 
-    @Embedded
     public RG getRg() {
         return rg;
     }
@@ -145,7 +161,6 @@ public class Candidato implements Serializable {
         this.rg = rg;
     }
 
-    @Embedded
     public Endereco getEndereco() {
         return endereco;
     }
@@ -154,12 +169,6 @@ public class Candidato implements Serializable {
         this.endereco = endereco;
     }
 
-    @ElementCollection
-    @CollectionTable(name = "candidato_telefones",
-            joinColumns = @JoinColumn(name = "candidato_id"))
-    @AttributeOverrides({
-        @AttributeOverride(name = "numero", column = @Column(name = "num_telefone"))
-    })
     public List<Telefone> getTelefones() {
         return telefones;
     }
@@ -168,20 +177,28 @@ public class Candidato implements Serializable {
         this.telefones = telefones;
     }
 
-    @OneToMany(mappedBy = "candidato")
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(String permissao) {
+        this.permissao = permissao;
+    }
+
     public List<Inscricao> getInscricoes() {
         return inscricoes;
     }
 
     public void setInscricoes(List<Inscricao> inscricoes) {
         this.inscricoes = inscricoes;
-    }
-
-    public void adicionaTelefoneVazio() {
-        this.telefones.add(0,new Telefone());
-        for (Telefone t : telefones) {
-            System.out.println("Tefone: "+t.getPrefixo()+t.getNumero()+" - "+t.getTipo());
-        }
     }
 
     @Override

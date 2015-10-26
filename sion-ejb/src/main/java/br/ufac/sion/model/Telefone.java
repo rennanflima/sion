@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.model;
 
-import javax.persistence.Column;
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,10 +15,11 @@ import javax.persistence.Enumerated;
  * @author Rennan
  */
 @Embeddable
-public class Telefone {
+public class Telefone implements Serializable {
 
     private String prefixo;
     private String numero;
+    @Enumerated(EnumType.STRING)
     private TipoTelefone tipo;
 
     public Telefone() {
@@ -47,7 +48,6 @@ public class Telefone {
         this.numero = numero;
     }
 
-    @Enumerated(EnumType.STRING)
     public TipoTelefone getTipo() {
         return tipo;
     }

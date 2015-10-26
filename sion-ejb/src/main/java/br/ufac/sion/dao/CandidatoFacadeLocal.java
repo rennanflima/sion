@@ -23,5 +23,7 @@ public interface CandidatoFacadeLocal {
     public Candidato findById(Long id);
 
     public List<Candidato> findAll();
+    
+    public Candidato findByCPF(String cpf);
 
 }

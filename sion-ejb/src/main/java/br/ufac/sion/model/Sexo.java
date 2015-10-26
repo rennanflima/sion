@@ -16,7 +16,7 @@ public enum Sexo {
 
     private String descricao;
 
-    private Sexo(String descricao) {
+    Sexo(String descricao) {
         this.descricao = descricao;
     }
 

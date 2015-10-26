@@ -1,6 +1,6 @@
-package br.ufac.sion.security;
+package br.ufac.sion.inscricao.security;
 
-import br.ufac.sion.dao.FuncionarioFacadeLocal;
+import br.ufac.sion.dao.CandidatoFacadeLocal;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -13,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class Seguranca {
 
     @EJB
-    private FuncionarioFacadeLocal funcionarioFacade;
+    private CandidatoFacadeLocal candidatoFacade;
 
     public String getNomeUsuario() {
         String nome = null;
@@ -21,7 +21,7 @@ public class Seguranca {
         UsuarioSistema usuarioLogado = getUsuarioLogado();
 
         if (usuarioLogado != null) {
-            nome = (funcionarioFacade.findByLogin(usuarioLogado.getUsuario().getLogin())).getNome();
+            nome = (candidatoFacade.findByCPF(usuarioLogado.getUsuario().getCpf())).getNome();
         }
 
         return nome;

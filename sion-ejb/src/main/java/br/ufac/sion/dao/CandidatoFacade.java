@@ -8,6 +8,7 @@ package br.ufac.sion.dao;
 import br.ufac.sion.model.Candidato;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements CandidatoFacadeLocal {
+
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
@@ -27,5 +29,26 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
     public CandidatoFacade() {
         super(Candidato.class);
     }
-    
+
+    @Override
+    public Candidato findByCPF(String cpf) {
+
+        Candidato candidato = null;
+        String cpf_formatado = "";
+        
+        if(cpf.length() == 11){
+            cpf_formatado = cpf.substring(0,3) + "." + cpf.substring(3,6) + "." + cpf.substring(6,9) + "-" + cpf.substring(9,11);
+        } else {
+            cpf_formatado = cpf;
+        }
+        
+        try {
+            candidato = em.createQuery("from Candidato where cpf = :cpf", Candidato.class)
+                    .setParameter("cpf", cpf_formatado)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nenhum candidato econtrado com o CPF informado.");
+        }
+        return candidato;
+    }
 }

@@ -35,12 +35,18 @@
                     <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.nome}"/>
 
                     <p:outputLabel value="Data de Nascimento" for="dataNascimento"/>
-                    <p:inputText id="dataNascimento" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.dataNascimento}"/>
+                    <p:calendar id="dataNascimento" value="#{cadastroCandidatoBean.candidato.dataNascimento}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
 
                     <p:outputLabel value="Sexo" for="sexo" />
                     <p:selectOneRadio id="sexo" value="#{cadastroCandidatoBean.candidato.sexo}">
                         <f:selectItems value="#{cadastroCandidatoBean.sexos}" var="sexo"
                                        itemLabel="#{sexo.descricao}" itemValue="#{sexo}" />
+                    </p:selectOneRadio>
+                    
+                    <p:outputLabel value="Braço Dominante" for="braco" />
+                    <p:selectOneRadio id="braco" value="#{cadastroCandidatoBean.candidato.bracoDominante}">
+                        <f:selectItems value="#{cadastroCandidatoBean.bracosDominante}" var="bd"
+                                       itemLabel="#{bd.descricao}" itemValue="#{bd}" />
                     </p:selectOneRadio>
 
                     <p:outputLabel value="Nome do Pai" for="nomePai"/>
@@ -68,7 +74,7 @@
                         <p:inputText id="rgUF" value="#{cadastroCandidatoBean.candidato.rg.orgaoExpedidor}" />
 
                         <p:outputLabel value="Data de expedição" for="dataRG" />
-                        <p:inputText id="dataRG" value="#{cadastroCandidatoBean.candidato.rg.dataExpedicao}" />
+                        <p:calendar id="dataRG" value="#{cadastroCandidatoBean.candidato.rg.dataExpedicao}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
                     </p:panelGrid>
 
                 </p:panelGrid>
@@ -118,23 +124,37 @@
                 </p:panelGrid>
 
                 <p:panelGrid columns="2" style="width: 100%;" id="painelTel"
-                             columnClasses="rotulo, campo, rotulo">
+                             columnClasses="rotulo, campo">
                     <p:outputLabel value="Telefones"/>
                     <h:panelGroup>
-                        <ui:repeat value="#{cadastroCandidatoBean.candidato.telefones}" var="tel">
-                            <h:panelGrid columns="3" columnClasses="">
-                                <p:inputMask mask="(999)" value="#{tel.prefixo}" size="5"/>
-                                <p:inputMask mask="9999?9-9999" value="#{tel.numero}" size="20"/>
-                                <p:selectOneMenu value="#{tel.tipo}">
-                                    <f:selectItems value="#{cadastroCandidatoBean.tiposTelefone}" var="tt"
-                                                   itemValue="#{tt}" itemLabel="#{tt.descricao}"/>
-                                </p:selectOneMenu>
-                            </h:panelGrid>
-                        </ui:repeat>
-                        <p:commandButton process="@this" icon="ui-icon-plus" update="painelTel" action="#{cadastroCandidatoBean.candidato.adicionaTelefoneVazio()}" />
+                        <h:panelGrid columns="3" columnClasses="rotulo, campo, campo">
+                            <p:outputLabel value="Celular"/>
+                            <p:inputMask mask="(99)" value="#{cadastroCandidatoBean.celular.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{cadastroCandidatoBean.celular.numero}" size="20"/>
+
+                            <p:outputLabel value="Residencial"/>
+                            <p:inputMask mask="(99)" value="#{cadastroCandidatoBean.residencial.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{cadastroCandidatoBean.residencial.numero}" size="20"/>
+
+                            <p:outputLabel value="Outro"/>
+                            <p:inputMask mask="(99)" value="#{cadastroCandidatoBean.outro.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{cadastroCandidatoBean.outro.numero}" size="20"/>
+                        </h:panelGrid>
                     </h:panelGroup>
+
+                    <p:outputLabel value="E-mail"/>
+                    <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.email}" label="E-mail" size="50" maxlength="60" />
                     
+                    <p:outputLabel for="senha" value="Senha: "/>
+                    <p:password id="senha" value="#{cadastroCandidatoBean.candidato.senha}" feedback="true" inline="true"  maxlength="45" size="40"
+                                promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
+                                goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
+                                validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>
+                    <p:outputLabel for="confirmaSenha" value="Confirme a senha: "/>
+                    <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45" size="40"
+                                requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
                 </p:panelGrid>
+                
 
             </p:fieldset>
 

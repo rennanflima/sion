@@ -1,8 +1,9 @@
-package br.ufac.sion.security;
+package br.ufac.sion.inscricao.security;
 
-import br.ufac.sion.dao.UsuarioFacadeLocal;
+import br.ufac.sion.dao.CandidatoFacadeLocal;
+import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Grupo;
-import br.ufac.sion.model.Usuario;
+import br.ufac.sion.model.Candidato;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,35 +21,32 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AppUserDetailsService implements UserDetailsService {
-    UsuarioFacadeLocal usuarioFacade = lookupUsuarioFacadeLocal();
+
+    CandidatoFacadeLocal usuarioFacade = lookupCandidatoFacadeLocal();
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Usuario usuario = usuarioFacade.findByLogin(login);
+        
+        Candidato usuario = usuarioFacade.findByCPF(login);
 
         UsuarioSistema user = null;
-        usuario.setUltimoAcesso(LocalDateTime.now());
-        
+
         if (usuario != null) {
-            usuario = usuarioFacade.save(usuario);
             user = new UsuarioSistema(usuario, getGrupos(usuario));
         }
         return user;
     }
 
-    private Collection<? extends GrantedAuthority> getGrupos(Usuario usuario) {
+    private Collection<? extends GrantedAuthority> getGrupos(Candidato usuario) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        
-        for (Grupo grupo : usuario.getGrupos()) {
-            authorities.add(new SimpleGrantedAuthority(grupo.getNome().toUpperCase()));
-        }
+        authorities.add(new SimpleGrantedAuthority(usuario.getPermissao().toUpperCase()));
         return authorities;
     }
 
-    private UsuarioFacadeLocal lookupUsuarioFacadeLocal() {
+    private CandidatoFacadeLocal lookupCandidatoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/UsuarioFacade");
+            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
