@@ -10,5 +10,19 @@ package br.ufac.sion.model;
  * @author Rennan
  */
 public enum TipoTelefone {
-    RESIDENCIAL, TRABALHO, CELULAR, OUTRO
+
+    RESIDENCIAL("Residencial"),
+    TRABALHO("Trabalho"),
+    CELULAR("Celular"),
+    OUTRO("Outro");
+
+    private String descricao;
+
+    TipoTelefone(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }

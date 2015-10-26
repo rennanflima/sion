@@ -6,7 +6,6 @@
 package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.CargoFacadeLocal;
-import br.ufac.sion.dao.FuncionarioFacadeLocal;
 import br.ufac.sion.dao.GrupoFacadeLocal;
 import br.ufac.sion.dao.SetorFacadeLocal;
 import br.ufac.sion.model.Cargo;

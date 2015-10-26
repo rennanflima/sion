@@ -11,6 +11,7 @@
         <module>sion-ear</module>
         <module>sion-web</module>
         <module>sion-ejb</module>
+        <module>inscricao</module>
     </modules>
     
     <build>

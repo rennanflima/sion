@@ -1,0 +1,65 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    
+    <beans:bean id="appUserDetailsService" class="br.ufac.sion.security.AppUserDetailsService" />
+    
+    
+    
+    <http pattern="/login.xhtml" security="none" />
+    <http pattern="/Erro.xhtml" security="none" />
+    <http pattern="/javax.faces.resource/**" security="none"/>
+    
+           
+    <http auto-config="false" use-expressions="true">
+        <custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+        
+        <intercept-url pattern="/home.xhtml" access="isAuthenticated()"/>
+        <intercept-url pattern="/cargos/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/concursos/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/contas/**" access="hasAnyRole('ADMINISTRADORES', 'FINANCEIRO')"/>
+        <intercept-url pattern="/localidades/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/niveis/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/funcionarios/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/setores/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/vagas/**" access="hasAnyRole('ADMINISTRADORES')"/>
+        <intercept-url pattern="/empresas/**" access="hasAnyRole('ADMINISTRADORES', 'FINANCEIRO')"/>
+        <intercept-url pattern="/**" access="denyAll"/>
+        
+        
+        <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?invalid=true" default-target-url="/" always-use-default-target="true"/>
+        <logout logout-url="/j_spring_security_logout" invalidate-session="true" />
+    </http>
+	
+    <authentication-manager>
+        <authentication-provider user-service-ref="appUserDetailsService">
+             <password-encoder hash="sha" /> 
+        </authentication-provider>
+    </authentication-manager>
+    
+           
+     <!-- http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-web-filters.html -->
+    <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+      <beans:property name="accessDeniedHandler" ref="jsfAccessDeniedHandler"/>
+      <beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+    </beans:bean>
+
+    <beans:bean id="jsfAccessDeniedHandler" class="br.ufac.sion.security.JsfAccessDeniedHandler">
+        <beans:property name="loginPath" value="/login.xhtml" />
+        <beans:property name="contextRelative" value="true" />
+    </beans:bean>
+
+    <beans:bean  id="authenticationEntryPoint" class="br.ufac.sion.security.JsfLoginUrlAuthenticationEntryPoint">
+        <beans:property name="loginFormUrl" value="/login.xhtml"/>
+        <beans:property name="redirectStrategy" ref="jsfRedirectStrategy" />
+    </beans:bean >
+
+
+    <beans:bean id="jsfRedirectStrategy" class="br.ufac.sion.security.JsfRedirectStrategy"/>
+    <beans:bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>             
+            
+</beans:beans>

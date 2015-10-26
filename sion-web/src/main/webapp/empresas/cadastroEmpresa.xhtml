@@ -41,7 +41,7 @@
 
                         <p:outputLabel value="Razão social" for="razaoSocial"/>
                         <p:inputText id="razaoSocial" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.razaoSocial}"/>
-                        
+
                         <p:outputLabel value="Sigla" for="sigla"/>
                         <p:inputText id="sigla" size="15" maxlength="20" value="#{cadastroEmpresaBean.empresa.sigla}"/>
 
@@ -52,7 +52,7 @@
 
                 <p:tab title="Endereço">
                     <p:panelGrid columns="4" id="painelEnd" style="width: 100%"
-                                 columnClasses="rotulo, campo">
+                                 columnClasses="rotulo, campo, rotulo, campo">
                         <p:outputLabel value="CEP" for="cep"/>
                         <p:inputMask id="cep" mask="99.999-999" value="#{cadastroEmpresaBean.empresa.endereco.cep}">
                             <p:ajax event="blur" listener="#{cadastroEmpresaBean.consultaCep()}" update="painelEnd"/>

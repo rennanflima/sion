@@ -47,6 +47,7 @@ public class Candidato implements Serializable {
     private String cpf;
     private BracoDominante bracoDominante;
     private RG rg;
+    private Endereco endereco;
     private List<Telefone> telefones = new ArrayList<>();
     private List<Inscricao> inscricoes = new ArrayList<>();
 
@@ -144,6 +145,15 @@ public class Candidato implements Serializable {
         this.rg = rg;
     }
 
+    @Embedded
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     @ElementCollection
     @CollectionTable(name = "candidato_telefones",
             joinColumns = @JoinColumn(name = "candidato_id"))
@@ -165,6 +175,13 @@ public class Candidato implements Serializable {
 
     public void setInscricoes(List<Inscricao> inscricoes) {
         this.inscricoes = inscricoes;
+    }
+
+    public void adicionaTelefoneVazio() {
+        this.telefones.add(0,new Telefone());
+        for (Telefone t : telefones) {
+            System.out.println("Tefone: "+t.getPrefixo()+t.getNumero()+" - "+t.getTipo());
+        }
     }
 
     @Override

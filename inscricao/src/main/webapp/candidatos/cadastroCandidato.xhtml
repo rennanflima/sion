@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="candidato" value="#{cadastroCandidatoBean.candidato}" />
+            <f:event listener="#{cadastroCandidatoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h:form>
+            <h1>#{cadastroCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroCandidatoBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+
+            <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
+                <p:panelGrid columns="2" style="width: 100%;"
+                             columnClasses="rotulo, campo">
+                    <p:outputLabel value="Nome" for="nome"/>
+                    <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.nome}"/>
+
+                    <p:outputLabel value="Data de Nascimento" for="dataNascimento"/>
+                    <p:inputText id="dataNascimento" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.dataNascimento}"/>
+
+                    <p:outputLabel value="Sexo" for="sexo" />
+                    <p:selectOneRadio id="sexo" value="#{cadastroCandidatoBean.candidato.sexo}">
+                        <f:selectItems value="#{cadastroCandidatoBean.sexos}" var="sexo"
+                                       itemLabel="#{sexo.descricao}" itemValue="#{sexo}" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="Nome do Pai" for="nomePai"/>
+                    <p:inputText id="nomePai" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.pai}"/>
+
+                    <p:outputLabel value="Nome da Mãe" for="nomeMae"/>
+                    <p:inputText id="nomeMae" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.mae}"/>
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Documentos" style="margin-top: 20px;">
+                <p:panelGrid columns="2" style="width: 100%;"
+                             columnClasses="rotulo, campo">
+
+                    <p:outputLabel value="CPF" for="cpf"/>
+                    <p:inputMask id="cpf" mask="999.999.999-99" value="#{cadastroCandidatoBean.candidato.cpf}"/>
+
+
+                    <p:outputLabel value="Identidade" for="rg" />
+                    <p:panelGrid columns="5" id="painel" style="width: 100%;"
+                                 columnClasses="campo, rotulo, campo, rotulo, campo">
+                        <p:inputText id="rg" value="#{cadastroCandidatoBean.candidato.rg.numero}" />
+
+                        <p:outputLabel value="Órgão Expedidor" for="rgUF" />
+                        <p:inputText id="rgUF" value="#{cadastroCandidatoBean.candidato.rg.orgaoExpedidor}" />
+
+                        <p:outputLabel value="Data de expedição" for="dataRG" />
+                        <p:inputText id="dataRG" value="#{cadastroCandidatoBean.candidato.rg.dataExpedicao}" />
+                    </p:panelGrid>
+
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Endereço para Correspondência" style="margin-top: 20px;">
+                <p:panelGrid id="painelEnd" columns="4" style="width: 100%"
+                             columnClasses="rotulo, campo, rotulo, campo">
+                    <p:outputLabel value="CEP" for="cep"/>
+                    <p:inputMask id="cep" mask="99.999-999" value="#{cadastroCandidatoBean.candidato.endereco.cep}">
+                        <p:ajax event="blur" listener="#{cadastroCandidatoBean.consultaCep()}" update="painelEnd"/>
+                    </p:inputMask>
+                    <p:spacer/>
+                    <p:spacer/>
+
+                    <p:outputLabel value="Logradouro" for="logradouro"/>
+                    <p:inputText id="logradouro" size="80" maxlength="80" value="#{cadastroCandidatoBean.candidato.endereco.logradouro}" />
+
+                    <p:outputLabel value="Número" for="numero"/>
+                    <p:inputText id="numero" size="10" maxlength="20" value="#{cadastroCandidatoBean.candidato.endereco.numero}"/>
+
+                    <p:outputLabel value="Complemento" for="complemento"/>
+                    <p:inputText id="complemento" size="60" maxlength="60" value="#{cadastroCandidatoBean.candidato.endereco.complemento}"/>
+                    <p:spacer/>
+                    <p:spacer/>
+
+
+                    <p:outputLabel value="Bairro" for="bairro"/>
+                    <p:inputText id="bairro" size="30" maxlength="60" value="#{cadastroCandidatoBean.candidato.endereco.bairro}"/>
+                    <p:spacer/>
+                    <p:spacer/>
+
+                    <p:outputLabel value="Estado" for="estado"/>
+                    <p:selectOneMenu id="estado" value="#{cadastroCandidatoBean.estado}" >
+                        <f:selectItem itemLabel="Selecione um estado..."/>
+                        <f:selectItems value="#{cadastroCandidatoBean.estados}" var="estado"
+                                       itemValue="#{estado}" itemLabel="#{estado.nome}"/>
+                        <p:ajax event="change" process="@this" update="cidade" listener="#{cadastroCandidatoBean.carregarCidades()}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Cidade" for="cidade"/>
+                    <p:selectOneMenu id="cidade" value="#{cadastroCandidatoBean.candidato.endereco.cidade}">
+                        <f:selectItem itemLabel="Selecione uma cidade..." itemValue=""/>
+                        <f:selectItems value="#{cadastroCandidatoBean.cidades}" var="cidade"
+                                       itemValue="#{cidade}" itemLabel="#{cidade.nome}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" style="width: 100%;" id="painelTel"
+                             columnClasses="rotulo, campo, rotulo">
+                    <p:outputLabel value="Telefones"/>
+                    <h:panelGroup>
+                        <ui:repeat value="#{cadastroCandidatoBean.candidato.telefones}" var="tel">
+                            <h:panelGrid columns="3" columnClasses="">
+                                <p:inputMask mask="(999)" value="#{tel.prefixo}" size="5"/>
+                                <p:inputMask mask="9999?9-9999" value="#{tel.numero}" size="20"/>
+                                <p:selectOneMenu value="#{tel.tipo}">
+                                    <f:selectItems value="#{cadastroCandidatoBean.tiposTelefone}" var="tt"
+                                                   itemValue="#{tt}" itemLabel="#{tt.descricao}"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </ui:repeat>
+                        <p:commandButton process="@this" icon="ui-icon-plus" update="painelTel" action="#{cadastroCandidatoBean.candidato.adicionaTelefoneVazio()}" />
+                    </h:panelGroup>
+                    
+                </p:panelGrid>
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

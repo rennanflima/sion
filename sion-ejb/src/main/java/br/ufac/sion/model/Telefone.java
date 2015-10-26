@@ -19,7 +19,6 @@ public class Telefone {
 
     private String prefixo;
     private String numero;
-    private String ramal;
     private TipoTelefone tipo;
 
     public Telefone() {
@@ -29,7 +28,6 @@ public class Telefone {
     public Telefone(String prefixo, String numero, String ramal, TipoTelefone tipo) {
         this.prefixo = prefixo;
         this.numero = numero;
-        this.ramal = ramal;
         this.tipo = tipo;
     }
 
@@ -47,14 +45,6 @@ public class Telefone {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public String getRamal() {
-        return ramal;
-    }
-
-    public void setRamal(String ramal) {
-        this.ramal = ramal;
     }
 
     @Enumerated(EnumType.STRING)

@@ -11,7 +11,6 @@ public abstract class Telefone_ {
 	public static volatile SingularAttribute<Telefone, TipoTelefone> tipo;
 	public static volatile SingularAttribute<Telefone, String> numero;
 	public static volatile SingularAttribute<Telefone, String> prefixo;
-	public static volatile SingularAttribute<Telefone, String> ramal;
 
 }
 

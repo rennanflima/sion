@@ -10,17 +10,18 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Candidato.class)
 public abstract class Candidato_ {
 
+	public static volatile SingularAttribute<Candidato, Endereco> endereco;
+	public static volatile SingularAttribute<Candidato, String> nome;
+	public static volatile ListAttribute<Candidato, Telefone> telefones;
 	public static volatile SingularAttribute<Candidato, String> mae;
 	public static volatile SingularAttribute<Candidato, BracoDominante> bracoDominante;
 	public static volatile ListAttribute<Candidato, Inscricao> inscricoes;
 	public static volatile SingularAttribute<Candidato, RG> rg;
 	public static volatile SingularAttribute<Candidato, String> cpf;
 	public static volatile SingularAttribute<Candidato, String> pai;
-	public static volatile SingularAttribute<Candidato, String> nome;
 	public static volatile SingularAttribute<Candidato, Long> id;
 	public static volatile SingularAttribute<Candidato, Sexo> sexo;
 	public static volatile SingularAttribute<Candidato, LocalDate> dataNascimento;
-	public static volatile ListAttribute<Candidato, Telefone> telefones;
 	public static volatile SingularAttribute<Candidato, String> email;
 
 }
