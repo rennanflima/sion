@@ -18,6 +18,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,6 +55,8 @@ public class Candidato implements Serializable {
     @Column(nullable = false)
     private String email;
     @Enumerated(EnumType.STRING)
+    private Escolaridade escolaridade;
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
@@ -67,7 +70,7 @@ public class Candidato implements Serializable {
     private RG rg;
     @Embedded
     private Endereco endereco;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "candidato_telefones",
             joinColumns = @JoinColumn(name = "candidato_id"))
     @AttributeOverrides({
@@ -119,6 +122,14 @@ public class Candidato implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Escolaridade getEscolaridade() {
+        return escolaridade;
+    }
+
+    public void setEscolaridade(Escolaridade escolaridade) {
+        this.escolaridade = escolaridade;
     }
 
     public Sexo getSexo() {

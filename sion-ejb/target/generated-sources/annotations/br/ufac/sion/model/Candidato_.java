@@ -22,6 +22,7 @@ public abstract class Candidato_ {
 	public static volatile SingularAttribute<Candidato, String> cpf;
 	public static volatile SingularAttribute<Candidato, String> pai;
 	public static volatile SingularAttribute<Candidato, Long> id;
+	public static volatile SingularAttribute<Candidato, Escolaridade> escolaridade;
 	public static volatile SingularAttribute<Candidato, Sexo> sexo;
 	public static volatile SingularAttribute<Candidato, LocalDate> dataNascimento;
 	public static volatile SingularAttribute<Candidato, String> email;

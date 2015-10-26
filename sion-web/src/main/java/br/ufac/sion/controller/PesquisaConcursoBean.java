@@ -5,15 +5,10 @@
  */
 package br.ufac.sion.controller;
 
-import br.ufac.sion.dao.CargoFacadeLocal;
 import br.ufac.sion.dao.ConcursoFacadeLocal;
-import br.ufac.sion.dao.NivelFacadeLocal;
-import br.ufac.sion.model.Cargo;
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.model.Nivel;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

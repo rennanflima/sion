@@ -8,6 +8,7 @@ package br.ufac.sion.dao;
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Localidade;
+import br.ufac.sion.model.Nivel;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,5 @@ public interface CargoConcursoFacadeLocal {
     
     public List<CargoConcurso> findByLocalidade(Localidade localidade);
 
+    public List<CargoConcurso> findByConcursoAndNivel(Concurso concurso, Nivel nivel);
 }

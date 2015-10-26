@@ -6,6 +6,8 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Concurso;
+import br.ufac.sion.model.StatusConcurso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,6 +36,13 @@ public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements Co
         return em.createQuery("SELECT c FROM Concurso c LEFT JOIN FETCH c.cargos cc WHERE c.id = :codigo", Concurso.class)
                 .setParameter("codigo", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Concurso> findByInscricoesAbertas() {
+        return em.createQuery("FROM Concurso c WHERE status = :situacao", Concurso.class)
+                .setParameter("situacao", StatusConcurso.INSCRICOES_ABERTAS)
+                .getResultList();
     }
 
 }

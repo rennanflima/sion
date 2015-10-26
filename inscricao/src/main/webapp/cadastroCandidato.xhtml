@@ -48,6 +48,12 @@
                         <f:selectItems value="#{cadastroCandidatoBean.bracosDominante}" var="bd"
                                        itemLabel="#{bd.descricao}" itemValue="#{bd}" />
                     </p:selectOneRadio>
+                    
+                    <p:outputLabel value="Escolaridade" for="escolaridade" />
+                    <p:selectOneRadio id="escolaridade" value="#{cadastroCandidatoBean.candidato.escolaridade}" layout="grid" columns="1">
+                        <f:selectItems value="#{cadastroCandidatoBean.escolaridades}" var="e"
+                                       itemLabel="#{e.descricao}" itemValue="#{e}" />
+                    </p:selectOneRadio>
 
                     <p:outputLabel value="Nome do Pai" for="nomePai"/>
                     <p:inputText id="nomePai" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.pai}"/>

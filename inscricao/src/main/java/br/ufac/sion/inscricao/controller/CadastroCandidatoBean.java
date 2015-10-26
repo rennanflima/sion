@@ -5,13 +5,13 @@
  */
 package br.ufac.sion.inscricao.controller;
 
-import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
 import br.ufac.sion.model.BracoDominante;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Endereco;
+import br.ufac.sion.model.Escolaridade;
 import br.ufac.sion.model.Estado;
 import br.ufac.sion.model.RG;
 import br.ufac.sion.model.Sexo;
@@ -56,6 +56,7 @@ public class CadastroCandidatoBean implements Serializable {
     private List<Estado> estados;
     private List<Cidade> cidades;
     private List<Sexo> sexos;
+    private List<Escolaridade> escolaridades;
     private List<BracoDominante> bracosDominante;
 
     private Telefone celular;
@@ -64,6 +65,7 @@ public class CadastroCandidatoBean implements Serializable {
 
     public void inicializar() {
         this.sexos = Arrays.asList(Sexo.values());
+        this.escolaridades = Arrays.asList(Escolaridade.values());
         this.bracosDominante = Arrays.asList(BracoDominante.values());
         if (FacesUtil.isNotPostback()) {
             this.estados = estadoFacade.findAll();
@@ -108,6 +110,10 @@ public class CadastroCandidatoBean implements Serializable {
 
     public List<Sexo> getSexos() {
         return sexos;
+    }
+
+    public List<Escolaridade> getEscolaridades() {
+        return escolaridades;
     }
 
     public List<BracoDominante> getBracosDominante() {

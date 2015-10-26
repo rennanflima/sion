@@ -21,6 +21,7 @@
         
         <intercept-url pattern="/home.xhtml" access="isAuthenticated()"/>
         <intercept-url pattern="/candidatos/**" access="hasAnyRole('CANDIDATO')"/>
+        <intercept-url pattern="/concursos/**" access="hasAnyRole('CANDIDATO')"/>
         <intercept-url pattern="/**" access="denyAll"/>
         
         

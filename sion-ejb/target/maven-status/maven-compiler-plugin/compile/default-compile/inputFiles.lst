@@ -22,6 +22,7 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CidadeFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ConcursoFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CargoConcursoFacade.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Escolaridade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ContaBancariaFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CandidatoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/CargoConcurso.java

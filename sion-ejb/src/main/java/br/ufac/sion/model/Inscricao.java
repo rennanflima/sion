@@ -29,16 +29,26 @@ public class Inscricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer numero;
+    @Column(name = "data_inscricao")
     private LocalDate dataInscricao;
+    @Embedded
     private Insencao insencao;
+    @Embedded
     private NecessidadeEspecial NecessidadeEspecial;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @JoinColumn(name = "boleto_id")
     private Boleto boleto;
+    @ManyToOne
+    @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;
+    @ManyToOne
+    @JoinColumn(name = "cargo_concurso_id", nullable = false)
+    private CargoConcurso cargoConcurso;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -55,7 +65,6 @@ public class Inscricao implements Serializable {
         this.numero = numero;
     }
 
-    @Column(name = "data_inscricao")
     public LocalDate getDataInscricao() {
         return dataInscricao;
     }
@@ -64,7 +73,6 @@ public class Inscricao implements Serializable {
         this.dataInscricao = dataInscricao;
     }
 
-    @Embedded
     public Insencao getInsencao() {
         return insencao;
     }
@@ -73,7 +81,6 @@ public class Inscricao implements Serializable {
         this.insencao = insencao;
     }
 
-    @Embedded
     public NecessidadeEspecial getNecessidadeEspecial() {
         return NecessidadeEspecial;
     }
@@ -82,8 +89,6 @@ public class Inscricao implements Serializable {
         this.NecessidadeEspecial = NecessidadeEspecial;
     }
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
-    @JoinColumn(name = "boleto_id")
     public Boleto getBoleto() {
         return boleto;
     }
@@ -92,14 +97,20 @@ public class Inscricao implements Serializable {
         this.boleto = boleto;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "candidato_id", nullable = false)
     public Candidato getCandidato() {
         return candidato;
     }
 
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
+    }
+
+    public CargoConcurso getCargoConcurso() {
+        return cargoConcurso;
+    }
+
+    public void setCargoConcurso(CargoConcurso cargoConcurso) {
+        this.cargoConcurso = cargoConcurso;
     }
 
     @Override
