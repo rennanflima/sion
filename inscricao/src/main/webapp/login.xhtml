@@ -34,7 +34,10 @@
                     <p:commandButton value="Login" action="#{loginBean.login()}" ajax="false" />
                 </h:panelGrid>
             </h:form>
-            <p:link value="Não tenho cadastro" outcome="cadastroCandidato" />
+            <div style="float: right">
+                <p:link value="Não tenho cadastro" outcome="cadastroCandidato" /> | 
+                <p:link value="Esqueci a senha" />
+            </div>
         </div>
     </h:body>
 </html>

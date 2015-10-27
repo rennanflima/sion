@@ -43,9 +43,12 @@ public class InscricaoBean implements Serializable {
 
     private Concurso concurso;
 
-    private List<Nivel> niveis = new ArrayList<>();
+    private List<Nivel> niveis;
 
-    private List<CargoConcurso> cargosConcurso = new ArrayList<>();
+    private List<CargoConcurso> cargosConcurso;
+    
+    private boolean qualPNE;
+    private boolean qualAtendimento;
 
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
@@ -90,15 +93,42 @@ public class InscricaoBean implements Serializable {
         this.inscricao = inscricao;
     }
 
+    public boolean isQualPNE() {
+        return qualPNE;
+    }
+
+    public void setQualPNE(boolean qualPNE) {
+        this.qualPNE = qualPNE;
+    }
+
+    public boolean isQualAtendimento() {
+        return qualAtendimento;
+    }
+
+    public void setQualAtendimento(boolean qualAtendimento) {
+        this.qualAtendimento = qualAtendimento;
+    }
+
     private void limpar() {
         this.concurso = new Concurso();
         this.nivel = new Nivel();
         this.inscricao = new Inscricao();
+        this.niveis = new ArrayList<>();
+        this.cargosConcurso = new ArrayList<>();
+        this.qualAtendimento = true;
+        this.qualPNE = true;
     }
 
     public void carregarCargos() {
-        System.out.println("Chama ajx");
         this.cargosConcurso.clear();
         this.cargosConcurso = cargoConcursoFacade.findByConcursoAndNivel(concurso, nivel);
+    }
+    
+    public void habilitaQualAtendimento(){
+        this.qualAtendimento = false;
+    }
+    
+    public void habilitaQualPNE(){
+        this.qualPNE = false;
     }
 }

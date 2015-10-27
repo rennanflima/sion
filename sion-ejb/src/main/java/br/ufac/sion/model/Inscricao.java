@@ -48,6 +48,7 @@ public class Inscricao implements Serializable {
     @ManyToOne
     @JoinColumn(name = "cargo_concurso_id", nullable = false)
     private CargoConcurso cargoConcurso;
+    private boolean concordoEdital;
 
     public Long getId() {
         return id;
@@ -111,6 +112,14 @@ public class Inscricao implements Serializable {
 
     public void setCargoConcurso(CargoConcurso cargoConcurso) {
         this.cargoConcurso = cargoConcurso;
+    }
+
+    public boolean isConcordoEdital() {
+        return concordoEdital;
+    }
+
+    public void setConcordoEdital(boolean concordoEdital) {
+        this.concordoEdital = concordoEdital;
     }
 
     @Override

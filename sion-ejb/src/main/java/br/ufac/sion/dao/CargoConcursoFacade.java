@@ -51,8 +51,9 @@ public class CargoConcursoFacade extends AbstractFacade<CargoConcurso, Long> imp
     public List<CargoConcurso> findByConcursoAndNivel(Concurso concurso, Nivel nivel) {
         return em.createQuery("from CargoConcurso where concurso = :concurso and cargo.nivel = :nivel", CargoConcurso.class)
                 .setParameter("concurso", concurso)
-                .setParameter("nivel", concurso)
+                .setParameter("nivel", nivel)
                 .getResultList();
+
     }
 
 }
