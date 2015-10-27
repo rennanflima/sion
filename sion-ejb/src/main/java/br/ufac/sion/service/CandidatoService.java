@@ -5,12 +5,12 @@
  */
 package br.ufac.sion.service;
 
-import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.util.NegocioException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -19,21 +19,30 @@ import javax.ejb.Stateless;
 @Stateless
 public class CandidatoService {
 
-    @EJB
-    private CandidatoFacadeLocal candidatoFacade;
-    
+    @PersistenceContext(unitName = "sionPU")
+    private EntityManager em;
+
     private GeraSenha geraSenha;
 
     public Candidato salvar(Candidato candidato) throws NegocioException {
         geraSenha = new GeraSenha();
-        
+
         candidato.setPermissao("CANDIDATO");
         candidato.setSenha(geraSenha.ecripta(candidato.getSenha()));
         try {
-            candidato = candidatoFacade.save(candidato);
+            candidato = em.merge(candidato);
             return candidato;
         } catch (Exception e) {
-            throw  new NegocioException(e.getMessage());
+            throw new NegocioException(e.getMessage());
+        }
+    }
+
+    public Candidato editar(Candidato candidato) throws NegocioException {
+        try {
+            return em.merge(candidato);
+
+        } catch (Exception e) {
+            throw new NegocioException(e.getMessage());
         }
     }
 }

@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{edicaoCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="candidato" value="#{edicaoCandidatoBean.candidato}" />
+            <f:event listener="#{edicaoCandidatoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h:form>
+            <h1>#{edicaoCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{edicaoCandidatoBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Página Inicial" outcome="/home"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+
+            <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
+                <p:panelGrid columns="2" style="width: 100%;"
+                             columnClasses="rotulo, campo">
+                    <p:outputLabel value="Nome" for="nome"/>
+                    <p:inputText id="nome" size="60" maxlength="80" value="#{edicaoCandidatoBean.candidato.nome}"/>
+
+                    <p:outputLabel value="Data de Nascimento" for="dataNascimento"/>
+                    <p:calendar id="dataNascimento" value="#{edicaoCandidatoBean.candidato.dataNascimento}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
+
+                    <p:outputLabel value="Sexo" for="sexo" />
+                    <p:selectOneRadio id="sexo" value="#{edicaoCandidatoBean.candidato.sexo}">
+                        <f:selectItems value="#{edicaoCandidatoBean.sexos}" var="sexo"
+                                       itemLabel="#{sexo.descricao}" itemValue="#{sexo}" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="Estado Civil" for="estadoCivil"/>
+                    <p:selectOneMenu id="estadoCivil" value="#{edicaoCandidatoBean.candidato.estadoCivil}">
+                        <f:selectItem itemLabel="Selecione um estado civil..."/>
+                        <f:selectItems value="#{edicaoCandidatoBean.estadosCivil}" var="ec"
+                                       itemLabel="#{ec.descricao}" itemValue="#{ec}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Braço Dominante" for="braco" />
+                    <p:selectOneRadio id="braco" value="#{edicaoCandidatoBean.candidato.bracoDominante}">
+                        <f:selectItems value="#{edicaoCandidatoBean.bracosDominante}" var="bd"
+                                       itemLabel="#{bd.descricao}" itemValue="#{bd}" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="Escolaridade" for="escolaridade" />
+                    <p:selectOneRadio id="escolaridade" value="#{edicaoCandidatoBean.candidato.escolaridade}" layout="grid" columns="1">
+                        <f:selectItems value="#{edicaoCandidatoBean.escolaridades}" var="e"
+                                       itemLabel="#{e.descricao}" itemValue="#{e}" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="Nome do Pai" for="nomePai"/>
+                    <p:inputText id="nomePai" size="60" maxlength="80" value="#{edicaoCandidatoBean.candidato.pai}"/>
+
+                    <p:outputLabel value="Nome da Mãe" for="nomeMae"/>
+                    <p:inputText id="nomeMae" size="60" maxlength="80" value="#{edicaoCandidatoBean.candidato.mae}"/>
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Documentos" style="margin-top: 20px;">
+                <p:panelGrid columns="2" style="width: 100%;"
+                             columnClasses="rotulo, campo">
+
+                    <p:outputLabel value="CPF"/>
+                    <h:outputText value="#{edicaoCandidatoBean.candidato.cpf}" style="font-weight: bold"/>
+
+
+                    <p:outputLabel value="Identidade" for="rg" />
+                    <p:panelGrid columns="5" id="painel" style="width: 100%;"
+                                 columnClasses="campo, rotulo, campo, rotulo, campo">
+                        <p:inputText id="rg" value="#{edicaoCandidatoBean.candidato.rg.numero}" />
+
+                        <p:outputLabel value="Órgão Expedidor" for="rgUF" />
+                        <p:inputText id="rgUF" value="#{edicaoCandidatoBean.candidato.rg.orgaoExpedidor}" />
+
+                        <p:outputLabel value="Data de expedição" for="dataRG" />
+                        <p:calendar id="dataRG" value="#{edicaoCandidatoBean.candidato.rg.dataExpedicao}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
+                    </p:panelGrid>
+
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Endereço para Correspondência" style="margin-top: 20px;">
+                <p:panelGrid id="painelEnd" columns="4" style="width: 100%"
+                             columnClasses="rotulo, campo, rotulo, campo">
+                    <p:outputLabel value="CEP" for="cep"/>
+                    <p:inputMask id="cep" mask="99.999-999" value="#{edicaoCandidatoBean.candidato.endereco.cep}">
+                        <p:ajax event="blur" listener="#{edicaoCandidatoBean.consultaCep()}" update="painelEnd"/>
+                    </p:inputMask>
+                    <p:spacer/>
+                    <p:spacer/>
+
+                    <p:outputLabel value="Logradouro" for="logradouro"/>
+                    <p:inputText id="logradouro" size="80" maxlength="80" value="#{edicaoCandidatoBean.candidato.endereco.logradouro}" />
+
+                    <p:outputLabel value="Número" for="numero"/>
+                    <p:inputText id="numero" size="10" maxlength="20" value="#{edicaoCandidatoBean.candidato.endereco.numero}"/>
+
+                    <p:outputLabel value="Complemento" for="complemento"/>
+                    <p:inputText id="complemento" size="60" maxlength="60" value="#{edicaoCandidatoBean.candidato.endereco.complemento}"/>
+
+                    <p:outputLabel value="Bairro" for="bairro"/>
+                    <p:inputText id="bairro" size="30" maxlength="60" value="#{edicaoCandidatoBean.candidato.endereco.bairro}"/>
+
+                    <p:outputLabel value="Estado" for="estado"/>
+                    <p:selectOneMenu id="estado" value="#{edicaoCandidatoBean.estado}" >
+                        <f:selectItem itemLabel="Selecione um estado..."/>
+                        <f:selectItems value="#{edicaoCandidatoBean.estados}" var="estado"
+                                       itemValue="#{estado}" itemLabel="#{estado.nome}"/>
+                        <p:ajax event="change" process="@this" update="cidade" listener="#{edicaoCandidatoBean.carregarCidades()}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Cidade" for="cidade"/>
+                    <p:selectOneMenu id="cidade" value="#{edicaoCandidatoBean.candidato.endereco.cidade}">
+                        <f:selectItem itemLabel="Selecione uma cidade..." itemValue=""/>
+                        <f:selectItems value="#{edicaoCandidatoBean.cidades}" var="cidade"
+                                       itemValue="#{cidade}" itemLabel="#{cidade.nome}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" style="width: 100%;" id="painelTel"
+                             columnClasses="rotulo, campo">
+                    <p:outputLabel value="Telefones"/>
+                    <h:panelGroup>
+                        <h:panelGrid columns="3" columnClasses="rotulo, campo, campo">
+                            <p:outputLabel value="Celular"/>
+                            <p:inputMask mask="(99)" value="#{edicaoCandidatoBean.celular.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{edicaoCandidatoBean.celular.numero}" size="20"/>
+
+                            <p:outputLabel value="Residencial"/>
+                            <p:inputMask mask="(99)" value="#{edicaoCandidatoBean.residencial.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{edicaoCandidatoBean.residencial.numero}" size="20"/>
+
+                            <p:outputLabel value="Outro"/>
+                            <p:inputMask mask="(99)" value="#{edicaoCandidatoBean.outro.prefixo}" size="5"/>
+                            <p:inputMask mask="9999?9-9999" value="#{edicaoCandidatoBean.outro.numero}" size="20"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="E-mail"/>
+                    <p:inputText id="email" required="true" value="#{edicaoCandidatoBean.candidato.email}" label="E-mail" size="50" maxlength="60" />
+                </p:panelGrid>
+
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

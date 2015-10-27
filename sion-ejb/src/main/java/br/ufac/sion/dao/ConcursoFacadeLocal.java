@@ -27,4 +27,8 @@ public interface ConcursoFacadeLocal {
     public Concurso findConcursoWithCargo(Long id);
     
     public List<Concurso> findByInscricoesAbertas();
+    
+    public List<Concurso> findByAberto();
+    
+    public List<Concurso> findByOutrasFases();
 }

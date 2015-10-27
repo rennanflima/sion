@@ -44,5 +44,26 @@ public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements Co
                 .setParameter("situacao", StatusConcurso.INSCRICOES_ABERTAS)
                 .getResultList();
     }
+    
+    @Override
+    public List<Concurso> findByAberto() {
+        return em.createQuery("FROM Concurso c WHERE status = :situacao", Concurso.class)
+                .setParameter("situacao", StatusConcurso.ABERTO)
+                .getResultList();
+    }
+
+    @Override
+    public List<Concurso> findByOutrasFases() {
+        return em.createQuery("FROM Concurso c WHERE status != :aberto and status != :inscricaoAberta", Concurso.class)
+                .setParameter("aberto", StatusConcurso.ABERTO)
+                .setParameter("inscricaoAberta", StatusConcurso.INSCRICOES_ABERTAS)
+                .getResultList();
+    }
+    
+    @Override
+    public Concurso save(Concurso entity) {
+         throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize ConcursoService."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
 }

@@ -25,6 +25,9 @@
 
                     <p:outputLabel value="Sexo" />
                     <h:outputText value="#{homeBean.candidato.sexo.descricao}"/>
+                    
+                    <p:outputLabel value="Estado Civil" />
+                    <h:outputText value="#{homeBean.candidato.estadoCivil.descricao}"/>
 
                     <p:outputLabel value="Escolaridade"/>
                     <h:outputText value="#{homeBean.candidato.escolaridade.descricao}"/>
@@ -101,11 +104,8 @@
                 </p:panelGrid>
             </p:panel>
             <div style="text-align: center; margin-top: 15px;">
-                <h:outputText value="Meus dados estão corretos?" style="font-weight: bold"/>
-                <br/>
-                <br/>
-                <p:button value="Sim" outcome="/concursos/concursosAbertos"/>
-                <p:button icon="ui-icon-pencil" value="Editar Perfil">
+                <p:button value="Realizar inscrição" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
+                <p:button icon="ui-icon-pencil" value="Editar Perfil" outcome="/candidatos/edicaoCandidato">
                     <f:param name="candidato" value="#{homeBean.candidato.id}"/>
                 </p:button>
             </div>

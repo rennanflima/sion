@@ -26,14 +26,14 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     public FuncionarioFacade() {
         super(Funcionario.class);
-        
+
     }
-    
-    public Funcionario findByLogin(String login){
-        
+
+    public Funcionario findByLogin(String login) {
+
         Funcionario funcionario = null;
 
         try {
@@ -45,4 +45,10 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
         }
         return funcionario;
     }
+
+    @Override
+    public Funcionario save(Funcionario entity) {
+        throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize FuncionarioService."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

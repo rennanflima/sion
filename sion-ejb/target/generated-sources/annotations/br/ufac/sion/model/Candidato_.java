@@ -12,6 +12,7 @@ public abstract class Candidato_ {
 
 	public static volatile SingularAttribute<Candidato, Endereco> endereco;
 	public static volatile SingularAttribute<Candidato, String> nome;
+	public static volatile SingularAttribute<Candidato, EstadoCivil> estadoCivil;
 	public static volatile SingularAttribute<Candidato, String> permissao;
 	public static volatile ListAttribute<Candidato, Telefone> telefones;
 	public static volatile SingularAttribute<Candidato, String> mae;

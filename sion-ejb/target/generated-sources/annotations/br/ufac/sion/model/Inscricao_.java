@@ -1,6 +1,6 @@
 package br.ufac.sion.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -10,13 +10,15 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Inscricao_ {
 
 	public static volatile SingularAttribute<Inscricao, Insencao> insencao;
-	public static volatile SingularAttribute<Inscricao, Integer> numero;
-	public static volatile SingularAttribute<Inscricao, LocalDate> dataInscricao;
+	public static volatile SingularAttribute<Inscricao, Boolean> concordoEdital;
+	public static volatile SingularAttribute<Inscricao, String> numero;
+	public static volatile SingularAttribute<Inscricao, LocalDateTime> dataInscricao;
 	public static volatile SingularAttribute<Inscricao, Boleto> boleto;
 	public static volatile SingularAttribute<Inscricao, CargoConcurso> cargoConcurso;
 	public static volatile SingularAttribute<Inscricao, Long> id;
 	public static volatile SingularAttribute<Inscricao, Candidato> candidato;
 	public static volatile SingularAttribute<Inscricao, NecessidadeEspecial> NecessidadeEspecial;
+	public static volatile SingularAttribute<Inscricao, SituacaoInscricao> status;
 
 }
 

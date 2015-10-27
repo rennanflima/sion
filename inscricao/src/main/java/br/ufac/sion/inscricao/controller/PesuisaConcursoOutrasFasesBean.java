@@ -20,17 +20,16 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class ConcursosAbertosBean implements Serializable {
+public class PesuisaConcursoOutrasFasesBean implements Serializable {
 
     @EJB
     private ConcursoFacadeLocal concursoFacade;
 
     private List<Concurso> concursos;
-    
 
     @PostConstruct
     public void inicializar() {
-        this.concursos = concursoFacade.findByInscricoesAbertas();
+        this.concursos = concursoFacade.findByOutrasFases();
 
     }
 

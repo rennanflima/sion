@@ -32,12 +32,12 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @ManagedBean
 @ViewScoped
-public class CadastroCandidatoBean implements Serializable {
-
+public class EdicaoCandidatoBean implements Serializable{
+    
     @EJB
     private CepService cepService;
 
@@ -78,7 +78,7 @@ public class CadastroCandidatoBean implements Serializable {
         }
     }
 
-    public CadastroCandidatoBean() {
+    public EdicaoCandidatoBean() {
         limpar();
     }
 
@@ -154,11 +154,11 @@ public class CadastroCandidatoBean implements Serializable {
     public void salvar() {
         try {
             salvarTelefones();
-            this.candidato = this.candidatoService.salvar(candidato);
-            FacesUtil.addSuccessMessage("Candidato salvo com sucesso!");
+            this.candidato = this.candidatoService.editar(candidato);
+            FacesUtil.addSuccessMessage("Candidato alterado com sucesso!");
             inicializar();
         } catch (Exception e) {
-            FacesUtil.addErrorMessage("Erro ao salvar o candidato: " + e.getMessage());
+            FacesUtil.addErrorMessage("Erro ao alterar o candidato: " + e.getMessage());
         }
     }
 
@@ -204,6 +204,7 @@ public class CadastroCandidatoBean implements Serializable {
     }
 
     public void salvarTelefones() {
+        this.candidato.getTelefones().clear();
         if (StringUtils.isNotBlank(celular.getPrefixo()) && StringUtils.isNotBlank(celular.getNumero())) {
             this.celular.setTipo(TipoTelefone.CELULAR);
             this.candidato.getTelefones().add(celular);

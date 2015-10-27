@@ -20,8 +20,8 @@ public class Insencao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private boolean requerInsencao;
-    private boolean insencaoConfirmada;
+    private boolean requerInsencao = false;
+    private boolean insencaoConfirmada = false;
     private String motivoNegacao;
     private PercentualInsencao percentualInsencao;
 

@@ -42,13 +42,20 @@
                         <f:selectItems value="#{cadastroCandidatoBean.sexos}" var="sexo"
                                        itemLabel="#{sexo.descricao}" itemValue="#{sexo}" />
                     </p:selectOneRadio>
-                    
+
+                    <p:outputLabel value="Estado Civil" for="estadoCivil"/>
+                    <p:selectOneMenu id="estadoCivil" value="#{cadastroCandidatoBean.candidato.estadoCivil}">
+                        <f:selectItem itemLabel="Selecione um estado civil..."/>
+                        <f:selectItems value="#{cadastroCandidatoBean.estadosCivil}" var="ec"
+                                       itemLabel="#{ec.descricao}" itemValue="#{ec}" />
+                    </p:selectOneMenu>
+
                     <p:outputLabel value="Braço Dominante" for="braco" />
                     <p:selectOneRadio id="braco" value="#{cadastroCandidatoBean.candidato.bracoDominante}">
                         <f:selectItems value="#{cadastroCandidatoBean.bracosDominante}" var="bd"
                                        itemLabel="#{bd.descricao}" itemValue="#{bd}" />
                     </p:selectOneRadio>
-                    
+
                     <p:outputLabel value="Escolaridade" for="escolaridade" />
                     <p:selectOneRadio id="escolaridade" value="#{cadastroCandidatoBean.candidato.escolaridade}" layout="grid" columns="1">
                         <f:selectItems value="#{cadastroCandidatoBean.escolaridades}" var="e"
@@ -150,7 +157,7 @@
 
                     <p:outputLabel value="E-mail"/>
                     <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.email}" label="E-mail" size="50" maxlength="60" />
-                    
+
                     <p:outputLabel for="senha" value="Senha: "/>
                     <p:password id="senha" value="#{cadastroCandidatoBean.candidato.senha}" feedback="true" inline="true"  maxlength="45" size="40"
                                 promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
@@ -160,7 +167,7 @@
                     <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45" size="40"
                                 requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
                 </p:panelGrid>
-                
+
 
             </p:fieldset>
 

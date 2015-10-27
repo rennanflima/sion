@@ -8,14 +8,20 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">Concursos abertos</ui:define>
-    
+
     <ui:define name="corpo">
         <h:form id="frmPesquisaConcurso" style="margin-top: 20px;">
             <h1>Concursos abertos</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
-            <p:dataTable id="concursosTable" var="concurso" value="#{concursosAbertosBean.concursos}" rowIndexVar="linha"
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup align="right">
+                    <p:button value="Página Inicial" outcome="/home"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoAbertoBean.concursos}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -41,11 +47,6 @@
                     <h:outputText value="#{concurso.status.descricao}"/>
                 </p:column>
 
-                <p:column style="width: 150px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Inscrever" value="Inscrever" outcome="inscricao">
-                        <f:param name="concurso" value="#{concurso.id}"/>
-                    </p:button>
-                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

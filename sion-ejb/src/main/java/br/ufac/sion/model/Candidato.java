@@ -58,6 +58,8 @@ public class Candidato implements Serializable {
     private Escolaridade escolaridade;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
+    @Enumerated(EnumType.STRING)
+    private EstadoCivil estadoCivil;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     @CPF
@@ -138,6 +140,14 @@ public class Candidato implements Serializable {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public EstadoCivil getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(EstadoCivil estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
 
     public LocalDate getDataNascimento() {

@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Inscricao;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,5 +24,7 @@ public interface InscricaoFacadeLocal {
     public Inscricao findById(Long id);
 
     public List<Inscricao> findAll();
-
+    
+    public List<Inscricao> findByCandidato(Candidato candidato);
+    
 }

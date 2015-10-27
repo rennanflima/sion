@@ -6,11 +6,13 @@
 package br.ufac.sion.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,13 +20,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Rennan
  */
 @Entity
-@Table(name = "inscricao")
+@Table(name = "inscricao", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"candidato_id", "cargo_concurso_id", "numero"})})
 public class Inscricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,13 +36,16 @@ public class Inscricao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer numero;
+    @Column(length = 100)
+    private String numero;
     @Column(name = "data_inscricao")
-    private LocalDate dataInscricao;
+    private LocalDateTime dataInscricao;
     @Embedded
     private Insencao insencao;
     @Embedded
     private NecessidadeEspecial NecessidadeEspecial;
+    @Enumerated(EnumType.STRING)
+    private SituacaoInscricao status = SituacaoInscricao.AGUARDANDO_PAGAMENTO;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "boleto_id")
     private Boleto boleto;
@@ -58,19 +65,19 @@ public class Inscricao implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public LocalDate getDataInscricao() {
+    public LocalDateTime getDataInscricao() {
         return dataInscricao;
     }
 
-    public void setDataInscricao(LocalDate dataInscricao) {
+    public void setDataInscricao(LocalDateTime dataInscricao) {
         this.dataInscricao = dataInscricao;
     }
 
@@ -88,6 +95,14 @@ public class Inscricao implements Serializable {
 
     public void setNecessidadeEspecial(NecessidadeEspecial NecessidadeEspecial) {
         this.NecessidadeEspecial = NecessidadeEspecial;
+    }
+
+    public SituacaoInscricao getStatus() {
+        return status;
+    }
+
+    public void setStatus(SituacaoInscricao status) {
+        this.status = status;
     }
 
     public Boleto getBoleto() {

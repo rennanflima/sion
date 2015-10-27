@@ -5,12 +5,12 @@
  */
 package br.ufac.sion.service;
 
-import br.ufac.sion.dao.FuncionarioFacadeLocal;
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.util.NegocioException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -19,8 +19,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class FuncionarioService {
 
-    @EJB
-    private FuncionarioFacadeLocal funcionarioFacade;
+    @PersistenceContext(unitName = "sionPU")
+    private EntityManager em;
 
     private GeraSenha geraSenha;
 
@@ -29,10 +29,10 @@ public class FuncionarioService {
         geraSenha = new GeraSenha();
 
         try {
-            if(funcionario.getId() == null){
+            if (funcionario.getId() == null) {
                 funcionario.getUsuario().setSenha(geraSenha.geraSenhaEncriptada());
             }
-            funcionarioFacade.save(funcionario);
+            em.merge(funcionario);
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
         }

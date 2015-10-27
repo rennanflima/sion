@@ -19,6 +19,8 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -27,6 +29,9 @@ import javax.ejb.TimerService;
 @Stateless
 public class ConcursoService {
 
+    @PersistenceContext(unitName = "sionPU")
+    private EntityManager em;
+    
     @Resource
     private TimerService timerService;
 
@@ -56,9 +61,9 @@ public class ConcursoService {
         criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao");
 
         try {
-            return concursoFacade.save(concurso);
+            return em.merge(concurso);
         } catch (Exception e) {
-            throw new NegocioException(e.getLocalizedMessage());
+            throw new NegocioException(e.getMessage());
         }
     }
 
