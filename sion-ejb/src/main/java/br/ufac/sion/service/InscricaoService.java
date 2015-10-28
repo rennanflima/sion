@@ -28,17 +28,23 @@ public class InscricaoService {
     private EntityManager em;
 
     public Inscricao salvar(Inscricao inscricao) throws NegocioException {
-        Inscricao insc = pesquisarPorCandidatoEConcurso(inscricao.getCandidato(), inscricao.getCargoConcurso().getConcurso());
         LocalDateTime now = LocalDateTime.now();
         try {
-            if (insc != null) {
-                throw new NegocioException("Já foi realizada uma inscrição com o CPF '"+inscricao.getCandidato().getCpf()+"' para o concurso.");
+            if (inscricao.getId() != null) {
+                inscricao.setDataInscricao(now);
+                inscricao.setStatus(SituacaoInscricao.AGUARDANDO_PAGAMENTO);
+                inscricao = em.merge(inscricao);
+            } else {
+                Inscricao insc = pesquisarPorCandidatoEConcurso(inscricao.getCandidato(), inscricao.getCargoConcurso().getConcurso());
+                if (insc != null) {
+                    throw new NegocioException("Já foi realizada uma inscrição com o CPF '" + inscricao.getCandidato().getCpf() + "' para o concurso.");
+                }
+                inscricao.setDataInscricao(now);
+                inscricao.setStatus(SituacaoInscricao.AGUARDANDO_PAGAMENTO);
+                inscricao = em.merge(inscricao);
+                inscricao.setNumero(geraNumeroInscricao(inscricao));
+                inscricao = em.merge(inscricao);
             }
-            inscricao.setDataInscricao(now);
-            inscricao.setStatus(SituacaoInscricao.AGUARDANDO_PAGAMENTO);
-            inscricao = em.merge(inscricao);
-            inscricao.setNumero(geraNumeroInscricao(inscricao));
-            inscricao = em.merge(inscricao);
             return inscricao;
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
@@ -57,8 +63,8 @@ public class InscricaoService {
         }
         return i;
     }
-    
-    private String geraNumeroInscricao(Inscricao inscricao){
-        return Year.now()+""+inscricao.getCargoConcurso().getConcurso().getId()+""+inscricao.getId();
+
+    private String geraNumeroInscricao(Inscricao inscricao) {
+        return Year.now() + "" + inscricao.getCargoConcurso().getConcurso().getId() + "" + inscricao.getId();
     }
 }

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Comprovante Inscrição</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="inscricao" value="#{comprovanteInscricaoBean.inscricao}" />
+            <f:event listener="#{comprovanteInscricaoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <p:panel>
+            <f:facet name="header">  
+                <h:outputText value="COMPROVANTE DE INSCRIÇÃO"/>  
+            </f:facet>
+
+            <h:panelGrid columns="2">
+                <h:graphicImage library="images" name="sesc.jpg" width="115" height="75"/>
+                <h:panelGroup>
+                    <h:outputText value="#{comprovanteInscricaoBean.empresa.nomeFantasia} - #{comprovanteInscricaoBean.empresa.sigla}" style="font-weight: bold"/>
+                    <br/>
+                    <h:outputText value="#{comprovanteInscricaoBean.empresa.endereco.logradouro}, #{comprovanteInscricaoBean.empresa.endereco.numero} - #{comprovanteInscricaoBean.empresa.endereco.cidade.nome}/#{comprovanteInscricaoBean.empresa.endereco.cidade.estado.sigla}"/>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h2 style="text-align: center; background-color: #E6E6E6; padding: 5px;">
+                #{comprovanteInscricaoBean.inscricao.cargoConcurso.concurso.titulo}
+            </h2>
+
+            <p:panelGrid columns="2" style="width: 100%; margin-top: 15px;"
+                         columnClasses="rotulo, campo">
+                <p:outputLabel value="Número de Inscrição:" />
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.numero}"/>
+
+                <p:outputLabel value="Nome:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.nome}"/>
+
+                <p:outputLabel value="CPF:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.cpf}"/>
+
+                <p:outputLabel value="Identidade:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.rg.numero} #{comprovanteInscricaoBean.inscricao.candidato.rg.orgaoExpedidor}"/>
+
+                <p:outputLabel value="Situação da inscrição:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.status.descricao}" style="font-weight: bold"/>
+                
+                <p:outputLabel value="Cargo:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.codigo} - #{comprovanteInscricaoBean.inscricao.cargoConcurso.cargo.descricao}"/>
+
+                <p:outputLabel value="Lotação:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.localidade.nome}"/>
+
+                <p:outputLabel value="Concorrer como candidato com deficiência:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.candidatoPNE}" />
+
+                <p:outputLabel value="Atendimento especial:"/>
+                <h:outputText value="#{comprovanteInscricaoBean.atendimentoEspecial}" />
+            </p:panelGrid>
+
+            <div style="text-align: center; margin-top: 15px;">
+                <p:button icon="ui-icon-pencil" value="Emitir Boleto Bancário">
+                    <f:param name="inscricao" value="#{comprovanteInscricaoBean.inscricao.id}"/>
+                </p:button>
+            </div>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

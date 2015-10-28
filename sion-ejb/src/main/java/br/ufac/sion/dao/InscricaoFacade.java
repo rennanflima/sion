@@ -6,7 +6,9 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
+import br.ufac.sion.model.SituacaoInscricao;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,6 +45,30 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     public List<Inscricao> findByCandidato(Candidato candidato){
         return em.createQuery("SELECT i FROM Inscricao i WHERE i.candidato = :candidato", Inscricao.class)
                 .setParameter("candidato", candidato)
+                .getResultList();
+    }
+
+    @Override
+    public List<Inscricao> findByConcurso(Concurso concurso) {
+        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Inscricao.class)
+                .setParameter("concurso", concurso)
+                .getResultList();
+    }
+
+    @Override
+    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso) {
+        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Inscricao.class)
+                .setParameter("concurso", concurso)
+                .setParameter("status", SituacaoInscricao.CONFIRMADA)
+                .getResultList();
+    }
+
+    @Override
+    public List<Inscricao> findByConcursoAndPNE(Concurso concurso) {
+        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Inscricao.class)
+                .setParameter("concurso", concurso)
+                .setParameter("portador", true)
+                .setParameter("necessitaAtendimento", true)
                 .getResultList();
     }
     

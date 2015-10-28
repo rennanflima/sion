@@ -35,7 +35,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  */
 @ManagedBean
 @ViewScoped
-public class InscricaoBean implements Serializable {
+public class EdicaoInscricaoBean implements Serializable {
 
     @EJB
     private InscricaoService inscricaoService;
@@ -68,17 +68,11 @@ public class InscricaoBean implements Serializable {
         if (FacesUtil.isNotPostback()) {
             this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
             this.niveis = nivelFacade.findAll();
-            if (!isEditando()) {
-                this.concurso = concursoFacade.findById(concurso.getId());
-            } else {
-                this.nivel = inscricao.getCargoConcurso().getCargo().getNivel();
-                this.concurso = inscricao.getCargoConcurso().getConcurso();
-                carregarCargos();
-            }
+            this.concurso = inscricao.getCargoConcurso().getConcurso();
         }
     }
 
-    public InscricaoBean() {
+    public EdicaoInscricaoBean() {
         limpar();
     }
 
@@ -96,14 +90,6 @@ public class InscricaoBean implements Serializable {
 
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
-    }
-
-    public Concurso getConcurso() {
-        return concurso;
-    }
-
-    public void setConcurso(Concurso concurso) {
-        this.concurso = concurso;
     }
 
     public Inscricao getInscricao() {

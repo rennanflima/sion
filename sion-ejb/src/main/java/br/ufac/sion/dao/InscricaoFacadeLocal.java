@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import java.util.List;
 import javax.ejb.Local;
@@ -26,5 +27,11 @@ public interface InscricaoFacadeLocal {
     public List<Inscricao> findAll();
     
     public List<Inscricao> findByCandidato(Candidato candidato);
+    
+    public List<Inscricao> findByConcurso(Concurso concurso);
+    
+    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso);
+    
+    public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
     
 }

@@ -12,7 +12,7 @@
     <ui:define name="corpo">
         <h:form id="frmPesquisaConcurso">
             <h1>Pesquisa Concursos</h1>
-            
+
             <p:messages autoUpdate="true" closable="true" />
 
             <p:toolbar style="margin-top: 20px">
@@ -31,7 +31,7 @@
                 <p:column headerText="#" style="text-align: center; width: 20px;">
                     <h:outputText value="#{linha + 1}"/>
                 </p:column>
-                
+
                 <p:column headerText="Título">
                     <h:outputText value="#{concurso.titulo}"/>
                 </p:column>
@@ -51,9 +51,8 @@
                 </p:column>
 
                 <p:column style="width: 150px; text-align: center;">
-                    <p:button icon="ui-icon-gear" title="Gerenciar" outcome="/concursos/gerenciar/home">
-                        <f:param name="concurso" value="#{concurso.id}"/>
-                    </p:button>
+                    <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="/concursos/gerenciar/home"
+                                     actionListener="#{pesquisaConcursoBean.guardaConcursoSessao(concurso)}" />
                     <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso">
                         <f:param name="concurso" value="#{concurso.id}"/>
                     </p:button>
@@ -70,8 +69,9 @@
                 <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
                                  process="@this" action="#{pesquisaConcursoBean.excluir()}"
                                  update=":frmPesquisaConcurso:concursosTable" />
-                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
-                
+                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide();
+                        return false;" />
+
             </p:confirmDialog>
         </h:form>
     </ui:define>

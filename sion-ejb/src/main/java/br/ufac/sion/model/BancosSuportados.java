@@ -11,7 +11,9 @@ package br.ufac.sion.model;
  */
 public enum BancosSuportados {
 
-    BANCO_DO_BRASIL("Banco do Brasil"), CAIXA_ECONOMICA_FEDERAL("Caixa Econômica Federal");
+    BANCO_DO_BRASIL("Banco do Brasil"),
+    CAIXA_ECONOMICA_FEDERAL("Caixa Econômica Federal"),
+    BANCO_BRADESCO("Banco Bradesco");
 
     private String descricao;
 

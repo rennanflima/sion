@@ -7,6 +7,7 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
+import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -67,5 +69,10 @@ public class PesquisaConcursoBean implements Serializable {
 
     private void limpar() {
         concursoSelecionadoParaExcluir = new Concurso();
+    }
+    
+    public void guardaConcursoSessao(Concurso concurso){
+        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        session.setAttribute("concursoGerenciado", concurso);
     }
 }

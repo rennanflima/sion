@@ -25,7 +25,7 @@
 
         <header>
             <div style="float: left">
-                <h:link outcome="/home">
+                <h:link outcome="/concursos/gerenciar/home">
                     <h:graphicImage library="images" name="logo-algaworks.png" />
                 </h:link>
             </div>
@@ -37,10 +37,9 @@
                 <h:form style="display: inline-block">
                     <p:menubar styleClass="menu-sistema">
                         <p:submenu label="Inscrição">
-                            <p:menuitem value="Lista de Inscritos"/>
-                            <p:menuitem value="Inscrições confirmadas" />
-                            <p:menuitem value="Insenção Requerida" />
-                            <p:menuitem value="Nessidades Especiais"/>
+                            <p:menuitem value="Lista de Inscritos" outcome="/concursos/gerenciar/inscricao/listaInscritos"/>
+                            <p:menuitem value="Inscrições confirmadas" outcome="/concursos/gerenciar/inscricao/listaInscritosConfirmados"/>
+                            <p:menuitem value="Nessidades Especiais" outcome="/concursos/gerenciar/inscricao/listaInscritosPNE"/>
                         </p:submenu>
                         <p:menuitem value="Cobrança"/>
                         <p:submenu label="Relatórios">
@@ -52,7 +51,7 @@
                             </p:submenu>
                             <p:menuitem value="Lista de presença"/>
                         </p:submenu>
-                        <p:menuitem value="Sair" outcome="/concursos/pesquisaConcursos" />
+                        <p:menuitem value="Sair" outcome="/concursos/pesquisaConcursos" actionListener="#{gerenciarConcursoBean.removeConcursoSessao()}" />
                     </p:menubar>
                 </h:form>
             </div>

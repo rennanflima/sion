@@ -14,6 +14,7 @@
 
         <f:metadata>
             <o:viewParam name="concurso" value="#{inscricaoBean.concurso}" />
+            <o:viewParam name="inscricao" value="#{inscricaoBean.inscricao}" />
             <f:event listener="#{inscricaoBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
@@ -27,7 +28,7 @@
                     <p:commandButton value="Salvar" id="botaoSalvar" action="#{inscricaoBean.salvar()}" update="@form"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="pesquisaConcursoInscricaoAberta"/>
+                    <p:button value="Pesquisa" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -37,6 +38,9 @@
                 <p:outputLabel value="Concurso"/>
                 <h:outputText value="#{inscricaoBean.concurso.titulo}" style="font-weight: bold" />
 
+                <p:outputLabel value="Número de Inscrição:" rendered="#{inscricaoBean.editando}"/>
+                <h:outputText value="#{inscricaoBean.inscricao.numero}" rendered="#{inscricaoBean.editando}"/>
+                
                 <p:outputLabel value="Nível" for="nivel"/>
                 <p:selectOneMenu id="nivel" value="#{inscricaoBean.nivel}" >
                     <f:selectItem itemLabel="Selecione um nível..."/>
@@ -83,7 +87,7 @@
             </p:panel>
             <p:panelGrid columns="2" id="painelConcordo" style="width: 100%; margin-top: 5px;"
                          columnClasses="rotulo, campo">
-                <p:spacer/>
+                <p:outputLabel value="Declaração"/>
                 <h:panelGroup>
                     <p:selectBooleanCheckbox id="concordo" value="#{inscricaoBean.inscricao.concordoEdital}" required="true" />
                     <p:outputLabel for="concordo" value="Declaro sob as penas de Lei que os dados informados nesta solicitação são verdadeiros; que preencho todas as condições exigidas no Edital de Abertura de Inscrições; que, mesmo aprovado, não poderei ser admitido no cargo ao qual estou me candidatando se não comprovar habilitação legal e as demais condições exigidas no Edital; que estou quite com as obrigações eleitorais e militares; que tenho pleno conhecimento das normas e métodos do Processo Seletivo a que me submeto; que ciente de que a inexatidão ou irregularidade destas afirmativas, ainda que verificadas posteriormente, ocasionará minha eliminação do Processo Seletivo, com a anulação de todos os atos praticados, sem prejuízo das demais medidas de ordem administrativa, civil ou criminal." style="margin-left: 10px;text-align: justify;"/>

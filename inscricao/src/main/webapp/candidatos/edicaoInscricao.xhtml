@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Inscrição</ui:define>
+
+    <ui:define name="corpo">
+
+        <f:metadata>
+            <o:viewParam name="inscricao" value="#{comprovanteInscricaoBean.inscricao}" />
+            <f:event listener="#{edicaoInscricaoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h:form>
+            <h1>Inscrição</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{edicaoInscricaoBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+
+                <p:outputLabel value="Concurso"/>
+                <h:outputText value="#{edicaoInscricaoBean.concurso.titulo}" style="font-weight: bold" />
+
+                <p:outputLabel value="Número de Inscrição:" rendered="#{edicaoInscricaoBean.editando}"/>
+                <h:outputText value="#{edicaoInscricaoBean.inscricao.numero}" rendered="#{edicaoInscricaoBean.editando}"/>
+                
+                <p:outputLabel value="Nível" for="nivel"/>
+                <p:selectOneMenu id="nivel" value="#{edicaoInscricaoBean.nivel}" >
+                    <f:selectItem itemLabel="Selecione um nível..."/>
+                    <f:selectItems value="#{edicaoInscricaoBean.niveis}" var="n"
+                                   itemValue="#{n}" itemLabel="#{n.descricao}"/>
+                    <p:ajax event="change" process="@this" update="cargoC" listener="#{edicaoInscricaoBean.carregarCargos()}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Cargo" for="cargoC"/>
+                <p:selectOneMenu id="cargoC" value="#{edicaoInscricaoBean.inscricao.cargoConcurso}">
+                    <f:selectItem itemLabel="Selecione um cargo..." itemValue=""/>
+                    <f:selectItems value="#{edicaoInscricaoBean.cargosConcurso}" var="cargoConcurso"
+                                   itemValue="#{cargoConcurso}" itemLabel="#{cargoConcurso.codigo} - #{cargoConcurso.cargo.descricao}"/>
+                    <p:ajax event="change" process="@this" update="valor"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Valor"/>
+                <h:outputText id="valor" value="#{edicaoInscricaoBean.nivel.valor}">
+                    <f:convertNumber type="currency" />
+                </h:outputText>
+            </p:panelGrid>
+            <p:panel header="Atendimento Especial" style="margin-top: 5px;">
+
+                <p:panelGrid columns="2" id="painelPNE" style="width: 100%; margin-top: 10px;"
+                             columnClasses="rotulo, campo">
+                    <p:outputLabel value="É pessoa com necessidade especial?" for="portador" />
+                    <p:selectBooleanButton id="portador" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.portador}" onLabel="Sim" offLabel="Não" style="width:60px">
+                        <p:ajax event="change" process="@this" update="qualPNE"/>
+                    </p:selectBooleanButton>
+
+                    <p:outputLabel value="Se possui, qual?" for="qualPNE"/>
+                    <p:inputText id="qualPNE" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.qualNecessidadeEspecial}" size="60"
+                                 disabled="#{!edicaoInscricaoBean.inscricao.necessidadeEspecial.portador}"/>
+
+                    <p:outputLabel value="Necessita de atendimento especial para a prova?" for="atendeEspecial" />
+                    <p:selectBooleanButton id="atendeEspecial" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}" onLabel="Sim" offLabel="Não" style="width:60px">
+                        <p:ajax event="change" process="@this" update="qualAtendeEspecial"/>
+                    </p:selectBooleanButton>
+
+                    <p:outputLabel value="Se possui, qual?" for="qualAtendeEspecial"/>
+                    <p:inputText id="qualAtendeEspecial" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.qualAtendimento}" size="60"
+                                 disabled="#{!edicaoInscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}"/>
+                </p:panelGrid>
+            </p:panel>
+            <p:panelGrid columns="2" id="painelConcordo" style="width: 100%; margin-top: 5px;"
+                         columnClasses="rotulo, campo">
+                <p:outputLabel value="Declaração"/>
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox id="concordo" value="#{edicaoInscricaoBean.inscricao.concordoEdital}" required="true" />
+                    <p:outputLabel for="concordo" value="Declaro sob as penas de Lei que os dados informados nesta solicitação são verdadeiros; que preencho todas as condições exigidas no Edital de Abertura de Inscrições; que, mesmo aprovado, não poderei ser admitido no cargo ao qual estou me candidatando se não comprovar habilitação legal e as demais condições exigidas no Edital; que estou quite com as obrigações eleitorais e militares; que tenho pleno conhecimento das normas e métodos do Processo Seletivo a que me submeto; que ciente de que a inexatidão ou irregularidade destas afirmativas, ainda que verificadas posteriormente, ocasionará minha eliminação do Processo Seletivo, com a anulação de todos os atos praticados, sem prejuízo das demais medidas de ordem administrativa, civil ou criminal." style="margin-left: 10px;text-align: justify;"/>
+                </h:panelGroup>
+
+                <h:outputText value="Observação" style="font-weight: bold" />
+                <h:outputText value="Caso seus dados não estejam no boleto, gere-o novamente. Não nos responsabilizamos por boletos sem dados pessoais."/>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

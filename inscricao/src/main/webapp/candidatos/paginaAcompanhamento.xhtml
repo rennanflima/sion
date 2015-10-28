@@ -36,12 +36,15 @@
                     <h:outputText value="#{inscricao.cargoConcurso.concurso.titulo}"/>
                 </p:column>
 
-                <p:column headerText="Situação" style="width: 100px; text-align: center;">
+                <p:column headerText="Situação do concurso" style="width: 150px; text-align: center;">
                     <h:outputText value="#{inscricao.cargoConcurso.concurso.status.descricao}"/>
                 </p:column>
 
-                <p:column style="width: 150px; text-align: center;">
-                    <p:button value="Comprovante Inscrição">
+                <p:column style="width: 330px; text-align: center;">
+                    <p:button value="Editar Inscrição" outcome="inscricao" style="font-size: 0.8em">
+                        <f:param name="inscricao" value="#{inscricao.id}"/>
+                    </p:button>
+                    <p:button value="Comprovante Inscrição" outcome="comprovanteInscricao" style="font-size: 0.8em">
                         <f:param name="inscricao" value="#{inscricao.id}"/>
                     </p:button>
                 </p:column>
