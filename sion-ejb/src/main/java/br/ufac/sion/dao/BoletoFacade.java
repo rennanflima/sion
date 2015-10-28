@@ -28,4 +28,9 @@ public class BoletoFacade extends AbstractFacade<Boleto, Long> implements Boleto
         super(Boleto.class);
     }
     
+    @Override
+    public Boleto save(Boleto entity) {
+         throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize BoletoService."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

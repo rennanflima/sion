@@ -8,6 +8,7 @@ package br.ufac.sion.service;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
+import br.ufac.sion.model.SituacaoBoleto;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.util.NegocioException;
 import java.time.LocalDateTime;
@@ -31,6 +32,9 @@ public class InscricaoService {
         LocalDateTime now = LocalDateTime.now();
         try {
             if (inscricao.getId() != null) {
+                if(inscricao.getBoleto() != null){
+                    inscricao.getBoleto().setSituacao(SituacaoBoleto.PENDENTE);
+                }
                 inscricao.setDataInscricao(now);
                 inscricao.setStatus(SituacaoInscricao.AGUARDANDO_PAGAMENTO);
                 inscricao = em.merge(inscricao);
@@ -47,6 +51,7 @@ public class InscricaoService {
             }
             return inscricao;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new NegocioException(e.getMessage());
         }
     }

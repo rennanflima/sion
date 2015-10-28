@@ -46,8 +46,7 @@ public class Inscricao implements Serializable {
     private NecessidadeEspecial NecessidadeEspecial;
     @Enumerated(EnumType.STRING)
     private SituacaoInscricao status = SituacaoInscricao.AGUARDANDO_PAGAMENTO;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    @JoinColumn(name = "boleto_id")
+    @OneToOne(mappedBy = "sacado", cascade = CascadeType.ALL)
     private Boleto boleto;
     @ManyToOne
     @JoinColumn(name = "candidato_id", nullable = false)

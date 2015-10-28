@@ -43,6 +43,10 @@
             <f:selectItems value="#{cadastroConcursoBean.contasBancaria}" var="cb"
                            itemValue="#{cb}" itemLabel="#{cb.descricao}"/>
         </p:selectOneMenu>
+        
+        <p:outputLabel for="dtVencimentoBoleto" value="Data de vencimento do boleto"/>
+        <p:calendar locale="pt_BR" id="dtVencimentoBoleto" value="#{cadastroConcursoBean.concurso.dataVencimentoBoleto}" 
+                    pattern="dd/MM/yyyy" converter="localDateConversor" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
     </p:panelGrid>
 
 </ui:composition>

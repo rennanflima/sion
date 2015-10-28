@@ -16,61 +16,60 @@
             <f:event listener="#{comprovanteInscricaoBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
-        <p:panel>
-            <f:facet name="header">  
-                <h:outputText value="COMPROVANTE DE INSCRIÇÃO"/>  
-            </f:facet>
+        <h:form>
+            <p:panel>
+                <f:facet name="header">  
+                    <h:outputText value="COMPROVANTE DE INSCRIÇÃO"/>  
+                </f:facet>
 
-            <h:panelGrid columns="2">
-                <h:graphicImage library="images" name="sesc.jpg" width="115" height="75"/>
-                <h:panelGroup>
-                    <h:outputText value="#{comprovanteInscricaoBean.empresa.nomeFantasia} - #{comprovanteInscricaoBean.empresa.sigla}" style="font-weight: bold"/>
-                    <br/>
-                    <h:outputText value="#{comprovanteInscricaoBean.empresa.endereco.logradouro}, #{comprovanteInscricaoBean.empresa.endereco.numero} - #{comprovanteInscricaoBean.empresa.endereco.cidade.nome}/#{comprovanteInscricaoBean.empresa.endereco.cidade.estado.sigla}"/>
-                </h:panelGroup>
-            </h:panelGrid>
-            
-            <h2 style="text-align: center; background-color: #E6E6E6; padding: 5px;">
-                #{comprovanteInscricaoBean.inscricao.cargoConcurso.concurso.titulo}
-            </h2>
+                <h:panelGrid columns="2">
+                    <h:graphicImage library="images" name="sesc.jpg" width="115" height="75"/>
+                    <h:panelGroup>
+                        <h:outputText value="#{comprovanteInscricaoBean.empresa.nomeFantasia} - #{comprovanteInscricaoBean.empresa.sigla}" style="font-weight: bold"/>
+                        <br/>
+                        <h:outputText value="#{comprovanteInscricaoBean.empresa.endereco.logradouro}, #{comprovanteInscricaoBean.empresa.endereco.numero} - #{comprovanteInscricaoBean.empresa.endereco.cidade.nome}/#{comprovanteInscricaoBean.empresa.endereco.cidade.estado.sigla}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
 
-            <p:panelGrid columns="2" style="width: 100%; margin-top: 15px;"
-                         columnClasses="rotulo, campo">
-                <p:outputLabel value="Número de Inscrição:" />
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.numero}"/>
+                <h2 style="text-align: center; background-color: #E6E6E6; padding: 5px;">
+                    #{comprovanteInscricaoBean.inscricao.cargoConcurso.concurso.titulo}
+                </h2>
 
-                <p:outputLabel value="Nome:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.nome}"/>
+                <p:panelGrid columns="2" style="width: 100%; margin-top: 15px;"
+                             columnClasses="rotulo, campo">
+                    <p:outputLabel value="Número de Inscrição:" />
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.numero}"/>
 
-                <p:outputLabel value="CPF:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.cpf}"/>
+                    <p:outputLabel value="Nome:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.nome}"/>
 
-                <p:outputLabel value="Identidade:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.rg.numero} #{comprovanteInscricaoBean.inscricao.candidato.rg.orgaoExpedidor}"/>
+                    <p:outputLabel value="CPF:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.cpf}"/>
 
-                <p:outputLabel value="Situação da inscrição:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.status.descricao}" style="font-weight: bold"/>
-                
-                <p:outputLabel value="Cargo:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.codigo} - #{comprovanteInscricaoBean.inscricao.cargoConcurso.cargo.descricao}"/>
+                    <p:outputLabel value="Identidade:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.candidato.rg.numero} #{comprovanteInscricaoBean.inscricao.candidato.rg.orgaoExpedidor}"/>
 
-                <p:outputLabel value="Lotação:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.localidade.nome}"/>
+                    <p:outputLabel value="Situação da inscrição:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.status.descricao}" style="font-weight: bold"/>
 
-                <p:outputLabel value="Concorrer como candidato com deficiência:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.candidatoPNE}" />
+                    <p:outputLabel value="Cargo:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.codigo} - #{comprovanteInscricaoBean.inscricao.cargoConcurso.cargo.descricao}"/>
 
-                <p:outputLabel value="Atendimento especial:"/>
-                <h:outputText value="#{comprovanteInscricaoBean.atendimentoEspecial}" />
-            </p:panelGrid>
+                    <p:outputLabel value="Lotação:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.localidade.nome}"/>
 
-            <div style="text-align: center; margin-top: 15px;">
-                <p:button icon="ui-icon-pencil" value="Emitir Boleto Bancário">
-                    <f:param name="inscricao" value="#{comprovanteInscricaoBean.inscricao.id}"/>
-                </p:button>
-            </div>
-        </p:panel>
+                    <p:outputLabel value="Concorrer como candidato com deficiência:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.candidatoPNE}" />
 
+                    <p:outputLabel value="Atendimento especial:"/>
+                    <h:outputText value="#{comprovanteInscricaoBean.atendimentoEspecial}" />
+                </p:panelGrid>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <p:commandButton icon="ui-icon-pencil" value="Emitir Boleto Bancário" ajax="false" onclick="this.form.target='_blank'" actionListener="#{comprovanteInscricaoBean.emitir()}" />
+                </div>
+            </p:panel>
+        </h:form>
     </ui:define>
 
 </ui:composition>

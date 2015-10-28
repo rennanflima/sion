@@ -6,6 +6,7 @@
 package br.ufac.sion.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,10 @@ public class Concurso implements Serializable {
     private String localInscricao;
     private LocalDateTime dataInicioInscricao;
     private LocalDateTime dataTerminoIncricao;
+    private LocalDate dataVencimentoBoleto;
     private List<CargoConcurso> cargos = new ArrayList<>();
     private StatusConcurso status = StatusConcurso.ABERTO;
-    private ContaBancaria contaBancaria;
+    private ContaBancaria contaBancaria; 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,6 +101,15 @@ public class Concurso implements Serializable {
 
     public void setDataTerminoIncricao(LocalDateTime dataTerminoIncricao) {
         this.dataTerminoIncricao = dataTerminoIncricao;
+    }
+
+    @Column(name = "data_vencimento_boleto")
+    public LocalDate getDataVencimentoBoleto() {
+        return dataVencimentoBoleto;
+    }
+
+    public void setDataVencimentoBoleto(LocalDate dataVencimentoBoleto) {
+        this.dataVencimentoBoleto = dataVencimentoBoleto;
     }
 
     @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

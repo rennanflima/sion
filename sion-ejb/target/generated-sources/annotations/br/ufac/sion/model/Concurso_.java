@@ -1,5 +1,6 @@
 package br.ufac.sion.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
@@ -12,6 +13,7 @@ public abstract class Concurso_ {
 
 	public static volatile SingularAttribute<Concurso, ContaBancaria> contaBancaria;
 	public static volatile SingularAttribute<Concurso, LocalDateTime> dataTerminoIncricao;
+	public static volatile SingularAttribute<Concurso, LocalDate> dataVencimentoBoleto;
 	public static volatile SingularAttribute<Concurso, String> titulo;
 	public static volatile SingularAttribute<Concurso, LocalDateTime> dataInicioInscricao;
 	public static volatile SingularAttribute<Concurso, String> localInscricao;

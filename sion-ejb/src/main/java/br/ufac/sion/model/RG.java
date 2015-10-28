@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,7 +15,7 @@ import javax.persistence.Embeddable;
  * @author Rennan
  */
 @Embeddable
-public class RG {
+public class RG implements Serializable {
 
     private String numero;
     private String orgaoExpedidor;

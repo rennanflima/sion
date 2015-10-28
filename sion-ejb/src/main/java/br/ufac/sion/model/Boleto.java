@@ -8,6 +8,7 @@ package br.ufac.sion.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,17 +31,26 @@ public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(precision = 10, scale = 2)
     private BigDecimal valor;
+    @Column(name = "data_vencimento")
     private LocalDate dataVencimento;
+    @Column(name = "data_pagamento")
     private LocalDate dataPagamento;
+    @Column(name = "valor_pago", precision = 10, scale = 2)
     private BigDecimal valorPago;
+    @Enumerated(EnumType.STRING)
     private SituacaoBoleto situacao;
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JoinColumn(name = "inscricao_id", unique = true, nullable = false) 
     private Inscricao sacado;
+    @ManyToOne
+    @JoinColumn(name = "arquivo_id")
     private ArquivoRetorno arquivo;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -48,7 +59,6 @@ public class Boleto implements Serializable {
         this.id = id;
     }
 
-    @Column(precision = 10, scale = 2)
     public BigDecimal getValor() {
         return valor;
     }
@@ -57,7 +67,6 @@ public class Boleto implements Serializable {
         this.valor = valor;
     }
 
-    @Column(name = "data_vencimento")
     public LocalDate getDataVencimento() {
         return dataVencimento;
     }
@@ -66,7 +75,6 @@ public class Boleto implements Serializable {
         this.dataVencimento = dataVencimento;
     }
 
-    @Column(name = "data_pagamento")
     public LocalDate getDataPagamento() {
         return dataPagamento;
     }
@@ -75,7 +83,6 @@ public class Boleto implements Serializable {
         this.dataPagamento = dataPagamento;
     }
 
-    @Column(name = "valor_pago", precision = 10, scale = 2)
     public BigDecimal getValorPago() {
         return valorPago;
     }
@@ -84,7 +91,6 @@ public class Boleto implements Serializable {
         this.valorPago = valorPago;
     }
 
-    @Enumerated(EnumType.STRING)
     public SituacaoBoleto getSituacao() {
         return situacao;
     }
@@ -101,8 +107,6 @@ public class Boleto implements Serializable {
         this.sacado = sacado;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "arquivo_id")
     public ArquivoRetorno getArquivo() {
         return arquivo;
     }
