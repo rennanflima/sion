@@ -11,7 +11,7 @@ package br.ufac.sion.model;
  */
 public enum StatusConcurso {
 
-    ABERTO("Aberto"), 
+    AUTORIZADO("Autorizado"), 
     INSCRICOES_ABERTAS("Inscrições abertas"), 
     INSCRICOES_ENCERRADAS("Inscrições encerradas"),
     EM_ANDAMENTO("Em andamento"), 

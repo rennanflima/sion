@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -134,6 +135,11 @@ public class Inscricao implements Serializable {
 
     public void setConcordoEdital(boolean concordoEdital) {
         this.concordoEdital = concordoEdital;
+    }
+
+    @Transient
+    public boolean isConfirmada() {
+        return this.status.equals(SituacaoInscricao.CONFIRMADA);
     }
 
     @Override

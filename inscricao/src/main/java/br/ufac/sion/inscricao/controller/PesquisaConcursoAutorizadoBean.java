@@ -20,7 +20,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class PesquisaConcursoAbertoBean implements Serializable {
+public class PesquisaConcursoAutorizadoBean implements Serializable {
 
     @EJB
     private ConcursoFacadeLocal concursoFacade;

@@ -7,11 +7,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Concursos abertos</ui:define>
+    <ui:define name="titulo">Concursos autorizado</ui:define>
 
     <ui:define name="corpo">
         <h:form id="frmPesquisaConcurso" style="margin-top: 20px;">
-            <h1>Concursos abertos</h1>
+            <h1>Concursos autorizado</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
@@ -21,7 +21,7 @@
                 </p:toolbarGroup>
             </p:toolbar>
             
-            <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoAbertoBean.concursos}" rowIndexVar="linha"
+            <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoAutorizadoBean.concursos}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 

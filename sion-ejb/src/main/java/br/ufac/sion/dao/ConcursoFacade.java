@@ -48,14 +48,14 @@ public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements Co
     @Override
     public List<Concurso> findByAberto() {
         return em.createQuery("FROM Concurso c WHERE status = :situacao", Concurso.class)
-                .setParameter("situacao", StatusConcurso.ABERTO)
+                .setParameter("situacao", StatusConcurso.AUTORIZADO)
                 .getResultList();
     }
 
     @Override
     public List<Concurso> findByOutrasFases() {
         return em.createQuery("FROM Concurso c WHERE status != :aberto and status != :inscricaoAberta", Concurso.class)
-                .setParameter("aberto", StatusConcurso.ABERTO)
+                .setParameter("aberto", StatusConcurso.AUTORIZADO)
                 .setParameter("inscricaoAberta", StatusConcurso.INSCRICOES_ABERTAS)
                 .getResultList();
     }

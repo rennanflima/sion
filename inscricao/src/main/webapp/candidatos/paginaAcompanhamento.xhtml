@@ -25,7 +25,7 @@
             </p:toolbar>
             
             <p:dataTable id="inscricoesTable" var="inscricao" value="#{paginaAcompanhamentoBean.inscricoes}" rowIndexVar="linha"
-                         style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
+                         style="margin-top: 20px;" emptyMessage="Nenhum inscrição encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                 <p:column headerText="#" style="text-align: center; width: 20px;">
@@ -41,7 +41,7 @@
                 </p:column>
 
                 <p:column style="width: 330px; text-align: center;">
-                    <p:button value="Editar Inscrição" outcome="inscricao" style="font-size: 0.8em">
+                    <p:button value="Editar Inscrição" outcome="inscricao" style="font-size: 0.8em" disabled="#{inscricao.confirmada}">
                         <f:param name="inscricao" value="#{inscricao.id}"/>
                     </p:button>
                     <p:button value="Comprovante Inscrição" outcome="comprovanteInscricao" style="font-size: 0.8em">

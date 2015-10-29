@@ -55,7 +55,7 @@ public class Concurso implements Serializable {
     @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CargoConcurso> cargos = new ArrayList<>();
     @Enumerated(EnumType.STRING)
-    private StatusConcurso status = StatusConcurso.ABERTO;
+    private StatusConcurso status = StatusConcurso.AUTORIZADO;
     @ManyToOne
     @JoinColumn(name = "conta_bancaria_id", nullable = false)
     private ContaBancaria contaBancaria;

@@ -42,7 +42,7 @@ public class ConcursoService {
         LocalDateTime now = LocalDateTime.now();
 
         if (concurso.isNovo()) {
-            concurso.setStatus(StatusConcurso.ABERTO);
+            concurso.setStatus(StatusConcurso.AUTORIZADO);
         }
         if (concurso.isInscricoesAberta()) {
             concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
@@ -50,7 +50,7 @@ public class ConcursoService {
             if (concurso.isInscricoesFechadas()) {
                 concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
             } else if(concurso.isAberto()){
-                concurso.setStatus(StatusConcurso.ABERTO);
+                concurso.setStatus(StatusConcurso.AUTORIZADO);
             }
         }
         if (concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())) {
@@ -95,7 +95,7 @@ public class ConcursoService {
     private void abreInscricao(List<Concurso> concursos) {
         LocalDateTime now = LocalDateTime.now();
         for (Concurso concurso : concursos) {
-            if (concurso.getStatus().equals(StatusConcurso.ABERTO)) {
+            if (concurso.getStatus().equals(StatusConcurso.AUTORIZADO)) {
                 if (concurso.isInscricoesAberta()) {
                     concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
                     this.concursoFacade.save(concurso);

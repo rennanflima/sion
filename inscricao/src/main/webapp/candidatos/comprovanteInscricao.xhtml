@@ -58,11 +58,14 @@
                     <p:outputLabel value="Lotação:"/>
                     <h:outputText value="#{comprovanteInscricaoBean.inscricao.cargoConcurso.localidade.nome}"/>
 
-                    <p:outputLabel value="Concorrer como candidato com deficiência:"/>
+                    <p:outputLabel value="Necessidade especial:"/>
                     <h:outputText value="#{comprovanteInscricaoBean.candidatoPNE}" />
 
                     <p:outputLabel value="Atendimento especial:"/>
                     <h:outputText value="#{comprovanteInscricaoBean.atendimentoEspecial}" />
+                    
+                    <p:outputLabel value="Cidade de realização das provas:"/>
+                    <h:outputText value="Conforme edital a provas serão realizadas na cidade a que se destina a vaga e/ou cadastro de reserva." style="font-weight: bold"/>
                 </p:panelGrid>
 
                 <div style="text-align: center; margin-top: 15px;">
