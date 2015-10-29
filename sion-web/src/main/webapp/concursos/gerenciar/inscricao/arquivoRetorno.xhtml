@@ -31,7 +31,7 @@
         </h:form>
 
         <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                     columnClasses="rotulo, campo" rendered="">
+                     columnClasses="rotulo, campo" rendered="#{arquivoRetornoBean.detalhe}">
             <p:outputLabel value="Data de crédito: "/>
             <h:outputText value="#{arquivoRetornoBean.arquivoRetornoDetalhe.dataCredito}">
                 <f:converter converterId="localDateConversor"/>
@@ -53,7 +53,7 @@
         
         <p:dataTable id="inscricoesTable" var="inscricao" value="#{arquivoRetornoBean.arquivoRetornoDetalhe.incricoesConfirmadas}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhuma inscrição confirmada encontrada." rows="20"
-                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rendered="#{arquivoRetornoBean.detalhe}">
 
                 <p:column headerText="#" style="text-align: center; width: 20px;">
                     <h:outputText value="#{linha + 1}"/>

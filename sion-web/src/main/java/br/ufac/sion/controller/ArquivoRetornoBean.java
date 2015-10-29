@@ -10,10 +10,9 @@ import br.ufac.sion.service.ArquivoRetornoService;
 import br.ufac.sion.service.util.ArquivoRetornoDetalhe;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.IOException;
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -21,8 +20,8 @@ import org.primefaces.model.UploadedFile;
  * @author rennan.lima
  */
 @ManagedBean
-@ViewScoped
-public class ArquivoRetornoBean implements Serializable{
+@RequestScoped
+public class ArquivoRetornoBean {
 
     @EJB
     private ArquivoRetornoService arquivoRetornoService;
@@ -49,14 +48,19 @@ public class ArquivoRetornoBean implements Serializable{
 
     public void upload() {
         try {
-            this.arquivoRetornoDetalhe = arquivoRetornoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
-            FacesUtil.addSuccessMessage("Inscrições confirmadas com sucesso!");
+            if (arquivo != null) {
+                System.out.println("Arquivo: " + arquivo.getFileName());
+                this.arquivoRetornoDetalhe = arquivoRetornoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
+                FacesUtil.addSuccessMessage("Inscrições confirmadas com sucesso!");
+            } else {
+                throw new ArquivoRetornoException("Arquivo não enviado");
+            }
         } catch (ArquivoRetornoException | IOException e) {
             FacesUtil.addErrorMessage(e.getMessage());
         }
     }
-    
-    public boolean isArquivoRetornoDetalhe(){
+
+    public boolean isDetalhe() {
         return this.arquivoRetornoDetalhe != null;
     }
 

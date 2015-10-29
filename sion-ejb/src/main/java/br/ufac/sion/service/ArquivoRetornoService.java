@@ -48,7 +48,6 @@ public class ArquivoRetornoService {
     private ArquivoRetornoDetalhe ard;
 
     public ArquivoRetornoDetalhe carregar(String fileName, InputStream inputstream) throws ArquivoRetornoException {
-        em.getTransaction().begin();
         try {
             ArquivoRetornoBradesco arquivoRetorno = criarArquivoRetorno(fileName, inputstream);
             this.ard = new ArquivoRetornoDetalhe();
@@ -57,13 +56,11 @@ public class ArquivoRetornoService {
 
             carregarTitulos(arquivoRetorno);
 
-            em.getTransaction().commit();
-            
             return ard;
-            
+
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new ArquivoRetornoException(e.getMessage());
+            e.printStackTrace();
+            throw new ArquivoRetornoException("Erro ao processar o arquivo de retorno: " + e.getMessage());
         }
 
     }
@@ -74,6 +71,7 @@ public class ArquivoRetornoService {
         int totalTitulosPagos = 0;
         for (TransacaoTitulo t : titulosPorOcorrencia.get(TransacaoTitulo.LIQUIDACAO)) {
             br.ufac.sion.model.Boleto cobranca = this.boletoFacade.findByNossoNumero(t.getNossoNumeroComDigito());
+            System.out.println("Nosso numero: "+t.getNossoNumeroComDigito());
             if (t.getValorPago().compareTo(cobranca.getValor()) >= 0) {
                 cobranca.getSacado().setStatus(SituacaoInscricao.CONFIRMADA);
                 cobranca.setSituacao(SituacaoBoleto.PAGO);
