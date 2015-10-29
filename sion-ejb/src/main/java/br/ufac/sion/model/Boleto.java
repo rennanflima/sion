@@ -47,7 +47,7 @@ public class Boleto implements Serializable {
     @Enumerated(EnumType.STRING)
     private SituacaoBoleto situacao;
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "inscricao_id", unique = true, nullable = false) 
+    @JoinColumn(name = "inscricao_id", unique = true, nullable = false)
     private Inscricao sacado;
     @ManyToOne
     @JoinColumn(name = "arquivo_id")

@@ -36,19 +36,30 @@ public class Concurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String titulo;
-    private String descricao;
-    private String localInscricao;
-    private LocalDateTime dataInicioInscricao;
-    private LocalDateTime dataTerminoIncricao;
-    private LocalDate dataVencimentoBoleto;
-    private List<CargoConcurso> cargos = new ArrayList<>();
-    private StatusConcurso status = StatusConcurso.ABERTO;
-    private ContaBancaria contaBancaria; 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(length = 100)
+    private String titulo;
+    @Lob
+    private String descricao;
+    @Lob
+    @Column(name = "local_inscricao")
+    private String localInscricao;
+    @Column(name = "data_inicio_inscricao")
+    private LocalDateTime dataInicioInscricao;
+    @Column(name = "data_termino_inscricao")
+    private LocalDateTime dataTerminoIncricao;
+    @Column(name = "data_vencimento_boleto")
+    private LocalDate dataVencimentoBoleto;
+    @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CargoConcurso> cargos = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private StatusConcurso status = StatusConcurso.ABERTO;
+    @ManyToOne
+    @JoinColumn(name = "conta_bancaria_id", nullable = false)
+    private ContaBancaria contaBancaria;
+
     public Long getId() {
         return id;
     }
@@ -57,7 +68,6 @@ public class Concurso implements Serializable {
         this.id = id;
     }
 
-    @Column(length = 100)
     public String getTitulo() {
         return titulo;
     }
@@ -66,7 +76,6 @@ public class Concurso implements Serializable {
         this.titulo = titulo;
     }
 
-    @Lob
     public String getDescricao() {
         return descricao;
     }
@@ -75,8 +84,6 @@ public class Concurso implements Serializable {
         this.descricao = descricao;
     }
 
-    @Lob
-    @Column(name = "local_inscricao")
     public String getLocalInscricao() {
         return localInscricao;
     }
@@ -85,7 +92,6 @@ public class Concurso implements Serializable {
         this.localInscricao = localInscricao;
     }
 
-    @Column(name = "data_inicio_inscricao")
     public LocalDateTime getDataInicioInscricao() {
         return dataInicioInscricao;
     }
@@ -94,7 +100,6 @@ public class Concurso implements Serializable {
         this.dataInicioInscricao = dataInicioInscricao;
     }
 
-    @Column(name = "data_termino_inscricao")
     public LocalDateTime getDataTerminoIncricao() {
         return dataTerminoIncricao;
     }
@@ -103,7 +108,6 @@ public class Concurso implements Serializable {
         this.dataTerminoIncricao = dataTerminoIncricao;
     }
 
-    @Column(name = "data_vencimento_boleto")
     public LocalDate getDataVencimentoBoleto() {
         return dataVencimentoBoleto;
     }
@@ -112,7 +116,6 @@ public class Concurso implements Serializable {
         this.dataVencimentoBoleto = dataVencimentoBoleto;
     }
 
-    @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public List<CargoConcurso> getCargos() {
         return cargos;
     }
@@ -121,7 +124,6 @@ public class Concurso implements Serializable {
         this.cargos = cargos;
     }
 
-    @Enumerated(EnumType.STRING)
     public StatusConcurso getStatus() {
         return status;
     }
@@ -130,8 +132,6 @@ public class Concurso implements Serializable {
         this.status = status;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "conta_bancaria_id", nullable = false)
     public ContaBancaria getContaBancaria() {
         return contaBancaria;
     }

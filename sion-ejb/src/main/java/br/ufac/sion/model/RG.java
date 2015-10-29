@@ -17,11 +17,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class RG implements Serializable {
 
+    @Column(name = "rg_numero", length = 20)
     private String numero;
+    @Column(name = "rg_orgao_expedidor", length = 20)
     private String orgaoExpedidor;
+    @Column(name = "rg_data_expedicao")
     private LocalDate dataExpedicao;
 
-    @Column(name = "rg_numero", length = 20)
     public String getNumero() {
         return numero;
     }
@@ -30,7 +32,6 @@ public class RG implements Serializable {
         this.numero = numero;
     }
 
-    @Column(name = "rg_orgao_expedidor", length = 20)
     public String getOrgaoExpedidor() {
         return orgaoExpedidor;
     }
@@ -39,7 +40,6 @@ public class RG implements Serializable {
         this.orgaoExpedidor = orgaoExpedidor;
     }
 
-    @Column(name = "rg_data_expedicao")
     public LocalDate getDataExpedicao() {
         return dataExpedicao;
     }

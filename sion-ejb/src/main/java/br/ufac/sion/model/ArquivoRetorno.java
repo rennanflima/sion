@@ -24,13 +24,15 @@ public class ArquivoRetorno implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String nome;
     private Integer numero;
+    @Column(name = "data_upload", nullable = false)
     private LocalDateTime dataUpload;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -55,7 +57,6 @@ public class ArquivoRetorno implements Serializable {
         this.numero = numero;
     }
 
-    @Column(name = "data_upload")
     public LocalDateTime getDataUpload() {
         return dataUpload;
     }

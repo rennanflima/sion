@@ -11,6 +11,7 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.service.BoletoService;
 import br.ufac.sion.service.InscricaoService;
 import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.util.boleto.EmissorBoleto;
 import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
@@ -106,8 +107,7 @@ public class ComprovanteInscricaoBean implements Serializable {
             byte[] pdf = this.bopepoEmissorBoleto.gerarBoleto(cedente, cobranca);
             enviarBoleto(pdf);
         } catch (NegocioException ex) {
-            System.out.println(ex.getMessage());
-            //FacesUtil.addErrorMessage(ex.getMessage());
+            FacesUtil.addErrorMessage(ex.getMessage());
         }
 
     }
@@ -128,4 +128,7 @@ public class ComprovanteInscricaoBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
+    public boolean isConfirmada() {
+        return this.inscricao.getStatus().equals(SituacaoInscricao.CONFIRMADA);
+    }
 }

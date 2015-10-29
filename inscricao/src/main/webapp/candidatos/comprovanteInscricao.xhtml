@@ -66,7 +66,7 @@
                 </p:panelGrid>
 
                 <div style="text-align: center; margin-top: 15px;">
-                    <p:commandButton icon="ui-icon-pencil" value="Emitir Boleto Bancário" ajax="false" onclick="this.form.target='_blank'" actionListener="#{comprovanteInscricaoBean.emitir()}" />
+                    <p:commandButton icon="ui-icon-pencil" value="Emitir Boleto Bancário" ajax="false" actionListener="#{comprovanteInscricaoBean.emitir()}" rendered="#{!comprovanteInscricaoBean.confirmada}"/>
                 </div>
             </p:panel>
         </h:form>

@@ -23,11 +23,13 @@ import org.hibernate.validator.constraints.Email;
  */
 @Entity
 public class Funcionario implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-     @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private Integer matricula;
     @Column(nullable = false, length = 60)
     private String nome;
@@ -36,12 +38,12 @@ public class Funcionario implements Serializable {
     private String email;
     @ManyToOne
     @JoinColumn(name = "setor_id")
-    private Setor setor = new Setor();;
+    private Setor setor = new Setor();
     @ManyToOne
     @JoinColumn(name = "cargo_id")
     private Cargo cargo = new Cargo();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id",nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario = new Usuario();
 
     public Long getId() {
@@ -124,5 +126,5 @@ public class Funcionario implements Serializable {
     public String toString() {
         return "br.ufac.sion.model.Funcionario[ id=" + id + " ]";
     }
-    
+
 }

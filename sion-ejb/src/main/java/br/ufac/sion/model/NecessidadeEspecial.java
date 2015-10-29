@@ -19,8 +19,11 @@ public class NecessidadeEspecial implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private boolean portador;
+    @Column(name = "qual_pne")
     private String qualNecessidadeEspecial;
+    @Column(name = "necessita_atendimento")
     private boolean necessitaAtendimento;
+    @Column(name = "qual_atendimento")
     private String qualAtendimento;
 
     public boolean isPortador() {
@@ -31,7 +34,6 @@ public class NecessidadeEspecial implements Serializable {
         this.portador = portador;
     }
 
-    @Column(name = "qual_pne")
     public String getQualNecessidadeEspecial() {
         return qualNecessidadeEspecial;
     }
@@ -40,7 +42,6 @@ public class NecessidadeEspecial implements Serializable {
         this.qualNecessidadeEspecial = qualNecessidadeEspecial;
     }
 
-    @Column(name = "necessita_atendimento")
     public boolean isNecessitaAtendimento() {
         return necessitaAtendimento;
     }
@@ -49,7 +50,6 @@ public class NecessidadeEspecial implements Serializable {
         this.necessitaAtendimento = necessitaAtendimento;
     }
 
-    @Column(name = "qual_atendimento")
     public String getQualAtendimento() {
         return qualAtendimento;
     }

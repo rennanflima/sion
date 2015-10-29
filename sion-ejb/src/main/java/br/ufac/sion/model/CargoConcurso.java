@@ -32,16 +32,27 @@ public class CargoConcurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Column(nullable = false, length = 10)
     private String codigo;
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valor = BigDecimal.ZERO;
+    @ManyToOne
+    @JoinColumn(name = "cargo_id", nullable = false)
     private Cargo cargo;
+    @ManyToOne
+    @JoinColumn(name = "concurso_id", nullable = false)
     private Concurso concurso;
+    @ManyToOne
+    @JoinColumn(name = "localidade_id", nullable = false)
     private Localidade localidade;
+    @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true,
+            fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
     private List<CargoVaga> vagas = new ArrayList<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -50,8 +61,6 @@ public class CargoConcurso implements Serializable {
         this.id = id;
     }
 
-    @NotBlank
-    @Column(nullable = false, length = 10)
     public String getCodigo() {
         return codigo;
     }
@@ -60,7 +69,6 @@ public class CargoConcurso implements Serializable {
         this.codigo = codigo;
     }
 
-    @Column(nullable = false, precision = 10, scale = 2)
     public BigDecimal getValor() {
         return valor;
     }
@@ -69,8 +77,6 @@ public class CargoConcurso implements Serializable {
         this.valor = valor;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "cargo_id", nullable = false)
     public Cargo getCargo() {
         return cargo;
     }
@@ -79,8 +85,6 @@ public class CargoConcurso implements Serializable {
         this.cargo = cargo;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "concurso_id", nullable = false)
     public Concurso getConcurso() {
         return concurso;
     }
@@ -89,8 +93,6 @@ public class CargoConcurso implements Serializable {
         this.concurso = concurso;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "localidade_id", nullable = false)
     public Localidade getLocalidade() {
         return localidade;
     }
@@ -99,7 +101,6 @@ public class CargoConcurso implements Serializable {
         this.localidade = localidade;
     }
 
-    @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
     public List<CargoVaga> getVagas() {
         return vagas;
     }

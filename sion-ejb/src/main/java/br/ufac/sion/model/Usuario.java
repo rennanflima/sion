@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,14 +22,20 @@ public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 40)
     private String login;
+    @Column(nullable = false, length = 45)
     private String senha;
+    @Column(name = "ultimo_acesso")
     private LocalDateTime ultimoAcesso;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private List<Grupo> grupos = new ArrayList<>();
 
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
@@ -37,7 +44,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    @Column(nullable = false, length = 40)
     public String getLogin() {
         return login;
     }
@@ -46,7 +52,6 @@ public class Usuario implements Serializable {
         this.login = login;
     }
 
-    @Column(nullable = false, length = 45)
     public String getSenha() {
         return senha;
     }
@@ -55,7 +60,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    @Column(name = "ultimo_acesso")
     public LocalDateTime getUltimoAcesso() {
         return ultimoAcesso;
     }
@@ -64,12 +68,7 @@ public class Usuario implements Serializable {
         this.ultimoAcesso = ultimoAcesso;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     public List<Grupo> getGrupos() {
-        System.out.println("entra: "+grupos.size());
-        
         return grupos;
     }
 

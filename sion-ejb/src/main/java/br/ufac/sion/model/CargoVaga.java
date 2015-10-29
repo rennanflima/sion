@@ -20,18 +20,23 @@ import javax.persistence.UniqueConstraint;
  * @author Rennan
  */
 @Entity
-@Table(name = "cargo_vaga", uniqueConstraints={@UniqueConstraint(columnNames={"quantidade","vaga_id", "cargo_concurso_id"})})
+@Table(name = "cargo_vaga", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"quantidade", "vaga_id", "cargo_concurso_id"})})
 public class CargoVaga implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer quantidade;
+    @ManyToOne
+    @JoinColumn(name = "vaga_id", nullable = false)
     private Vaga tipoVaga;
+    @ManyToOne
+    @JoinColumn(name = "cargo_concurso_id")
     private CargoConcurso cargoConcurso;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -48,24 +53,20 @@ public class CargoVaga implements Serializable {
         this.quantidade = quantidade;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "cargo_concurso_id")
-    public CargoConcurso getCargoConcurso() {
-        return cargoConcurso;
-    }
-
-    public void setCargoConcurso(CargoConcurso cargoConcurso) {
-        this.cargoConcurso = cargoConcurso;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "vaga_id", nullable = false)
     public Vaga getTipoVaga() {
         return tipoVaga;
     }
 
     public void setTipoVaga(Vaga tipoVaga) {
         this.tipoVaga = tipoVaga;
+    }
+
+    public CargoConcurso getCargoConcurso() {
+        return cargoConcurso;
+    }
+
+    public void setCargoConcurso(CargoConcurso cargoConcurso) {
+        this.cargoConcurso = cargoConcurso;
     }
 
     @Override

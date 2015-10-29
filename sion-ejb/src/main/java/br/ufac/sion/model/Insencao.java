@@ -20,12 +20,16 @@ public class Insencao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "requer_insencao")
     private boolean requerInsencao = false;
+    @Column(name = "insencao_confirmada")
     private boolean insencaoConfirmada = false;
+    @Column(name = "motivo_negacao")
     private String motivoNegacao;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "percentual_insencao")
     private PercentualInsencao percentualInsencao;
 
-    @Column(name = "requer_insencao")
     public boolean isRequerInsencao() {
         return requerInsencao;
     }
@@ -34,7 +38,6 @@ public class Insencao implements Serializable {
         this.requerInsencao = requerInsencao;
     }
 
-    @Column(name = "insencao_confirmada")
     public boolean isInsencaoConfirmada() {
         return insencaoConfirmada;
     }
@@ -43,7 +46,6 @@ public class Insencao implements Serializable {
         this.insencaoConfirmada = insencaoConfirmada;
     }
 
-    @Column(name = "motivo_negacao")
     public String getMotivoNegacao() {
         return motivoNegacao;
     }
@@ -52,8 +54,6 @@ public class Insencao implements Serializable {
         this.motivoNegacao = motivoNegacao;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "percentual_insencao")
     public PercentualInsencao getPercentualInsencao() {
         return percentualInsencao;
     }

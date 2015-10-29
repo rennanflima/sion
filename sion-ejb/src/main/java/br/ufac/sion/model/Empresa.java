@@ -28,7 +28,9 @@ import org.hibernate.validator.constraints.br.CNPJ;
 @Entity
 @Table(name = "empresa")
 public class Empresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,7 +48,6 @@ public class Empresa implements Serializable {
     private Endereco endereco;
     @OneToMany(mappedBy = "cedente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ContaBancaria> contasBancaria = new ArrayList<>();
-    
 
     public Long getId() {
         return id;
@@ -120,5 +121,5 @@ public class Empresa implements Serializable {
     public String toString() {
         return "br.ufac.sion.model.Empresa[ id=" + id + " ]";
     }
-    
+
 }

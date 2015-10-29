@@ -23,11 +23,12 @@ public class Localidade implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String nome;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, length = 100)
+    private String nome;
+
     public Long getId() {
         return id;
     }
@@ -36,7 +37,6 @@ public class Localidade implements Serializable {
         this.id = id;
     }
 
-    @Column(nullable = false, length = 100)
     public String getNome() {
         return nome;
     }

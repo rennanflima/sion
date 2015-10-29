@@ -17,23 +17,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author rennan.lima
  */
 @Entity
+@Table(name = "setor")
 public class Setor implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 60, unique = true)
     private String nome;
     @Column(length = 10, unique = true)
     private String sigla;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="cargo_setor", joinColumns={@JoinColumn(name="setor_id")}, inverseJoinColumns={@JoinColumn(name="cargo_id")})
+    @JoinTable(name = "cargo_setor", joinColumns = {
+        @JoinColumn(name = "setor_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "cargo_id")})
     private List<Cargo> cargos = new ArrayList<>();
 
     public Long getId() {
@@ -92,5 +98,5 @@ public class Setor implements Serializable {
     public String toString() {
         return "br.ufac.sion.model.Setor[ id=" + id + " ]";
     }
-    
+
 }

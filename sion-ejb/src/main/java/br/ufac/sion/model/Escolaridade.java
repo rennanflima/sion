@@ -10,7 +10,7 @@ package br.ufac.sion.model;
  * @author rennan.lima
  */
 public enum Escolaridade {
-    
+
     NIVEL_FUNDAMENTAL("Nível Fundamental (1º Grau)"),
     NIVEL_MEDIO("Nível Médio (2º Grau)"),
     NIVEL_SUPERIOR_INCOMPLETO("Nível Superior Incompleto"),
@@ -18,7 +18,7 @@ public enum Escolaridade {
     POS_GRADUACAO("Pós-graduação"),
     MESTRADO("Mestrado"),
     DOUTORADO("Doutorado");
-    
+
     private String descricao;
 
     Escolaridade(String descricao) {
@@ -28,5 +28,5 @@ public enum Escolaridade {
     public String getDescricao() {
         return descricao;
     }
-    
+
 }

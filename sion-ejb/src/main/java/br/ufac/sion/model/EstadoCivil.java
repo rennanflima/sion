@@ -10,13 +10,14 @@ package br.ufac.sion.model;
  * @author rennan.lima
  */
 public enum EstadoCivil {
+
     CASADO("Casado(a)"),
     DIVORCIADO("Divorciado(a)"),
     SEPARADO("Separado(a)"),
     SOLTEIRO("Solteiro(a)"),
     VIUVO("Viúvo(a)"),
     OUTROS("Outro");
-    
+
     private String descricao;
 
     EstadoCivil(String descricao) {
@@ -26,6 +27,5 @@ public enum EstadoCivil {
     public String getDescricao() {
         return descricao;
     }
-    
-    
+
 }

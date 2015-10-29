@@ -10,9 +10,10 @@ package br.ufac.sion.model;
  * @author Rennan
  */
 public enum BracoDominante {
-    DESTRO("Destro"), 
+
+    DESTRO("Destro"),
     CANHOTO("Canhoto");
-    
+
     private String descricao;
 
     BracoDominante(String descricao) {

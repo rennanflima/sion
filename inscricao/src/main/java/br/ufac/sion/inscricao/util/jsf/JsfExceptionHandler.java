@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.util.jsf;
 
+import br.ufac.sion.exception.ArquivoRetornoException;
 import br.ufac.sion.exception.NegocioException;
 import java.io.IOException;
 import java.util.Iterator;
@@ -45,6 +46,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 
             Throwable exception = context.getException();
             NegocioException negocioException = getNegocioException(exception);
+            ArquivoRetornoException arquivoRetornoException = getArquivoRetornoException(exception);
 
             boolean handled = false;
 
@@ -55,6 +57,9 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
                 } else if (negocioException != null) {
                     handled = true;
                     FacesUtil.addErrorMessage(negocioException.getMessage());
+                } else if (arquivoRetornoException != null) {
+                    handled = true;
+                    FacesUtil.addErrorMessage(arquivoRetornoException.getMessage());
                 } else {
                     handled = true;
                     redirect("/Erro.xhtml");
@@ -79,6 +84,16 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
         return null;
     }
 
+    private ArquivoRetornoException getArquivoRetornoException(Throwable exception) {
+        if (exception instanceof ArquivoRetornoException) {
+            return (ArquivoRetornoException) exception;
+        } else if (exception.getCause() != null) {
+            return getArquivoRetornoException(exception.getCause());
+        }
+
+        return null;
+    }
+    
     private void redirect(String page) {
         try {
             FacesContext facesContext = FacesContext.getCurrentInstance();

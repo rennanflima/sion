@@ -23,11 +23,12 @@ public class Vaga implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String tipo;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(length = 60)
+    private String tipo;
+
     public Long getId() {
         return id;
     }
@@ -35,8 +36,7 @@ public class Vaga implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    @Column(length = 60)
+
     public String getTipo() {
         return tipo;
     }

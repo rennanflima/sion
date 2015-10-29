@@ -68,7 +68,10 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
 
         Boleto boleto = new Boleto(titulo);
         boleto.setLocalPagamento("Pagável em qualquer banco até o vencimento");
-        boleto.setInstrucao1("Não receber após o vencimento");
+        boleto.setInstrucao1("1. Senhor(a) caixa, por favor não receba este documento após a data de vencimento.");
+        boleto.setInstrucao2("2. Valores expressos em reais");
+        boleto.setInstrucao3("3. Não receber por depósito");
+        boleto.setInstrucao4("4. Pagamento em cheque, anotar no verso o 'Nosso número'.");
         return boleto;
     }
 

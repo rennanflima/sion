@@ -49,7 +49,7 @@
     </beans:bean>
 
     <beans:bean id="jsfAccessDeniedHandler" class="br.ufac.sion.security.JsfAccessDeniedHandler">
-        <beans:property name="loginPath" value="/login.xhtml" />
+        <beans:property name="loginPath" value="/AcessoNegado.xhtml" />
         <beans:property name="contextRelative" value="true" />
     </beans:bean>
 
