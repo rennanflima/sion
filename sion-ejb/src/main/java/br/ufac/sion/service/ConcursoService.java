@@ -8,7 +8,7 @@ package br.ufac.sion.service;
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.Resource;

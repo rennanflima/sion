@@ -23,5 +23,7 @@ public interface BoletoFacadeLocal {
     public Boleto findById(Long id);
 
     public List<Boleto> findAll();
+    
+    public Boleto findByNossoNumero(String nossoNumero);
 
 }

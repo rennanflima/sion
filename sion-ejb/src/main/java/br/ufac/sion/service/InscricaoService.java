@@ -10,7 +10,7 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoBoleto;
 import br.ufac.sion.model.SituacaoInscricao;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import java.time.LocalDateTime;
 import java.time.Year;
 import javax.ejb.Stateless;

@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutGerenciamento.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Arquivo de Retorno</ui:define>
+
+    <ui:define name="corpo">
+
+        <h:form enctype="multipart/form-data">
+            <h1>Arquivo de Retorno</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <f:facet name="left">
+                    <p:commandButton value="Carregar" actionListener="#{arquivoRetornoBean.upload}" ajax="false"/>
+                </f:facet>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+                <p:outputLabel value="Arquivo de retorno" for="arquivoRetorno"/>
+                <p:fileUpload id="arquivoRetorno" value="#{arquivoRetornoBean.arquivo}" mode="simple"/>      
+            </p:panelGrid>
+
+        </h:form>
+
+        <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                     columnClasses="rotulo, campo" rendered="">
+            <p:outputLabel value="Data de crédito: "/>
+            <h:outputText value="#{arquivoRetornoBean.arquivoRetornoDetalhe.dataCredito}">
+                <f:converter converterId="localDateConversor"/>
+            </h:outputText>
+
+            <p:outputLabel value="Número de títulos em cobrança no banco: "/>
+            <h:outputText value="#{arquivoRetornoBean.arquivoRetornoDetalhe.quantidadeDeTitulosEmCobranca}"/>
+
+            <p:outputLabel value="Valor total de títulos: "/>
+            <h:outputText value="#{arquivoRetornoBean.arquivoRetornoDetalhe.valorTotalEmCobrancas}">
+                <f:convertNumber type="currency" />
+            </h:outputText>
+
+            <p:outputLabel value="Total de títulos pagos: "/>
+            <h:outputText value="#{arquivoRetornoBean.arquivoRetornoDetalhe.totalTitulosPagos}">
+                <f:convertNumber type="currency" />
+            </h:outputText>
+        </p:panelGrid>
+        
+        <p:dataTable id="inscricoesTable" var="inscricao" value="#{arquivoRetornoBean.arquivoRetornoDetalhe.incricoesConfirmadas}" rowIndexVar="linha"
+                         style="margin-top: 20px;" emptyMessage="Nenhuma inscrição confirmada encontrada." rows="20"
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                <p:column headerText="#" style="text-align: center; width: 20px;">
+                    <h:outputText value="#{linha + 1}"/>
+                </p:column>
+
+                <p:column headerText="Inscrição" style="text-align: center; width: 100px;">
+                    <h:outputText value="#{inscricao.numero}"/>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{inscricao.candidato.nome}"/>
+                </p:column>
+                
+                <p:column headerText="CPF" style="text-align: center; width: 120px;">
+                    <h:outputText value="#{inscricao.candidato.cpf}"/>
+                </p:column>
+                
+                <p:column headerText="Cargo">
+                    <h:outputText value="#{inscricao.cargoConcurso.codigo} - #{inscricao.cargoConcurso.cargo.descricao}"/>
+                </p:column>
+                
+                <p:column headerText="Situação da inscrição" style="text-align: center; width: 120px;">
+                    <h:outputText value="#{inscricao.status.descricao}"/>
+                </p:column>
+            
+                <p:column headerText="Data da confirmação" style="text-align: center; width: 150px;">
+                    <h:outputText value="#{inscricao.boleto.dataPagamento}">
+                        <f:converter converterId="localDateConversor"/>
+                    </h:outputText>
+                </p:column>
+
+            </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

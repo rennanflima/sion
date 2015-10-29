@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.util.jsf;
 
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import java.io.IOException;
 import java.util.Iterator;
 

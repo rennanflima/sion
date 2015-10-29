@@ -22,7 +22,7 @@ import br.ufac.sion.model.Empresa;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import br.ufac.sion.service.ConcursoService;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;

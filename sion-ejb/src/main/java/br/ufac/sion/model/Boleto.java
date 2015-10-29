@@ -34,6 +34,8 @@ public class Boleto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "nosso_numero", length = 20, unique = true)
+    private String nossoNumero;
     @Column(precision = 10, scale = 2)
     private BigDecimal valor;
     @Column(name = "data_vencimento")
@@ -57,6 +59,14 @@ public class Boleto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNossoNumero() {
+        return nossoNumero;
+    }
+
+    public void setNossoNumero(String nossoNumero) {
+        this.nossoNumero = nossoNumero;
     }
 
     public BigDecimal getValor() {

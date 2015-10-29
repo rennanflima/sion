@@ -1,4 +1,4 @@
-package br.ufac.sion.util;
+package br.ufac.sion.exception;
 
 public class NegocioException extends Exception {
 

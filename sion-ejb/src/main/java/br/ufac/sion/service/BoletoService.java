@@ -7,10 +7,20 @@ package br.ufac.sion.service;
 
 import br.ufac.sion.model.Boleto;
 import br.ufac.sion.model.SituacaoBoleto;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.util.modulo11.GeradorDigitoVerificador;
+import br.ufac.sion.util.modulo11.GeradorDigitoVerificadorBancoDoBrasil;
+import br.ufac.sion.util.modulo11.GeradorDigitoVerificadorBradesco;
+import br.ufac.sion.util.modulo11.GeradorDigitoVerificadorCaixa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.jrimum.bopepo.BancosSuportados;
+import org.jrimum.domkee.financeiro.banco.febraban.Agencia;
+import org.jrimum.domkee.financeiro.banco.febraban.Carteira;
+import org.jrimum.domkee.financeiro.banco.febraban.ContaBancaria;
+import org.jrimum.domkee.financeiro.banco.febraban.NumeroDaConta;
 
 /**
  *
@@ -22,13 +32,20 @@ public class BoletoService {
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
+    private GeradorDigitoVerificador geradorDigitoVerificador;
+
+    private BancosSuportados banco;
+
     public Boleto salvar(Boleto cobranca) throws NegocioException {
-        cobranca.setSituacao(SituacaoBoleto.PENDENTE);
+
         Boleto b = perquisarPorInscricao(cobranca);
         try {
             if (b == null) {
+                cobranca.setSituacao(SituacaoBoleto.PENDENTE);
+                cobranca.setNossoNumero(geraNossoNumero(cobranca));
                 b = em.merge(cobranca);
             } else {
+                b.setNossoNumero(geraNossoNumero(b));
                 b = em.merge(b);
             }
         } catch (Exception e) {
@@ -42,10 +59,45 @@ public class BoletoService {
         Boleto b = null;
         try {
             b = em.createQuery("from Boleto b where b.sacado = :inscricao", Boleto.class)
-                .setParameter("inscricao", boleto.getSacado())
-                .getSingleResult();
-        } catch (Exception e) {
+                    .setParameter("inscricao", boleto.getSacado())
+                    .getSingleResult();
+        } catch (NoResultException e) {
         }
         return b;
     }
+
+    private String geraNossoNumero(Boleto cobranca) {
+        inicializaGeradorDigitoVerificador(cobranca);
+        String codigo = this.geradorDigitoVerificador.completarComZeros(cobranca.getSacado().getNumero());
+        ContaBancaria conta = criarContaBancaria(cobranca);
+        return codigo + this.geradorDigitoVerificador.gerarDigito(conta.getCarteira().getCodigo(), codigo);
+    }
+
+    private void inicializaGeradorDigitoVerificador(br.ufac.sion.model.Boleto cobrancaSistema) {
+        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
+        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_BRADESCO)) {
+            geradorDigitoVerificador = new GeradorDigitoVerificadorBradesco();
+            this.banco = BancosSuportados.BANCO_BRADESCO;
+        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+            geradorDigitoVerificador = new GeradorDigitoVerificadorBancoDoBrasil();
+            this.banco = BancosSuportados.BANCO_DO_BRASIL;
+        } else {
+            geradorDigitoVerificador = new GeradorDigitoVerificadorCaixa();
+            this.banco = BancosSuportados.CAIXA_ECONOMICA_FEDERAL;
+        }
+    }
+
+    private ContaBancaria criarContaBancaria(Boleto cobrancaSistema) {
+        ContaBancaria contaBancaria = new ContaBancaria(banco.create());
+        Integer agencia = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getAgencia();
+        String digitoAgencia = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getDigitoAgencia();
+        Integer numeroConta = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getNumero();
+        String digitoConta = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getDigitoConta();
+        contaBancaria.setAgencia(new Agencia(agencia, digitoAgencia));
+        contaBancaria.setNumeroDaConta(new NumeroDaConta(numeroConta, digitoConta));
+        contaBancaria.setCarteira(new Carteira(cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getCodigoCarteira()));
+
+        return contaBancaria;
+    }
+
 }

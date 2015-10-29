@@ -15,6 +15,7 @@ public abstract class Boleto_ {
 	public static volatile SingularAttribute<Boleto, Inscricao> sacado;
 	public static volatile SingularAttribute<Boleto, LocalDate> dataVencimento;
 	public static volatile SingularAttribute<Boleto, BigDecimal> valor;
+	public static volatile SingularAttribute<Boleto, String> nossoNumero;
 	public static volatile SingularAttribute<Boleto, BigDecimal> valorPago;
 	public static volatile SingularAttribute<Boleto, ArquivoRetorno> arquivo;
 	public static volatile SingularAttribute<Boleto, Long> id;

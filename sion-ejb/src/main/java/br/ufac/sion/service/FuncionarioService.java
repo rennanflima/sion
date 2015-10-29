@@ -7,7 +7,7 @@ package br.ufac.sion.service;
 
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.util.GeraSenha;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

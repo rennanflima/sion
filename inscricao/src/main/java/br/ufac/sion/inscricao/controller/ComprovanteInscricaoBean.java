@@ -10,7 +10,7 @@ import br.ufac.sion.model.Empresa;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.service.BoletoService;
 import br.ufac.sion.service.InscricaoService;
-import br.ufac.sion.util.NegocioException;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.util.boleto.EmissorBoleto;
 import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
