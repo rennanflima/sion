@@ -20,6 +20,7 @@ import br.ufac.sion.model.Telefone;
 import br.ufac.sion.model.TipoTelefone;
 import br.ufac.sion.service.CandidatoService;
 import br.ufac.sion.service.CepService;
+import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -31,5 +31,5 @@ public interface CargoConcursoFacadeLocal {
     
     public List<CargoConcurso> findByLocalidade(Localidade localidade);
 
-    public List<CargoConcurso> findByConcursoAndNivel(Concurso concurso, Nivel nivel);
+    public List<CargoConcurso> findByConcursoAndNivelAndLocalidade(Concurso concurso, Nivel nivel, Localidade local);
 }

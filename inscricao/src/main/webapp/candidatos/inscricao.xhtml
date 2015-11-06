@@ -41,6 +41,14 @@
                 <p:outputLabel value="Número de Inscrição:" rendered="#{inscricaoBean.editando}"/>
                 <h:outputText value="#{inscricaoBean.inscricao.numero}" rendered="#{inscricaoBean.editando}"/>
                 
+                <p:outputLabel value="Lotação" for="local"/>
+                <p:selectOneMenu id="local" value="#{inscricaoBean.local}" >
+                    <f:selectItem itemLabel="Selecione local de lotação..."/>
+                    <f:selectItems value="#{inscricaoBean.localidades}" var="l"
+                                   itemValue="#{l}" itemLabel="#{l.nome}"/>
+                    <p:ajax event="change" process="@this" update="nivel cargoC" listener="#{inscricaoBean.carregarNiveis()}"/>
+                </p:selectOneMenu>
+                
                 <p:outputLabel value="Nível" for="nivel"/>
                 <p:selectOneMenu id="nivel" value="#{inscricaoBean.nivel}" >
                     <f:selectItem itemLabel="Selecione um nível..."/>

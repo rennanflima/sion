@@ -1,18 +1,17 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:o="http://omnifaces.org/ui">
-
-    <ui:define name="titulo">#{cadastroCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</ui:define>
-
-    <ui:define name="corpo">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
+        <title>Novo candidato</title>
+        <h:outputStylesheet library="css" name="sistema.css" />
+    </h:head>
+    <h:body>
         <f:metadata>
-            <o:viewParam name="candidato" value="#{cadastroCandidatoBean.candidato}" />
             <f:event listener="#{cadastroCandidatoBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
@@ -20,13 +19,6 @@
             <h1>#{cadastroCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
-
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroCandidatoBean.salvar()}" update="@form"/>
-                </p:toolbarGroup>
-            </p:toolbar>
-
 
             <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
                 <p:panelGrid columns="2" style="width: 100%;"
@@ -57,7 +49,7 @@
                     </p:selectOneRadio>
 
                     <p:outputLabel value="Escolaridade" for="escolaridade" />
-                    <p:selectOneRadio id="escolaridade" value="#{cadastroCandidatoBean.candidato.escolaridade}" layout="grid" columns="1">
+                    <p:selectOneRadio id="escolaridade" value="#{cadastroCandidatoBean.candidato.escolaridade}">
                         <f:selectItems value="#{cadastroCandidatoBean.escolaridades}" var="e"
                                        itemLabel="#{e.descricao}" itemValue="#{e}" />
                     </p:selectOneRadio>
@@ -111,14 +103,9 @@
 
                     <p:outputLabel value="Complemento" for="complemento"/>
                     <p:inputText id="complemento" size="60" maxlength="60" value="#{cadastroCandidatoBean.candidato.endereco.complemento}"/>
-                    <p:spacer/>
-                    <p:spacer/>
-
 
                     <p:outputLabel value="Bairro" for="bairro"/>
                     <p:inputText id="bairro" size="30" maxlength="60" value="#{cadastroCandidatoBean.candidato.endereco.bairro}"/>
-                    <p:spacer/>
-                    <p:spacer/>
 
                     <p:outputLabel value="Estado" for="estado"/>
                     <p:selectOneMenu id="estado" value="#{cadastroCandidatoBean.estado}" >
@@ -171,7 +158,11 @@
 
             </p:fieldset>
 
+            <div style="float: right; margin-top: 15px">
+                <p:commandButton value="Salvar" id="botaoSalvar" action="login" actionListener="#{cadastroCandidatoBean.salvar()}" update="@form"/>
+                <p:commandButton value="Limpar" id="botaoLimpar" style="margin-left: 10px;" action="#{cadastroCandidatoBean.limpar()}" update="@form"/>
+                <p:button value="Cancelar" outcome="login" style="margin-left: 10px;" />
+            </div>
         </h:form>
-    </ui:define>
-
-</ui:composition>
+    </h:body>
+</html>

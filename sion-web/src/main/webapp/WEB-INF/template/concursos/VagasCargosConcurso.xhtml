@@ -32,8 +32,12 @@
         <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:spacer/>
-        <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
-                         update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
+        <h:panelGroup>
+            <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
+                             update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
+            <p:commandButton value="Limpar" id="botaoLimpar" style="margin-left: 10px;" action="#{cadastroConcursoBean.limparAddCargoVaga()}" update="@form"/>
+        </h:panelGroup>
+
     </p:panelGrid>
 
     <ui:include src="/WEB-INF/template/concursos/ListaVagasCargosConcurso.xhtml" /> 

@@ -219,6 +219,10 @@ public class CadastroConcursoBean implements Serializable {
     public void setCargoVagaConcursoParaExcluir(CargoVaga cargoVagaConcursoParaExcluir) {
         this.cargoVagaConcursoParaExcluir = cargoVagaConcursoParaExcluir;
     }
+    
+    public void limparAddCargoVaga(){
+        this.addQuantidadeVaga = new AddCargoVaga();
+    }
 
     public boolean isMarcarTodos() {
         if (this.addQuantidadeVaga.getListaCargos().size() < cargosConcurso.size()) {
@@ -275,6 +279,7 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public void preparaCargoConcurso() {
+        this.cargoConcurso = new CargoConcurso();
         int cod = this.concurso.getCargos().size() + 1;
         if (cod < 10) {
             this.cargoConcurso.setCodigo("COD0" + cod);

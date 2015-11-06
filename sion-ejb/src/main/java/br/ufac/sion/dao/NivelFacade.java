@@ -5,7 +5,9 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,4 +29,13 @@ public class NivelFacade extends AbstractFacade<Nivel, Long> implements NivelFac
     public NivelFacade() {
         super(Nivel.class);
     }
+
+    @Override
+    public List<Nivel> findByLocalidade(Localidade local) {
+        return em.createQuery("SELECT DISTINCT(n) FROM CargoConcurso cc JOIN cc.cargo.nivel n WHERE cc.localidade = :local", Nivel.class)
+                .setParameter("local", local)
+                .getResultList();
+    }
+    
+    
 }

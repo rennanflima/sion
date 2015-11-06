@@ -57,9 +57,9 @@ public class Candidato implements Serializable {
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
     @Enumerated(EnumType.STRING)
-    private Sexo sexo;
+    private Sexo sexo = Sexo.MASCULINO;
     @Enumerated(EnumType.STRING)
-    private EstadoCivil estadoCivil;
+    private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     @CPF
@@ -67,7 +67,7 @@ public class Candidato implements Serializable {
     private String cpf;
     @Enumerated(EnumType.STRING)
     @Column(name = "braco_dominante")
-    private BracoDominante bracoDominante;
+    private BracoDominante bracoDominante = BracoDominante.DESTRO;
     @Embedded
     private RG rg;
     @Embedded

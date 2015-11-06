@@ -8,6 +8,7 @@ package br.ufac.sion.inscricao.controller;
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.ConcursoFacadeLocal;
+import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.dao.NivelFacadeLocal;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
 import br.ufac.sion.model.Candidato;
@@ -15,6 +16,7 @@ import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.Insencao;
+import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.NecessidadeEspecial;
 import br.ufac.sion.model.Nivel;
 import br.ufac.sion.service.InscricaoService;
@@ -36,6 +38,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @ManagedBean
 @ViewScoped
 public class EdicaoInscricaoBean implements Serializable {
+    
+    @EJB
+    private LocalidadeFacadeLocal localidadeFacade;
 
     @EJB
     private InscricaoService inscricaoService;
@@ -59,16 +64,23 @@ public class EdicaoInscricaoBean implements Serializable {
     private Concurso concurso;
 
     private Candidato candidato;
+    
+    private Localidade local;
 
     private List<Nivel> niveis;
+    
+    private List<Localidade> localidades;
 
     private List<CargoConcurso> cargosConcurso;
 
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
+            this.localidades = localidadeFacade.findAll();
             this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
-            this.niveis = nivelFacade.findAll();
             this.concurso = inscricao.getCargoConcurso().getConcurso();
+            this.local = inscricao.getCargoConcurso().getLocalidade();
+            carregarNiveis();
+            carregarCargos();
         }
     }
 
@@ -96,8 +108,20 @@ public class EdicaoInscricaoBean implements Serializable {
         return inscricao;
     }
 
+    public List<Localidade> getLocalidades() {
+        return localidades;
+    }
+
     public void setInscricao(Inscricao inscricao) {
         this.inscricao = inscricao;
+    }
+
+    public Localidade getLocal() {
+        return local;
+    }
+
+    public void setLocal(Localidade local) {
+        this.local = local;
     }
 
     public void salvar() {
@@ -118,11 +142,19 @@ public class EdicaoInscricaoBean implements Serializable {
         this.inscricao.setInsencao(new Insencao());
         this.niveis = new ArrayList<>();
         this.cargosConcurso = new ArrayList<>();
+        this.local = new Localidade();
+        this.localidades = new ArrayList<>();
     }
 
+    public void carregarNiveis(){
+        this.nivel = new Nivel();
+        this.niveis.clear();
+        this.niveis = nivelFacade.findByLocalidade(local);
+    }
+    
     public void carregarCargos() {
         this.cargosConcurso.clear();
-        this.cargosConcurso = cargoConcursoFacade.findByConcursoAndNivel(concurso, nivel);
+        this.cargosConcurso = cargoConcursoFacade.findByConcursoAndNivelAndLocalidade(concurso, nivel, local);
     }
 
     private UsuarioSistema getUsuarioLogado() {

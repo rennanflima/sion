@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,5 +24,7 @@ public interface NivelFacadeLocal {
     public Nivel findById(Long id);
 
     public List<Nivel> findAll();
+    
+    public List<Nivel> findByLocalidade(Localidade local);
     
 }

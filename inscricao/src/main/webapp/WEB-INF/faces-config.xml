@@ -7,7 +7,7 @@
     
     <application>
         
-        <message-bundle>br.ufac.sion.Messages</message-bundle>
+        <message-bundle>br.ufac.inscricao.Messages</message-bundle>
         
         <locale-config>
             <default-locale>pt_BR</default-locale>
