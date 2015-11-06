@@ -90,6 +90,9 @@ public class EdicaoCandidatoBean implements Serializable{
         this.candidato = candidato;
 
         if (this.candidato != null) {
+            if(this.candidato.getRg() == null) {
+                this.candidato.setRg(new RG());
+            }
             this.estado = this.candidato.getEndereco().getCidade().getEstado();
             popularTelefones();
         }

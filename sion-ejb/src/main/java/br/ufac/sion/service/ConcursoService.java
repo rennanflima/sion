@@ -31,7 +31,7 @@ public class ConcursoService {
 
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
-    
+
     @Resource
     private TimerService timerService;
 
@@ -49,7 +49,7 @@ public class ConcursoService {
         } else {
             if (concurso.isInscricoesFechadas()) {
                 concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
-            } else if(concurso.isAberto()){
+            } else if (concurso.isAutorizado()) {
                 concurso.setStatus(StatusConcurso.AUTORIZADO);
             }
         }
@@ -57,11 +57,17 @@ public class ConcursoService {
             throw new NegocioException("A data de termíno das inscrição deve ser maior que a data de início das inscrições");
         }
 
-        criarAgendamento(concurso.getDataInicioInscricao(), "abreInscricao");
-        criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao");
-
         try {
-            return em.merge(concurso);
+            concurso = em.merge(concurso);
+            if (concurso.isAutorizado() || concurso.isInscricoesAberta()) {
+                cancelarAgendamentoIncricaoAberta(concurso);
+                criarAgendamento(concurso.getDataInicioInscricao(), "abreInscricao" + concurso.getId());
+            } else if (concurso.isAutorizado() || concurso.isInscricoesAberta() || concurso.isInscricoesFechadas()) {
+                cancelarAgendamentoIncricaoFechada(concurso);
+                criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao" + concurso.getId());
+            }
+
+            return concurso;
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
         }
@@ -70,6 +76,22 @@ public class ConcursoService {
     public Concurso buscarConcursoComCargos(Long id) {
         Concurso c = concursoFacade.findConcursoWithCargo(id);
         return c;
+    }
+
+    private void cancelarAgendamentoIncricaoAberta(Concurso concurso) {
+        for (Timer timer : timerService.getAllTimers()) {
+            if (timer.getInfo().equals("abreInscricao" + concurso.getId())) {
+                timer.cancel();
+            }
+        }
+    }
+
+    private void cancelarAgendamentoIncricaoFechada(Concurso concurso) {
+        for (Timer timer : timerService.getAllTimers()) {
+            if (timer.getInfo().equals("fechaInscricao" + concurso.getId())) {
+                timer.cancel();
+            }
+        }
     }
 
     private void criarAgendamento(LocalDateTime dataHora, String nomeAgendamento) {
@@ -81,36 +103,34 @@ public class ConcursoService {
         expression.minute(dataHora.getMinute());
         this.timerService.createCalendarTimer(expression, new TimerConfig(nomeAgendamento, true));
     }
-    
+
     @Timeout
     private void timeOut(Timer timer) {
         List<Concurso> concursos = this.concursoFacade.findAll();
-        if (timer.getInfo().equals("abreInscricao")) {
-            abreInscricao(concursos);
-        } else if (timer.getInfo().equals("fechaInscricao")) {
-            fechaInscricao(concursos);
-        }
-    }
-
-    private void abreInscricao(List<Concurso> concursos) {
-        LocalDateTime now = LocalDateTime.now();
         for (Concurso concurso : concursos) {
-            if (concurso.getStatus().equals(StatusConcurso.AUTORIZADO)) {
-                if (concurso.isInscricoesAberta()) {
-                    concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
-                    this.concursoFacade.save(concurso);
-                }
+            if (timer.getInfo().equals("abreInscricao" + concurso.getId())) {
+                abreInscricao(concurso);
+            } else if (timer.getInfo().equals("fechaInscricao" + concurso.getId())) {
+                fechaInscricao(concurso);
             }
         }
     }
 
-    private void fechaInscricao(List<Concurso> concursos) {
+    private void abreInscricao(Concurso concurso) {
         LocalDateTime now = LocalDateTime.now();
-        for (Concurso concurso : concursos) {
-            if (concurso.isInscricoesFechadas()) {
-                concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+        if (concurso.getStatus().equals(StatusConcurso.AUTORIZADO)) {
+            if (concurso.isInscricoesAberta()) {
+                concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
                 this.concursoFacade.save(concurso);
             }
+        }
+    }
+
+    private void fechaInscricao(Concurso concurso) {
+        LocalDateTime now = LocalDateTime.now();
+        if (concurso.isInscricoesFechadas()) {
+            concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+            this.concursoFacade.save(concurso);
         }
     }
 }

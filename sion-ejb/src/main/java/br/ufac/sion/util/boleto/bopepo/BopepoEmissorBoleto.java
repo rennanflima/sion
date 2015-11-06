@@ -41,10 +41,10 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
 
     @Override
     public byte[] gerarBoleto(Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) {
-        if(geradorDigitoVerificador == null){
+        if (geradorDigitoVerificador == null) {
             inicializaGeradorDigitoVerificador(cobrancaSistema);
         }
-        
+
         Boleto boleto = criarBoleto(cedenteSistema, cobrancaSistema);
 
         BoletoViewer boletoViewer = new BoletoViewer(boleto);
@@ -61,8 +61,8 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
 
     private Boleto criarBoleto(Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) {
         ContaBancaria contaBancaria = criarContaBancaria(cobrancaSistema);
-        Sacado sacado = new Sacado(cobrancaSistema.getSacado().getCandidato().getNome() + " - CPF: "+cobrancaSistema.getSacado().getCandidato().getCpf());
-        Cedente cedente = new Cedente(cedenteSistema.getNomeFantasia() +" - "+cedenteSistema.getSigla(), cedenteSistema.getCnpj());
+        Sacado sacado = new Sacado(cobrancaSistema.getSacado().getCandidato().getNome() + " - CPF: " + cobrancaSistema.getSacado().getCandidato().getCpf());
+        Cedente cedente = new Cedente(cedenteSistema.getNomeFantasia() + " - " + cedenteSistema.getSigla(), cedenteSistema.getCnpj());
 
         Titulo titulo = criarTitulo(contaBancaria, sacado, cedente, cobrancaSistema);
 
@@ -91,9 +91,16 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
     private Titulo criarTitulo(ContaBancaria contaBancaria, Sacado sacado, Cedente cedente, br.ufac.sion.model.Boleto cobrancaSistema) {
         Titulo titulo = new Titulo(contaBancaria, sacado, cedente);
 
+        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
         String codigo = this.geradorDigitoVerificador.completarComZeros(cobrancaSistema.getSacado().getNumero());
-        titulo.setNumeroDoDocumento(codigo);
-        titulo.setNossoNumero(codigo);
+
+        titulo.setNumeroDoDocumento(cobrancaSistema.getSacado().getNumero());
+        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
+            System.out.println("Entra caixa");
+            titulo.setNossoNumero(contaBancaria.getCarteira().getCodigo() + codigo);
+        } else {
+            titulo.setNossoNumero(codigo);
+        }
         titulo.setDigitoDoNossoNumero(this.geradorDigitoVerificador.gerarDigito(contaBancaria.getCarteira().getCodigo(), codigo));
 
         titulo.setValor(cobrancaSistema.getValor());

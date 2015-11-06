@@ -165,15 +165,23 @@ public class Concurso implements Serializable {
         return now.isAfter(dataTerminoIncricao) && status.equals(StatusConcurso.INSCRICOES_ABERTAS);
     }
 
+    
     @Transient
-    public boolean isAberto() {
+    public boolean isAlteravelInscricoesFechadas() {
+        LocalDateTime now = LocalDateTime.now();
+        return !status.equals(StatusConcurso.INSCRICOES_ENCERRADAS) || !now.isAfter(dataTerminoIncricao) && !status.equals(StatusConcurso.INSCRICOES_ABERTAS);
+    }
+    
+    
+    @Transient
+    public boolean isAutorizado() {
         LocalDateTime now = LocalDateTime.now();
         return now.isBefore(dataInicioInscricao);
     }
 
     @Transient
     public boolean isAlteravel() {
-        return this.isAberto();
+        return this.isAutorizado();
     }
 
     @Transient

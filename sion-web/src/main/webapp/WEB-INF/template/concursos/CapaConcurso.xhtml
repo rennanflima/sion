@@ -24,7 +24,7 @@
 
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
-                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
         
         <p:outputLabel value="Local de inscrição" for="localInscricao" />
         <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%" />
