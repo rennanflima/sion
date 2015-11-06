@@ -2,3 +2,4 @@
 /sion-ejb/target/
 /sion-ear/target/
 /inscricao/target/
+*.class
