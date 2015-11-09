@@ -1,5 +1,6 @@
 package br.ufac.sion.util.boleto.bopepo;
 
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Empresa;
 import br.ufac.sion.util.boleto.EmissorBoleto;
 import br.ufac.sion.util.conversor.DateConversor;
@@ -40,19 +41,28 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
     }
 
     @Override
-    public byte[] gerarBoleto(Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) {
+    public byte[] gerarBoleto(Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) throws NegocioException {
         if (geradorDigitoVerificador == null) {
             inicializaGeradorDigitoVerificador(cobrancaSistema);
         }
 
-        Boleto boleto = criarBoleto(cedenteSistema, cobrancaSistema);
+        try {
+            Boleto boleto = criarBoleto(cedenteSistema, cobrancaSistema);
 
-        BoletoViewer boletoViewer = new BoletoViewer(boleto);
-        return boletoViewer.getPdfAsByteArray();
+            BoletoViewer boletoViewer = new BoletoViewer(boleto);
+            return boletoViewer.getPdfAsByteArray();
+        } catch (Exception e) {
+            throw new NegocioException(e.getMessage());
+        }
+
     }
 
     @Override
     public File gerarBoletoEmArquivo(String arquivo, Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) {
+        if (geradorDigitoVerificador == null) {
+            inicializaGeradorDigitoVerificador(cobrancaSistema);
+        }
+
         Boleto boleto = criarBoleto(cedenteSistema, cobrancaSistema);
 
         BoletoViewer boletoViewer = new BoletoViewer(boleto);
@@ -84,7 +94,6 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
         contaBancaria.setAgencia(new Agencia(agencia, digitoAgencia));
         contaBancaria.setNumeroDaConta(new NumeroDaConta(numeroConta, digitoConta));
         contaBancaria.setCarteira(new Carteira(cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getCodigoCarteira()));
-
         return contaBancaria;
     }
 
@@ -96,12 +105,14 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
 
         titulo.setNumeroDoDocumento(cobrancaSistema.getSacado().getNumero());
         if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
-            System.out.println("Entra caixa");
             titulo.setNossoNumero(contaBancaria.getCarteira().getCodigo() + codigo);
+            titulo.setDigitoDoNossoNumero(this.geradorDigitoVerificador.gerarDigito(contaBancaria.getCarteira().getCodigo(), codigo));
+        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+            titulo.setNossoNumero(cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getConvenio() + codigo);
         } else {
             titulo.setNossoNumero(codigo);
+            titulo.setDigitoDoNossoNumero(this.geradorDigitoVerificador.gerarDigito(contaBancaria.getCarteira().getCodigo(), codigo));
         }
-        titulo.setDigitoDoNossoNumero(this.geradorDigitoVerificador.gerarDigito(contaBancaria.getCarteira().getCodigo(), codigo));
 
         titulo.setValor(cobrancaSistema.getValor());
         titulo.setDataDoDocumento(new Date());
@@ -116,6 +127,7 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
         if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_BRADESCO)) {
             geradorDigitoVerificador = new GeradorDigitoVerificadorBradesco();
         } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+            System.out.println("crira bb");
             geradorDigitoVerificador = new GeradorDigitoVerificadorBancoDoBrasil();
         } else {
             geradorDigitoVerificador = new GeradorDigitoVerificadorCaixa();

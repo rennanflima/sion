@@ -39,6 +39,7 @@
                     <f:selectItem itemLabel="Selecione um banco..." />
                     <f:selectItems value="#{cadastroContaBean.bancos}" var="banco"
                                    itemValue="#{banco}" itemLabel="#{banco.descricao}" />
+                    <p:ajax event="change" process="@this" update="@form" listener="#{cadastroContaBean.mudaConvenio()}"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel value="Descrição" for="descricao"/>
@@ -58,6 +59,9 @@
                 
                 <p:outputLabel value="Carteira" for="carteira"/>
                 <p:inputText id="carteira" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.codigoCarteira}"/>
+                
+                <p:outputLabel value="Convênio" for="convenio" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
+                <p:inputText id="convenio" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.convenio}" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
                 
                 <p:outputLabel value="Empresa" for="empresa"/>
                 <p:selectOneMenu id="empresa" value="#{cadastroContaBean.contaBancaria.cedente}">

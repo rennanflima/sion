@@ -38,6 +38,7 @@ public class ContaBancaria implements Serializable {
     private Integer numero;
     @Column(name = "digito_conta")
     private String digitoConta;
+    private Integer convenio;
     @Column(name = "codigo_carteira")
     private Integer codigoCarteira;
     @Enumerated(EnumType.STRING)
@@ -100,6 +101,14 @@ public class ContaBancaria implements Serializable {
 
     public void setCodigoCarteira(Integer codigoCarteira) {
         this.codigoCarteira = codigoCarteira;
+    }
+
+    public Integer getConvenio() {
+        return convenio;
+    }
+
+    public void setConvenio(Integer convenio) {
+        this.convenio = convenio;
     }
 
     public Empresa getCedente() {

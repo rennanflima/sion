@@ -66,10 +66,13 @@ public class BoletoService {
         return b;
     }
 
-    private String geraNossoNumero(Boleto cobranca) {
+    private String geraNossoNumero(Boleto cobranca) throws NegocioException {
         inicializaGeradorDigitoVerificador(cobranca);
         String codigo = this.geradorDigitoVerificador.completarComZeros(cobranca.getSacado().getNumero());
         ContaBancaria conta = criarContaBancaria(cobranca);
+        if (banco.equals(BancosSuportados.BANCO_DO_BRASIL)) {
+            return cobranca.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getConvenio() + codigo;
+        }
         return codigo + this.geradorDigitoVerificador.gerarDigito(conta.getCarteira().getCodigo(), codigo);
     }
 

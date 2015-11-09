@@ -8,6 +8,7 @@ package br.ufac.sion.service;
 import br.ufac.sion.util.WebServiceCep;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Endereco;
 import br.ufac.sion.model.Estado;
@@ -29,7 +30,7 @@ public class CepService {
 
     private WebServiceCep webServiceCep;
 
-    public Endereco consultarCep(String cep) {
+    public Endereco consultarCep(String cep) throws NegocioException {
         webServiceCep = WebServiceCep.searchCep(cep);
 
         Endereco endereco = new Endereco();
@@ -41,7 +42,7 @@ public class CepService {
             Cidade c = cidadeFacade.findByNomeAndIdEstado(webServiceCep.getCidade(), e.getId());
             endereco.setCidade(c);
         } else {
-            System.err.println("Erro ao consultar o cep: " + webServiceCep.getResulCode() + " - " + webServiceCep.getResultText());
+            throw  new NegocioException("Erro ao consultar o cep: " + webServiceCep.getCep() + " - " + webServiceCep.getResultText());
         }
         return endereco;
     }

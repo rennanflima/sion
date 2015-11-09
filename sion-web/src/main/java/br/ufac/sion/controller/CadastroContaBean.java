@@ -14,7 +14,6 @@ import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -37,6 +36,8 @@ public class CadastroContaBean implements Serializable {
 
     private List<Empresa> empresas = new ArrayList<>();
 
+    private boolean convenioBancoDoBrasil = false;
+    
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
             this.empresas = empresaFacade.findAll();
@@ -59,6 +60,10 @@ public class CadastroContaBean implements Serializable {
         return empresas;
     }
 
+    public boolean isConvenioBancoDoBrasil() {
+        return convenioBancoDoBrasil;
+    }
+
     public void salvar() {
         try {
             this.contaBancariaBancariaFacade.save(contaBancaria);
@@ -79,5 +84,13 @@ public class CadastroContaBean implements Serializable {
 
     public boolean isEditando() {
         return this.contaBancaria.getId() != null;
+    }
+    
+    public void mudaConvenio(){
+        System.out.println("entra método");
+        if(contaBancaria.getBanco().equals(BancosSuportados.BANCO_DO_BRASIL)){
+            System.out.println("entra if");
+            convenioBancoDoBrasil = true;
+        }
     }
 }

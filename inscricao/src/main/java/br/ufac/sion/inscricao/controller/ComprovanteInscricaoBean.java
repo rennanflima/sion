@@ -106,13 +106,14 @@ public class ComprovanteInscricaoBean implements Serializable {
 
             byte[] pdf = this.bopepoEmissorBoleto.gerarBoleto(cedente, cobranca);
             enviarBoleto(pdf);
-        } catch (NegocioException ex) {
+        } catch (Exception ex) {
             FacesUtil.addErrorMessage(ex.getMessage());
         }
 
     }
 
     private void enviarBoleto(byte[] pdf) {
+        System.out.println("");
         HttpServletResponse response = FacesProducer.getHttpServletResponse();
         try {
             response.setContentType("application/pdf");

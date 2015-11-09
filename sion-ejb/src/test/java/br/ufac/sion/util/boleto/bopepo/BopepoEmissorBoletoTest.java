@@ -34,12 +34,11 @@ public class BopepoEmissorBoletoTest {
 
     @Before
     public void init() {
-        GeradorDigitoVerificador geradorDigitoVerificador = new GeradorDigitoVerificadorBradesco();
-        emissorBoleto = new BopepoEmissorBoleto(geradorDigitoVerificador);
+        emissorBoleto = new BopepoEmissorBoleto();
     }
 
     @Test
-    public void deve_gerar_boleto_em_arquivo() throws Exception {
+    public void deve_gerar_boleto_em_arquivo_bradesco() throws Exception {
         Empresa cedenteSistema = new Empresa();
         cedenteSistema.setNomeFantasia("AlgaWorks");
         cedenteSistema.setSigla("AW");
@@ -83,4 +82,50 @@ public class BopepoEmissorBoletoTest {
         desktop.open(boleto);
     }
 
+    
+        @Test
+    public void deve_gerar_boleto_em_arquivo_banco_do_brasil() throws Exception {
+        Empresa cedenteSistema = new Empresa();
+        cedenteSistema.setNomeFantasia("AlgaWorks");
+        cedenteSistema.setSigla("AW");
+        cedenteSistema.setCnpj("10.687.566/0001-97");
+        ContaBancaria contaBancaria = new ContaBancaria();
+        contaBancaria.setAgencia(3022);
+        contaBancaria.setDigitoAgencia("8");
+        contaBancaria.setNumero(3374);
+        contaBancaria.setDigitoConta("x");
+        contaBancaria.setCodigoCarteira(18);
+        contaBancaria.setBanco(BancosSuportados.BANCO_DO_BRASIL);
+        contaBancaria.setCedente(cedenteSistema);
+        contaBancaria.setConvenio(1379859);
+
+        Boleto cobrancaSistema = new Boleto();
+        cobrancaSistema.setId(1L);
+        cobrancaSistema.setDataVencimento(LocalDate.now());
+        cobrancaSistema.setValor(new BigDecimal("200.22"));
+
+        Candidato candidato = new Candidato();
+        candidato.setNome("Maria Santos");
+        candidato.setCpf("866.646.623-53");
+        
+        Concurso concurso = new Concurso();
+        concurso.setContaBancaria(contaBancaria);
+        
+        Cargo cargo =  new Cargo();
+        cargo.setDescricao("teste");
+        
+        CargoConcurso cc = new CargoConcurso();
+        cc.setCargo(cargo);
+        cc.setConcurso(concurso);
+        
+        Inscricao sacado = new Inscricao();
+        sacado.setNumero("20152921");
+        sacado.setCargoConcurso(cc);
+        sacado.setCandidato(candidato);
+        cobrancaSistema.setSacado(sacado);
+
+        File boleto = this.emissorBoleto.gerarBoletoEmArquivo("boletoTeste2.pdf", cedenteSistema, cobrancaSistema);
+        Desktop desktop = Desktop.getDesktop();
+        desktop.open(boleto);
+    }
 }

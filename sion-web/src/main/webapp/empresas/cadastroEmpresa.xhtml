@@ -61,7 +61,7 @@
                         <p:spacer/>
 
                         <p:outputLabel value="Logradouro" for="logradouro"/>
-                        <p:inputText id="logradouro" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.endereco.logradouro}" />
+                        <p:inputText id="logradouro" size="80" maxlength="80" value="#{cadastroEmpresaBean.empresa.endereco.logradouro}" disabled="#{cadastroEmpresaBean.bloqueiaEndereco}"/>
 
                         <p:outputLabel value="Número" for="numero"/>
                         <p:inputText id="numero" size="10" maxlength="20" value="#{cadastroEmpresaBean.empresa.endereco.numero}"/>
@@ -73,12 +73,12 @@
 
 
                         <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText id="bairro" size="30" maxlength="60" value="#{cadastroEmpresaBean.empresa.endereco.bairro}"/>
+                        <p:inputText id="bairro" size="30" maxlength="60" value="#{cadastroEmpresaBean.empresa.endereco.bairro}" disabled="#{cadastroEmpresaBean.bloqueiaEndereco}"/>
                         <p:spacer/>
                         <p:spacer/>
 
                         <p:outputLabel value="Estado" for="estado"/>
-                        <p:selectOneMenu id="estado" value="#{cadastroEmpresaBean.estado}" >
+                        <p:selectOneMenu id="estado" value="#{cadastroEmpresaBean.estado}" disabled="#{cadastroEmpresaBean.bloqueiaEndereco}">
                             <f:selectItem itemLabel="Selecione um estado..."/>
                             <f:selectItems value="#{cadastroEmpresaBean.estados}" var="estado"
                                            itemValue="#{estado}" itemLabel="#{estado.nome}"/>
@@ -86,7 +86,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:selectOneMenu id="cidade" value="#{cadastroEmpresaBean.empresa.endereco.cidade}">
+                        <p:selectOneMenu id="cidade" value="#{cadastroEmpresaBean.empresa.endereco.cidade}" disabled="#{cadastroEmpresaBean.bloqueiaEndereco}">
                             <f:selectItem itemLabel="Selecione uma cidade..." itemValue=""/>
                             <f:selectItems value="#{cadastroEmpresaBean.cidades}" var="cidade"
                                            itemValue="#{cidade}" itemLabel="#{cidade.nome}"/>

@@ -7,6 +7,7 @@ package br.ufac.sion.inscricao.controller;
 
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.BracoDominante;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cidade;
@@ -185,7 +186,7 @@ public class EdicaoCandidatoBean implements Serializable{
         this.cidades = cidadeFacade.findByEstado(estado);
     }
 
-    public void consultaCep() {
+    public void consultaCep() throws NegocioException {
         String cep = this.candidato.getEndereco().getCep();
         this.candidato.setEndereco(cepService.consultarCep(cep));
         this.estado = this.candidato.getEndereco().getCidade().getEstado();

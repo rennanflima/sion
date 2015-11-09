@@ -8,6 +8,7 @@ package br.ufac.sion.controller;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.EmpresaFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Empresa;
 import br.ufac.sion.model.Endereco;
@@ -43,6 +44,8 @@ public class CadastroEmpresaBean implements Serializable {
 
     private Empresa empresa;
     private Estado estado;
+
+    private boolean bloqueiaEndereco = true;
 
     private List<Estado> estados;
     private List<Cidade> cidades;
@@ -89,6 +92,10 @@ public class CadastroEmpresaBean implements Serializable {
         return cidades;
     }
 
+    public boolean isBloqueiaEndereco() {
+        return bloqueiaEndereco;
+    }
+
     public void salvar() {
         try {
             this.empresaFacade.save(empresa);
@@ -117,9 +124,16 @@ public class CadastroEmpresaBean implements Serializable {
     }
 
     public void consultaCep() {
-        String cep = this.empresa.getEndereco().getCep();
-        this.empresa.setEndereco(cepService.consultarCep(cep));
-        this.estado = this.empresa.getEndereco().getCidade().getEstado();
-        carregarCidades();
+        try {
+            String cep = this.empresa.getEndereco().getCep();
+            this.empresa.setEndereco(cepService.consultarCep(cep));
+            this.estado = this.empresa.getEndereco().getCidade().getEstado();
+            carregarCidades();
+            bloqueiaEndereco = true;
+        } catch (NegocioException ex) {
+            FacesUtil.addErrorMessage(ex.getMessage());
+            bloqueiaEndereco = false;
+        }
     }
+
 }

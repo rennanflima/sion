@@ -11,16 +11,20 @@ import java.io.Serializable;
  *
  * @author rennan.lima
  */
-public class GeradorDigitoVerificadorBancoDoBrasil implements GeradorDigitoVerificador, Serializable{
-
-    @Override
-    public String gerarDigito(Integer carteira, String nossoNumero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public class GeradorDigitoVerificadorBancoDoBrasil implements GeradorDigitoVerificador, Serializable {
 
     @Override
     public String completarComZeros(String numero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String novoNumero = "";
+        for (int i = 0; i < (10 - numero.length()); i++) {
+            novoNumero += "0";
+        }
+
+        return novoNumero + numero;
     }
-    
+
+    @Override
+    public String gerarDigito(Integer carteira, String nossoNumero) {
+        throw new UnsupportedOperationException("Método não suportado."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
