@@ -20,6 +20,7 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/SetorFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/service/ConcursoService.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Telefone.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/util/EnviaEmail.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ArquivoRetornoFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Localidade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/service/InscricaoService.java

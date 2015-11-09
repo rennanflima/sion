@@ -100,6 +100,7 @@ br/ufac/sion/model/RG.class
 br/ufac/sion/dao/CargoFacadeLocal.class
 br/ufac/sion/dao/ContaBancariaFacade.class
 br/ufac/sion/model/ArquivoRetorno_.class
+br/ufac/sion/util/EnviaEmail.class
 br/ufac/sion/model/Setor_.class
 br/ufac/sion/util/WebServiceCep$Xml.class
 br/ufac/sion/model/Telefone_.class
