@@ -8,7 +8,10 @@ package br.ufac.sion.dao;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
+import br.ufac.sion.model.SituacaoInscricao;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -33,5 +36,6 @@ public interface InscricaoFacadeLocal {
     public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso);
     
     public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
-    
+   
+    public Map<Date, Long> inscricoesPorData(Concurso concurso, SituacaoInscricao situacao);
 }

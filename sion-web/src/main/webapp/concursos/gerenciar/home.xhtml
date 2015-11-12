@@ -1,15 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/WEB-INF/template/LayoutGerenciamento.xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:composition template="/WEB-INF/template/LayoutGerenciamento.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
 
     <ui:define name="titulo">Dashboard</ui:define>
 
     <ui:define name="corpo">
-        
+
+        <f:metadata>
+            <f:viewParam name="dummy"/>
+            <f:event listener="#{gerenciarConcursoBean.preRender()}" type="preRenderView"/>
+        </f:metadata>
+
         <h3 style="margin-top: 50px; margin-bottom: 30px;">Seja bem-vindo ao gerenciamento do concurso '#{gerenciarConcursoBean.concurso.titulo}'!!</h3>
-        
+
+
+        <p:chart type="line" style="height: 400px" model="#{gerenciarConcursoBean.model}"/>
+
+
     </ui:define>
 
 </ui:composition>
