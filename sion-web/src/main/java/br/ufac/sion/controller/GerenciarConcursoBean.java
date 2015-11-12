@@ -16,19 +16,22 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
  * @author Rennan
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class GerenciarConcursoBean implements Serializable {
-    
+
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM");
 
     @EJB
@@ -62,20 +65,30 @@ public class GerenciarConcursoBean implements Serializable {
     public void preRender() {
         this.model = new LineChartModel();
 
-        adicionarSerie("Inscritos", null);
-        adicionarSerie("Confirmados", SituacaoInscricao.CONFIRMADA);
+        adicionarSerie("Total de inscrições", null);
+        adicionarSerie("Inscrições confirmadas", SituacaoInscricao.CONFIRMADA);
+
+        model.setAnimate(true);
+        model.setTitle("Inscrições");
+        model.setLegendPosition("nw");
+        model.setShowPointLabels(true);
+
+        model.getAxes().put(AxisType.X, new CategoryAxis("Data de inscrição"));
+        Axis yAxis = model.getAxis(AxisType.Y);
+        yAxis.setLabel("Quantidade de inscritos");
+        yAxis.setMin(0);
     }
 
     private void adicionarSerie(String rotulo, SituacaoInscricao status) {
-        
+
         Map<Date, Long> quantidadePorData = inscricaoFacade.inscricoesPorData(concurso, status);
-        
-        LineChartSeries series = new LineChartSeries(rotulo);
+
+        ChartSeries series = new ChartSeries();
+        series.setLabel(rotulo);
 
         for (Date data : quantidadePorData.keySet()) {
             series.set(DATE_FORMAT.format(data), quantidadePorData.get(data));
         }
-
         this.model.addSeries(series);
     }
 

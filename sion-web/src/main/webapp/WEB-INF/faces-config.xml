@@ -14,10 +14,10 @@
         </locale-config>
     </application>
     
-    <factory>
+<!--    <factory>
         <exception-handler-factory>
             br.ufac.sion.util.jsf.JsfExceptionHandlerFactory
         </exception-handler-factory>
-    </factory>
+    </factory>-->
     
 </faces-config>

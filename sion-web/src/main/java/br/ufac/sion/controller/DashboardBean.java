@@ -5,9 +5,21 @@
  */
 package br.ufac.sion.controller;
 
+import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.model.Concurso;
+import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpSession;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
@@ -19,28 +31,65 @@ import org.primefaces.model.chart.LineChartSeries;
 @RequestScoped
 public class DashboardBean implements Serializable {
 
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM");
+
+    @EJB
+    private InscricaoFacadeLocal inscricaoFacade;
+    
     private LineChartModel model;
+    
+    private Concurso concurso;
 
-    public void preRender() {
-        this.model = new LineChartModel();
 
-        adicionarSerie("Inscritos");
-        adicionarSerie("Confirmados");
+    @PostConstruct
+    public void init() {
+        recuperaConcursoSessao();
+        createAnimatedModels();
     }
 
-    private void adicionarSerie(String rotulo) {
-        LineChartSeries series = new LineChartSeries(rotulo);
+    private void createAnimatedModels() {
+        this.model = initLinearModel();
+        this.model.setTitle("Inscrições");
+        this.model.setAnimate(true);
+        this.model.setLegendPosition("se");
+        Axis yAxis = this.model.getAxis(AxisType.Y);
+    }
 
-        series.set("1", Math.random() * 1000);
-        series.set("2", Math.random() * 1000);
-        series.set("3", Math.random() * 1000);
-        series.set("4", Math.random() * 1000);
-        series.set("5", Math.random() * 1000);
+    private LineChartModel initLinearModel() {
+        LineChartModel lineModel = new LineChartModel();
 
-        this.model.addSeries(series);
+        LineChartSeries series1 = new LineChartSeries();
+        series1.setLabel("Total de inscrições");
+        
+         Map<Date, Long> totalInscricoes = inscricaoFacade.inscricoesPorData(concurso, null);
+
+        for (Date data : totalInscricoes.keySet()) {
+            series1.set(DATE_FORMAT.format(data), totalInscricoes.get(data));
+            System.out.println("Data: "+DATE_FORMAT.format(data)+" - "+totalInscricoes.get(data));
+        }
+
+        LineChartSeries series2 = new LineChartSeries();
+        series2.setLabel("Series 2");
+
+        series2.set(1, 6);
+        series2.set(2, 3);
+        series2.set(3, 2);
+        series2.set(4, 7);
+        series2.set(5, 9);
+
+        lineModel.addSeries(series1);
+        lineModel.addSeries(series2);
+
+        return lineModel;
     }
 
     public LineChartModel getModel() {
         return model;
     }
+    
+    public void recuperaConcursoSessao() {
+        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
+    }
+
 }

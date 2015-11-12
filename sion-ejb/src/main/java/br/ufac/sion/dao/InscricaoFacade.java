@@ -97,44 +97,41 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
         Integer dias = Period.between(concurso.getDataInicioInscricao().toLocalDate(), concurso.getDataTerminoIncricao().toLocalDate()).getDays();
         Map<Date, Long> resultado = criaMapaVazio(dias, dataInicial);
-        for (Date data : resultado.keySet()) {
-            System.out.println("Data: " + data+ " - "+ resultado.get(data));
-        }
+
         criteria.createAlias("cargoConcurso", "cc")
                 .setProjection(Projections.projectionList()
-                .add(Projections.sqlGroupProjection("date(data_inscricao) as data",
-                                "date(data_inscricao)", new String[]{"data"},
-                                new Type[]{StandardBasicTypes.DATE}))
-                .add(Projections.count("id").as("quantidade"))
-        )
+                        .add(Projections.sqlGroupProjection("date(data_inscricao) as data",
+                                        "date(data_inscricao)", new String[]{"data"},
+                                        new Type[]{StandardBasicTypes.DATE}))
+                        .add(Projections.count("id").as("quantidade"))
+                )
                 .add(Restrictions.ge("dataInscricao", dataInicial))
                 .add(Restrictions.eq("cc.concurso", concurso));
 
-        if(situacao != null){
+        if (situacao != null) {
             criteria.add(Restrictions.eq("status", situacao.CONFIRMADA));
         }
-        
+
         List<DataQuantidade> quantidadesPorData
                 = criteria.setResultTransformer(Transformers.aliasToBean(DataQuantidade.class)).list();
-        
+
         for (DataQuantidade quantidadeData : quantidadesPorData) {
             resultado.put(quantidadeData.getData(), quantidadeData.getQuantidade());
         }
+
         return resultado;
     }
 
     private Map<Date, Long> criaMapaVazio(Integer numeroDeDias, LocalDateTime dataInicial) {
         Map<Date, Long> mapaInicial = new TreeMap<>();
 
-        System.out.println("Número de dias: "+numeroDeDias);
         LocalDate dt = dataInicial.toLocalDate();
 
-        for (int i = 0; i < numeroDeDias; i++) {
+        for (int i = 0; i <= numeroDeDias; i++) {
             mapaInicial.put(DateConversor.convertLocalDateToDate(dt), 0L);
             dt = dt.plusDays(1);
         }
-        
-        
+
         return mapaInicial;
     }
 }
