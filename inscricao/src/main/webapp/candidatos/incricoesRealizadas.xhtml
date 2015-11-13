@@ -7,11 +7,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Página de Acompanhamento</ui:define>
+    <ui:define name="titulo">Inscrições Realizadas</ui:define>
 
     <ui:define name="corpo">
         <h:form id="frmPesquisaConcurso" style="margin-top: 20px;">
-            <h1>Página de Acompanhamento</h1>
+            <h1>Inscrições Realizadas</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
@@ -24,7 +24,7 @@
                 </p:toolbarGroup>
             </p:toolbar>
             
-            <p:dataTable id="inscricoesTable" var="inscricao" value="#{paginaAcompanhamentoBean.inscricoes}" rowIndexVar="linha"
+            <p:dataTable id="inscricoesTable" var="inscricao" value="#{inscricoesRealizadasBean.inscricoes}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhum inscrição encontrada." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -41,9 +41,6 @@
                 </p:column>
 
                 <p:column style="width: 330px; text-align: center;">
-                    <p:button value="Editar Inscrição" outcome="edicaoInscricao" style="font-size: 0.8em" disabled="#{inscricao.confirmada}">
-                        <f:param name="inscricao" value="#{inscricao.id}"/>
-                    </p:button>
                     <p:button value="Comprovante Inscrição" outcome="comprovanteInscricao" style="font-size: 0.8em">
                         <f:param name="inscricao" value="#{inscricao.id}"/>
                     </p:button>

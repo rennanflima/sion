@@ -64,6 +64,13 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
                 .getResultList();
     }
 
+    public List<Inscricao> findIncricoesAtivasByCandidato(Candidato candidato) {
+        return em.createQuery("SELECT i FROM Inscricao i WHERE i.candidato = :candidato and i.status != :situcao", Inscricao.class)
+                .setParameter("candidato", candidato)
+                .setParameter("situcao", SituacaoInscricao.CANCELADA)
+                .getResultList();
+    }
+
     @Override
     public List<Inscricao> findByConcurso(Concurso concurso) {
         return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Inscricao.class)
@@ -134,4 +141,5 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
         return mapaInicial;
     }
+
 }

@@ -28,14 +28,16 @@ public interface InscricaoFacadeLocal {
     public Inscricao findById(Long id);
 
     public List<Inscricao> findAll();
-    
+
     public List<Inscricao> findByCandidato(Candidato candidato);
-    
+
+    public List<Inscricao> findIncricoesAtivasByCandidato(Candidato candidato);
+
     public List<Inscricao> findByConcurso(Concurso concurso);
-    
+
     public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso);
-    
+
     public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
-   
+
     public Map<Date, Long> inscricoesPorData(Concurso concurso, SituacaoInscricao situacao);
 }

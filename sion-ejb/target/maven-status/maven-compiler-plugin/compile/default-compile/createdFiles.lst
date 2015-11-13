@@ -62,6 +62,7 @@ br/ufac/sion/dao/LocalidadeFacade.class
 br/ufac/sion/model/BracoDominante.class
 br/ufac/sion/model/Cidade_.class
 br/ufac/sion/service/FuncionarioService.class
+br/ufac/sion/model/vo/FiltroInscricao.class
 br/ufac/sion/util/modulo11/GeradorDigitoVerificadorBancoDoBrasil.class
 br/ufac/sion/model/CargoVaga.class
 br/ufac/sion/model/Boleto_.class

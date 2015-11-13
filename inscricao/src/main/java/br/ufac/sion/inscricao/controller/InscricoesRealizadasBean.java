@@ -25,7 +25,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  */
 @ManagedBean
 @ViewScoped
-public class PaginaAcompanhamentoBean implements Serializable {
+public class InscricoesRealizadasBean implements Serializable {
 
     @EJB
     private CandidatoFacadeLocal candidatoFacade;
@@ -40,7 +40,7 @@ public class PaginaAcompanhamentoBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
-        this.inscricoes = inscricaoFacade.findIncricoesAtivasByCandidato(candidato);
+        this.inscricoes = inscricaoFacade.findByCandidato(candidato);
     }
 
     public List<Inscricao> getInscricoes() {

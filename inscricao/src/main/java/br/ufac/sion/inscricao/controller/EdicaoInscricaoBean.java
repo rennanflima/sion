@@ -79,6 +79,7 @@ public class EdicaoInscricaoBean implements Serializable {
             this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
             this.concurso = inscricao.getCargoConcurso().getConcurso();
             this.local = inscricao.getCargoConcurso().getLocalidade();
+            this.nivel = inscricao.getCargoConcurso().getCargo().getNivel();
             carregarNiveis();
             carregarCargos();
         }
@@ -124,6 +125,10 @@ public class EdicaoInscricaoBean implements Serializable {
         this.local = local;
     }
 
+    public Concurso getConcurso() {
+        return concurso;
+    }
+
     public void salvar() {
         try {
             this.inscricao.setCandidato(candidato);
@@ -147,7 +152,6 @@ public class EdicaoInscricaoBean implements Serializable {
     }
 
     public void carregarNiveis(){
-        this.nivel = new Nivel();
         this.niveis.clear();
         this.niveis = nivelFacade.findByLocalidade(local);
     }

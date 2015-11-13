@@ -17,6 +17,7 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/vo/DataQuantidade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/AbstractFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/Empresa.java
+/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/vo/FiltroInscricao.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EstadoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/SetorFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/service/ConcursoService.java

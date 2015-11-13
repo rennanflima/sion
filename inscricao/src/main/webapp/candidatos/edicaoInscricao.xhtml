@@ -13,7 +13,7 @@
     <ui:define name="corpo">
 
         <f:metadata>
-            <o:viewParam name="inscricao" value="#{comprovanteInscricaoBean.inscricao}" />
+            <o:viewParam name="inscricao" value="#{edicaoInscricaoBean.inscricao}" />
             <f:event listener="#{edicaoInscricaoBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
@@ -39,6 +39,14 @@
 
                 <p:outputLabel value="Número de Inscrição:" rendered="#{edicaoInscricaoBean.editando}"/>
                 <h:outputText value="#{edicaoInscricaoBean.inscricao.numero}" rendered="#{edicaoInscricaoBean.editando}"/>
+                
+                <p:outputLabel value="Lotação" for="local"/>
+                <p:selectOneMenu id="local" value="#{edicaoInscricaoBean.local}" >
+                    <f:selectItem itemLabel="Selecione local de lotação..."/>
+                    <f:selectItems value="#{edicaoInscricaoBean.localidades}" var="l"
+                                   itemValue="#{l}" itemLabel="#{l.nome}"/>
+                    <p:ajax event="change" process="@this" update="nivel cargoC" listener="#{edicaoInscricaoBean.carregarNiveis()}"/>
+                </p:selectOneMenu>
                 
                 <p:outputLabel value="Nível" for="nivel"/>
                 <p:selectOneMenu id="nivel" value="#{edicaoInscricaoBean.nivel}" >

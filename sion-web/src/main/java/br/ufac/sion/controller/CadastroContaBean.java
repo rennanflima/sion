@@ -54,6 +54,7 @@ public class CadastroContaBean implements Serializable {
 
     public void setContaBancaria(ContaBancaria contaBancaria) {
         this.contaBancaria = contaBancaria;
+        mudaConvenio();
     }
 
     public List<Empresa> getEmpresas() {
@@ -87,9 +88,7 @@ public class CadastroContaBean implements Serializable {
     }
     
     public void mudaConvenio(){
-        System.out.println("entra método");
         if(contaBancaria.getBanco().equals(BancosSuportados.BANCO_DO_BRASIL)){
-            System.out.println("entra if");
             convenioBancoDoBrasil = true;
         }
     }
