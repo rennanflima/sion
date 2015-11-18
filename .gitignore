@@ -3,3 +3,4 @@
 /sion-ear/target/
 /inscricao/target/
 *.class
+mail.properties
