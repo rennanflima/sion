@@ -35,9 +35,12 @@ public interface InscricaoFacadeLocal {
 
     public List<Inscricao> findByConcurso(Concurso concurso);
 
-    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso);
+    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso, int first, int pageSize);
 
     public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
 
     public Map<Date, Long> inscricoesPorData(Concurso concurso, SituacaoInscricao situacao);
+    
+    public Long encontrarQuantidadeDeInscricoesConfirmadas(Concurso concurso);
+
 }

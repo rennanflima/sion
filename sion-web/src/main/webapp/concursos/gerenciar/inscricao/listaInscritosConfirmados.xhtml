@@ -23,7 +23,7 @@
             </p:toolbar>
 
             <p:dataTable id="inscricoesTable" var="inscricao" value="#{listaInscritosConfirmadosBean.inscritosConfirmados}" rowIndexVar="linha"
-                         style="margin-top: 20px;" emptyMessage="Nenhuma inscrição confirmada encontrada." rows="20"
+                         style="margin-top: 20px;" emptyMessage="Nenhuma inscrição confirmada encontrada." rows="20" lazy="true"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                 <p:column headerText="#" style="text-align: center; width: 20px;">

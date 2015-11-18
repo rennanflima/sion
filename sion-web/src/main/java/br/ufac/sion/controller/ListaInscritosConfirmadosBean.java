@@ -10,13 +10,15 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 /**
  *
@@ -31,19 +33,33 @@ public class ListaInscritosConfirmadosBean implements Serializable {
 
     private Concurso concurso;
 
-    private List<Inscricao> inscritosConfirmados;
-    
+    private LazyDataModel<Inscricao> inscritosConfirmados;
+
     @PostConstruct
     public void inicializar() {
-        this.inscritosConfirmados = inscricaoFacade.findByConcursoAndConfirmadas(concurso);
+        this.inscritosConfirmados = new LazyDataModel<Inscricao>() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public List<Inscricao> load(int first, int pageSize,
+                    String sortField, SortOrder sortOrder,
+                    Map<String, Object> filters) {
+
+                setRowCount(inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadas(concurso).intValue());
+
+                return inscricaoFacade.findByConcursoAndConfirmadas(concurso, first, pageSize);
+            }
+
+        };
+
     }
 
     public ListaInscritosConfirmadosBean() {
-        inscritosConfirmados = new ArrayList<>();
         recuperaConcursoSessao();
     }
 
-    public List<Inscricao> getInscritosConfirmados() {
+    public LazyDataModel<Inscricao> getInscritosConfirmados() {
         return inscritosConfirmados;
     }
 

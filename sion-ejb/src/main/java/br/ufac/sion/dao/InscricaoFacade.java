@@ -58,12 +58,14 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         throw new UnsupportedOperationException("Operação não suportada! Não é possível excluir uma inscrição."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public List<Inscricao> findByCandidato(Candidato candidato) {
         return em.createQuery("SELECT i FROM Inscricao i WHERE i.candidato = :candidato", Inscricao.class)
                 .setParameter("candidato", candidato)
                 .getResultList();
     }
 
+    @Override
     public List<Inscricao> findIncricoesAtivasByCandidato(Candidato candidato) {
         return em.createQuery("SELECT i FROM Inscricao i WHERE i.candidato = :candidato and i.status != :situcao", Inscricao.class)
                 .setParameter("candidato", candidato)
@@ -79,10 +81,12 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
-    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso) {
+    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso, int first, int pageSize) {
         return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Inscricao.class)
                 .setParameter("concurso", concurso)
                 .setParameter("status", SituacaoInscricao.CONFIRMADA)
+                .setFirstResult(first)
+                .setMaxResults(pageSize)
                 .getResultList();
     }
 
@@ -142,4 +146,11 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         return mapaInicial;
     }
 
+    @Override
+    public Long encontrarQuantidadeDeInscricoesConfirmadas(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("status", SituacaoInscricao.CONFIRMADA)
+                .getSingleResult();
+    }
 }
