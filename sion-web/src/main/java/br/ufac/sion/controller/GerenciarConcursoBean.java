@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.controller;
 
+import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.SituacaoInscricao;
@@ -23,6 +24,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -35,10 +37,20 @@ public class GerenciarConcursoBean implements Serializable {
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM");
 
     @EJB
+    private CargoConcursoFacadeLocal cargoConcursoFacade;
+
+    @EJB
     private InscricaoFacadeLocal inscricaoFacade;
 
     private LineChartModel model;
     private Concurso concurso;
+    private Long totalCargos;
+    private Long totalInscricoes;
+    private Long totalInscricoesConfirmadas;
+    private Long totalInscricoesPNE;
+    private Long totalInscricoesSubJudice;
+
+    private PieChartModel inscricaoPie;
 
     public GerenciarConcursoBean() {
         recuperaConcursoSessao();
@@ -50,6 +62,43 @@ public class GerenciarConcursoBean implements Serializable {
 
     public void setConcurso(Concurso concurso) {
         this.concurso = concurso;
+    }
+
+    public Long getTotalCargos() {
+        return totalCargos = cargoConcursoFacade.findQuantidadeCargoByConcurso(concurso);
+    }
+
+    public Long getTotalInscricoes() {
+        return totalInscricoes = inscricaoFacade.encontrarQuantidadeDeInscricoes(concurso);
+    }
+
+    public Long getTotalInscricoesPNE() {
+        return totalInscricoesPNE = inscricaoFacade.encontrarQuantidadeDeInscricoesPNE(concurso);
+    }
+
+    public Long getTotalInscricoesSubJudice() {
+        return totalInscricoesSubJudice = inscricaoFacade.encontrarQuantidadeDeInscricoesSubJudice(concurso);
+    }
+
+    public Long getTotalInscricoesConfirmadas() {
+        return totalInscricoesConfirmadas = inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadas(concurso);
+    }
+
+    public LineChartModel getModel() {
+        return model;
+    }
+
+    public PieChartModel getInscricaoPie() {
+        inscricaoPie = new PieChartModel();
+
+        inscricaoPie.set("Inscrições não confirmadas", inscricaoFacade.encontrarQuantidadeDeInscricoesNaoConfirmadas(concurso));
+        inscricaoPie.set("Inscrições confirmadas", inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadasESubJudice(concurso));
+
+        inscricaoPie.setTitle("Incrições");
+        inscricaoPie.setLegendPosition("e");
+        inscricaoPie.setShowDataLabels(true);
+
+        return inscricaoPie;
     }
 
     public void recuperaConcursoSessao() {
@@ -69,7 +118,7 @@ public class GerenciarConcursoBean implements Serializable {
         adicionarSerie("Inscrições confirmadas", SituacaoInscricao.CONFIRMADA);
 
         model.setAnimate(true);
-        model.setTitle("Inscrições");
+        model.setTitle("Inscrições por Dia");
         model.setLegendPosition("nw");
         model.setShowPointLabels(true);
 
@@ -92,7 +141,4 @@ public class GerenciarConcursoBean implements Serializable {
         this.model.addSeries(series);
     }
 
-    public LineChartModel getModel() {
-        return model;
-    }
 }

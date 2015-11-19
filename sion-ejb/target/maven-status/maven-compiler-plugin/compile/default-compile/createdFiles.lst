@@ -95,6 +95,7 @@ br/ufac/sion/dao/SetorFacade.class
 br/ufac/sion/dao/CargoVagaFacade.class
 br/ufac/sion/dao/ConcursoFacade.class
 br/ufac/sion/model/Vaga_.class
+br/ufac/sion/util/EnviaEmail$1.class
 br/ufac/sion/model/Insencao_.class
 br/ufac/sion/dao/EstadoFacade.class
 br/ufac/sion/model/RG.class

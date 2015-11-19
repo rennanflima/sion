@@ -46,9 +46,9 @@ public class ListaInscritosConfirmadosBean implements Serializable {
                     String sortField, SortOrder sortOrder,
                     Map<String, Object> filters) {
 
-                setRowCount(inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadas(concurso).intValue());
+                setRowCount(inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadasESubJudice(concurso).intValue());
 
-                return inscricaoFacade.findByConcursoAndConfirmadas(concurso, first, pageSize);
+                return inscricaoFacade.findByConcursoAndConfirmadasESubJudice(concurso, first, pageSize);
             }
 
         };

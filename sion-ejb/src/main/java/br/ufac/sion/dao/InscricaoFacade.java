@@ -81,10 +81,11 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
-    public List<Inscricao> findByConcursoAndConfirmadas(Concurso concurso, int first, int pageSize) {
-        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Inscricao.class)
+    public List<Inscricao> findByConcursoAndConfirmadasESubJudice(Concurso concurso, int first, int pageSize) {
+        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Inscricao.class)
                 .setParameter("concurso", concurso)
-                .setParameter("status", SituacaoInscricao.CONFIRMADA)
+                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
                 .setFirstResult(first)
                 .setMaxResults(pageSize)
                 .getResultList();
@@ -147,10 +148,54 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
+    public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+                .getSingleResult();
+    }
+    
+    @Override
+    public Long encontrarQuantidadeDeInscricoesNaoConfirmadas(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status != :confirmada OR status != :judice", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+                .getSingleResult();
+    }
+
+    @Override
+    public Long encontrarQuantidadeDeInscricoes(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Long.class)
+                .setParameter("concurso", concurso)
+                .getSingleResult();
+    }
+
+    @Override
+    public Long encontrarQuantidadeDeInscricoesPNE(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("portador", true)
+                .setParameter("necessitaAtendimento", true)
+                .getSingleResult();
+    }
+
+    @Override
+    public Long encontrarQuantidadeDeInscricoesSubJudice(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("status", SituacaoInscricao.SUB_JUDICE)
+                .getSingleResult();
+    }
+
+    @Override
     public Long encontrarQuantidadeDeInscricoesConfirmadas(Concurso concurso) {
         return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Long.class)
                 .setParameter("concurso", concurso)
                 .setParameter("status", SituacaoInscricao.CONFIRMADA)
                 .getSingleResult();
     }
+    
+    
 }

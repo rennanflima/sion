@@ -18,11 +18,66 @@
             <f:event listener="#{gerenciarConcursoBean.preRender()}" type="preRenderView"/>
         </f:metadata>
 
-        <h3 style="margin-top: 50px; margin-bottom: 30px;">Seja bem-vindo ao gerenciamento do concurso '#{gerenciarConcursoBean.concurso.titulo}'!!</h3>
+        <h2 style="margin-top: 50px; margin-bottom: 30px;">Seja bem-vindo ao gerenciamento do concurso '#{gerenciarConcursoBean.concurso.titulo}'!!</h2>
 
 
-        <p:chart type="line" style="height: 400px" model="#{gerenciarConcursoBean.model}"/>
+        <p:chart type="line" style="height: 400px; margin-bottom: 50px;" model="#{gerenciarConcursoBean.model}" responsive="true" />
 
+
+        <div class="ui-grid ui-grid-responsive">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-6">
+                    <p:fieldset legend="Informações" class="ui-grid-col-11">
+                        <h:panelGrid columns="2" cellpadding="4" cellspacing="10" style="font-size: 14px;">
+
+                            <h:outputText value="Situação do Concurso: "/>
+                            <h:outputText value="#{gerenciarConcursoBean.concurso.status.descricao}" style="font-weight:bold"/>
+
+                            <h:outputText value="Período de Inscrição: "/>
+                            <h:panelGroup>
+                                De
+                                <h:outputText value="#{gerenciarConcursoBean.concurso.dataInicioInscricao}" style="font-weight:bold">
+                                    <f:converter converterId="localDateTimeConversor"/>
+                                </h:outputText>
+                                até
+                                <h:outputText value="#{gerenciarConcursoBean.concurso.dataTerminoIncricao}" style="font-weight:bold">
+                                    <f:converter converterId="localDateTimeConversor"/>
+                                </h:outputText>
+                            </h:panelGroup>
+
+                            <h:outputText value="Total de Cargos do Concurso: "/>
+                            <h:outputText value="#{gerenciarConcursoBean.totalCargos}" style="font-weight:bold"/>
+
+                            <h:outputText value="Total de Inscrições: "/>
+                            <h:outputText value="#{gerenciarConcursoBean.totalInscricoes}" style="font-weight:bold"/>
+                        </h:panelGrid>
+                        <fieldset style="border: 1px solid; padding: 3px;">
+                            <legend style="padding: 6px; font-weight: bold;">Inscrições</legend>
+                            <h:panelGrid columns="2" cellpadding="4" cellspacing="10" style="font-size: 14px;">
+
+                                <h:outputText value="Total de Inscrições Confirmadas: "/>
+                                <h:outputText value="#{gerenciarConcursoBean.totalInscricoesConfirmadas}" style="font-weight:bold"/>
+
+                                <h:outputText value="Total de Inscritos com Nessecidades Especiais: "/>
+                                <h:outputText value="#{gerenciarConcursoBean.totalInscricoesPNE}" style="font-weight:bold"/>
+
+                                <h:outputText value="Total de Inscrições Sub-judice: "/>
+                                <h:outputText value="#{gerenciarConcursoBean.totalInscricoesSubJudice}" style="font-weight:bold"/>
+                            </h:panelGrid>
+                        </fieldset>
+
+                    </p:fieldset>
+                </div>
+                <div class="ui-grid-col-6">
+                    <p:chart type="pie" model="#{gerenciarConcursoBean.inscricaoPie}" style="height: 450px" responsive="true"/>
+                </div>
+            </div>
+        </div>
+        <!--        <h:panelGrid columns="2" columnClasses="left, right" style="width: 100%; font-size: 15px;">
+        
+        
+        
+                </h:panelGrid>-->
 
     </ui:define>
 

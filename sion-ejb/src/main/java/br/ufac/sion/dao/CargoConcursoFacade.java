@@ -55,6 +55,13 @@ public class CargoConcursoFacade extends AbstractFacade<CargoConcurso, Long> imp
                 .setParameter("local", local)
                 .getResultList();
 
-    } 
+    }
+
+    @Override
+    public Long findQuantidadeCargoByConcurso(Concurso concurso) {
+        return em.createQuery("select count(cc) from CargoConcurso cc where cc.concurso = :concurso", Long.class)
+                .setParameter("concurso", concurso)
+                .getSingleResult();
+    }
 
 }

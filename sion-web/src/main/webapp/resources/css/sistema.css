@@ -123,3 +123,11 @@ h1 {
 .ui-state-disabled{
     opacity: .80 !important;
 }
+
+.left {
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
