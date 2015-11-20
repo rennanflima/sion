@@ -142,10 +142,12 @@ public class Concurso implements Serializable {
 
     public void adicionaCargo(CargoConcurso cargoConcurso, Integer linha) {
         if (linha == null) {
+            System.out.println("Entra if");
             this.cargos.add(cargoConcurso);
         } else {
             this.cargos.set(linha, cargoConcurso);
         }
+        System.out.println("QTD CC: "+cargos.size());
     }
 
     @Transient
@@ -169,14 +171,14 @@ public class Concurso implements Serializable {
     @Transient
     public boolean isAlteravelInscricoesFechadas() {
         LocalDateTime now = LocalDateTime.now();
-        return !(status.equals(StatusConcurso.INSCRICOES_ENCERRADAS) || status.equals(StatusConcurso.INSCRICOES_ABERTAS));
+        return status.equals(StatusConcurso.INSCRICOES_ENCERRADAS);
     }
     
     
     @Transient
     public boolean isAutorizado() {
         LocalDateTime now = LocalDateTime.now();
-        return now.isBefore(dataInicioInscricao);
+        return status.equals(StatusConcurso.AUTORIZADO);
     }
 
     @Transient

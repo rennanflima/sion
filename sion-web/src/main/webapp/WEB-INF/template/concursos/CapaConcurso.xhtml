@@ -27,7 +27,7 @@
                     pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
         
         <p:outputLabel value="Local de inscrição" for="localInscricao" />
-        <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%" />
+        <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%"  disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:outputLabel value="Empresa" for="empresa"/>
         <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">

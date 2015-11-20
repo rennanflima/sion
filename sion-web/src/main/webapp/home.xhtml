@@ -10,7 +10,15 @@
     <ui:define name="titulo">Dashboard</ui:define>
 
     <ui:define name="corpo">
-        <br/><br/><br/>Seja bem-vindo!<br/><br/><br/>
+        <f:metadata>
+            <f:viewParam name="dummy"/>
+            <f:event listener="#{dashboardBean.preRender()}" type="preRenderView"/>
+        </f:metadata>
+        
+        <br/>
+        <h2>Seja bem-vindo!</h2>
+        <br/><br/><br/>
 
+        <p:chart type="line" style="height: 400px; margin-bottom: 50px;" model="#{dashboardBean.model}" responsive="true" />
     </ui:define>
 </ui:composition>

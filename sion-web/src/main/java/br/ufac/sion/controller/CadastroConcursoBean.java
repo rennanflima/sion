@@ -105,11 +105,11 @@ public class CadastroConcursoBean implements Serializable {
         if (FacesUtil.isNotPostback()) {
             this.niveis = nivelFacade.findAll();
             this.localidades = localidadeFacade.findAll();
+            this.empresas = empresaFacade.findAll();
             if (isEditando()) {
                 this.concurso = concursoService.buscarConcursoComCargos(concurso.getId());
                 this.cargosConcurso = cargoConcursoFacade.findByConcurso(concurso);
                 this.cargosVaga = cargoVagaFacade.findByConcurso(concurso);
-                this.empresas = empresaFacade.findAll();
                 carregarContasBancaria();
             }
         }
@@ -301,6 +301,11 @@ public class CadastroConcursoBean implements Serializable {
         this.cargoConcurso.setConcurso(concurso);
         this.concurso.adicionaCargo(this.cargoConcurso, this.linha);
         FacesUtil.addSuccessMessage("Cargo salvo com sucesso!");
+        System.out.println("-------------------------------------------");
+        System.out.println("Depois de inserir");
+        System.out.println("Tamanhao lista: " + this.concurso.getCargos().size());
+        System.out.println("Lista vazia: " + this.concurso.getCargos().isEmpty());
+        System.out.println("-------------------------------------------");
         limparCargo();
         preparaCargoConcurso();
     }

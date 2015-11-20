@@ -5,13 +5,16 @@
  */
 package br.ufac.sion.controller;
 
+import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.model.Concurso;
+import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,6 +23,8 @@ import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
@@ -31,65 +36,51 @@ import org.primefaces.model.chart.LineChartSeries;
 @RequestScoped
 public class DashboardBean implements Serializable {
 
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM");
+    @EJB
+    private ConcursoFacadeLocal concursoFacade;
 
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
-    
+
     private LineChartModel model;
-    
-    private Concurso concurso;
-
-
-    @PostConstruct
-    public void init() {
-        recuperaConcursoSessao();
-        createAnimatedModels();
-    }
-
-    private void createAnimatedModels() {
-        this.model = initLinearModel();
-        this.model.setTitle("Inscrições");
-        this.model.setAnimate(true);
-        this.model.setLegendPosition("se");
-        Axis yAxis = this.model.getAxis(AxisType.Y);
-    }
-
-    private LineChartModel initLinearModel() {
-        LineChartModel lineModel = new LineChartModel();
-
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Total de inscrições");
-        
-         Map<Date, Long> totalInscricoes = inscricaoFacade.inscricoesPorData(concurso, null);
-
-        for (Date data : totalInscricoes.keySet()) {
-            series1.set(DATE_FORMAT.format(data), totalInscricoes.get(data));
-            System.out.println("Data: "+DATE_FORMAT.format(data)+" - "+totalInscricoes.get(data));
-        }
-
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
-
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
-
-        lineModel.addSeries(series1);
-        lineModel.addSeries(series2);
-
-        return lineModel;
-    }
 
     public LineChartModel getModel() {
         return model;
     }
-    
-    public void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
-        this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
+
+    public void preRender() {
+        this.model = new LineChartModel();
+
+        adicionarSerie("Total de inscrições", null);
+        adicionarSerie("Inscrições confirmadas", SituacaoInscricao.CONFIRMADA);
+
+        model.setAnimate(true);
+        model.setTitle("Inscrições por Concurso");
+        model.setLegendPosition("nw");
+        model.setShowPointLabels(true);
+
+        model.getAxes().put(AxisType.X, new CategoryAxis("Concurso"));
+        Axis yAxis = model.getAxis(AxisType.Y);
+        yAxis.setLabel("Quantidade de inscritos");
+        yAxis.setMin(0);
+    }
+
+    private void adicionarSerie(String rotulo, SituacaoInscricao status) {
+
+        List<Concurso> concursos = concursoFacade.findAll();
+
+        ChartSeries series = new ChartSeries();
+        series.setLabel(rotulo);
+
+        for (Concurso concurso : concursos) {
+            if (status != null && status.equals(SituacaoInscricao.CONFIRMADA)) {
+                series.set(concurso.getTitulo(), inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadasESubJudice(concurso));
+            } else {
+                series.set(concurso.getTitulo(), inscricaoFacade.encontrarQuantidadeDeInscricoes(concurso));
+            }
+
+        }
+        this.model.addSeries(series);
     }
 
 }
