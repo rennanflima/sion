@@ -126,12 +126,12 @@
         </dependency>
         
         <!-- Abstração para envio de e-mails -->		
-        <dependency>
+<!--        <dependency>
             <groupId>com.outjected</groupId>
             <artifactId>simple-email</artifactId>
             <version>0.2.1</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Requerido para envio de e-mails -->
         <dependency>

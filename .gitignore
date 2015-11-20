@@ -4,3 +4,4 @@
 /inscricao/target/
 *.class
 mail.properties
+*.jar
