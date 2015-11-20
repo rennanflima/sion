@@ -1,2 +1,2 @@
 # SION
-Sistema de Inscrição Online
+Sistema de Inscrição Online de Processos Seletivos
