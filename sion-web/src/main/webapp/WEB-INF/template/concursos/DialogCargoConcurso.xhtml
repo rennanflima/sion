@@ -8,10 +8,10 @@
         <h:form id="inclusaoPanel">
             <p:panelGrid columns="2" columnClasses="rotulo, campo">
                 <p:outputLabel for="codigo" value="Código"/>
-                <p:inputText id="codigo" size="10" maxlength="20" value="#{cadastroConcursoBean.cargoConcurso.codigo}"/>
+                <p:inputText id="codigo" size="10" maxlength="20" value="#{cadastroConcursoBean.cargoConcurso.codigo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
                 <p:outputLabel for="nivelCargo" value="Nível"/>
-                <p:selectOneMenu id="nivelCargo" value="#{cadastroConcursoBean.nivel}">
+                <p:selectOneMenu id="nivelCargo" value="#{cadastroConcursoBean.nivel}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                     <f:selectItem itemLabel="Selecione um nível..."/>
                     <f:selectItems value="#{cadastroConcursoBean.niveis}" var="nivel"
                                    itemValue="#{nivel}" itemLabel="#{nivel.descricao}"/>
@@ -19,14 +19,14 @@
                 </p:selectOneMenu>
 
                 <p:outputLabel for="cargo" value="Cargo"/>
-                <p:selectOneMenu id="cargo" value="#{cadastroConcursoBean.cargoConcurso.cargo}">
+                <p:selectOneMenu id="cargo" value="#{cadastroConcursoBean.cargoConcurso.cargo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                     <f:selectItem itemLabel="Selecione um cargo..."/>
                     <f:selectItems value="#{cadastroConcursoBean.cargos}" var="cargo"
                                    itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel for="localidade" value="Localidade"/>
-                <p:selectOneMenu id="localidade" value="#{cadastroConcursoBean.cargoConcurso.localidade}">
+                <p:selectOneMenu id="localidade" value="#{cadastroConcursoBean.cargoConcurso.localidade}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                     <f:selectItem itemLabel="Selecione uma localidade..."/>
                     <f:selectItems value="#{cadastroConcursoBean.localidades}" var="local"
                                    itemValue="#{local}" itemLabel="#{local.nome}"/>
@@ -34,7 +34,7 @@
             </p:panelGrid>
 
             <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}"
-                             update="inclusaoPanel :frmConcurso:cargosConcursoTable"/>
+                             process="@form" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" update="inclusaoPanel :frmConcurso:cargosConcursoTable"/>
         </h:form>
     </p:dialog> 
 </ui:composition>

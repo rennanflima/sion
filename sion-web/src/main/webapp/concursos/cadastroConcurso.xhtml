@@ -23,7 +23,7 @@
 
             <ui:include src="/WEB-INF/template/concursos/BotoesConcurso.xhtml" />
             
-            <p:wizard style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar">
+            <p:wizard widgetVar="concursoWizard" flowListener="#{cadastroConcursoBean.onFlowProcess}" style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar">
                 <p:tab id="dadosConcurso" title="Dados Gerais">
                     <ui:include src="/WEB-INF/template/concursos/CapaConcurso.xhtml" />
                 </p:tab>

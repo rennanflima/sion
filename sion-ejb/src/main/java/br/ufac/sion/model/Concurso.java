@@ -142,12 +142,10 @@ public class Concurso implements Serializable {
 
     public void adicionaCargo(CargoConcurso cargoConcurso, Integer linha) {
         if (linha == null) {
-            System.out.println("Entra if");
             this.cargos.add(cargoConcurso);
         } else {
             this.cargos.set(linha, cargoConcurso);
         }
-        System.out.println("QTD CC: "+cargos.size());
     }
 
     @Transient

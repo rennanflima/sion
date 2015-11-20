@@ -34,7 +34,7 @@
         <p:spacer/>
         <h:panelGroup>
             <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
-                             update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
+                             process="@form" update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
             <p:commandButton value="Limpar" id="botaoLimpar" style="margin-left: 10px;" action="#{cadastroConcursoBean.limparAddCargoVaga()}" update="@form"/>
         </h:panelGroup>
 

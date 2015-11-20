@@ -30,6 +30,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -105,11 +106,11 @@ public class CadastroConcursoBean implements Serializable {
         if (FacesUtil.isNotPostback()) {
             this.niveis = nivelFacade.findAll();
             this.localidades = localidadeFacade.findAll();
-            this.empresas = empresaFacade.findAll();
             if (isEditando()) {
                 this.concurso = concursoService.buscarConcursoComCargos(concurso.getId());
                 this.cargosConcurso = cargoConcursoFacade.findByConcurso(concurso);
                 this.cargosVaga = cargoVagaFacade.findByConcurso(concurso);
+                this.empresas = empresaFacade.findAll();
                 carregarContasBancaria();
             }
         }
@@ -185,6 +186,9 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public List<CargoConcurso> getCargosConcurso() {
+        if(this.concurso.getCargos() != null || cargosConcurso == null){
+            cargosConcurso = this.concurso.getCargos();
+        }
         return cargosConcurso;
     }
 
@@ -301,11 +305,6 @@ public class CadastroConcursoBean implements Serializable {
         this.cargoConcurso.setConcurso(concurso);
         this.concurso.adicionaCargo(this.cargoConcurso, this.linha);
         FacesUtil.addSuccessMessage("Cargo salvo com sucesso!");
-        System.out.println("-------------------------------------------");
-        System.out.println("Depois de inserir");
-        System.out.println("Tamanhao lista: " + this.concurso.getCargos().size());
-        System.out.println("Lista vazia: " + this.concurso.getCargos().isEmpty());
-        System.out.println("-------------------------------------------");
         limparCargo();
         preparaCargoConcurso();
     }
@@ -390,6 +389,13 @@ public class CadastroConcursoBean implements Serializable {
     public void carregarContasBancaria() {
         this.contasBancaria.clear();
         this.contasBancaria = contaBancariaFacade.findByEmpresa(empresa);
+    }
+    
+    public String onFlowProcess(FlowEvent event){
+        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas")){
+            salvar();
+        }
+        return event.getNewStep();
     }
 
 }
