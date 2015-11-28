@@ -8,6 +8,7 @@ package br.ufac.sion.service;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.model.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +44,17 @@ public class CandidatoService {
 
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
+        }
+    }
+    
+    public void alterarSenha(String oldSenha, String senha, Candidato candidato) throws NegocioException {
+        String temp;
+        temp = new GeraSenha().ecripta(oldSenha);
+        if (temp.equals(candidato.getSenha())) {
+            candidato.setSenha(new GeraSenha().ecripta(senha));
+            em.merge(candidato);
+        } else {
+            throw new NegocioException("Sua senha antiga não corresponde a que está cadastrada");
         }
     }
 }

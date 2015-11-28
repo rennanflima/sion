@@ -57,7 +57,7 @@
                         <f:param name="concurso" value="#{concurso.id}"/>
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                     update=":frmPesquisaConcurso:confirmacaoExclusaoDialog">
+                                     update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel}">
                         <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionadoParaExcluir}" value="#{concurso}"/>
                     </p:commandButton>
                 </p:column>

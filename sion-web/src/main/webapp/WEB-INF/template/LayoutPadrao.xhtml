@@ -11,6 +11,7 @@
         <title><ui:insert name="titulo">Sistema de Locadora de Veículo</ui:insert></title>
         <h:outputStylesheet library="css" name="sistema.css" />
         <h:outputScript library="js" name="jquery.maskMoney.js"/>
+        <h:outputScript library="js" name="numeros.js"/>
     </h:head>
 
     <h:body>
@@ -41,15 +42,17 @@
                             <p:menuitem value="Tipo de vaga" outcome="/vagas/pesquisaVagas"/>
                             <p:menuitem value="Nível" outcome="/niveis/pesquisaNiveis"/>
                             <p:menuitem value="Cargo" outcome="/cargos/pesquisaCargos"/>
-                            <p:separator/>
-                            <p:menuitem value="Setor" outcome="/setores/pesquisaSetores"/>
                         </p:submenu>
                         <p:menuitem value="Concurso" outcome="/concursos/pesquisaConcursos" />
                         <p:submenu label="Configurações">
                             <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
                             <p:menuitem value="Contas Bancárias" outcome="/contas/pesquisaContas"/>
                             <p:separator/>
+                            <p:menuitem value="Setor" outcome="/setores/pesquisaSetores"/>
                             <p:menuitem value="Usuários" outcome="/funcionarios/pesquisaFuncionarios"/>
+                        </p:submenu>
+                        <p:submenu label="Segurança">
+                            <p:menuitem value="Trocar Senha" outcome="/seguranca/trocarSenha" />
                         </p:submenu>
                         <p:menuitem value="Sair" url="/j_spring_security_logout"/>
                     </p:menubar>
@@ -79,6 +82,8 @@
                 configurarMoeda();
             });
         </script>
+        
+        
     </h:body>
 
 </html>

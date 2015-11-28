@@ -121,7 +121,7 @@ public class ConcursoService {
         if (concurso.getStatus().equals(StatusConcurso.AUTORIZADO)) {
             if (concurso.isInscricoesAberta()) {
                 concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
-                this.concursoFacade.save(concurso);
+                em.merge(concurso);
             }
         }
     }
@@ -130,7 +130,7 @@ public class ConcursoService {
         LocalDateTime now = LocalDateTime.now();
         if (concurso.isInscricoesFechadas()) {
             concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
-            this.concursoFacade.save(concurso);
+            em.merge(concurso);
         }
     }
 }

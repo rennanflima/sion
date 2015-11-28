@@ -45,7 +45,7 @@
                     <f:selectItem itemLabel="Selecione local de lotação..."/>
                     <f:selectItems value="#{edicaoInscricaoBean.localidades}" var="l"
                                    itemValue="#{l}" itemLabel="#{l.nome}"/>
-                    <p:ajax event="change" process="@this" update="nivel cargoC" listener="#{edicaoInscricaoBean.carregarNiveis()}"/>
+                    <p:ajax event="change" process="@this" update="nivel cargoC valor" listener="#{edicaoInscricaoBean.carregarNiveis()}"/>
                 </p:selectOneMenu>
                 
                 <p:outputLabel value="Nível" for="nivel"/>

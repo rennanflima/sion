@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import java.util.List;
@@ -25,6 +26,6 @@ public interface NivelFacadeLocal {
 
     public List<Nivel> findAll();
     
-    public List<Nivel> findByLocalidade(Localidade local);
+    public List<Nivel> findByLocalidadeAndConcurso(Localidade local, Concurso concurso);
     
 }

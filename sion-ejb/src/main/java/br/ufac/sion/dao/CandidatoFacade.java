@@ -57,5 +57,4 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
         throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize CandidatoService."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
 }

@@ -90,6 +90,8 @@ public class CadastroContaBean implements Serializable {
     public void mudaConvenio(){
         if(contaBancaria.getBanco().equals(BancosSuportados.BANCO_DO_BRASIL)){
             convenioBancoDoBrasil = true;
+        } else {
+            convenioBancoDoBrasil = false;
         }
     }
 }

@@ -25,4 +25,6 @@ public interface FuncionarioFacadeLocal {
     public List<Funcionario> findAll();
     
     public Funcionario findByLogin(String login);
+    
+    public Funcionario findByMatricula(Integer matricula);
 }

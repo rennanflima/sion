@@ -6,7 +6,6 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Funcionario;
-import br.ufac.sion.model.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -32,6 +31,7 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
 
     }
 
+    @Override
     public Funcionario findByLogin(String login) {
 
         Funcionario funcionario = null;
@@ -41,7 +41,7 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
                     .setParameter("login", login)
                     .getSingleResult();
         } catch (NoResultException e) {
-            System.out.println("Nenhum funcionario econtrado com o e-mail informado.");
+            System.out.println("Nenhum funcionario encontrado com o e-mail informado.");
         }
         return funcionario;
     }
@@ -49,6 +49,20 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
     @Override
     public Funcionario save(Funcionario entity) {
         throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize FuncionarioService."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Funcionario findByMatricula(Integer matricula) {
+        Funcionario funcionario = null;
+
+        try {
+            funcionario = em.createQuery("from Funcionario where matricula = :mat", Funcionario.class)
+                    .setParameter("mat", matricula)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nenhum funcionario encontrado com a matricula informada.");
+        }
+        return funcionario;
     }
 
 }

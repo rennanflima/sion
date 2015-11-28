@@ -30,10 +30,13 @@
                     <p:outputLabel value="Senha" />
                     <p:password size="30" id="j_password" />
 
-                    <h:panelGroup/>
+                    <p:spacer />
                     <p:commandButton value="Login" action="#{loginBean.login()}" ajax="false" />
                 </h:panelGrid>
             </h:form>
+            <div style="float: right">
+                <p:link value="Esqueci a senha" outcome="/recuperaSenha" />
+            </div>
         </div>
     </h:body>
 </html>

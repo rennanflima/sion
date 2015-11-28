@@ -38,6 +38,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @ManagedBean
 @ViewScoped
 public class InscricaoBean implements Serializable {
+
     @EJB
     private LocalidadeFacadeLocal localidadeFacade;
 
@@ -65,7 +66,7 @@ public class InscricaoBean implements Serializable {
     private Candidato candidato;
 
     private Localidade local;
-    
+
     private List<Nivel> niveis;
     private List<Localidade> localidades;
 
@@ -74,16 +75,8 @@ public class InscricaoBean implements Serializable {
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
             this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
-            this.localidades = localidadeFacade.findAll();
-            if (!isEditando()) {
-                this.concurso = concursoFacade.findById(concurso.getId());
-            } else {
-                this.local = inscricao.getCargoConcurso().getLocalidade();
-                this.nivel = inscricao.getCargoConcurso().getCargo().getNivel();
-                this.concurso = inscricao.getCargoConcurso().getConcurso();
-                carregarNiveis();
-                carregarCargos();
-            }
+            this.concurso = concursoFacade.findById(concurso.getId());
+            this.localidades = localidadeFacade.findByConcurso(concurso);
         }
     }
 
@@ -156,12 +149,12 @@ public class InscricaoBean implements Serializable {
         this.local = new Localidade();
         this.localidades = new ArrayList<>();
     }
-    
-    public void carregarNiveis(){
+
+    public void carregarNiveis() {
         this.inscricao.setCargoConcurso(new CargoConcurso());
         this.nivel = new Nivel();
         this.niveis.clear();
-        this.niveis = nivelFacade.findByLocalidade(local);
+        this.niveis = nivelFacade.findByLocalidadeAndConcurso(local, concurso);
     }
 
     public void carregarCargos() {

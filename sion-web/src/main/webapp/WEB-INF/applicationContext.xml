@@ -11,7 +11,9 @@
     
     
     <http pattern="/login.xhtml" security="none" />
+    <http pattern="/recuperaSenha.xhtml" security="none" />
     <http pattern="/Erro.xhtml" security="none" />
+    <http pattern="/AcessoNegado.xhtml" security="none" />
     <http pattern="/javax.faces.resource/**" security="none"/>
     
            
@@ -28,6 +30,7 @@
         <intercept-url pattern="/setores/**" access="hasAnyRole('ADMINISTRADORES')"/>
         <intercept-url pattern="/vagas/**" access="hasAnyRole('ADMINISTRADORES')"/>
         <intercept-url pattern="/empresas/**" access="hasAnyRole('ADMINISTRADORES', 'FINANCEIRO')"/>
+        <intercept-url pattern="/seguranca/**" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="denyAll"/>
         
         

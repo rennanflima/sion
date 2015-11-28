@@ -11,8 +11,10 @@
     
     
     <http pattern="/login.xhtml" security="none" />
+    <http pattern="/recuperaSenha.xhtml" security="none" />
     <http pattern="/cadastroCandidato.xhtml" security="none" />
     <http pattern="/Erro.xhtml" security="none" />
+    <http pattern="/AcessoNegado.xhtml" security="none" />
     <http pattern="/javax.faces.resource/**" security="none"/>
     
            
@@ -22,6 +24,7 @@
         <intercept-url pattern="/home.xhtml" access="isAuthenticated()"/>
         <intercept-url pattern="/candidatos/**" access="hasAnyRole('CANDIDATO')"/>
         <intercept-url pattern="/concursos/**" access="hasAnyRole('CANDIDATO')"/>
+        <intercept-url pattern="/seguranca/**" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="denyAll"/>
         
         
