@@ -5,9 +5,12 @@
  */
 package br.ufac.sion.controller;
 
+import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
+import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.Serializable;
 import java.util.List;
@@ -29,14 +32,20 @@ import org.primefaces.model.SortOrder;
 public class ListaInscritosConfirmadosBean implements Serializable {
 
     @EJB
+    private CargoConcursoFacadeLocal cargoConcursoFacade;
+
+    @EJB
     private InscricaoFacadeLocal inscricaoFacade;
 
     private Concurso concurso;
+    private FiltroInscritos filtro = new FiltroInscritos();
+    private List<CargoConcurso> cargosConcurso;
 
     private LazyDataModel<Inscricao> inscritosConfirmados;
 
     @PostConstruct
     public void inicializar() {
+        cargosConcurso = cargoConcursoFacade.findByConcurso(concurso);
         this.inscritosConfirmados = new LazyDataModel<Inscricao>() {
 
             private static final long serialVersionUID = 1L;
@@ -46,17 +55,43 @@ public class ListaInscritosConfirmadosBean implements Serializable {
                     String sortField, SortOrder sortOrder,
                     Map<String, Object> filters) {
 
-                setRowCount(inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadasESubJudice(concurso).intValue());
+//                setRowCount(inscricaoFacade.encontrarQuantidadeDeInscricoesConfirmadasESubJudice(concurso).intValue());
+//                return inscricaoFacade.findByConcursoAndConfirmadasESubJudice(concurso, first, pageSize);
+                filtro.setPrimeiroRegistro(first);
+                filtro.setQuantidadeRegistros(pageSize);
+                filtro.setConcurso(concurso);
 
-                return inscricaoFacade.findByConcursoAndConfirmadasESubJudice(concurso, first, pageSize);
+                setRowCount(inscricaoFacade.contaInscricoesConfirmadasESubJudice(filtro));
+                
+                return inscricaoFacade.findByConcursoAndConfirmadasESubJudice(filtro);
             }
 
         };
 
     }
+    
+    public void limparFiltro(){
+        filtro.setCargo(new CargoConcurso());
+        filtro.setNome(null);
+        filtro.setCpf(null);
+        filtro.setNumeroInscricao(null);
+    }
+
+    public FiltroInscritos getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(FiltroInscritos filtro) {
+        this.filtro = filtro;
+    }
+
+    public List<CargoConcurso> getCargosConcurso() {
+        return cargosConcurso;
+    }
 
     public ListaInscritosConfirmadosBean() {
         recuperaConcursoSessao();
+        limparFiltro();
     }
 
     public LazyDataModel<Inscricao> getInscritosConfirmados() {

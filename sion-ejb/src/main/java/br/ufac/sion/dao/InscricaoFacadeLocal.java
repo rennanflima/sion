@@ -9,6 +9,7 @@ import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
+import br.ufac.sion.model.vo.FiltroInscritos;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +36,13 @@ public interface InscricaoFacadeLocal {
 
     public List<Inscricao> findByConcurso(Concurso concurso);
 
-    public List<Inscricao> findByConcursoAndConfirmadasESubJudice(Concurso concurso, int first, int pageSize);
+    public List<Inscricao> findByConcursoAndConfirmadasESubJudice(FiltroInscritos filtro);
 
     public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
 
     public Map<Date, Long> inscricoesPorData(Concurso concurso, SituacaoInscricao situacao);
+    
+    public int contaInscricoesConfirmadasESubJudice(FiltroInscritos filtro);
     
     public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso);
     

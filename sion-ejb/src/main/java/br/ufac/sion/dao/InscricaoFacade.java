@@ -10,6 +10,7 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.model.vo.DataQuantidade;
+import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.util.conversor.DateConversor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,8 +22,12 @@ import java.util.TreeMap;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -81,14 +86,28 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
-    public List<Inscricao> findByConcursoAndConfirmadasESubJudice(Concurso concurso, int first, int pageSize) {
-        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Inscricao.class)
-                .setParameter("concurso", concurso)
-                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
-                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
-                .setFirstResult(first)
-                .setMaxResults(pageSize)
-                .getResultList();
+    public List<Inscricao> findByConcursoAndConfirmadasESubJudice(FiltroInscritos filtro) {
+//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Inscricao.class)
+//                .setParameter("concurso", concurso)
+//                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+//                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+//                .setFirstResult(first)
+//                .setMaxResults(pageSize)
+//                .getResultList();
+
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+
+        //criteria.createAlias("candidato", "c");
+        criteria.setFirstResult(filtro.getPrimeiroRegistro());
+        criteria.setMaxResults(filtro.getQuantidadeRegistros());
+
+        Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
+        Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
+        criteria.add(Restrictions.or(confirmada, judice));
+        
+        //criteria.addOrder(Order.asc("c.nome"));
+
+        return criteria.list();
     }
 
     @Override
@@ -148,14 +167,23 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
-    public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
-                .setParameter("concurso", concurso)
-                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
-                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
-                .getSingleResult();
+    public int contaInscricoesConfirmadasESubJudice(FiltroInscritos filtro) {
+//        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
+//                .setParameter("concurso", concurso)
+//                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+//                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+//                .getSingleResult();
+
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+        Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
+        Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
+        criteria.add(Restrictions.or(confirmada, judice));
+
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Number) criteria.uniqueResult()).intValue();
     }
-    
+
     @Override
     public Long encontrarQuantidadeDeInscricoesNaoConfirmadas(Concurso concurso) {
         return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status != :confirmada OR status != :judice", Long.class)
@@ -196,6 +224,38 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
                 .setParameter("status", SituacaoInscricao.CONFIRMADA)
                 .getSingleResult();
     }
-    
-    
+
+    private Criteria criarCriteriaParaFiltro(FiltroInscritos filtro) {
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Inscricao.class);
+
+        criteria.createAlias("cargoConcurso", "cc").add(Restrictions.eq("cc.concurso", filtro.getConcurso()));
+        criteria.createAlias("candidato", "c");
+
+        if (filtro.getCargo() != null && filtro.getCargo().getId() != null) {
+            criteria.add(Restrictions.eq("cargoConcurso", filtro.getCargo()));
+        }
+
+        if (StringUtils.isNotEmpty(filtro.getNome())) {
+            criteria.add(Restrictions.ilike("c.nome", filtro.getNome(), MatchMode.ANYWHERE));
+        }
+        if (StringUtils.isNotEmpty(filtro.getCpf())) {
+            criteria.add(Restrictions.ilike("c.cpf", filtro.getCpf(), MatchMode.EXACT));
+        }
+        if (StringUtils.isNotEmpty(filtro.getNumeroInscricao())) {
+            criteria.add(Restrictions.ilike("numero", filtro.getNumeroInscricao(), MatchMode.START));
+        }
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return criteria;
+    }
+
+    @Override
+    public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso) {
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
+                .setParameter("concurso", concurso)
+                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
+                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+                .getSingleResult();
+    }
 }

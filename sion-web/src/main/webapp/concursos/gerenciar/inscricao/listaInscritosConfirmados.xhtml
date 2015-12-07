@@ -16,11 +16,35 @@
 
             <p:messages autoUpdate="true" closable="true" />
 
-            <p:toolbar style="margin-top: 20px">
+            <p:toolbar style="margin-top: 20px;">
+                <p:toolbarGroup>
+                    <p:commandButton value="Pesquisar" update="inscricoesTable" process="@form" />
+                    <p:separator/>
+                    <p:commandButton value="Limpar" update="inscricoesTable @form" action="#{listaInscritosConfirmadosBean.limparFiltro()}" />
+                </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Página Inicial" outcome="/concursos/gerenciar/home"/>
                 </p:toolbarGroup>
             </p:toolbar>
+
+            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="rotulo, campo">
+                
+                <p:outputLabel value="Cargo" for="cargo" />
+                <p:selectOneMenu id="cargo" value="#{listaInscritosConfirmadosBean.filtro.cargo}">
+                    <f:selectItem itemLabel="Selecione um cargo..." itemValue=""/>
+                    <f:selectItems value="#{listaInscritosConfirmadosBean.cargosConcurso}" var="cargoConcurso"
+                                   itemValue="#{cargoConcurso}" itemLabel="#{cargoConcurso.codigo} - #{cargoConcurso.cargo.descricao}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText id="nome" size="60" value="#{listaInscritosConfirmadosBean.filtro.nome}"/>
+
+                <p:outputLabel value="CPF" for="cpf"/>
+                <p:inputMask id="cpf" mask="999.999.999-99" value="#{listaInscritosConfirmadosBean.filtro.cpf}"/>
+
+                <p:outputLabel value="Número de inscrição" for="inscricao"/>
+                <p:inputText id="inscricao" size="20" value="#{listaInscritosConfirmadosBean.filtro.numeroInscricao}"/>
+            </p:panelGrid>
 
             <p:dataTable id="inscricoesTable" var="inscricao" value="#{listaInscritosConfirmadosBean.inscritosConfirmados}" rowIndexVar="linha"
                          style="margin-top: 20px;" emptyMessage="Nenhuma inscrição confirmada encontrada." rows="20" lazy="true"
@@ -37,21 +61,21 @@
                 <p:column headerText="Nome">
                     <h:outputText value="#{inscricao.candidato.nome}"/>
                 </p:column>
-                
+
                 <p:column headerText="CPF" style="text-align: center; width: 120px;">
                     <h:outputText value="#{inscricao.candidato.cpf}"/>
                 </p:column>
-                
+
                 <p:column headerText="Data de Nascimento" style="text-align: center; width: 100px;">
                     <h:outputText value="#{inscricao.candidato.dataNascimento}">
                         <f:converter converterId="localDateConversor"/>
                     </h:outputText>
                 </p:column>
-                
+
                 <p:column headerText="Cargo">
                     <h:outputText value="#{inscricao.cargoConcurso.codigo} - #{inscricao.cargoConcurso.cargo.descricao}"/>
                 </p:column>
-                
+
                 <p:column headerText="Data da Inscrição" style="text-align: center; width: 150px;">
                     <h:outputText value="#{inscricao.dataInscricao}">
                         <f:converter converterId="localDateTimeConversor"/>

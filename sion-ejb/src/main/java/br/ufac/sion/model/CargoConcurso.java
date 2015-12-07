@@ -20,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -51,6 +53,7 @@ public class CargoConcurso implements Serializable {
     private Localidade localidade;
     @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true,
             fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<CargoVaga> vagas = new ArrayList<>();
 
     public Long getId() {
