@@ -27,7 +27,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -79,10 +78,16 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     @Override
-    public List<Inscricao> findByConcurso(Concurso concurso) {
-        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Inscricao.class)
-                .setParameter("concurso", concurso)
-                .getResultList();
+    public List<Inscricao> findByConcurso(FiltroInscritos filtro) {
+//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Inscricao.class)
+//                .setParameter("concurso", concurso)
+//                .getResultList();
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+
+        criteria.setFirstResult(filtro.getPrimeiroRegistro());
+        criteria.setMaxResults(filtro.getQuantidadeRegistros());
+
+        return criteria.list();
     }
 
     @Override
@@ -104,19 +109,31 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
         Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
         criteria.add(Restrictions.or(confirmada, judice));
-        
-        //criteria.addOrder(Order.asc("c.nome"));
 
+        //criteria.addOrder(Order.asc("c.nome"));
         return criteria.list();
     }
 
     @Override
-    public List<Inscricao> findByConcursoAndPNE(Concurso concurso) {
-        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Inscricao.class)
-                .setParameter("concurso", concurso)
-                .setParameter("portador", true)
-                .setParameter("necessitaAtendimento", true)
-                .getResultList();
+    public List<Inscricao> findByConcursoAndPNE(FiltroInscritos filtro) {
+//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Inscricao.class)
+//                .setParameter("concurso", concurso)
+//                .setParameter("portador", true)
+//                .setParameter("necessitaAtendimento", true)
+//                .getResultList();
+
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+
+        //criteria.createAlias("necessidadeEspecial", "ne");
+        criteria.setFirstResult(filtro.getPrimeiroRegistro());
+        criteria.setMaxResults(filtro.getQuantidadeRegistros());
+
+        Criterion portador = Restrictions.eq("necessidadeEspecial.portador", true);
+        Criterion necessitaAtendimento = Restrictions.eq("necessidadeEspecial.necessitaAtendimento", true);
+        criteria.add(Restrictions.or(portador, necessitaAtendimento));
+
+        //criteria.addOrder(Order.asc("c.nome"));
+        return criteria.list();
     }
 
     @Override
@@ -202,7 +219,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public Long encontrarQuantidadeDeInscricoesPNE(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Long.class)
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.necessidadeEspecial.portador = :portador OR i.necessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Long.class)
                 .setParameter("concurso", concurso)
                 .setParameter("portador", true)
                 .setParameter("necessitaAtendimento", true)
@@ -257,5 +274,28 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
                 .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
                 .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
                 .getSingleResult();
+    }
+
+    @Override
+    public int contaInscricoes(FiltroInscritos filtro) {
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Number) criteria.uniqueResult()).intValue();
+    }
+
+    @Override
+    public int contaInscricoesPNE(FiltroInscritos filtro) {
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+        
+        //criteria.createAlias("necessidadeEspecial", "ne");
+        Criterion portador = Restrictions.eq("necessidadeEspecial.portador", true);
+        Criterion necessitaAtendimento = Restrictions.eq("necessidadeEspecial.necessitaAtendimento", true);
+        criteria.add(Restrictions.or(portador, necessitaAtendimento));
+        
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Number) criteria.uniqueResult()).intValue();
     }
 }

@@ -17,6 +17,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -71,5 +72,14 @@ public class InscricaoService {
 
     private String geraNumeroInscricao(Inscricao inscricao) {
         return Year.now() + "" + inscricao.getCargoConcurso().getConcurso().getId() + "" + inscricao.getId();
+    }
+    
+    public void confirmaInscricao(Inscricao inscricao) throws NegocioException{
+        if(StringUtils.isNotBlank(inscricao.getMotivoConfirmacao())){
+            inscricao.setStatus(SituacaoInscricao.CONFIRMADA);
+            em.merge(inscricao);
+        }else{
+            throw new NegocioException("A justificativa é obrigatória");
+        }
     }
 }

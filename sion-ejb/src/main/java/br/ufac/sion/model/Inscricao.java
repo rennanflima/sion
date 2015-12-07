@@ -44,9 +44,11 @@ public class Inscricao implements Serializable {
     @Embedded
     private Insencao insencao;
     @Embedded
-    private NecessidadeEspecial NecessidadeEspecial;
+    private NecessidadeEspecial necessidadeEspecial;
     @Enumerated(EnumType.STRING)
     private SituacaoInscricao status = SituacaoInscricao.AGUARDANDO_PAGAMENTO;
+    @Column(length = 100)
+    private String motivoConfirmacao;
     @OneToOne(mappedBy = "sacado", cascade = CascadeType.ALL)
     private Boleto boleto;
     @ManyToOne
@@ -90,11 +92,11 @@ public class Inscricao implements Serializable {
     }
 
     public NecessidadeEspecial getNecessidadeEspecial() {
-        return NecessidadeEspecial;
+        return necessidadeEspecial;
     }
 
     public void setNecessidadeEspecial(NecessidadeEspecial NecessidadeEspecial) {
-        this.NecessidadeEspecial = NecessidadeEspecial;
+        this.necessidadeEspecial = NecessidadeEspecial;
     }
 
     public SituacaoInscricao getStatus() {
@@ -103,6 +105,14 @@ public class Inscricao implements Serializable {
 
     public void setStatus(SituacaoInscricao status) {
         this.status = status;
+    }
+
+    public String getMotivoConfirmacao() {
+        return motivoConfirmacao;
+    }
+
+    public void setMotivoConfirmacao(String motivoConfirmacao) {
+        this.motivoConfirmacao = motivoConfirmacao;
     }
 
     public Boleto getBoleto() {

@@ -89,6 +89,7 @@ public class ArquivoRetornoCaixaService{
             if (cobranca != null) {
                 if (t.getSegmentoU().getValorPago().compareTo(cobranca.getValor()) >= 0) {
                     cobranca.getSacado().setStatus(SituacaoInscricao.CONFIRMADA);
+                    cobranca.getSacado().setMotivoConfirmacao("Confirmação automática (via arquivo de retorno)");
                     cobranca.setSituacao(SituacaoBoleto.PAGO);
                     cobranca.setDataPagamento(DateConversor.convertDateToLocalDate(t.getSegmentoU().getDataOcorrencia()));
                     cobranca.setValorPago(t.getSegmentoU().getValorPago());

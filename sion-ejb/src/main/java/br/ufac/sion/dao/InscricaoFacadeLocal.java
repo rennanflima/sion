@@ -34,15 +34,19 @@ public interface InscricaoFacadeLocal {
 
     public List<Inscricao> findIncricoesAtivasByCandidato(Candidato candidato);
 
-    public List<Inscricao> findByConcurso(Concurso concurso);
+    public List<Inscricao> findByConcurso(FiltroInscritos filtrox);
 
     public List<Inscricao> findByConcursoAndConfirmadasESubJudice(FiltroInscritos filtro);
 
-    public List<Inscricao> findByConcursoAndPNE(Concurso concurso);
+    public List<Inscricao> findByConcursoAndPNE(FiltroInscritos filtro);
 
     public Map<Date, Long> inscricoesPorData(Concurso concurso, SituacaoInscricao situacao);
     
     public int contaInscricoesConfirmadasESubJudice(FiltroInscritos filtro);
+    
+    public int contaInscricoes(FiltroInscritos filtro);
+    
+    public int contaInscricoesPNE(FiltroInscritos filtro);
     
     public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso);
     

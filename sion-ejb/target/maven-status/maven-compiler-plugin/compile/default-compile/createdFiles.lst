@@ -12,7 +12,6 @@ br/ufac/sion/model/Cidade.class
 br/ufac/sion/model/Cargo_.class
 br/ufac/sion/util/modulo11/GeradorDigitoVerificadorBradesco.class
 br/ufac/sion/util/boleto/bopepo/BopepoEmissorBoleto.class
-br/ufac/sion/service/retorno/ArquivoRetornoService.class
 br/ufac/sion/model/Localidade_.class
 br/ufac/sion/model/Telefone.class
 br/ufac/sion/service/CepService.class
@@ -34,7 +33,6 @@ br/ufac/sion/util/WebServiceCep$Xml$3.class
 br/ufac/sion/dao/ArquivoRetornoFacade.class
 br/ufac/sion/model/Funcionario.class
 br/ufac/sion/dao/ConcursoFacadeLocal.class
-br/ufac/sion/service/ProcessaArquivoRetorno.class
 br/ufac/sion/util/WebServiceCep$Xml$2.class
 br/ufac/sion/model/Usuario_.class
 br/ufac/sion/dao/CargoConcursoFacadeLocal.class

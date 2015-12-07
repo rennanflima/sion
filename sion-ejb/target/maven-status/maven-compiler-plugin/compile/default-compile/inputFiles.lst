@@ -43,7 +43,6 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ConcursoFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/util/retorno/bradesco/Cabecalho.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/CargoFacadeLocal.java
-/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/service/retorno/ArquivoRetornoService.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/util/boleto/bopepo/BopepoEmissorBoleto.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/model/BancosSuportados.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/BoletoFacadeLocal.java
@@ -100,7 +99,6 @@
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/VagaFacadeLocal.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/util/modulo11/GeradorDigitoVerificador.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ArquivoRetornoFacadeLocal.java
-/Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/service/ProcessaArquivoRetorno.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EstadoFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/ContaBancariaFacade.java
 /Users/rennan.lima/NetBeansProjects/sion/sion-ejb/src/main/java/br/ufac/sion/dao/EmpresaFacadeLocal.java
