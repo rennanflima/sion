@@ -6,13 +6,18 @@
 package br.ufac.sion.controller;
 
 import br.ufac.sion.exception.ArquivoRetornoException;
-import br.ufac.sion.service.ArquivoRetornoService;
+import br.ufac.sion.model.BancosSuportados;
+import br.ufac.sion.model.Concurso;
+import br.ufac.sion.service.retorno.ArquivoRetornoBradescoService;
+import br.ufac.sion.service.retorno.ArquivoRetornoCaixaService;
 import br.ufac.sion.service.util.ArquivoRetornoDetalhe;
+import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -24,14 +29,19 @@ import org.primefaces.model.UploadedFile;
 public class ArquivoRetornoBean {
 
     @EJB
-    private ArquivoRetornoService arquivoRetornoService;
+    private ArquivoRetornoBradescoService arquivoRetornoBradescoService;
+    @EJB
+    private ArquivoRetornoCaixaService arquivoRetornoCaixaService;
 
     private ArquivoRetornoDetalhe arquivoRetornoDetalhe;
+
+    private Concurso concurso;
 
     private UploadedFile arquivo;
 
     public ArquivoRetornoBean() {
         this.arquivoRetornoDetalhe = null;
+        recuperaConcursoSessao();
     }
 
     public ArquivoRetornoDetalhe getArquivoRetornoDetalhe() {
@@ -47,10 +57,16 @@ public class ArquivoRetornoBean {
     }
 
     public void upload() {
+        BancosSuportados banco = concurso.getContaBancaria().getBanco();
         try {
             if (arquivo != null) {
                 System.out.println("Arquivo: " + arquivo.getFileName());
-                this.arquivoRetornoDetalhe = arquivoRetornoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
+                if (banco.equals(BancosSuportados.BANCO_BRADESCO)) {
+                    this.arquivoRetornoDetalhe = this.arquivoRetornoBradescoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
+                } else if (banco.equals(BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
+                    this.arquivoRetornoDetalhe = this.arquivoRetornoCaixaService.carregar(arquivo.getFileName(), arquivo.getInputstream());
+                }
+                // this.arquivoRetornoDetalhe = processaArquivoRetorno.carregar(concurso, arquivo.getFileName(), arquivo.getInputstream());
                 FacesUtil.addSuccessMessage("Inscrições confirmadas com sucesso!");
             } else {
                 throw new ArquivoRetornoException("Arquivo não enviado");
@@ -62,6 +78,11 @@ public class ArquivoRetornoBean {
 
     public boolean isDetalhe() {
         return this.arquivoRetornoDetalhe != null;
+    }
+
+    public void recuperaConcursoSessao() {
+        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
 
 }

@@ -10,7 +10,6 @@ import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.exception.NegocioException;
-import br.ufac.sion.model.Usuario;
 import br.ufac.sion.util.EnviaEmail;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

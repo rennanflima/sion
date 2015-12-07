@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-public class ArquivoRetornoTest {
+public class ArquivoRetornoBradescoTest {
 
     @Test
     public void deve_retornar_valor_total_transacoes() {

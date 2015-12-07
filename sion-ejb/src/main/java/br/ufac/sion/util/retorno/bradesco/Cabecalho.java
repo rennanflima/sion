@@ -6,54 +6,54 @@ import org.jrimum.texgit.Record;
 
 public class Cabecalho {
 
-	private Record registro;
+    private Record registro;
 
-	public Cabecalho(Record registro) {
-		if (registro != null) {
-			this.registro = registro;
-		} else {
-			throw new IllegalArgumentException("Registro de cabeçalho não informado.");
-		}
-	}
+    public Cabecalho(Record registro) {
+        if (registro != null) {
+            this.registro = registro;
+        } else {
+            throw new IllegalArgumentException("Registro de cabeçalho não informado.");
+        }
+    }
 
-	public String getLiteralRetorno() {
-		return registro.getValue("LiteralRetorno");
-	}
+    public String getLiteralRetorno() {
+        return registro.getValue("LiteralRetorno");
+    }
 
-	public String getCodigoDeServico() {
-		return registro.getValue("CodigoDeServico");
-	}
+    public String getCodigoDeServico() {
+        return registro.getValue("CodigoDeServico");
+    }
 
-	public String getLiteralServico() {
-		return registro.getValue("LiteralServico");
-	}
+    public String getLiteralServico() {
+        return registro.getValue("LiteralServico");
+    }
 
-	public String getCodigoDaEmpresa() {
-		return registro.getValue("CodigoDaEmpresa");
-	}
+    public String getCodigoDaEmpresa() {
+        return registro.getValue("CodigoDaEmpresa");
+    }
 
-	public String getNomeDaEmpresa() {
-		return registro.getValue("NomeDaEmpresa");
-	}
+    public String getNomeDaEmpresa() {
+        return registro.getValue("NomeDaEmpresa");
+    }
 
-	public String getCodigoCompensacao() {
-		return registro.getValue("CodigoCompensacao");
-	}
+    public String getCodigoCompensacao() {
+        return registro.getValue("CodigoCompensacao");
+    }
 
-	public String getNomeBanco() {
-		return registro.getValue("NomeBanco");
-	}
+    public String getNomeBanco() {
+        return registro.getValue("NomeBanco");
+    }
 
-	public Date getDataGravacaoArquivo() {
-		return registro.getValue("DataGravacaoArquivo");
-	}
+    public Date getDataGravacaoArquivo() {
+        return registro.getValue("DataGravacaoArquivo");
+    }
 
-	public String getNumeroDoAvisoBancario() {
-		return registro.getValue("NumeroDoAvisoBancario");
-	}
+    public String getNumeroDoAvisoBancario() {
+        return registro.getValue("NumeroDoAvisoBancario");
+    }
 
-	public Date getDataDoCredito() {
-		return registro.getValue("DataDoCredito");
-	}
+    public Date getDataDoCredito() {
+        return registro.getValue("DataDoCredito");
+    }
 
 }
