@@ -25,6 +25,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -126,8 +127,9 @@ public class ListaInscritosBean implements Serializable {
     public void confirmaInscricao() {
         try {
             inscricaoService.confirmaInscricao(inscricao);
-            FacesUtil.addSuccessMessage("Inscrição de número '" + inscricao + "' foi confirmada com sucesso.");
+            FacesUtil.addSuccessMessage("Inscrição de número '" + inscricao.getNumero() + "' foi confirmada com sucesso.");
             this.inscricao = new Inscricao();
+            RequestContext.getCurrentInstance().execute("PF('confirmacaoDialog').hide();");
         } catch (NegocioException ex) {
             FacesUtil.addErrorMessage(ex.getMessage());
         }

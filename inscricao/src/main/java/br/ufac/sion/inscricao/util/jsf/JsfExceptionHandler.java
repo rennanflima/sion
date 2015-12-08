@@ -18,12 +18,16 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
  * @author Rennan
  */
 public class JsfExceptionHandler extends ExceptionHandlerWrapper {
+    
+    private static Log log = LogFactory.getLog(JsfExceptionHandler.class);
 
     private ExceptionHandler wrapped;
 
@@ -62,6 +66,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
                     FacesUtil.addErrorMessage(arquivoRetornoException.getMessage());
                 } else {
                     handled = true;
+                    log.error("Erro de sistema (inscricao): " + exception.getMessage(), exception);
                     redirect("/Erro.xhtml");
                 }
             } finally {

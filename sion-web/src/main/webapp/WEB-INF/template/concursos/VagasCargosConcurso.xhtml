@@ -29,7 +29,8 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
-        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"
+                     onkeypress="return SomenteNumero(event)" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:spacer/>
         <h:panelGroup>

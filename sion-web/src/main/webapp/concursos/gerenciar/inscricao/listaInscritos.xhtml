@@ -84,28 +84,26 @@
 
                 <p:column style="width: 200px; text-align: center;">
                     <p:button icon="ui-icon-contact" title="Ficha de Inscrição" value="Ficha de inscrição" style="font-size: 12px; margin-right: 5px; margin-bottom: 5px;"/>
-                    <p:commandButton icon="ui-icon-check" title="Confirmar inscrição" value="Confirmar inscrição" update=":frmInscritos:frmJustificativa"
-                                     style="font-size: 12px;" onclick="PF('confirmacaoDialog').show();" disabled="#{inscricao.confirmada}">
+                    <p:commandButton icon="ui-icon-check" title="Confirmar inscrição" value="Confirmar inscrição" update=":frmJustificativa"
+                                     style="font-size: 12px;" oncomplete="PF('confirmacaoDialog').show();" disabled="#{inscricao.confirmada}">
                         <f:setPropertyActionListener target="#{listaInscritosBean.inscricao}" value="#{inscricao}"/>
                     </p:commandButton>
                 </p:column>
 
             </p:dataTable>
-            
-            <p:dialog header="Justificativa da confirmação" widgetVar="confirmacaoDialog" modal="true" width="300" resizable="false">
-                <h:form id="frmJustificativa">
-                    <h:outputText value="Numero: #{inscricao.numero}"/>
-                    <p:inputTextarea id="justificativa" value="#{inscricao.motivoConfirmacao}" required="true" rows="7" cols="33"
-                                     style="margin-top: 20px;"/>
-
-                    <p:commandButton action="#{listaInscritosBean.confirmaInscricao()}" update="frmJustificativa :frmInscritos:inscricoesTable" value="Confirmar" onsuccess="PF('confirmacaoDialog').hide();"/>
-                    <p:commandButton value="Cancelar" action="#{listaInscritosBean.limparInscricao()}" oncomplete="PF('confirmacaoDialog').hide();"/>
-                </h:form>
-            </p:dialog> 
-            
         </h:form>   
+
+        <p:dialog header="Justificativa de confirmação" widgetVar="confirmacaoDialog" modal="true" width="300" resizable="false" closable="false">
+            <h:form id="frmJustificativa">
+                <p:inputTextarea id="justificativa" value="#{listaInscritosBean.inscricao.justificativaStatus}" required="true" rows="8" cols="33"
+                                 style="margin-top: 20px; margin-bottom: 20px" requiredMessage="A justificativa de confirmação da inscrição é obrigatória."/>
+
+                <p:commandButton action="#{listaInscritosBean.confirmaInscricao()}" update="@form :frmInscritos:inscricoesTable" value="Confirmar" />
+                <p:commandButton value="Cancelar" action="#{listaInscritosBean.limparInscricao()}" oncomplete="PF('confirmacaoDialog').hide();"
+                                 immediate="true" process="@this" style="margin-left: 5px;"/>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
-
-
 
 </ui:composition>

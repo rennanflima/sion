@@ -203,10 +203,9 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public Long encontrarQuantidadeDeInscricoesNaoConfirmadas(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status != :confirmada OR status != :judice", Long.class)
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :situacao", Long.class)
                 .setParameter("concurso", concurso)
-                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
-                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
+                .setParameter("situacao", SituacaoInscricao.AGUARDANDO_PAGAMENTO)
                 .getSingleResult();
     }
 

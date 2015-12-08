@@ -75,8 +75,9 @@ public class InscricaoService {
     }
     
     public void confirmaInscricao(Inscricao inscricao) throws NegocioException{
-        if(StringUtils.isNotBlank(inscricao.getMotivoConfirmacao())){
+        if(StringUtils.isNotBlank(inscricao.getJustificativaStatus())){
             inscricao.setStatus(SituacaoInscricao.CONFIRMADA);
+            inscricao.setDataJustificativaStatus(LocalDateTime.now());
             em.merge(inscricao);
         }else{
             throw new NegocioException("A justificativa é obrigatória");

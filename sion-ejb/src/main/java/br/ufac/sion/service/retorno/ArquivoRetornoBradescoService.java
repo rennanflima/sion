@@ -86,7 +86,8 @@ if(ar == null){
             if (cobranca != null) {
                 if (t.getValorPago().compareTo(cobranca.getValor()) >= 0) {
                     cobranca.getSacado().setStatus(SituacaoInscricao.CONFIRMADA);
-                    cobranca.getSacado().setMotivoConfirmacao("Confirmação automática (via arquivo de retorno)");
+                    cobranca.getSacado().setJustificativaStatus("Confirmação automática (via arquivo de retorno)");
+                    cobranca.getSacado().setDataJustificativaStatus(LocalDateTime.now());
                     cobranca.setSituacao(SituacaoBoleto.PAGO);
                     cobranca.setDataPagamento(DateConversor.convertDateToLocalDate(t.getDataDoCredito()));
                     cobranca.setValorPago(t.getValorPago());

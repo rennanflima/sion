@@ -9,6 +9,7 @@
         <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
         <title>Login</title>
         <h:outputStylesheet library="css" name="sistema.css" />
+        <h:outputScript library="js" name="jquery.maskMoney.js"/>
     </h:head>
     <h:body>
         <f:metadata>
@@ -25,7 +26,7 @@
 
                 <h:panelGrid columns="2" styleClass="grid-login">
                     <p:outputLabel value="CPF" />
-                    <p:inputText size="30" id="j_username" value="#{loginBean.username}" />
+                    <p:inputText size="30" id="j_username" value="#{loginBean.username}" onkeypress="return SomenteNumero(event)" />
 
                     <p:outputLabel value="Senha" />
                     <p:password size="30" id="j_password" />

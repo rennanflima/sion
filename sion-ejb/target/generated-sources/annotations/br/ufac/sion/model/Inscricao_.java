@@ -13,12 +13,13 @@ public abstract class Inscricao_ {
 	public static volatile SingularAttribute<Inscricao, Boolean> concordoEdital;
 	public static volatile SingularAttribute<Inscricao, String> numero;
 	public static volatile SingularAttribute<Inscricao, LocalDateTime> dataInscricao;
+	public static volatile SingularAttribute<Inscricao, String> justificativaStatus;
 	public static volatile SingularAttribute<Inscricao, Boleto> boleto;
-	public static volatile SingularAttribute<Inscricao, String> motivoConfirmacao;
 	public static volatile SingularAttribute<Inscricao, NecessidadeEspecial> necessidadeEspecial;
 	public static volatile SingularAttribute<Inscricao, CargoConcurso> cargoConcurso;
 	public static volatile SingularAttribute<Inscricao, Long> id;
 	public static volatile SingularAttribute<Inscricao, Candidato> candidato;
+	public static volatile SingularAttribute<Inscricao, LocalDateTime> dataJustificativaStatus;
 	public static volatile SingularAttribute<Inscricao, SituacaoInscricao> status;
 
 }

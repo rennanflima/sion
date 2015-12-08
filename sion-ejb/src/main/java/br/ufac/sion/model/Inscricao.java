@@ -47,8 +47,10 @@ public class Inscricao implements Serializable {
     private NecessidadeEspecial necessidadeEspecial;
     @Enumerated(EnumType.STRING)
     private SituacaoInscricao status = SituacaoInscricao.AGUARDANDO_PAGAMENTO;
-    @Column(length = 100)
-    private String motivoConfirmacao;
+    @Column(length = 100, name = "justificativa_status")
+    private String justificativaStatus;
+    @Column(name="data_justificativa_status")
+    private LocalDateTime dataJustificativaStatus;
     @OneToOne(mappedBy = "sacado", cascade = CascadeType.ALL)
     private Boleto boleto;
     @ManyToOne
@@ -107,12 +109,20 @@ public class Inscricao implements Serializable {
         this.status = status;
     }
 
-    public String getMotivoConfirmacao() {
-        return motivoConfirmacao;
+    public String getJustificativaStatus() {
+        return justificativaStatus;
     }
 
-    public void setMotivoConfirmacao(String motivoConfirmacao) {
-        this.motivoConfirmacao = motivoConfirmacao;
+    public void setJustificativaStatus(String justificativaStatus) {
+        this.justificativaStatus = justificativaStatus;
+    }
+
+    public LocalDateTime getDataJustificativaStatus() {
+        return dataJustificativaStatus;
+    }
+
+    public void setDataJustificativaStatus(LocalDateTime dataJustificativaStatus) {
+        this.dataJustificativaStatus = dataJustificativaStatus;
     }
 
     public Boleto getBoleto() {
