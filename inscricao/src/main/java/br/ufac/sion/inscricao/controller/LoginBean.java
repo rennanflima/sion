@@ -1,7 +1,7 @@
 package br.ufac.sion.inscricao.controller;
 
-import br.ufac.sion.util.jsf.FacesProducer;
-import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.inscricao.util.jsf.FacesProducer;
+import br.ufac.sion.inscricao.util.jsf.FacesUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;

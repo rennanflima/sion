@@ -55,7 +55,7 @@ public class VagaConverter implements Converter {
     private VagaFacadeLocal lookupVagaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (VagaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/VagaFacade");
+            return (VagaFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/VagaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

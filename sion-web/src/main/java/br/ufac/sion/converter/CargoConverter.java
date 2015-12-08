@@ -54,7 +54,7 @@ public class CargoConverter implements Converter {
     private CargoFacadeLocal lookupVagaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CargoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoFacade");
+            return (CargoFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/CargoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

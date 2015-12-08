@@ -5,7 +5,10 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Usuario;
+import br.ufac.sion.util.GeraSenha;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -21,6 +24,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
 
+    private GeraSenha geraSenha;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -43,6 +48,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
             System.out.println("Nenhum usuário econtrado com o e-mail informado.");
         }
         return usuario;
+    }
+    
+    public void alterarSenha(String oldSenha, String senha, Usuario usuario) throws NegocioException {
+        String temp;
+        temp = new GeraSenha().ecripta(oldSenha);
+        if (temp.equals(usuario.getSenha())) {
+            usuario.setSenha(new GeraSenha().ecripta(senha));
+            em.merge(usuario);
+        } else {
+            throw new NegocioException("Sua senha antiga não corresponde a que está cadastrada");
+        }
     }
 
 }

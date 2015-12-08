@@ -53,7 +53,7 @@ public class CConcursoConverter implements Converter {
     private CargoConcursoFacadeLocal lookupCargoConcursoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CargoConcursoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoConcursoFacade");
+            return (CargoConcursoFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/CargoConcursoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

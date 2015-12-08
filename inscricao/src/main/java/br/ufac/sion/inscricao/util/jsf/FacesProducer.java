@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.util.jsf;
+package br.ufac.sion.inscricao.util.jsf;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

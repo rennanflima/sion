@@ -16,7 +16,7 @@
     
     <factory>
         <exception-handler-factory>
-            br.ufac.sion.util.jsf.JsfExceptionHandlerFactory
+            br.ufac.sion.inscricao.util.jsf.JsfExceptionHandlerFactory
         </exception-handler-factory>
     </factory>
     

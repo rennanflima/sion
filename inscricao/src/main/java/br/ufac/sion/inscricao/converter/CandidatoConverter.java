@@ -54,7 +54,7 @@ public class CandidatoConverter implements Converter {
     private CandidatoFacadeLocal lookupCandidatoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
+            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

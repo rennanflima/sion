@@ -19,7 +19,6 @@
             <p:toolbar style="margin-top: 20px;">
                 <p:toolbarGroup>
                     <p:commandButton value="Pesquisar" update="inscricoesTable" process="@form" />
-                    <p:separator/>
                     <p:commandButton value="Limpar" update="inscricoesTable @form" action="#{listaInscritosConfirmadosBean.limparFiltro()}" />
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
@@ -37,7 +36,7 @@
                 </p:selectOneMenu>
                 
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60" value="#{listaInscritosConfirmadosBean.filtro.nome}"/>
+                <p:inputText id="nome" size="80" value="#{listaInscritosConfirmadosBean.filtro.nome}"/>
 
                 <p:outputLabel value="CPF" for="cpf"/>
                 <p:inputMask id="cpf" mask="999.999.999-99" value="#{listaInscritosConfirmadosBean.filtro.cpf}"/>

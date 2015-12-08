@@ -36,13 +36,13 @@ import org.apache.commons.io.FileUtils;
  * @author rennan.lima
  */
 @Stateless
-public class ArquivoRetornoBradescoService{
-
-    @EJB
-    private BoletoFacadeLocal boletoFacade;
+public class ArquivoRetornoBradescoService {
 
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
+
+    @EJB
+    private BoletoFacadeLocal boletoFacade;
 
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
@@ -56,13 +56,13 @@ public class ArquivoRetornoBradescoService{
             ArquivoRetornoBradesco arquivoRetorno = criarArquivoRetorno(fileName, inputstream);
             this.ard = new ArquivoRetornoDetalhe();
             this.ar = new ArquivoRetorno();
-if(ar == null){
-    System.out.println("arquivo retorno null");
-}
+            if (ar == null) {
+                System.out.println("arquivo retorno null");
+            }
             this.ar.setNome(fileName);
             this.ar.setDataUpload(LocalDateTime.now());
             this.ar = em.merge(ar);
-            
+
             carregarMensagens(arquivoRetorno);
 
             carregarTitulos(arquivoRetorno);

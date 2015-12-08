@@ -21,13 +21,13 @@ import org.hibernate.validator.constraints.Email;
  *
  * @author rennan.lima
  */
-@Entity
+@Entity(name = "funcionario")
 public class Funcionario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     @Column(nullable = false, unique = true)
     private Integer matricula;

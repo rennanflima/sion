@@ -6,8 +6,6 @@
 package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.ContaBancariaFacadeLocal;
-import br.ufac.sion.dao.ContaBancariaFacadeLocal;
-import br.ufac.sion.model.ContaBancaria;
 import br.ufac.sion.model.ContaBancaria;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +54,7 @@ public class ContaConverter implements Converter {
     private ContaBancariaFacadeLocal lookupVagaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (ContaBancariaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/ContaBancariaFacade");
+            return (ContaBancariaFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/ContaBancariaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

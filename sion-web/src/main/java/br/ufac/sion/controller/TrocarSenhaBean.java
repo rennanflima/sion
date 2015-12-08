@@ -6,8 +6,10 @@
 package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.FuncionarioFacadeLocal;
+import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Funcionario;
+import br.ufac.sion.model.Usuario;
 import br.ufac.sion.security.UsuarioSistema;
 import br.ufac.sion.service.FuncionarioService;
 import br.ufac.sion.util.jsf.FacesUtil;
@@ -30,6 +32,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class TrocarSenhaBean implements Serializable {
 
     @EJB
+    private UsuarioFacadeLocal usuarioFacade;
+
+    @EJB
     private FuncionarioFacadeLocal funcionarioFacade;
 
     @EJB
@@ -40,11 +45,12 @@ public class TrocarSenhaBean implements Serializable {
     private Integer mat;
     private String senha;
     private String oldSenha;
+    private Usuario usuario;
 
     @PostConstruct
     public void inicializar() {
         if (getUsuarioLogado() != null) {
-            this.funcionario = funcionarioFacade.findByLogin(getUsuarioLogado().getUsuario().getLogin());
+            this.usuario = usuarioFacade.findByLogin(getUsuarioLogado().getUsuario().getLogin());
         }
     }
 
@@ -90,7 +96,7 @@ public class TrocarSenhaBean implements Serializable {
 
     public void trocarSenha() {
         try {
-            funcionarioService.alterarSenha(oldSenha, senha, funcionario);
+            usuarioFacade.alterarSenha(oldSenha, senha, usuario);
             FacesUtil.addSuccessMessage("Sua senha foi alterada com sucesso.");
         } catch (NegocioException ex) {
             FacesUtil.addErrorMessage(ex.getMessage());

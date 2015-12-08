@@ -2,9 +2,6 @@ package br.ufac.sion.inscricao.security;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.model.Candidato;
-import br.ufac.sion.model.Grupo;
-import br.ufac.sion.model.Candidato;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -46,7 +43,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private CandidatoFacadeLocal lookupCandidatoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
+            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

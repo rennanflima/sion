@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.dao;
 
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,7 +24,9 @@ public interface UsuarioFacadeLocal {
     public Usuario findById(Long id);
 
     public List<Usuario> findAll();
-    
+
     public Usuario findByLogin(String login);
+
+    public void alterarSenha(String oldSenha, String senha, Usuario usuario) throws NegocioException;
 
 }

@@ -53,17 +53,6 @@ public class FuncionarioService {
         }
     }
 
-    public void alterarSenha(String oldSenha, String senha, Funcionario funcionario) throws NegocioException {
-        String temp;
-        temp = new GeraSenha().ecripta(oldSenha);
-        if (temp.equals(funcionario.getUsuario().getSenha())) {
-            funcionario.getUsuario().setSenha(new GeraSenha().ecripta(senha));
-            em.merge(funcionario);
-        } else {
-            throw new NegocioException("Sua senha antiga não corresponde a que está cadastrada");
-        }
-    }
-
     public void esquecerSenha(Integer mat, String login) throws NegocioException {
         email = new EnviaEmail();
         geraSenha = new GeraSenha();
