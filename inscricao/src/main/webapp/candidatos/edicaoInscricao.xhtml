@@ -23,11 +23,8 @@
             <p:messages autoUpdate="true" closable="true" />
 
             <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{edicaoInscricaoBean.salvar()}" update="@form"/>
-                </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
+                    <p:button value="Inscrições abertas" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -39,7 +36,7 @@
 
                 <p:outputLabel value="Número de Inscrição:" rendered="#{edicaoInscricaoBean.editando}"/>
                 <h:outputText value="#{edicaoInscricaoBean.inscricao.numero}" rendered="#{edicaoInscricaoBean.editando}"/>
-                
+
                 <p:outputLabel value="Lotação" for="local"/>
                 <p:selectOneMenu id="local" value="#{edicaoInscricaoBean.local}" >
                     <f:selectItem itemLabel="Selecione local de lotação..."/>
@@ -47,7 +44,7 @@
                                    itemValue="#{l}" itemLabel="#{l.nome}"/>
                     <p:ajax event="change" process="@this" update="nivel cargoC valor" listener="#{edicaoInscricaoBean.carregarNiveis()}"/>
                 </p:selectOneMenu>
-                
+
                 <p:outputLabel value="Nível" for="nivel"/>
                 <p:selectOneMenu id="nivel" value="#{edicaoInscricaoBean.nivel}" >
                     <f:selectItem itemLabel="Selecione um nível..."/>
@@ -74,20 +71,26 @@
                 <p:panelGrid columns="2" id="painelPNE" style="width: 100%; margin-top: 10px;"
                              columnClasses="rotulo, campo">
                     <p:outputLabel value="É pessoa com necessidade especial?" for="portador" />
-                    <p:selectBooleanButton id="portador" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.portador}" onLabel="Sim" offLabel="Não" style="width:60px">
-                        <p:ajax event="change" process="@this" update="qualPNE"/>
-                    </p:selectBooleanButton>
+                    <h:panelGroup>
+                        <p:selectBooleanButton id="portador" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.portador}" onLabel="Sim" offLabel="Não" style="width:60px">
+                            <p:ajax event="change" process="@this" update="qualPNE"/>
+                        </p:selectBooleanButton>
+                        <h:outputText value="(Clique para alterar)" style="margin-left: 15px; font-size: 10px;" />
+                    </h:panelGroup>
 
-                    <p:outputLabel value="Se possui, qual?" for="qualPNE"/>
+                    <p:outputLabel value="Qual necessidade especial?" for="qualPNE" />
                     <p:inputText id="qualPNE" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.qualNecessidadeEspecial}" size="60"
                                  disabled="#{!edicaoInscricaoBean.inscricao.necessidadeEspecial.portador}"/>
 
                     <p:outputLabel value="Necessita de atendimento especial para a prova?" for="atendeEspecial" />
-                    <p:selectBooleanButton id="atendeEspecial" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}" onLabel="Sim" offLabel="Não" style="width:60px">
-                        <p:ajax event="change" process="@this" update="qualAtendeEspecial"/>
-                    </p:selectBooleanButton>
+                    <h:panelGroup>
+                        <p:selectBooleanButton id="atendeEspecial" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}" onLabel="Sim" offLabel="Não" style="width:60px">
+                            <p:ajax event="change" process="@this" update="qualAtendeEspecial"/>
+                        </p:selectBooleanButton>
+                        <h:outputText value="(Clique para alterar)" style="margin-left: 15px; font-size: 10px;" />
+                    </h:panelGroup>
 
-                    <p:outputLabel value="Se possui, qual?" for="qualAtendeEspecial"/>
+                    <p:outputLabel value="Qual atendimento especial?" for="qualAtendeEspecial"/>
                     <p:inputText id="qualAtendeEspecial" value="#{edicaoInscricaoBean.inscricao.necessidadeEspecial.qualAtendimento}" size="60"
                                  disabled="#{!edicaoInscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}"/>
                 </p:panelGrid>
@@ -103,6 +106,7 @@
                 <h:outputText value="Observação" style="font-weight: bold" />
                 <h:outputText value="Caso seus dados não estejam no boleto, gere-o novamente. Não nos responsabilizamos por boletos sem dados pessoais."/>
             </p:panelGrid>
+            <p:commandButton value="Salvar" id="botaoSalvar" action="#{edicaoInscricaoBean.salvar()}" update="@form" style="margin-top: 20px"/>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -18,11 +18,11 @@ public class NecessidadeEspecial implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private boolean portador;
+    private boolean portador = false;
     @Column(name = "qual_pne")
     private String qualNecessidadeEspecial;
     @Column(name = "necessita_atendimento")
-    private boolean necessitaAtendimento;
+    private boolean necessitaAtendimento = false;
     @Column(name = "qual_atendimento")
     private String qualAtendimento;
 

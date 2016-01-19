@@ -20,7 +20,7 @@
 
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
-                    <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block; margin: 0 auto;">
+                    <p:commandButton value="Imprimir comprovante" type="button" icon="ui-icon-print" style="display:block; margin: 0 auto;">
                         <p:printer target="comprovanteInsc" />
                     </p:commandButton>
                 </p:toolbarGroup>
@@ -81,10 +81,19 @@
                 </p:panelGrid>
 
                 <div style="text-align: center; margin-top: 15px;">
-                    <p:commandButton icon="ui-icon-pencil" value="Emitir Boleto Bancário" ajax="false" actionListener="#{comprovanteInscricaoBean.emitir()}" rendered="#{!comprovanteInscricaoBean.confirmada}"/>
+                    <p:commandButton icon="ui-icon-pencil" value="Emitir Boleto Bancário" ajax="false" onclick="PF('dlgBoleto').show();"
+                                     actionListener="#{comprovanteInscricaoBean.emitir()}" rendered="#{!comprovanteInscricaoBean.confirmada}"/>
 
                 </div>
             </p:panel>
+
+            <p:dialog header="Aviso boleto" widgetVar="dlgBoleto" modal="true" height="100" closable="false" resizable="false">
+                <h:outputText value="Download iniciado!" />
+                
+                <div style="text-align: center; margin-top: 10px;">
+                    <p:commandButton value="OK" immediate="true" process="@this" onclick="PF('dlgBoleto').hide();" />
+                </div>
+            </p:dialog>
         </h:form>
     </ui:define>
 

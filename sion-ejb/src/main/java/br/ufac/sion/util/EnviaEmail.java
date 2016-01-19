@@ -27,17 +27,17 @@ public class EnviaEmail {
         /**
          * Parâmetros de conexão com servidor Gmail
          */
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.host", "maildr.sesc.com.br");
+        props.put("mail.smtp.socketFactory.port", "25");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.port", "25");
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
 
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("noreplay@gmail.com", "122");
+                        return new PasswordAuthentication("processoseletivo@ac.sesc.com.br", "srh@123");
                     }
                });
         
@@ -48,7 +48,7 @@ public class EnviaEmail {
         session.setDebug(true);
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("noreplay@gmail.com")); //Remetente
+            message.setFrom(new InternetAddress("processoseletivo@ac.sesc.com.br")); //Remetente
 
             Address[] toUser = InternetAddress //Destinatário(s)
                     .parse(para);

@@ -16,6 +16,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -24,6 +26,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CadastroSetorBean implements Serializable {
+    
+    private static Log log = LogFactory.getLog(CadastroSetorBean.class);
 
     @EJB
     private CargoFacadeLocal cargoFacade;
@@ -80,6 +84,7 @@ public class CadastroSetorBean implements Serializable {
             FacesUtil.addSuccessMessage("Setor salvo com sucesso!");
             limpar();
         } catch (Exception e) {
+            log.error("Erro de sistema (sion-web): " + e.getMessage(), e);
             FacesUtil.addErrorMessage("Erro ao salvar o setor: " + e.getMessage());
         }
     }

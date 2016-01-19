@@ -71,7 +71,8 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
 
     private Boleto criarBoleto(Empresa cedenteSistema, br.ufac.sion.model.Boleto cobrancaSistema) {
         ContaBancaria contaBancaria = criarContaBancaria(cobrancaSistema);
-        Sacado sacado = new Sacado(cobrancaSistema.getSacado().getCandidato().getNome() + " - CPF: " + cobrancaSistema.getSacado().getCandidato().getCpf());
+        Sacado sacado = new Sacado(cobrancaSistema.getSacado().getCandidato().getNome() + " - CPF: " + cobrancaSistema.getSacado().getCandidato().getCpf()
+                + " / Cargo: " + cobrancaSistema.getSacado().getCargoConcurso().getCodigo() + " - " + cobrancaSistema.getSacado().getCargoConcurso().getCargo().getDescricao());
         Cedente cedente = new Cedente(cedenteSistema.getNomeFantasia() + " - " + cedenteSistema.getSigla(), cedenteSistema.getCnpj());
 
         Titulo titulo = criarTitulo(contaBancaria, sacado, cedente, cobrancaSistema);
