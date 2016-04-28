@@ -52,8 +52,9 @@
 
                 <p:column style="width: 150px; text-align: center;">
                     <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="/concursos/gerenciar/home"
-                                     actionListener="#{pesquisaConcursoBean.guardaConcursoSessao(concurso)}" />
-                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso">
+                                     actionListener="#{pesquisaConcursoBean.guardaConcursoSessao(concurso)}" >
+                    </p:commandButton>
+                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >
                         <f:param name="concurso" value="#{concurso.id}"/>
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"

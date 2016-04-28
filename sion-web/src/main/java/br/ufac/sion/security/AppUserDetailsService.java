@@ -48,7 +48,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private UsuarioFacadeLocal lookupUsuarioFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/UsuarioFacade");
+            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/UsuarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -16,7 +16,7 @@
             <f:event listener="#{edicaoCandidatoBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
-        <h:form>
+        <h:form style="padding-bottom: 30px">
             <h1>#{edicaoCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
@@ -157,8 +157,12 @@
                     <p:inputText id="email" required="true" value="#{edicaoCandidatoBean.candidato.email}" label="E-mail" size="50" maxlength="60" />
                 </p:panelGrid>
 
-
             </p:fieldset>
+
+            <div style="float: right; margin-top: 15px">
+                <p:commandButton value="Salvar" id="botaoSalvar2" action="#{edicaoCandidatoBean.salvar()}" update="@form"/>
+                <p:button value="Página Inicial" outcome="/home"/>
+            </div>
 
         </h:form>
     </ui:define>

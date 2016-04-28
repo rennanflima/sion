@@ -392,9 +392,9 @@ public class CadastroConcursoBean implements Serializable {
     }
     
     public String onFlowProcess(FlowEvent event){
-        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas") || event.getNewStep().equals("confirmacaoConcurso")){
-            salvar();
-        }
+//        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas") || event.getNewStep().equals("confirmacaoConcurso")){
+//            salvar();
+//        }
         return event.getNewStep();
     }
 

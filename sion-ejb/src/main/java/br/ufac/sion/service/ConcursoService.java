@@ -9,15 +9,15 @@ import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
 import br.ufac.sion.exception.NegocioException;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.ScheduleExpression;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
-import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,30 +43,27 @@ public class ConcursoService {
 
         if (concurso.isNovo()) {
             concurso.setStatus(StatusConcurso.AUTORIZADO);
-        }
-        if (concurso.isInscricoesAberta()) {
+        } else if (concurso.isInscricoesAberta()) {
             concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
-        } else {
-            if (concurso.isInscricoesFechadas()) {
-                concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
-            } else if (concurso.isAutorizado()) {
-                concurso.setStatus(StatusConcurso.AUTORIZADO);
-            }
+        } else if (concurso.isInscricoesFechadas()) {
+            concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+        } else if (concurso.isAutorizado()) {
+            concurso.setStatus(StatusConcurso.AUTORIZADO);
         }
+
         if (concurso.getDataTerminoIncricao().isBefore(concurso.getDataInicioInscricao())) {
             throw new NegocioException("A data de termíno das inscrição deve ser maior que a data de início das inscrições");
         }
 
         try {
             concurso = em.merge(concurso);
-            if (concurso.isAutorizado() || concurso.isInscricoesAberta()) {
-                cancelarAgendamentoIncricaoAberta(concurso);
+            if (now.isBefore(concurso.getDataInicioInscricao())) {
                 criarAgendamento(concurso.getDataInicioInscricao(), "abreInscricao" + concurso.getId());
-            } else if (concurso.isAutorizado() || concurso.isInscricoesAberta() || concurso.isInscricoesFechadas()) {
-                cancelarAgendamentoIncricaoFechada(concurso);
-                criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao" + concurso.getId());
             }
 
+            if (now.isBefore(concurso.getDataTerminoIncricao())) {
+                criarAgendamento(concurso.getDataTerminoIncricao(), "fechaInscricao" + concurso.getId());
+            }
             return concurso;
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
@@ -78,59 +75,28 @@ public class ConcursoService {
         return c;
     }
 
-    private void cancelarAgendamentoIncricaoAberta(Concurso concurso) {
-        for (Timer timer : timerService.getAllTimers()) {
-            if (timer.getInfo().equals("abreInscricao" + concurso.getId())) {
-                timer.cancel();
-            }
-        }
-    }
-
-    private void cancelarAgendamentoIncricaoFechada(Concurso concurso) {
-        for (Timer timer : timerService.getAllTimers()) {
-            if (timer.getInfo().equals("fechaInscricao" + concurso.getId())) {
-                timer.cancel();
-            }
-        }
-    }
-
-    private void criarAgendamento(LocalDateTime dataHora, String nomeAgendamento) {
-        ScheduleExpression expression = new ScheduleExpression();
-        expression.dayOfMonth(dataHora.getDayOfMonth());
-        expression.month(dataHora.getMonth().getValue());
-        expression.year(dataHora.getYear());
-        expression.hour(dataHora.getHour());
-        expression.minute(dataHora.getMinute());
-        this.timerService.createCalendarTimer(expression, new TimerConfig(nomeAgendamento, true));
+    private void criarAgendamento(LocalDateTime fim, String nomeAgendamento) {
+        LocalDateTime inicio = LocalDateTime.now();
+        Duration duracao = Duration.between(inicio, fim);
+        this.timerService.createTimer(duracao.toMillis(), nomeAgendamento);
     }
 
     @Timeout
-    private void timeOut(Timer timer) {
+    private void verificaInscricoes(Timer timer) {
+        System.out.println("Time Service : " + timer.getInfo());
+        System.out.println("Data da Execução : " + new Date());
         List<Concurso> concursos = this.concursoFacade.findAll();
         for (Concurso concurso : concursos) {
             if (timer.getInfo().equals("abreInscricao" + concurso.getId())) {
-                abreInscricao(concurso);
-            } else if (timer.getInfo().equals("fechaInscricao" + concurso.getId())) {
-                fechaInscricao(concurso);
-            }
-        }
-    }
-
-    private void abreInscricao(Concurso concurso) {
-        LocalDateTime now = LocalDateTime.now();
-        if (concurso.getStatus().equals(StatusConcurso.AUTORIZADO)) {
-            if (concurso.isInscricoesAberta()) {
                 concurso.setStatus(StatusConcurso.INSCRICOES_ABERTAS);
                 em.merge(concurso);
+                System.out.println("Abriu as incrições do Concurso : " + concurso.getTitulo());
+            } else if (timer.getInfo().equals("fechaInscricao" + concurso.getId())) {
+                concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
+                em.merge(concurso);
+                System.out.println("Encerrou as incrições do Concurso : " + concurso.getTitulo());
             }
         }
-    }
-
-    private void fechaInscricao(Concurso concurso) {
-        LocalDateTime now = LocalDateTime.now();
-        if (concurso.isInscricoesFechadas()) {
-            concurso.setStatus(StatusConcurso.INSCRICOES_ENCERRADAS);
-            em.merge(concurso);
-        }
+        System.out.println("____________________________________________");
     }
 }

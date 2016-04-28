@@ -54,7 +54,7 @@ public class LocalidadeConverter implements Converter {
     private LocalidadeFacadeLocal lookupLocalidadeFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (LocalidadeFacadeLocal) c.lookup("java:global/sion-ear-1.0-SNAPSHOT/sion-ejb-1.0-SNAPSHOT/LocalidadeFacade");
+            return (LocalidadeFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/LocalidadeFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

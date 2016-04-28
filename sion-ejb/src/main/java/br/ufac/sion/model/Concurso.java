@@ -162,7 +162,7 @@ public class Concurso implements Serializable {
     @Transient
     public boolean isInscricoesFechadas() {
         LocalDateTime now = LocalDateTime.now();
-        return now.isAfter(dataTerminoIncricao) && status.equals(StatusConcurso.INSCRICOES_ABERTAS);
+        return now.isEqual(dataTerminoIncricao) || now.isAfter(dataTerminoIncricao);
     }
 
     
