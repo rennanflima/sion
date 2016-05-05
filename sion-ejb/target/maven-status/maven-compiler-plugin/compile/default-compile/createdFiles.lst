@@ -78,6 +78,7 @@ br\ufac\sion\model\ContaBancaria.class
 br\ufac\sion\util\modulo11\GeradorDigitoVerificadorCaixa.class
 br\ufac\sion\model\Escolaridade.class
 br\ufac\sion\dao\NivelFacadeLocal.class
+br\ufac\sion\service\mdb\EnviaEmailMDB.class
 br\ufac\sion\model\Localidade.class
 br\ufac\sion\model\TipoTelefone.class
 br\ufac\sion\dao\ConcursoFacade.class
@@ -101,6 +102,7 @@ br\ufac\sion\model\Insencao.class
 br\ufac\sion\util\retorno\caixa\SegmentoT.class
 br\ufac\sion\util\WebServiceCep$XmlEnums.class
 br\ufac\sion\dao\LocalidadeFacade.class
+br\ufac\sion\service\EnviaEmailService.class
 br\ufac\sion\util\retorno\caixa\SumarioArquivo.class
 br\ufac\sion\dao\BoletoFacade.class
 br\ufac\sion\dao\CargoConcursoFacade.class
@@ -135,6 +137,7 @@ br\ufac\sion\model\Concurso_.class
 br\ufac\sion\dao\CargoVagaFacadeLocal.class
 br\ufac\sion\util\retorno\caixa\CabecalhoLote.class
 br\ufac\sion\model\Usuario_.class
+br\ufac\sion\service\util\InfoEmail.class
 br\ufac\sion\util\retorno\bradesco\Sumario.class
 br\ufac\sion\util\WebServiceCep$Xml$4.class
 br\ufac\sion\model\CargoConcurso.class
