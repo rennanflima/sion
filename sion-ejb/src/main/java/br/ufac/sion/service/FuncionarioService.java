@@ -12,6 +12,7 @@ import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.service.util.InfoEmail;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -50,8 +51,8 @@ public class FuncionarioService {
 
                 infoEmail.setPara(funcionario.getEmail());
                 infoEmail.setAssunto("Acesso ao SION");
-
-                enviaEmailService.processaEnvioDeEmail(infoEmail, funcionario.getNome(), funcionario.getUsuario().getLogin(), senha);
+                infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getNome(), funcionario.getUsuario().getLogin(), senha));
+                enviaEmailService.processaEnvioDeEmail(infoEmail);
             }
             em.merge(funcionario);
         } catch (Exception e) {
@@ -72,8 +73,8 @@ public class FuncionarioService {
 
                     infoEmail.setPara(funcionario.getEmail());
                     infoEmail.setAssunto("Recuperação de Senha");
-                    
-                    enviaEmailService.processaEnvioDeEmail(infoEmail, funcionario.getNome(), funcionario.getUsuario().getLogin(), senha);
+                    infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getNome(), funcionario.getUsuario().getLogin(), senha));
+                    enviaEmailService.processaEnvioDeEmail(infoEmail);
                 } else {
                     throw new NegocioException("O login informado não corresponde ao que foi cadastrado");
                 }
@@ -87,4 +88,15 @@ public class FuncionarioService {
         }
     }
 
+    private String geraCorpoEmailAcessoAdministrativo(String nome, String login, String senha) throws IOException {
+        InputStream stream = getClass().getResourceAsStream("/acesso.html");
+        byte[] acessoBytes = new byte[stream.available()];
+        stream.read(acessoBytes);
+        stream.close();
+        String body = new String(acessoBytes);
+        body = body.replaceAll("@@@NOME_USUARIO@@@", nome);
+        body = body.replaceAll("@@@LOGIN@@@", login);
+        body = body.replaceAll("@@@SENHA@@@", senha);
+        return body;
+    }
 }

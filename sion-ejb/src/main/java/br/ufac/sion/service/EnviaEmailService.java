@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.service;
 
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.service.util.InfoEmail;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -41,25 +43,18 @@ public class EnviaEmailService implements Serializable {
     private Queue emailQueue;
 
     @Inject
-    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
+    @JMSConnectionFactory("jms/emailQueueFactory")
     private JMSContext context;
 
     @Lock(LockType.WRITE)
-    public void processaEnvioDeEmail(InfoEmail infoEmail, String nome, String login, String senha) throws IOException {
-        infoEmail.setCorpo(geraCorpoEmail(nome, login, senha));
+    public void processaEnvioDeEmail(InfoEmail infoEmail) throws NegocioException{
+        if(infoEmail == null){
+            throw new NegocioException("Não foi possível enviar o e-mail. Conteúdo vázio!");
+        } else{
+            if(StringUtils.isBlank(infoEmail.getPara())){
+                throw new NegocioException("Não foi possível enviar o e-mail. Remetente inválido!");
+            }
+        }
         context.createProducer().send(emailQueue, infoEmail);
-    }
-
-    private String geraCorpoEmail(String nome, String login, String senha) throws IOException {
-        System.out.println("Caminho: " + getClass().getResourceAsStream("/acesso.html"));
-        InputStream stream = getClass().getResourceAsStream("/acesso.html");
-        byte[] acessoBytes = new byte[stream.available()];
-        stream.read(acessoBytes);
-        stream.close();
-        String body = new String(acessoBytes);
-        body = body.replaceAll("@@@NOME_USUARIO@@@", nome);
-        body = body.replaceAll("@@@LOGIN@@@", login);
-        body = body.replaceAll("@@@SENHA@@@", senha);
-        return body;
     }
 }

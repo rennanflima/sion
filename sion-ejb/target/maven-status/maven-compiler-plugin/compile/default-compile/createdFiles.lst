@@ -14,7 +14,6 @@ br\ufac\sion\model\CargoVaga_.class
 br\ufac\sion\model\Setor_.class
 br\ufac\sion\model\Candidato.class
 br\ufac\sion\dao\InscricaoFacadeLocal.class
-br\ufac\sion\util\EnviaEmail$1.class
 br\ufac\sion\dao\InscricaoFacade.class
 br\ufac\sion\dao\LocalidadeFacadeLocal.class
 br\ufac\sion\model\Estado.class
@@ -61,7 +60,6 @@ br\ufac\sion\exception\ArquivoRetornoException.class
 br\ufac\sion\dao\CargoFacade.class
 br\ufac\sion\dao\CidadeFacade.class
 br\ufac\sion\util\WebServiceCep$1.class
-br\ufac\sion\util\EnviaEmail.class
 br\ufac\sion\util\retorno\bradesco\TransacaoTitulo.class
 br\ufac\sion\dao\EmpresaFacade.class
 br\ufac\sion\model\Cidade_.class

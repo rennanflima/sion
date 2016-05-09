@@ -11,8 +11,12 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoBoleto;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.service.util.InfoEmail;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.Year;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -28,9 +32,16 @@ public class InscricaoService {
 
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
+    
+    @EJB
+    private EnviaEmailService enviaEmailService;
 
+    private InfoEmail infoEmail;
+    
     public Inscricao salvar(Inscricao inscricao) throws NegocioException {
         LocalDateTime now = LocalDateTime.now();
+        infoEmail = new InfoEmail();
+        String assunto = "";
         try {
             if (inscricao.getId() != null) {
                 if(inscricao.getBoleto() != null){
@@ -39,6 +50,8 @@ public class InscricaoService {
                 inscricao.setDataInscricao(now);
                 inscricao.setStatus(SituacaoInscricao.AGUARDANDO_PAGAMENTO);
                 inscricao = em.merge(inscricao);
+                
+                assunto = "Alteração da solicitação de inscrição no " + inscricao.getCargoConcurso().getConcurso().getTitulo();
             } else {
                 Inscricao insc = pesquisarPorCandidatoEConcurso(inscricao.getCandidato(), inscricao.getCargoConcurso().getConcurso());
                 if (insc != null) {
@@ -49,7 +62,15 @@ public class InscricaoService {
                 inscricao = em.merge(inscricao);
                 inscricao.setNumero(geraNumeroInscricao(inscricao));
                 inscricao = em.merge(inscricao);
+                
+                assunto = "Solicitação de inscrição no " + inscricao.getCargoConcurso().getConcurso().getTitulo();
             }
+            
+            infoEmail.setPara(inscricao.getCandidato().getEmail());
+            infoEmail.setAssunto(assunto);
+            infoEmail.setCorpo(geraCorpoEmailSolicitacaoInscricao(inscricao));
+            enviaEmailService.processaEnvioDeEmail(infoEmail);
+            
             return inscricao;
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,5 +103,21 @@ public class InscricaoService {
         }else{
             throw new NegocioException("A justificativa é obrigatória");
         }
+    }
+    
+    private String geraCorpoEmailSolicitacaoInscricao(Inscricao inscricao) throws IOException {
+        InputStream stream = getClass().getResourceAsStream("/comprovante.html");
+        byte[] acessoBytes = new byte[stream.available()];
+        stream.read(acessoBytes);
+        stream.close();
+        String body = new String(acessoBytes);
+        body = body.replaceAll("@@@NOME_USUARIO@@@", inscricao.getCandidato().getNome());
+        body = body.replaceAll("@@@CONCURSO@@@", inscricao.getCargoConcurso().getConcurso().getTitulo());
+        body = body.replaceAll("@@@CARGO@@@", inscricao.getCargoConcurso().getCodigo() + " - " + inscricao.getCargoConcurso().getCargo().getDescricao());
+        body = body.replaceAll("@@@CIDADE_PROVA@@@", inscricao.getCargoConcurso().getLocalidade().getNome());
+        body = body.replaceAll("@@@BANCO@@@", inscricao.getCargoConcurso().getConcurso().getContaBancaria().getBanco().getDescricao());
+        body = body.replaceAll("@@@NOME_FANTASIA@@@", inscricao.getCargoConcurso().getConcurso().getContaBancaria().getCedente().getNomeFantasia());
+        body = body.replaceAll("@@@SIGLA@@@", inscricao.getCargoConcurso().getConcurso().getContaBancaria().getCedente().getSigla());
+        return body;
     }
 }
