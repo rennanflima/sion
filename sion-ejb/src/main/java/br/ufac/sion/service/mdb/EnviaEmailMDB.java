@@ -5,13 +5,9 @@
  */
 package br.ufac.sion.service.mdb;
 
-import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.service.util.InfoEmail;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.activation.DataHandler;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -26,7 +22,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
 
 /**
  *
@@ -67,7 +62,7 @@ public class EnviaEmailMDB implements MessageListener {
             msg.setSubject(infoEmail.getAssunto());
             // The Message
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(infoEmail.getCorpo(), "text/html; charset=ISO-8859-1");
+            messageBodyPart.setContent(infoEmail.getCorpo(), "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
 
             /* The PDF File
