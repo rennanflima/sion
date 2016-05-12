@@ -25,5 +25,7 @@ public interface CandidatoFacadeLocal {
     public List<Candidato> findAll();
     
     public Candidato findByCPF(String cpf);
+    
+    public Candidato findByEmail(String email);
 
 }

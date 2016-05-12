@@ -54,7 +54,20 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
 
     @Override
     public Candidato save(Candidato entity) {
-        throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize CandidatoService."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize CandidatoService.");
+    }
+
+    @Override
+    public Candidato findByEmail(String email) {
+        Candidato candidato = null;
+        try {
+            candidato = em.createQuery("from Candidato where email = :email", Candidato.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nenhum candidato econtrado com o CPF informado.");
+        }
+        return candidato;
     }
 
 }

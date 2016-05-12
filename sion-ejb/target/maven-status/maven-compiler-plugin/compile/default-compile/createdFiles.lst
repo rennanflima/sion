@@ -23,6 +23,7 @@ br\ufac\sion\util\WebServiceCep$Xml$5.class
 br\ufac\sion\dao\NivelFacade.class
 br\ufac\sion\util\boleto\bopepo\BopepoEmissorBoleto.class
 br\ufac\sion\model\Inscricao.class
+br\ufac\sion\dao\exceptions\PreexistingEntityException.class
 br\ufac\sion\model\Endereco_.class
 br\ufac\sion\util\conversor\DateConversor.class
 br\ufac\sion\util\retorno\caixa\ArquivoRetornoCaixa.class
@@ -36,6 +37,7 @@ br\ufac\sion\model\RG.class
 br\ufac\sion\model\SituacaoInscricao.class
 br\ufac\sion\model\Usuario.class
 br\ufac\sion\dao\EmpresaFacadeLocal.class
+br\ufac\sion\model\TokenRecuperacao_.class
 br\ufac\sion\model\Setor.class
 br\ufac\sion\util\modulo11\GeradorDigitoVerificador.class
 br\ufac\sion\util\WebServiceCep$Xml$1.class
@@ -51,10 +53,12 @@ br\ufac\sion\util\GeraSenha.class
 br\ufac\sion\model\Grupo.class
 br\ufac\sion\util\modulo11\GeradorDigitoVerificadorBancoDoBrasil.class
 br\ufac\sion\util\WebServiceCep$Xml$7.class
+br\ufac\sion\model\TokenRecuperacao.class
 br\ufac\sion\model\Empresa.class
 br\ufac\sion\service\retorno\ArquivoRetornoBradescoService.class
 br\ufac\sion\service\util\ArquivoRetornoDetalhe.class
 br\ufac\sion\dao\GrupoFacadeLocal.class
+br\ufac\sion\dao\exceptions\RollbackFailureException.class
 br\ufac\sion\model\Boleto_.class
 br\ufac\sion\exception\ArquivoRetornoException.class
 br\ufac\sion\dao\CargoFacade.class
@@ -86,6 +90,7 @@ br\ufac\sion\util\WebServiceCep$Xml$3.class
 br\ufac\sion\model\Concurso.class
 br\ufac\sion\model\Sexo.class
 br\ufac\sion\service\CepService.class
+br\ufac\sion\dao\TokenRecuperacaoFacadeLocal.class
 br\ufac\sion\model\SituacaoBoleto.class
 br\ufac\sion\dao\VagaFacade.class
 br\ufac\sion\util\retorno\bradesco\TransacaoTitulo$MotivoConfirmacaoDeProtesto.class
@@ -111,6 +116,7 @@ br\ufac\sion\dao\UsuarioFacade.class
 br\ufac\sion\model\vo\FiltroInscritos.class
 br\ufac\sion\exception\NegocioException.class
 br\ufac\sion\dao\ContaBancariaFacade.class
+br\ufac\sion\dao\exceptions\IllegalOrphanException.class
 br\ufac\sion\dao\BoletoFacadeLocal.class
 br\ufac\sion\model\Insencao_.class
 br\ufac\sion\service\FuncionarioService.class
@@ -127,6 +133,7 @@ br\ufac\sion\model\NecessidadeEspecial.class
 br\ufac\sion\dao\SetorFacade.class
 br\ufac\sion\model\util\LocalDateTimeConverter.class
 br\ufac\sion\model\util\LocalDateConverter.class
+br\ufac\sion\dao\exceptions\NonexistentEntityException.class
 br\ufac\sion\model\Cargo_.class
 br\ufac\sion\util\boleto\EmissorBoleto.class
 br\ufac\sion\model\Nivel.class
@@ -136,6 +143,7 @@ br\ufac\sion\dao\CargoVagaFacadeLocal.class
 br\ufac\sion\util\retorno\caixa\CabecalhoLote.class
 br\ufac\sion\model\Usuario_.class
 br\ufac\sion\service\util\InfoEmail.class
+br\ufac\sion\dao\TokenRecuperacaoFacade.class
 br\ufac\sion\util\retorno\bradesco\Sumario.class
 br\ufac\sion\util\WebServiceCep$Xml$4.class
 br\ufac\sion\model\CargoConcurso.class

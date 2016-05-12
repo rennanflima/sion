@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Login</title>
         <h:outputStylesheet library="css" name="sistema.css" />
         <h:outputScript library="js" name="jquery.maskMoney.js"/>
@@ -37,7 +37,7 @@
             </h:form>
             <div style="float: right">
                 <p:link value="Não tenho cadastro" outcome="cadastroCandidato" /> | 
-                <p:link value="Esqueci a senha" />
+                <p:link value="Esqueci a senha" outcome="recuperaSenha" />
             </div>
         </div>
     </h:body>

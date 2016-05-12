@@ -12,6 +12,7 @@
     
     <http pattern="/login.xhtml" security="none" />
     <http pattern="/recuperaSenha.xhtml" security="none" />
+    <http pattern="/alterarSenha.xhtml" security="none" />
     <http pattern="/cadastroCandidato.xhtml" security="none" />
     <http pattern="/Erro.xhtml" security="none" />
     <http pattern="/AcessoNegado.xhtml" security="none" />

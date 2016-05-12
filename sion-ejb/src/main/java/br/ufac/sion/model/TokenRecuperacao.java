@@ -8,9 +8,9 @@ package br.ufac.sion.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -31,7 +31,7 @@ public class TokenRecuperacao implements Serializable {
     private String token;
     @Column(name = "data_vencimento")
     private LocalDateTime dataVencimento;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;
 

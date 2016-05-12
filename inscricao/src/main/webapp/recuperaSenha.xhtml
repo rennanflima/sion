@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Recuperar Senha</title>
         <h:outputStylesheet library="css" name="sistema.css" />
         <h:outputScript library="js" name="numeros.js"/>
@@ -20,7 +20,7 @@
                 <h:outputText value=""/>
             </f:facet>
         </p:ajaxStatus>
-        
+
         <div id="reenvia-dialog">
             <h1>Recuperação de Senha</h1>
 
@@ -28,27 +28,25 @@
 
                 <p:messages id="messages" autoUpdate="true" closable="true" />
 
-                <h:panelGrid columns="2" styleClass="grid-login" width="500">
-                    <p:outputLabel value="Matrícula" for="mat" />
-                    <p:inputText id="mat" required="true" value="#{trocarSenhaBean.mat}" label="Matrícula" size="10"
-                                 onkeypress="return SomenteNumero(event)" requiredMessage="O campo 'Matrícula' é obrigatório"
-                                 converterMessage="Digite apenas número na Matrícula!" validatorMessage="O campo 'Matrícula' deve conter no mínimo dois digitos">
-                        <f:validateLength minimum="2" /> 
-                        <f:convertNumber integerOnly="true"/>
-                    </p:inputText>
-
-                    <p:outputLabel for="login" value="Usuário: "/>
-                    <p:inputText id="login" required="true" value="#{trocarSenhaBean.login}" 
-                                 label="Login" size="30" maxlength="20"
-                                 requiredMessage="O campo 'Login' é obrigatório">
-                    </p:inputText>
+                <h:panelGrid columns="1" styleClass="grid-login" width="500">
+                    <h:outputText value="Para recuperar sua senha digite o e-mail cadastrado:"  style=""/>
 
                     <p:spacer />
-                    <h:panelGroup >
-                        <p:commandButton value="Enviar" update="@form" action="#{trocarSenhaBean.esqueceuSenha()}"/>
-                        <p:commandButton value="Limpar" update="@form" action="#{trocarSenhaBean.limpaRecupera()}" immediate="true" process="@this"/>
-                        <p:button value="Cancelar" outcome="/login" />
-                    </h:panelGroup>
+                    <h:panelGrid columns="2" style="width: 100%">
+
+                        <p:outputLabel for="email" value="E-mail: "/>
+                        <p:inputText id="email" required="true" value="#{recuperaSenhaBean.email}" 
+                                     label="E-mail" size="50" maxlength="60"
+                                     requiredMessage="O campo 'E-mail' é obrigatório">
+                        </p:inputText>
+
+                        <p:spacer />
+                        <h:panelGroup >
+                            <p:commandButton value="Enviar" update="@form" action="#{recuperaSenhaBean.esqueceuSenha()}"/>
+                            <p:commandButton value="Limpar" update="@form" action="#{recuperaSenhaBean.limparSolicitacaoNovaSenha()}" immediate="true" process="@this"/>
+                            <p:button value="Cancelar" outcome="/login" />
+                        </h:panelGroup>
+                    </h:panelGrid>
                 </h:panelGrid>
             </h:form>
         </div>

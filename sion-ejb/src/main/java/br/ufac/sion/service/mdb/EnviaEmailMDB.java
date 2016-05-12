@@ -62,6 +62,7 @@ public class EnviaEmailMDB implements MessageListener {
             msg.setSubject(infoEmail.getAssunto());
             // The Message
             BodyPart messageBodyPart = new MimeBodyPart();
+//            messageBodyPart.setContent(infoEmail.getCorpo(), "text/html; charset=iso-8859-1");
             messageBodyPart.setContent(infoEmail.getCorpo(), "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
 

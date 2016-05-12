@@ -1,3 +1,4 @@
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\NonexistentEntityException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\LocalidadeFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Escolaridade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\EmpresaFacadeLocal.java
@@ -43,6 +44,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\InscricaoService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\FuncionarioFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\SetorFacade.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\RollbackFailureException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\PercentualInsencao.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Empresa.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Estado.java
@@ -55,6 +57,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ContaBancariaFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\retorno\bradesco\Sumario.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\CargoConcurso.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\TokenRecuperacaoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\NivelFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CandidatoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ArquivoRetornoFacade.java
@@ -67,11 +70,13 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\SetorFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\modulo11\GeradorDigitoVerificadorCaixa.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Boleto.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\TokenRecuperacao.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\WebServiceCep.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\AbstractFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\BoletoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\ContaBancaria.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\IllegalOrphanException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Grupo.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ConcursoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Insencao.java
@@ -84,6 +89,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CandidatoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\retorno\caixa\SumarioLote.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Localidade.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\TokenRecuperacaoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\modulo11\GeradorDigitoVerificadorBradesco.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\BoletoService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\NivelFacade.java
@@ -91,6 +97,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Funcionario.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\LocalidadeFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\NecessidadeEspecial.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\PreexistingEntityException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\exception\NegocioException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\modulo11\GeradorDigitoVerificador.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\FuncionarioService.java

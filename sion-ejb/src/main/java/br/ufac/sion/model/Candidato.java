@@ -52,7 +52,7 @@ public class Candidato implements Serializable {
     private String pai;
     @Email
     @NotNull
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
