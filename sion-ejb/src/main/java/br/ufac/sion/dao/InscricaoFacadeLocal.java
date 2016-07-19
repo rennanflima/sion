@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
@@ -60,4 +61,6 @@ public interface InscricaoFacadeLocal {
     
     public Long encontrarQuantidadeDeInscricoesConfirmadas(Concurso concurso);
 
+    public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status);
+    
 }

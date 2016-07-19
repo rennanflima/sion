@@ -9,10 +9,13 @@ import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
 import br.ufac.sion.exception.NegocioException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,6 +24,12 @@ import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -98,5 +107,19 @@ public class ConcursoService {
             }
         }
         System.out.println("____________________________________________");
+    }
+    
+    
+    public byte[] geraPDFEstatisticaIncritosConfirmados(Concurso concurso) throws JRException{
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo",logo);
+        
+        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos_confirmados.jrxml"));
+        JasperPrint jp = JasperFillManager.fillReport(jr, parameters);
+        byte[] paraRetorno = JasperExportManager.exportReportToPdf(jp);
+        System.out.println("PDF: "+paraRetorno);
+        return paraRetorno;
     }
 }

@@ -63,7 +63,8 @@ public class Candidato implements Serializable {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     @CPF
-    @Column(unique = true, length = 14)
+    @NotBlank
+    @Column(unique = true, length = 14, nullable = false)
     private String cpf;
     @Enumerated(EnumType.STRING)
     @Column(name = "braco_dominante")

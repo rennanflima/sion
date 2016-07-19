@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
@@ -149,8 +150,8 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         criteria.createAlias("cargoConcurso", "cc")
                 .setProjection(Projections.projectionList()
                         .add(Projections.sqlGroupProjection("date(data_inscricao) as data",
-                                        "date(data_inscricao)", new String[]{"data"},
-                                        new Type[]{StandardBasicTypes.DATE}))
+                                "date(data_inscricao)", new String[]{"data"},
+                                new Type[]{StandardBasicTypes.DATE}))
                         .add(Projections.count("id").as("quantidade"))
                 )
                 .add(Restrictions.ge("dataInscricao", dataInicial))
@@ -287,14 +288,37 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     @Override
     public int contaInscricoesPNE(FiltroInscritos filtro) {
         Criteria criteria = criarCriteriaParaFiltro(filtro);
-        
+
         //criteria.createAlias("necessidadeEspecial", "ne");
         Criterion portador = Restrictions.eq("necessidadeEspecial.portador", true);
         Criterion necessitaAtendimento = Restrictions.eq("necessidadeEspecial.necessitaAtendimento", true);
         criteria.add(Restrictions.or(portador, necessitaAtendimento));
-        
+
         criteria.setProjection(Projections.rowCount());
 
         return ((Number) criteria.uniqueResult()).intValue();
+    }
+
+    @Override
+    public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status) {
+
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Inscricao.class);
+
+        criteria.add(Restrictions.eq("cargoConcurso", cargoConcurso));
+
+        if (StringUtils.isNotEmpty(status) && status.equals("CONFIRMADA")) {
+            Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
+            Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
+            criteria.add(Restrictions.or(confirmada, judice));
+        }
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Number) criteria.uniqueResult()).longValue();
+//        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso = :cargo", Long.class)
+//                .setParameter("cargo", cargoConcurso)
+//                .getSingleResult();
     }
 }

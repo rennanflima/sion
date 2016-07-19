@@ -64,6 +64,5 @@ public class ConcursoFacade extends AbstractFacade<Concurso, Long> implements Co
     public Concurso save(Concurso entity) {
          throw new UnsupportedOperationException("Operação não suportada! Para salvar utilize ConcursoService."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
 }

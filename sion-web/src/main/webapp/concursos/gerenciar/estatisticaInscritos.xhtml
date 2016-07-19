@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutGerenciamento.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">
+
+    </ui:define>
+
+    <ui:define name="corpo">
+
+
+        <h:form id="frmInscritos" style="margin-top: 20px;">
+            <h1>Quantificação de Inscritos Por Cargo</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Pesquisar" update="cargosConcursoTable @form" process="@form" />
+                    <p:commandButton value="Limpar" update="cargosConcursoTable @form" action="#{estatisticaConcursoBean.limparFiltro()}" />
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Página Inicial" outcome="/concursos/gerenciar/home"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="rotulo, campo">
+
+                <p:outputLabel value="Situação da inscrição" for="status" />
+                <p:selectOneMenu id="status" value="#{estatisticaConcursoBean.status}">
+                    <f:selectItem itemLabel="Selecione um cargo..." itemValue=""/>
+                    <f:selectItem itemLabel="Sem confirmação" itemValue="AGUARDANDO_PAGAMENTO"/>
+                    <f:selectItem itemLabel="Confirmadas" itemValue="CONFIRMADA"/>
+                </p:selectOneMenu>
+            </p:panelGrid>
+
+            <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{estatisticaConcursoBean.cargosConcurso}"
+                         style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                <p:column headerText="#" style="width: 50px;">
+                    <h:outputText value="#{cargoConcurso.codigo}" />
+                </p:column>
+
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{cargoConcurso.cargo.descricao}" />
+                </p:column>
+
+                <p:column headerText="Carga Horária" style="text-align: right; width: 100px;">
+                    <h:outputText value="#{cargoConcurso.cargo.cargaHoraria}h"/>
+                </p:column>
+
+                <p:column headerText="Nível" style="width: 140px;">
+                    <h:outputText value="#{cargoConcurso.cargo.nivel.descricao}"/>
+                </p:column>
+
+                <p:column headerText="Localidade">
+                    <h:outputText value="#{cargoConcurso.localidade.nome}"/>
+                </p:column>
+
+                <p:column headerText="Quantidade de Inscritos">
+                    <h:outputText value="#{estatisticaConcursoBean.getQuantidadeInscritosPorCargo(cargoConcurso)}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

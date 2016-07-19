@@ -31,4 +31,5 @@ public interface ConcursoFacadeLocal {
     public List<Concurso> findByAberto();
     
     public List<Concurso> findByOutrasFases();
+    
 }

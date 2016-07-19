@@ -10,7 +10,6 @@ import br.ufac.sion.model.Candidato;
 import br.ufac.sion.util.GeraSenha;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.TokenRecuperacao;
-import br.ufac.sion.model.Usuario;
 import br.ufac.sion.service.util.InfoEmail;
 import java.io.IOException;
 import java.io.InputStream;
