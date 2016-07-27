@@ -11,6 +11,7 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.model.vo.FiltroInscritos;
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,4 +64,5 @@ public interface InscricaoFacadeLocal {
 
     public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status);
     
+    public ResultSet findInscritosByConcurso(Concurso concurso); 
 }

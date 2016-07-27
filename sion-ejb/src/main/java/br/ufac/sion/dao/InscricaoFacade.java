@@ -13,6 +13,7 @@ import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.model.vo.DataQuantidade;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.util.conversor.DateConversor;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -150,8 +151,8 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         criteria.createAlias("cargoConcurso", "cc")
                 .setProjection(Projections.projectionList()
                         .add(Projections.sqlGroupProjection("date(data_inscricao) as data",
-                                "date(data_inscricao)", new String[]{"data"},
-                                new Type[]{StandardBasicTypes.DATE}))
+                                        "date(data_inscricao)", new String[]{"data"},
+                                        new Type[]{StandardBasicTypes.DATE}))
                         .add(Projections.count("id").as("quantidade"))
                 )
                 .add(Restrictions.ge("dataInscricao", dataInicial))
@@ -321,4 +322,36 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 //                .setParameter("cargo", cargoConcurso)
 //                .getSingleResult();
     }
+
+    @Override
+    public ResultSet findInscritosByConcurso(Concurso concurso) {
+        return (ResultSet) em.createNativeQuery("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
+                    + "cand.nome AS ficha_inscricao_nome, "
+                    + "cand.cpf AS ficha_inscricao_cpf, "
+                    + "i.data_inscricao AS ficha_inscricao_data_cadastro, "
+                    + "CONCAT(cc.codigo,' - ',c.descricao)  AS ficha_inscricao_cargo, "
+                    + "l.nome AS ficha_inscricao_local, "
+                    + "i.portador  AS ficha_inscricao_possui_deficiencia, "
+                    + "i.`status` AS ficha_inscricao_situacao, "
+                    + "conc.titulo AS concurso_nome "
+                + "FROM "
+                    + "inscricao i, "
+                    + "candidato cand, "
+                    + "cargo c, "
+                    + "localidade l, "
+                    + "concurso conc, "
+                    + "cargo_concurso cc "
+                + "WHERE "
+                    + "i.candidato_id = cand.id AND "
+                    + "i.cargo_concurso_id = cc.id AND "
+                    + "cc.cargo_id = c.id AND "
+                    + "cc.localidade_id = l.id AND "
+                    + "cc.concurso_id = conc.id AND "
+                    + "conc.id = :id"
+                + "ORDER BY "
+                    + "l.nome, "
+                    + "c.descricao, "
+                    + "cand.nome ").setParameter("id", concurso.getId()).getResultList();
+    }
+
 }

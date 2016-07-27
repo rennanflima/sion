@@ -44,7 +44,7 @@
                         <p:menuitem value="Cobrança" outcome="/concursos/gerenciar/inscricao/arquivoRetorno"/>
                         <p:submenu label="Relatórios">
                             <p:submenu label="Lista de inscritos">
-                                <p:menuitem value="Geral"/>
+                                <p:menuitem value="Geral" action="#{relatorioConcursoBean.imprimeRelacaoInscritos()}" target="_blank"/>
                                 <p:menuitem value="Por cargo e cidade"/>
                                 <p:menuitem value="Confirmados"/>
                                 <p:menuitem value="Necessidades Especiais"/>

@@ -166,6 +166,7 @@
 	<parameter name="id_concurso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
        i.numero AS ficha_inscricao_numero_inscricao,
@@ -282,7 +283,7 @@ ORDER BY
 		<band height="802" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="156" uuid="06afef5e-c93f-4d91-9dda-8bdda2a106ba"/>
-				<imageExpression><![CDATA["C:\\Users\\Rennan\\Documents\\Relatório Concurso Sesc\\Concurso\\topo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 		</band>
 	</background>
