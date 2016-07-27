@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
-	<property name="ireport.zoom" value="1.1269722013523664"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
+	<property name="ireport.zoom" value="1.2100000000000055"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1816"/>
+	<property name="ireport.y" value="1572"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -163,229 +163,184 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="id_concurso" class="java.lang.Integer">
+	<parameter name="concurso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT
-      cc.codigo AS concurso_titulo,
-      c.descricao AS cargo_descricao,
-      conc.titulo AS localidade_nome,
-      (SELECT COUNT(*) FROM inscricao i WHERE i.cargo_concurso_id = cc.id) AS qtd_cargo
+       i.numero AS ficha_inscricao_numero_inscricao,
+       cand.nome AS ficha_inscricao_nome,
+       cand.cpf AS ficha_inscricao_cpf,
+       i.data_inscricao AS ficha_inscricao_data_cadastro,
+       CONCAT(cc.codigo,' - ',c.descricao) AS ficha_inscricao_cargo,
+       l.nome AS ficha_inscricao_local,
+       i.portador  AS ficha_inscricao_possui_deficiencia,
+       i.`status` AS ficha_inscricao_situacao,
+       conc.titulo AS concurso_nome
 FROM
-    cargo_concurso cc,
+    inscricao i,
+    candidato cand,
     cargo c,
     localidade l,
-    concurso conc
+    concurso conc,
+    cargo_concurso cc
 WHERE
+     i.candidato_id = cand.id AND
+     i.cargo_concurso_id = cc.id AND
      cc.cargo_id = c.id AND
      cc.localidade_id = l.id AND
      cc.concurso_id = conc.id AND
-     conc.id = $P{id_concurso}
+     i.`status` = 'CONFIRMADA' AND i.`status` = 'SUB_JUDICE' AND
+     conc.id = 1
 ORDER BY
       l.nome,
-      cc.codigo]]>
+      c.descricao,
+      cand.nome]]>
 	</queryString>
-	<field name="concurso_titulo" class="java.lang.String"/>
-	<field name="cargo_descricao" class="java.lang.String"/>
-	<field name="localidade_nome" class="java.lang.String"/>
-	<field name="qtd_cargo" class="java.lang.Long"/>
-	<variable name="qtd_cargo_1" class="java.lang.Long" resetType="Group" resetGroup="Local" calculation="Sum">
-		<variableExpression><![CDATA[$F{qtd_cargo}]]></variableExpression>
-	</variable>
-	<variable name="total" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{qtd_cargo}]]></variableExpression>
-	</variable>
-	<group name="Local">
-		<groupExpression><![CDATA[$F{localidade_nome}]]></groupExpression>
+	<field name="ficha_inscricao_numero_inscricao" class="java.lang.String"/>
+	<field name="ficha_inscricao_nome" class="java.lang.String"/>
+	<field name="ficha_inscricao_cpf" class="java.lang.String"/>
+	<field name="ficha_inscricao_data_cadastro" class="java.sql.Timestamp"/>
+	<field name="ficha_inscricao_cargo" class="java.lang.String"/>
+	<field name="ficha_inscricao_local" class="java.lang.String"/>
+	<field name="ficha_inscricao_possui_deficiencia" class="java.lang.Boolean"/>
+	<field name="ficha_inscricao_situacao" class="java.lang.String"/>
+	<field name="concurso_nome" class="java.lang.String"/>
+	<group name="ficha_inscricao_local" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true">
 		<groupHeader>
-			<band height="102">
+			<band height="67">
 				<textField>
-					<reportElement mode="Opaque" x="0" y="20" width="565" height="33" backcolor="#FFFFCC" uuid="8268808b-0635-4542-b12f-68f86da08047"/>
+					<reportElement mode="Opaque" x="0" y="20" width="565" height="33" backcolor="#FFFFCC" uuid="ca97735c-0d09-42fa-be81-be61b63838a9"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{localidade_nome}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ficha_inscricao_local}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement mode="Opaque" x="0" y="82" width="404" height="20" backcolor="#CCCCCC" uuid="2a3b028d-1bed-4433-9287-80ca31b16a40"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[CARGO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="404" y="82" width="161" height="20" backcolor="#CCCCCC" uuid="1fdcc395-6c83-4d9b-b0e7-b4c7bc7d6a09"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[QUANTIDADE DE INSCRITOS]]></text>
-				</staticText>
 			</band>
 		</groupHeader>
-		<groupFooter>
-			<band height="20">
+	</group>
+	<group name="ficha_inscricao_cargo" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{ficha_inscricao_cargo}]]></groupExpression>
+		<groupHeader>
+			<band height="104">
+				<textField>
+					<reportElement x="27" y="26" width="311" height="19" uuid="08227b38-f2ef-4a05-a687-c7c98be2197c"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Bell MT" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ficha_inscricao_cargo}]]></textFieldExpression>
+				</textField>
 				<staticText>
-					<reportElement x="1" y="0" width="394" height="20" uuid="cc3c05ac-c560-4fb9-8360-2a68f6ee721b"/>
-					<textElement textAlignment="Right">
+					<reportElement mode="Opaque" x="0" y="72" width="60" height="32" backcolor="#CCCCCC" uuid="35fb7aaf-5664-443f-a23a-82daec2de363"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Total de Inscritos:]]></text>
+					<text><![CDATA[INSCRIÇÃO]]></text>
 				</staticText>
-				<textField isBlankWhenNull="true">
-					<reportElement x="404" y="0" width="161" height="20" uuid="448aab13-c3f7-44c0-b1df-464ef573782a"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{qtd_cargo_1}]]></textFieldExpression>
-				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="60" y="72" width="259" height="32" backcolor="#CCCCCC" uuid="8ec76c84-4edb-4528-a4e7-5632004f634d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="319" y="72" width="245" height="32" backcolor="#CCCCCC" uuid="080644ae-eb60-4716-ba80-0c411748878d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ASSINATURA]]></text>
+				</staticText>
+				<line>
+					<reportElement key="line-2" positionType="FixRelativeToBottom" x="0" y="58" width="565" height="1" uuid="efb71ecf-553f-45cf-975c-b7f0bdb37685"/>
+				</line>
 			</band>
-		</groupFooter>
-	</group>
-	<group name="cargo">
-		<groupExpression><![CDATA[$F{cargo_descricao}]]></groupExpression>
+		</groupHeader>
 	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="556" height="156" uuid="06afef5e-c93f-4d91-9dda-8bdda2a106ba"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="156" uuid="06afef5e-c93f-4d91-9dda-8bdda2a106ba"/>
+				<imageExpression><![CDATA["C:\\Users\\Rennan\\Documents\\Relatório Concurso Sesc\\Concurso\\topo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</background>
-	<title>
-		<band height="181" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="148" width="564" height="33" uuid="57c9f77a-554e-46bb-af9d-2672cac965dc"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="18" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Quantificação de Inscritos]]></text>
-			</staticText>
+	<pageHeader>
+		<band height="185" splitType="Stretch">
 			<textField>
-				<reportElement x="446" y="23" width="80" height="20" uuid="c4e53c48-bc2b-4369-b539-79dfc5cc0639"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="526" y="23" width="40" height="20" uuid="174496d5-c05e-454d-a511-017c41122113"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="121" width="564" height="27" uuid="0588dff2-138d-431a-be04-50fe17727bc6"/>
+				<reportElement x="1" y="125" width="565" height="27" uuid="3310a7ce-a01d-4e31-9e76-1ad1261120b3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="20" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{concurso_titulo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{concurso_nome}]]></textFieldExpression>
 			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="148" splitType="Stretch">
-			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} > 1]]></printWhenExpression>
+			<staticText>
+				<reportElement x="1" y="152" width="564" height="33" uuid="57c9f77a-554e-46bb-af9d-2672cac965dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Presença]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="446" y="23" width="80" height="20" uuid="1bdd6b82-4e33-4ea9-bf8a-cf463a6199a9"/>
+				<reportElement x="446" y="29" width="80" height="20" uuid="af2faab5-16ef-44d6-9ebf-04ba044b6c87"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="526" y="23" width="40" height="20" uuid="eb87623d-e5fe-411f-9380-179a5b76523a"/>
+				<reportElement x="526" y="29" width="40" height="20" uuid="81b352e5-bf62-45bc-a934-1251f24facbb"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
-			<line>
-				<reportElement x="0" y="24" width="565" height="1" uuid="1d89312a-fe2c-4ee9-a5c0-b960d472a9fd"/>
-			</line>
+		<band height="39" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="404" y="0" width="161" height="20" uuid="c06adb22-957a-4965-a2a0-1df84dbed703"/>
+				<reportElement x="0" y="0" width="60" height="33" uuid="ab57bc2c-2c30-4c1e-9634-202ca93fefd6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{qtd_cargo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ficha_inscricao_numero_inscricao}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="0" width="403" height="20" uuid="63a92d08-4376-42e7-8aff-89fbb926275b"/>
+				<reportElement x="60" y="0" width="259" height="33" uuid="6ba66a5d-49ed-47b2-836a-2326bb9120b2"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cargo_descricao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ficha_inscricao_nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="33" width="565" height="1" uuid="1d89312a-fe2c-4ee9-a5c0-b960d472a9fd"/>
+			</line>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="80" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<staticText>
-				<reportElement x="61" y="35" width="465" height="15" uuid="b7ccefb9-c5af-44e3-905d-0ae6b796b269"/>
+				<reportElement x="61" y="23" width="465" height="15" uuid="b7ccefb9-c5af-44e3-905d-0ae6b796b269"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sesc - Serviço Social do Comércio | Departamento Regional no Acre | www.sescacre.com.br]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="61" y="50" width="465" height="15" uuid="c395f71d-be6a-4678-9ba3-9fe7f305198b"/>
+				<reportElement x="61" y="38" width="465" height="15" uuid="c395f71d-be6a-4678-9ba3-9fe7f305198b"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[Av. Getúlio Vargas, 2.472 - Bairro Bosque, Condomínio Antonio Oliveira Santos - Rio Branco/Acre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="65" width="435" height="15" uuid="8c9b7de5-d182-4ee8-94ef-848886a9f016"/>
+				<reportElement x="71" y="53" width="435" height="15" uuid="8c9b7de5-d182-4ee8-94ef-848886a9f016"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[CEP: 69.900-589 - Fone/Fax (68) 3302-2850]]></text>
 			</staticText>
 			<textField pattern="EEEE, dd&apos; de &apos;MMMM&apos; de &apos;yyyy&apos; às &apos;HH:mm:ss&apos; UTC &apos;Z">
-				<reportElement x="100" y="15" width="465" height="20" uuid="203fd85a-6c05-45ea-a8b2-45a1b237f74d"/>
+				<reportElement x="100" y="3" width="465" height="20" uuid="203fd85a-6c05-45ea-a8b2-45a1b237f74d"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="34" width="565" height="1" uuid="822753de-e680-4f7f-85a6-0fc8ebc30baf"/>
+				<reportElement x="0" y="22" width="565" height="1" uuid="822753de-e680-4f7f-85a6-0fc8ebc30baf"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="15" width="100" height="20" uuid="58897fe8-4447-4bb1-8343-1ae772c18961"/>
+				<reportElement x="0" y="3" width="100" height="20" uuid="58897fe8-4447-4bb1-8343-1ae772c18961"/>
 				<text><![CDATA[Relatório gerado em:]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
-	<lastPageFooter>
-		<band height="254">
-			<staticText>
-				<reportElement x="0" y="5" width="153" height="20" uuid="e0adbf0a-dcec-4cd5-b1c8-fcb72cf27ae0"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total Geral de Inscritos:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="153" y="5" width="100" height="20" uuid="1e54305b-3163-4ce3-a08f-dfb0c45b04bd"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="61" y="209" width="465" height="15" uuid="b7ccefb9-c5af-44e3-905d-0ae6b796b269"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Sesc - Serviço Social do Comércio | Departamento Regional no Acre | www.sescacre.com.br]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="61" y="224" width="465" height="15" uuid="c395f71d-be6a-4678-9ba3-9fe7f305198b"/>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
-				<text><![CDATA[Av. Getúlio Vargas, 2.472 - Bairro Bosque, Condomínio Antonio Oliveira Santos - Rio Branco/Acre]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="71" y="239" width="435" height="15" uuid="8c9b7de5-d182-4ee8-94ef-848886a9f016"/>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
-				<text><![CDATA[CEP: 69.900-589 - Fone/Fax (68) 3302-2850]]></text>
-			</staticText>
-			<textField pattern="EEEE, dd&apos; de &apos;MMMM&apos; de &apos;yyyy&apos; às &apos;HH:mm:ss&apos; UTC &apos;Z">
-				<reportElement x="100" y="189" width="465" height="20" uuid="203fd85a-6c05-45ea-a8b2-45a1b237f74d"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="0" y="208" width="565" height="1" uuid="822753de-e680-4f7f-85a6-0fc8ebc30baf"/>
-			</line>
-			<staticText>
-				<reportElement x="0" y="189" width="100" height="20" uuid="58897fe8-4447-4bb1-8343-1ae772c18961"/>
-				<text><![CDATA[Relatório gerado em:]]></text>
-			</staticText>
-		</band>
-	</lastPageFooter>
 	<noData>
 		<band height="802">
 			<staticText>
