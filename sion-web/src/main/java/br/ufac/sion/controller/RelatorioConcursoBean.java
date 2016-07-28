@@ -32,6 +32,10 @@ public class RelatorioConcursoBean implements Serializable {
 
     private Concurso concurso;
 
+    public RelatorioConcursoBean() {
+        recuperaConcursoSessao();
+    }
+
     public Concurso getConcurso() {
         return concurso;
     }
@@ -45,19 +49,6 @@ public class RelatorioConcursoBean implements Serializable {
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
 
-    public String imprimeRelacaoInscritos() throws JRException, IOException {
-        byte[] relatorio = concursoService.geraPDFRelacaoInscritos(null);
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext ec = fc.getExternalContext();
-        ec.responseReset();
-        ec.setResponseContentType("application/pdf");
-        ec.setResponseContentLength(relatorio.length);
-        System.out.println("Tamanho PDF: " + relatorio.length);
-        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"relacao_inscritosˆ_" + concurso.getId() + ".pdf\"");
-        OutputStream output = ec.getResponseOutputStream();
-        output.write(relatorio);
-        fc.responseComplete();
-        return null;
-    }
+
 
 }

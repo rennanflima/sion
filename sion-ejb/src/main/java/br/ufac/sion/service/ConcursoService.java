@@ -129,7 +129,7 @@ public class ConcursoService {
         return paraRetorno;
     }
 
-    public byte[] geraPDFRelacaoInscritos(Concurso concurso) throws JRException {
+    public JasperPrint geraPDFRelacaoInscritos(Concurso concurso) throws JRException {
         Map<String, Object> parameters = new HashMap<>();
         InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
         parameters.put("id_concurso", concurso.getId());
@@ -140,9 +140,8 @@ public class ConcursoService {
         
         JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo.jrxml"));
         JasperPrint jp = JasperFillManager.fillReport(jr, parameters,jrRS);
-        byte[] paraRetorno = JasperExportManager.exportReportToPdf(jp);
-        System.out.println("PDF: " + paraRetorno);
-        return paraRetorno;
+//        byte[] paraRetorno = JasperExportManager.exportReportToPdf(jp);
+        return jp;
     }
 
 }

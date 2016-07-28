@@ -13,7 +13,11 @@ import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.model.vo.DataQuantidade;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.util.conversor.DateConversor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -21,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +37,10 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.internal.SessionFactoryImpl;
+import org.hibernate.jpa.HibernateEntityManager;
+import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
@@ -325,7 +335,12 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public ResultSet findInscritosByConcurso(Concurso concurso) {
-        return (ResultSet) em.createNativeQuery("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
+        Session session = em.unwrap(Session.class);
+        SessionFactoryImpl sfi = (SessionFactoryImpl) session.getSessionFactory();
+        ResultSet rs = null;
+        try {
+            Connection con = sfi.getConnectionProvider().getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
                     + "cand.nome AS ficha_inscricao_nome, "
                     + "cand.cpf AS ficha_inscricao_cpf, "
                     + "i.data_inscricao AS ficha_inscricao_data_cadastro, "
@@ -347,11 +362,18 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
                     + "cc.cargo_id = c.id AND "
                     + "cc.localidade_id = l.id AND "
                     + "cc.concurso_id = conc.id AND "
-                    + "conc.id = :id"
+                    + "conc.id = ? "
                 + "ORDER BY "
                     + "l.nome, "
                     + "c.descricao, "
-                    + "cand.nome ").setParameter("id", concurso.getId()).getResultList();
+                    + "cand.nome ");
+            ps.setLong(1, concurso.getId());
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(InscricaoFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }

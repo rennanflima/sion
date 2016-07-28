@@ -166,7 +166,7 @@
 	<parameter name="id_concurso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT
        i.numero AS ficha_inscricao_numero_inscricao,

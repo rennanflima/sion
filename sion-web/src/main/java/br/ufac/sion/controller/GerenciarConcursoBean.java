@@ -11,6 +11,7 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -27,6 +28,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -46,7 +49,7 @@ public class GerenciarConcursoBean implements Serializable {
 
     @EJB
     private ConcursoService concursoService;
-    
+
     @EJB
     private CargoConcursoFacadeLocal cargoConcursoFacade;
 
@@ -151,7 +154,7 @@ public class GerenciarConcursoBean implements Serializable {
         }
         this.model.addSeries(series);
     }
-    
+
     public void imprimeEstatistica() throws JRException, IOException {
         byte[] relatorio = concursoService.geraPDFEstatisticaIncritosConfirmados(concurso);
         FacesContext context = FacesContext.getCurrentInstance();
@@ -165,9 +168,7 @@ public class GerenciarConcursoBean implements Serializable {
         servletOutputStream.close();
         context.renderResponse();
         context.responseComplete();
-        
-        
-        
+
 //        ExternalContext ec = fc.getExternalContext();
 //        ec.responseReset();
 //        ec.setResponseContentType("application/pdf");
@@ -179,4 +180,25 @@ public class GerenciarConcursoBean implements Serializable {
 //        fc.responseComplete();
 //        return null;
     }
+
+    public void imprimeRelacaoInscritos() throws JRException, IOException {
+//        byte[] relatorio = concursoService.geraPDFRelacaoInscritos(concurso);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        JasperPrint jasperPrint = concursoService.geraPDFRelacaoInscritos(concurso);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename=relacao_inscritos_" + concurso.getId() + ".pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
+    }
+
 }
