@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
 	<property name="ireport.zoom" value="1.2396694214876032"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="617"/>
+	<property name="ireport.y" value="851"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -163,9 +163,10 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="id_concurso" class="java.lang.Integer">
+	<parameter name="id_concurso" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT
        i.numero AS ficha_inscricao_numero_inscricao,
@@ -283,9 +284,9 @@ ORDER BY
 	</group>
 	<background>
 		<band height="802" splitType="Stretch">
-			<image>
+			<image isUsingCache="true" isLazy="true">
 				<reportElement x="0" y="0" width="555" height="156" uuid="06afef5e-c93f-4d91-9dda-8bdda2a106ba"/>
-				<imageExpression><![CDATA["C:\\Users\\Rennan\\Documents\\Relatório Concurso Sesc\\Concurso\\topo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -413,7 +414,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Relação de Inscritos]]></text>
+				<text><![CDATA[Relação de Inscritos - Portadores de Necessidades Especiais]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="786" width="435" height="15" uuid="8c9b7de5-d182-4ee8-94ef-848886a9f016"/>

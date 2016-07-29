@@ -36,6 +36,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\VagaFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\VagaFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\StatusConcurso.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\util\ConexaoJDBC.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\boleto\EmissorBoleto.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\retorno\caixa\SegmentoU.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\BoletoFacadeLocal.java

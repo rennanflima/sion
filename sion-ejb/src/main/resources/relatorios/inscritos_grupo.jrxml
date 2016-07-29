@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
 	<property name="ireport.zoom" value="1.2396694214876032"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1905"/>
+	<property name="ireport.y" value="411"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -163,7 +163,7 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="id_concurso" class="java.lang.Integer">
+	<parameter name="id_concurso" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="logo" class="java.io.InputStream"/>
@@ -173,7 +173,7 @@
        cand.nome AS ficha_inscricao_nome,
        cand.cpf AS ficha_inscricao_cpf,
        i.data_inscricao AS ficha_inscricao_data_cadastro,
-       CONCAT(cc.codigo,' - ',c.descricao)  AS ficha_inscricao_cargo,
+       CONCAT(cc.codigo,' - ',c.descricao) AS ficha_inscricao_cargo,
        l.nome AS ficha_inscricao_local,
        i.portador  AS ficha_inscricao_possui_deficiencia,
        i.`status` AS ficha_inscricao_situacao,
@@ -281,7 +281,7 @@ ORDER BY
 	</group>
 	<background>
 		<band height="802" splitType="Stretch">
-			<image>
+			<image isUsingCache="true" isLazy="true">
 				<reportElement x="0" y="0" width="555" height="156" uuid="06afef5e-c93f-4d91-9dda-8bdda2a106ba"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
@@ -343,7 +343,7 @@ ORDER BY
 			<textField isBlankWhenNull="true">
 				<reportElement x="294" y="0" width="80" height="33" uuid="bac4a2d5-3291-435b-9893-fbeeed9b4850"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ficha_inscricao_cpf}.substring(0, 3) + "." + $F{ficha_inscricao_cpf}.substring(3, 6) + "." + $F{ficha_inscricao_cpf}.substring(6, 9) + "-" + $F{ficha_inscricao_cpf}.substring(9, 11)]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ficha_inscricao_cpf}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="374" y="0" width="61" height="33" uuid="2abb2e9c-7ff8-4305-b987-2e6d48f3541d"/>
@@ -358,7 +358,7 @@ ORDER BY
 			<textField isBlankWhenNull="true">
 				<reportElement x="505" y="0" width="60" height="34" uuid="061e17a5-6b0b-44cf-a75f-76cc1265c6ac"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ficha_inscricao_situacao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{ficha_inscricao_situacao}.equals("AGUARDANDO_PAGAMENTO") ? "Aguardando pagamento" : ($F{ficha_inscricao_situacao}.equals("CONFIRMADA") ? "Confirmada" : ($F{ficha_inscricao_situacao}.equals("SUB_JUDICE") ? "Sub judice" : ($F{ficha_inscricao_situacao}.equals("CANCELADA") ? "Cancelada" : " - " ))))]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="33" width="565" height="1" uuid="1d89312a-fe2c-4ee9-a5c0-b960d472a9fd"/>

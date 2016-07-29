@@ -13,7 +13,6 @@ import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,9 +21,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
@@ -155,39 +152,12 @@ public class GerenciarConcursoBean implements Serializable {
         this.model.addSeries(series);
     }
 
-    public void imprimeEstatistica() throws JRException, IOException {
-        byte[] relatorio = concursoService.geraPDFEstatisticaIncritosConfirmados(concurso);
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-        ServletOutputStream servletOutputStream = response.getOutputStream();
-        response.setContentType("application/pdf");
-        response.setContentLength(relatorio.length);
-        response.addHeader("Content-Disposition", "attachment; filename=\"estatistica_" + concurso.getId() + ".pdf\"");
-        servletOutputStream.write(relatorio);
-        servletOutputStream.flush();
-        servletOutputStream.close();
-        context.renderResponse();
-        context.responseComplete();
-
-//        ExternalContext ec = fc.getExternalContext();
-//        ec.responseReset();
-//        ec.setResponseContentType("application/pdf");
-//        ec.setResponseContentLength(relatorio.length);
-//        System.out.println("Tamanho PDF: "+relatorio.length);
-//        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"estatistica_" + concurso.getId() + ".pdf\"");
-//        OutputStream output = ec.getResponseOutputStream();
-//        output.write(relatorio);
-//        fc.responseComplete();
-//        return null;
-    }
-
     public void imprimeRelacaoInscritos() throws JRException, IOException {
-//        byte[] relatorio = concursoService.geraPDFRelacaoInscritos(concurso);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 
-        JasperPrint jasperPrint = concursoService.geraPDFRelacaoInscritos(concurso);
+        JasperPrint jasperPrint = concursoService.geraRelatorioInscritos(concurso);
         JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
 
         response.reset();
@@ -201,4 +171,79 @@ public class GerenciarConcursoBean implements Serializable {
         context.responseComplete();
     }
 
+    public void imprimeRelacaoInscritosDeferidos() throws JRException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosDeferidos(concurso);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename=relacao_inscritos_deferidos_" + concurso.getId() + ".pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
+    }
+
+    public void imprimeRelacaoInscritosDeferidosPNE() throws JRException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosDeferidosPNE(concurso);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename=relacao_inscritos_deferidos_pne_" + concurso.getId() + ".pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
+    }
+
+    public void imprimeListaPresenca() throws JRException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        JasperPrint jasperPrint = concursoService.geraRelatorioListaPresenca(concurso);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename=relacao_inscritos_deferidos_pne_" + concurso.getId() + ".pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
+    }
+
+    public void imprimeRelacaoInscritosIndeferidos() throws JRException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosIndeferidos(concurso);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename=relacao_inscritos_indeferidos_" + concurso.getId() + ".pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
+    }
 }

@@ -54,6 +54,7 @@ br\ufac\sion\model\Grupo.class
 br\ufac\sion\util\modulo11\GeradorDigitoVerificadorBancoDoBrasil.class
 br\ufac\sion\util\WebServiceCep$Xml$7.class
 br\ufac\sion\model\TokenRecuperacao.class
+br\ufac\sion\dao\util\ConexaoJDBC.class
 br\ufac\sion\model\Empresa.class
 br\ufac\sion\service\retorno\ArquivoRetornoBradescoService.class
 br\ufac\sion\service\util\ArquivoRetornoDetalhe.class
