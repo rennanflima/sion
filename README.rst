@@ -43,7 +43,7 @@ Console de administração do domínio ::
    http://localhost:4848/
 
 Configuração Data Source de Banco
-˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Criar o Pool de conexões (JDBC Connection Pools) ::
 
@@ -64,7 +64,7 @@ JDBC Resources ::
    Status: enabled
 
 Configuração JMS de fila (queue)
-˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 JMS Destination Resource ::
 
@@ -80,7 +80,7 @@ JMS Connection Factory ::
    Status: Enabled
 
 JavaMail Session
-˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
+~~~~~~~~~~~~~~~~
 
 JMS Destination Resource ::
 
