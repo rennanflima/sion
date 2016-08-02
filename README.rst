@@ -63,7 +63,7 @@ JDBC Resources ::
    PoolNane: SionPool
    Status: enabled
 
-Configuração JMS de fila (queue) ::
+Configuração JMS de fila (queue)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 JMS Destination Resource ::
