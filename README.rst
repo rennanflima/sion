@@ -26,6 +26,11 @@ Ferramenta de desenvolvimento::
 Ferramenta de desenvolvimento de relatórios::
 
    iReport-5.6.0
+   
+SGBD (banco de dados)::
+
+   MariaDB
+      Fornecido através do pacote de aplicativos XAMPP
 
 Servidor de aplicação::
 
