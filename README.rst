@@ -13,7 +13,7 @@ Quickstart
 
 Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas:
 
-`Java`_::
+`Java`::
 
    Java SE Development Kit 8 update 77
       Versão utilizada no desenvolvimento do sistema
@@ -21,15 +21,15 @@ Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas:
    Java SE Development Kit 7 update 67_
       O iReport só abre com o JDK 7, portanto se faz necessário caso queira alterar algum relatório através da ferramenta
 
-Ferramenta de desenvolvimento_::
+Ferramenta de desenvolvimento::
 
    NetBeans IDE 8.1
 
-Ferramenta de desenvolvimento de relatórios_::
+Ferramenta de desenvolvimento de relatórios::
 
    iReport-5.6.0
 
-Servidor de aplicação_::
+Servidor de aplicação::
 
    GlassFish Server Open Source Edition 4.0
 
@@ -38,14 +38,14 @@ Glassfish Configuration
 
 Para implantar o projeto é necessário realizar algumas configurações
 
-Console de administração do domínio_::
+Console de administração do domínio::
 
    http://localhost:4848/
 
 Configuração Data Source de Banco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Criar o Pool de conexões (JDBC Connection Pools)_::
+Criar o Pool de conexões (JDBC Connection Pools)
 
    Pool Name: SionPool
    Resource Type: javax.sql.DataSource
@@ -57,7 +57,7 @@ Criar o Pool de conexões (JDBC Connection Pools)_::
       Port:3306
       ServerName: localhost
 
-JDBC Resources_::
+JDBC Resources
 
    jndiName: jdbc/SionDS
    PoolNane: SionPool
@@ -66,14 +66,14 @@ JDBC Resources_::
 Configuração JMS de fila (queue)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JMS Destination Resource_::
+JMS Destination Resource
 
    JNDI Name: jms/emailQueue
    Physical Destination Name: emailQueue
    Resource Type: javax.jms.Queue
    Status: Enabled
 
-JMS Connection Factory_::
+JMS Connection Factory
 
    JNDI Name: jms/emailQueueFactory
    Resource Type: javax.jms.QueueConnectionFactory
@@ -82,7 +82,7 @@ JMS Connection Factory_::
 JavaMail Session
 ~~~~~~~~~~~~~~~~
 
-JMS Destination Resource_::
+JMS Destination Resource
 
    JNDI Name: mail/gmailSMTP
    Mail Host: smtp.gmail.com
