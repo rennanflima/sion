@@ -11,9 +11,9 @@ O sistema foi desenvolvido com o intuito de facilitar o gerenciamento das inscri
 Quickstart
 ----------
 
-Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas.
+Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas:
 
-`Java` ::
+`Java`_::
 
    Java SE Development Kit 8 update 77
       Versão utilizada no desenvolvimento do sistema
@@ -21,15 +21,15 @@ Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas.
    Java SE Development Kit 7 update 67_
       O iReport só abre com o JDK 7, portanto se faz necessário caso queira alterar algum relatório através da ferramenta
 
-Ferramenta de desenvolvimento ::
+Ferramenta de desenvolvimento_::
 
    NetBeans IDE 8.1
 
-Ferramenta de desenvolvimento de relatórios ::
+Ferramenta de desenvolvimento de relatórios_::
 
    iReport-5.6.0
 
-Servidor de aplicação ::
+Servidor de aplicação_::
 
    GlassFish Server Open Source Edition 4.0
 
@@ -38,14 +38,14 @@ Glassfish Configuration
 
 Para implantar o projeto é necessário realizar algumas configurações
 
-Console de administração do domínio ::
+Console de administração do domínio_::
 
    http://localhost:4848/
 
 Configuração Data Source de Banco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Criar o Pool de conexões (JDBC Connection Pools) ::
+Criar o Pool de conexões (JDBC Connection Pools)_::
 
    Pool Name: SionPool
    Resource Type: javax.sql.DataSource
@@ -57,7 +57,7 @@ Criar o Pool de conexões (JDBC Connection Pools) ::
       Port:3306
       ServerName: localhost
 
-JDBC Resources ::
+JDBC Resources_::
 
    jndiName: jdbc/SionDS
    PoolNane: SionPool
@@ -66,14 +66,14 @@ JDBC Resources ::
 Configuração JMS de fila (queue)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JMS Destination Resource ::
+JMS Destination Resource_::
 
    JNDI Name: jms/emailQueue
    Physical Destination Name: emailQueue
    Resource Type: javax.jms.Queue
    Status: Enabled
 
-JMS Connection Factory ::
+JMS Connection Factory_::
 
    JNDI Name: jms/emailQueueFactory
    Resource Type: javax.jms.QueueConnectionFactory
@@ -82,7 +82,7 @@ JMS Connection Factory ::
 JavaMail Session
 ~~~~~~~~~~~~~~~~
 
-JMS Destination Resource ::
+JMS Destination Resource_::
 
    JNDI Name: mail/gmailSMTP
    Mail Host: smtp.gmail.com
