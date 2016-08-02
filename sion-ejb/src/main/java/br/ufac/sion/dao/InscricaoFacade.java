@@ -12,12 +12,12 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.model.vo.DataQuantidade;
 import br.ufac.sion.model.vo.FiltroInscritos;
+import br.ufac.sion.model.vo.FiltroInscritosRelatorio;
 import br.ufac.sion.util.conversor.DateConversor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -37,10 +37,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.internal.SessionFactoryImpl;
-import org.hibernate.jpa.HibernateEntityManager;
-import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
@@ -161,8 +158,8 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         criteria.createAlias("cargoConcurso", "cc")
                 .setProjection(Projections.projectionList()
                         .add(Projections.sqlGroupProjection("date(data_inscricao) as data",
-                                        "date(data_inscricao)", new String[]{"data"},
-                                        new Type[]{StandardBasicTypes.DATE}))
+                                "date(data_inscricao)", new String[]{"data"},
+                                new Type[]{StandardBasicTypes.DATE}))
                         .add(Projections.count("id").as("quantidade"))
                 )
                 .add(Restrictions.ge("dataInscricao", dataInicial))
@@ -349,21 +346,21 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
                     + "i.portador  AS ficha_inscricao_possui_deficiencia, "
                     + "i.`status` AS ficha_inscricao_situacao, "
                     + "conc.titulo AS concurso_nome "
-                + "FROM "
+                    + "FROM "
                     + "inscricao i, "
                     + "candidato cand, "
                     + "cargo c, "
                     + "localidade l, "
                     + "concurso conc, "
                     + "cargo_concurso cc "
-                + "WHERE "
+                    + "WHERE "
                     + "i.candidato_id = cand.id AND "
                     + "i.cargo_concurso_id = cc.id AND "
                     + "cc.cargo_id = c.id AND "
                     + "cc.localidade_id = l.id AND "
                     + "cc.concurso_id = conc.id AND "
                     + "conc.id = ? "
-                + "ORDER BY "
+                    + "ORDER BY "
                     + "l.nome, "
                     + "c.descricao, "
                     + "cand.nome ");
@@ -376,4 +373,51 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         }
     }
 
+    @Override
+    public List<Inscricao> findByCargoAndLocalidade(FiltroInscritosRelatorio filtroRelatorio) {
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Inscricao.class);
+
+        criteria.createAlias("cargoConcurso", "cc").add(Restrictions.eq("cc.concurso", filtroRelatorio.getConcurso()));
+        criteria.createAlias("candidato", "c");
+
+        if (filtroRelatorio.getCargo() != null && filtroRelatorio.getCargo().getId() != null) {
+            criteria.add(Restrictions.eq("cargoConcurso", filtroRelatorio.getCargo()));
+        }
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+        criteria.setFirstResult(filtroRelatorio.getPrimeiroRegistro());
+        criteria.setMaxResults(filtroRelatorio.getQuantidadeRegistros());
+
+        Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
+        Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
+        criteria.add(Restrictions.or(confirmada, judice));
+
+        //criteria.addOrder(Order.asc("c.nome"));
+        return criteria.list();
+    }
+
+    @Override
+    public int contaInscricoesByCargoAndLocalidade(FiltroInscritosRelatorio filtroRelatorio) {
+        Session session = em.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Inscricao.class);
+
+        criteria.createAlias("cargoConcurso", "cc").add(Restrictions.eq("cc.concurso", filtroRelatorio.getConcurso()));
+        criteria.createAlias("candidato", "c");
+
+        if (filtroRelatorio.getCargo() != null && filtroRelatorio.getCargo().getId() != null) {
+            criteria.add(Restrictions.eq("cargoConcurso", filtroRelatorio.getCargo()));
+        }
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+        Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
+        Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
+        criteria.add(Restrictions.or(confirmada, judice));
+
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Number) criteria.uniqueResult()).intValue();
+    }
 }

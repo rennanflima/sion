@@ -84,6 +84,7 @@ br\ufac\sion\dao\NivelFacadeLocal.class
 br\ufac\sion\service\mdb\EnviaEmailMDB.class
 br\ufac\sion\model\Localidade.class
 br\ufac\sion\model\TipoTelefone.class
+br\ufac\sion\model\vo\FiltroInscritosRelatorio.class
 br\ufac\sion\dao\ConcursoFacade.class
 br\ufac\sion\model\Grupo_.class
 br\ufac\sion\model\CargoConcurso_.class

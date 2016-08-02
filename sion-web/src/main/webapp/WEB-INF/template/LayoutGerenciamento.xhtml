@@ -45,13 +45,13 @@
                         <p:submenu label="Relatórios">
                             <p:submenu label="Lista de inscritos">
                                 <p:menuitem value="Geral" action="#{gerenciarConcursoBean.imprimeRelacaoInscritos()}" ajax="false" target="_blank"/>
-                                <p:menuitem value="Por cargo e cidade"/>
+                                <p:menuitem value="Por cargo e cidade" outcome="/concursos/gerenciar/relatorios/listaInscritosPorLocalECargo"/>
                                 <p:menuitem value="Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidos()}" ajax="false" target="_blank"/>
                                 <p:menuitem value="Não Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosIndeferidos()}" ajax="false" target="_blank"/>
                                 <p:menuitem value="Necessidades Especiais" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidosPNE()}" ajax="false" target="_blank"/>
                             </p:submenu>
                             <p:menuitem value="Lista de presença" action="#{gerenciarConcursoBean.imprimeListaPresenca()}" ajax="false" target="_blank"/>
-                            <p:menuitem value="Estastisticas de Inscritos" outcome="/concursos/gerenciar/estatisticaInscritos"/>
+                            <p:menuitem value="Estastisticas de Inscritos" outcome="/concursos/gerenciar/relatorios/estatisticaInscritos"/>
                         </p:submenu>
                         <p:menuitem value="Sair" outcome="/concursos/pesquisaConcursos" actionListener="#{gerenciarConcursoBean.removeConcursoSessao()}" />
                     </p:menubar>
