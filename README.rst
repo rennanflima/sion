@@ -45,7 +45,7 @@ Console de administração do domínio::
 Configuração Data Source de Banco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Criar o Pool de conexões (JDBC Connection Pools) ::
+Criar o Pool de conexões (JDBC Connection Pools)
 
    Pool Name: SionPool
    Resource Type: javax.sql.DataSource
