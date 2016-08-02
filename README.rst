@@ -1,9 +1,7 @@
 SION
 =======
 
-Sistema de Inscrição Online de Processos Seletivos
-
-O SION foi desenvolvido em JAVA 8, utilizando os frameworks JSF, PrimeFaces, Hibernate com JPA, SpringSecurity para a autenticação e controle dos usuários, JasperRepot e IReport para a geração de relatórios, JUnit para os testes e o Maven para gerenciar as dependências, além de utilizar o JRebel para diminuir o redeploy. O sistema gera boleto com o BOPEPO e lê o retorno do banco com o auxilio do Textgit.
+O Sistema de Inscrição Online de Processos Seletivos - SION foi desenvolvido em JAVA 8, utilizando os frameworks JSF, PrimeFaces, Hibernate com JPA, SpringSecurity para a autenticação e controle dos usuários, JasperRepot e IReport para a geração de relatórios, JUnit para os testes e o Maven para gerenciar as dependências, além de utilizar o JRebel para diminuir o redeploy. O sistema gera boleto com o BOPEPO e lê o retorno do banco com o auxilio do Textgit.
 
 O sistema foi desenvolvido com o intuito de facilitar o gerenciamento das inscrições de um processo seletivo ou concurso, sendo a  confirmação da inscrição feita de forma automática, através do arquivo de retorno do banco, ou manualmente.
 
