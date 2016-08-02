@@ -16,7 +16,7 @@ Para o ambiente de desenvolvimento é necessário ter as seguintes ferramentas:
    Java SE Development Kit 8 update 77
       Versão utilizada no desenvolvimento do sistema
 
-   Java SE Development Kit 7 update 67_
+   Java SE Development Kit 7 update 67
       O iReport só abre com o JDK 7, portanto se faz necessário caso queira alterar algum relatório através da ferramenta
 
 Ferramenta de desenvolvimento::
