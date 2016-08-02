@@ -45,7 +45,7 @@ Console de administração do domínio::
 Configuração Data Source de Banco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Criar o Pool de conexões (JDBC Connection Pools)
+Criar o Pool de conexões (JDBC Connection Pools) ::
 
    Pool Name: SionPool
    Resource Type: javax.sql.DataSource
@@ -57,23 +57,23 @@ Criar o Pool de conexões (JDBC Connection Pools)
       Port:3306
       ServerName: localhost
 
-JDBC Resources
+JDBC Resources ::
 
    jndiName: jdbc/SionDS
    PoolNane: SionPool
    Status: enabled
 
-Configuração JMS de fila (queue)
+Configuração JMS de fila (queue) ::
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JMS Destination Resource
+JMS Destination Resource ::
 
    JNDI Name: jms/emailQueue
    Physical Destination Name: emailQueue
    Resource Type: javax.jms.Queue
    Status: Enabled
 
-JMS Connection Factory
+JMS Connection Factory ::
 
    JNDI Name: jms/emailQueueFactory
    Resource Type: javax.jms.QueueConnectionFactory
@@ -82,7 +82,7 @@ JMS Connection Factory
 JavaMail Session
 ~~~~~~~~~~~~~~~~
 
-JMS Destination Resource
+JMS Destination Resource ::
 
    JNDI Name: mail/gmailSMTP
    Mail Host: smtp.gmail.com
