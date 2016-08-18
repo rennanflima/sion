@@ -82,7 +82,10 @@
                 </p:column>
 
                 <p:column style="width: 200px; text-align: center;">
-                    <p:button icon="ui-icon-contact" title="Ficha de Inscrição" value="Ficha de inscrição" style="font-size: 12px; margin-right: 5px; margin-bottom: 5px;"/>
+                    <p:commandButton icon="ui-icon-contact" title="Ficha de Inscrição" value="Ficha de inscrição" style="font-size: 12px; margin-right: 5px; margin-bottom: 5px;"
+                                     action="#{listaInscritosBean.imprimeFormularioInscricao()}" ajax="false" onclick="this.form.target='_blank'">
+                        <f:setPropertyActionListener target="#{listaInscritosBean.inscricao}" value="#{inscricao}"/>
+                    </p:commandButton>
                     <p:commandButton icon="ui-icon-check" title="Confirmar inscrição" value="Confirmar inscrição" update=":frmJustificativa"
                                      style="font-size: 12px;" oncomplete="PF('confirmacaoDialog').show();" disabled="#{inscricao.confirmada}">
                         <f:setPropertyActionListener target="#{listaInscritosBean.inscricao}" value="#{inscricao}"/>

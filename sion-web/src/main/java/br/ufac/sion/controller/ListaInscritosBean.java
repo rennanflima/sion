@@ -15,16 +15,21 @@ import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.service.InscricaoService;
 import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -133,5 +138,29 @@ public class ListaInscritosBean implements Serializable {
         } catch (NegocioException ex) {
             FacesUtil.addErrorMessage(ex.getMessage());
         }
+    }
+    
+    public void imprimeFormularioInscricao() throws JRException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        JasperPrint jasperPrint = inscricaoService.geraRelatorioFormularioInscricao(inscricao);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+        renderizaPDF(baos, "formulario_inscricao_" + inscricao.getId() + ".pdf");
+    }
+    
+    private void renderizaPDF(ByteArrayOutputStream baos, String nomeArquivo) throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", "inline; filename="+nomeArquivo);
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        context.responseComplete();
     }
 }

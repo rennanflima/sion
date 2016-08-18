@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="candidato_tel" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0934edcf-0f15-488f-8d9a-b9426dd1ed80">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="candidato_id" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     candidato_telefones.`num_telefone` AS candidato_telefones_num_telefone,
+     candidato_telefones.`prefixo` AS candidato_telefones_prefixo,
+     candidato_telefones.`tipo` AS candidato_telefones_tipo
+FROM
+     `candidato_telefones` candidato_telefones
+WHERE
+     candidato_telefones.`candidato_id` = $P{candidato_id}]]>
+	</queryString>
+	<field name="candidato_telefones_num_telefone" class="java.lang.String"/>
+	<field name="candidato_telefones_prefixo" class="java.lang.String"/>
+	<field name="candidato_telefones_tipo" class="java.lang.String"/>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="14" y="0" width="274" height="20" uuid="a7ca6c5c-66ac-449a-bb36-f179327a0deb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{candidato_telefones_prefixo}+" "+$F{candidato_telefones_num_telefone}+" - "+$F{candidato_telefones_tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
