@@ -15,7 +15,7 @@
 
 
         <h:form id="frmInscritos" style="margin-top: 20px;">
-            <h1>Quantificação de Inscritos Por Cargo</h1>
+            <h1>#{estatisticaConcursoBean.titulo}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
@@ -23,7 +23,7 @@
                 <p:toolbarGroup>
                     <p:commandButton value="Pesquisar" update="cargosConcursoTable @form" process="@form" />
                     <p:commandButton value="Limpar" update="cargosConcursoTable @form" action="#{estatisticaConcursoBean.limparFiltro()}" />
-                    <p:commandButton value="Gerar PDF" action="#{estatisticaConcursoBean.imprimeEstatisticaConfirmados()}" ajax="false" onclick="this.form.target='_blank'"/>
+                    <p:commandButton value="Gerar PDF" action="#{estatisticaConcursoBean.imprimeEstatistica()}" ajax="false" onclick="this.form.target='_blank'"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Página Inicial" outcome="/concursos/gerenciar/home"/>

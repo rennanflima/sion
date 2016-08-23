@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritos_Grupo" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="4e90be2f-6b73-45c7-bc23-aa9e0b31806e">
 	<property name="ireport.zoom" value="1.1269722013523664"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2252"/>
+	<property name="ireport.y" value="786"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -174,7 +174,7 @@
       CONCAT(cc.codigo,' - ',c.descricao) AS cargo_descricao,
       conc.titulo AS concurso_titulo,
       l.nome AS localidade_nome,
-      (SELECT COUNT(*) FROM inscricao i WHERE i.cargo_concurso_id = cc.id AND i.status = 'CONFIRMADA' OR i.status = 'SUB_JUDICE') AS qtd_cargo
+      (SELECT COUNT(*) FROM inscricao i WHERE i.cargo_concurso_id = cc.id) AS qtd_cargo
 FROM
     cargo_concurso cc,
     cargo c,
@@ -261,7 +261,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Quantificação de Inscritos Confirmados]]></text>
+				<text><![CDATA[Quantificação de Inscritos]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="446" y="23" width="80" height="20" uuid="c4e53c48-bc2b-4369-b539-79dfc5cc0639"/>
@@ -402,7 +402,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Quantificação de Inscritos Confirmados]]></text>
+				<text><![CDATA[Quantificação de Inscritos]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="786" width="435" height="15" uuid="8c9b7de5-d182-4ee8-94ef-848886a9f016"/>

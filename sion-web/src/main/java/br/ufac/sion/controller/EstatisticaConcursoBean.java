@@ -45,10 +45,11 @@ public class EstatisticaConcursoBean implements Serializable {
 
     @EJB
     private ConcursoService concursoService;
-    
+
     private Concurso concurso;
 
     private String status = "";
+    private String titulo = "Quantificação de Inscritos Por Cargo";
 
     private List<CargoConcurso> cargosConcurso = new ArrayList<>();
 
@@ -73,6 +74,13 @@ public class EstatisticaConcursoBean implements Serializable {
         this.status = status;
     }
 
+    public String getTitulo() {
+        if (status.equals("CONFIRMADA")) {
+            return "Quantificação de Inscritos Confirmados Por Cargo";
+        }
+        return titulo;
+    }
+
     public void recuperaConcursoSessao() {
         HttpSession session = FacesProducer.getHttpServletRequest().getSession();
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
@@ -86,18 +94,27 @@ public class EstatisticaConcursoBean implements Serializable {
         }
     }
 
-    public void imprimeEstatisticaConfirmados() throws JRException, IOException {
+    public void imprimeEstatistica() throws JRException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-
-        JasperPrint jasperPrint = concursoService.geraRelatorioEstatisticaIncritosConfirmados(concurso);
+        
+        String nomeArquivo = "";
+        JasperPrint jasperPrint = null;
+        
+        if (status.equals("CONFIRMADA")) {
+            jasperPrint = concursoService.geraRelatorioEstatisticaIncritosConfirmados(concurso);
+            nomeArquivo = "estatistica_inscritos_confirmados_" + concurso.getId();
+        } else {
+            jasperPrint = concursoService.geraRelatorioEstatisticaIncritos(concurso);
+            nomeArquivo = "estatistica_inscritos_" + concurso.getId();
+        }
         JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-
+        
         response.reset();
         response.setContentType("application/pdf");
         response.setContentLength(baos.size());
-        response.setHeader("Content-disposition", "inline; filename=estatistica_inscritos_confirmados_" + concurso.getId() + ".pdf");
+        response.setHeader("Content-disposition", "inline; filename=" + nomeArquivo + ".pdf");
         response.getOutputStream().write(baos.toByteArray());
         response.getOutputStream().flush();
         response.getOutputStream().close();

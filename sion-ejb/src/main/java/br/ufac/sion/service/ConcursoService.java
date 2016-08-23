@@ -132,6 +132,21 @@ public class ConcursoService {
         return jp;
     }
 
+    public JasperPrint geraRelatorioEstatisticaIncritos(Concurso concurso) throws JRException {
+        this.conexaoJDBC = new ConexaoJDBC();
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+
+        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+
+        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos.jrxml"));
+        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+        conexaoJDBC.fechaConexao();
+        return jp;
+    }
+    
     public JasperPrint geraRelatorioInscritos(Concurso concurso) throws JRException {
         Map<String, Object> parameters = new HashMap<>();
         InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
