@@ -16,7 +16,9 @@ header {
     margin-bottom: 20px;
     height: 30px;
 
-    background-color: #545454;
+    /*background-color: #545454;*/
+    /*background-color: #00468B; //cor da letra sesc*/
+    background-color: #205E9A;
     color: #fff;
 
     box-shadow: 0px 2px 2px #ccc;
@@ -140,4 +142,35 @@ h1 {
 
 .right{
     text-align: right;
+}
+
+.ui-steps .ui-steps-item {
+    width: 24%;
+}
+ 
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+.ui-steps.custom {
+    margin-bottom: 30px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+    background-color: #0081c2;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 30px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+ 
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+    color: #555;
 }

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Inscrição</ui:define>
+    
+    <ui:define name="corpo">
+        <f:metadata>
+            <o:viewParam name="concurso" value="#{inscricaoBean.concurso}" />
+            <f:event listener="#{inscricaoBean.inicializar()}" type="preRenderView" />
+        </f:metadata>
+        <h:form id="frmInscricao">
+            <!--<h1></h1>-->
+
+            <p:messages autoUpdate="true" closable="true" />
+            
+            <p:wizard widgetVar="concursoWizard" flowListener="#{inscricaoBean.onFlowProcess}" style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar">
+                <p:tab id="dadosCandidato"  title="Dados Pessoais">
+                    <ui:include src="/WEB-INF/template/inscricao/dadosPessoais.xhtml" />
+                </p:tab>
+                <p:tab id="dadosEndereco" title="Endereço">
+                    <ui:include src="/WEB-INF/template/inscricao/endereco.xhtml" />
+                </p:tab>
+                <p:tab id="dadosContatos" title="Contatos">
+                    <ui:include src="/WEB-INF/template/inscricao/contatos.xhtml" />
+                </p:tab>
+                <p:tab id="dadosVagas" title="Vagas dos cargos">
+                    <ui:include src="/WEB-INF/template/inscricao/vagas.xhtml" />
+                </p:tab>
+                <p:tab id="confirmacaoInscricao" title="Confirmação">
+                    <ui:include src="/WEB-INF/template/inscricao/confirmacao.xhtml" />
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

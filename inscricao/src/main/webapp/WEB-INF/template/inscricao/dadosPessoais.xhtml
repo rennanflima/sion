@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+                    
+    <p:panelGrid columns="2" style="width: 100%; margin-top: 20px; margin-bottom: 10px" 
+                 columnClasses="rotulo, campo">
+        
+        <p:outputLabel value="Nome" for="nome"/>
+        <p:inputText id="nome" size="60" maxlength="80" value="#{inscricaoBean.candidato.nome}"/>
+
+        <p:outputLabel value="Nome da Mãe" for="nomeMae"/>
+        <p:inputText id="nomeMae" size="60" maxlength="80" value="#{inscricaoBean.candidato.mae}"/>
+
+        <p:outputLabel value="Nome do Pai" for="nomePai"/>
+        <p:inputText id="nomePai" size="60" maxlength="80" value="#{inscricaoBean.candidato.pai}"/>
+
+        <p:outputLabel value="Sexo" for="sexo" />
+        <p:selectOneRadio id="sexo" value="#{inscricaoBean.candidato.sexo}">
+            <f:selectItems value="#{inscricaoBean.sexos}" var="sexo"
+                          itemLabel="#{sexo.descricao}" itemValue="#{sexo}" />
+        </p:selectOneRadio>
+
+        <p:outputLabel value="Data de Nascimento" for="dataNascimento"/>
+        <p:calendar id="dataNascimento" value="#{inscricaoBean.candidato.dataNascimento}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
+
+        <p:outputLabel value="CPF"/>
+        <h:outputText value="#{inscricaoBean.candidato.cpf}" style="font-weight: bold"/>
+
+        <p:outputLabel value="Identidade" for="rg" />
+        <p:panelGrid columns="5" style="width: 100%;"
+                    columnClasses="campo, rotulo, campo, rotulo, campo">
+            <p:inputText id="rg" value="#{inscricaoBean.candidato.rg.numero}" />
+
+            <p:outputLabel value="Órgão Expedidor" for="rgUF" />
+            <p:inputText id="rgUF" value="#{inscricaoBean.candidato.rg.orgaoExpedidor}" />
+
+            <p:outputLabel value="Data de expedição" for="dataRG" />
+            <p:calendar id="dataRG" value="#{inscricaoBean.candidato.rg.dataExpedicao}" pattern="dd/MM/yyyy" mask="true" converter="localDateConversor"/>
+        </p:panelGrid>
+
+        <p:outputLabel value="Estado Civil" for="estadoCivil"/>
+        <p:selectOneMenu id="estadoCivil" value="#{inscricaoBean.candidato.estadoCivil}">
+            <f:selectItem itemLabel="Selecione um estado civil..."/>
+            <f:selectItems value="#{inscricaoBean.estadosCivil}" var="ec"
+                          itemLabel="#{ec.descricao}" itemValue="#{ec}" />
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Braço Dominante" for="braco" />
+        <p:selectOneRadio id="braco" value="#{inscricaoBean.candidato.bracoDominante}">
+            <f:selectItems value="#{inscricaoBean.bracosDominante}" var="bd"
+                          itemLabel="#{bd.descricao}" itemValue="#{bd}" />
+        </p:selectOneRadio>
+
+        <p:outputLabel value="Escolaridade" for="escolaridade" />
+        <p:selectOneRadio id="escolaridade" value="#{inscricaoBean.candidato.escolaridade}" layout="grid" columns="1">
+            <f:selectItems value="#{inscricaoBean.escolaridades}" var="e"
+                          itemLabel="#{e.descricao}" itemValue="#{e}" />
+        </p:selectOneRadio>
+       
+   </p:panelGrid>
+</ui:composition>

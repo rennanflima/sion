@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+                    
+    <p:panel header="Dados Pessoais" style="margin-top: 15px;">
+        <p:panelGrid columns="2" style="width: 100%;"
+                     columnClasses="rotulo, campo">
+            
+            <p:outputLabel value="Nome"/>
+            <h:outputText value="#{inscricaoBean.candidato.nome}"/>
+
+            <p:outputLabel value="Nome da Mãe"/>
+            <h:outputText value="#{inscricaoBean.candidato.mae}"/>
+            
+            <p:outputLabel value="Nome do Pai"/>
+            <h:outputText value="#{inscricaoBean.candidato.pai}"/>
+            
+            <p:outputLabel value="Sexo" />
+            <h:outputText value="#{inscricaoBean.candidato.sexo.descricao}"/>
+            
+            <p:outputLabel value="Data de Nascimento"/>
+            <h:outputText value="#{inscricaoBean.candidato.dataNascimento}">
+                <f:converter converterId="localDateConversor"/>
+            </h:outputText>
+
+            <p:outputLabel value="CPF"/>
+            <h:outputText value="#{inscricaoBean.candidato.cpf}"/>
+
+
+            <p:outputLabel value="Identidade"/>
+            <h:panelGroup>
+                <h:outputText value="#{inscricaoBean.candidato.rg.numero} #{inscricaoBean.candidato.rg.orgaoExpedidor}"/>
+                - 
+                <h:outputText value="#{inscricaoBean.candidato.rg.dataExpedicao}">
+                    <f:converter converterId="localDateConversor"/>
+                </h:outputText>
+            </h:panelGroup>
+            
+            <p:outputLabel value="Estado Civil" />
+            <h:outputText value="#{inscricaoBean.candidato.estadoCivil.descricao}"/>
+
+            <p:outputLabel value="Braço Dominante"/>
+            <h:outputText value="#{inscricaoBean.candidato.bracoDominante.descricao}"/>
+            
+            <p:outputLabel value="Escolaridade"/>
+            <h:outputText value="#{inscricaoBean.candidato.escolaridade.descricao}"/>
+
+        </p:panelGrid>
+    </p:panel>
+    
+    <p:panel header="Endereço" style="margin-top: 15px;">
+        <p:panelGrid columns="4" style="width: 100%;"
+                     columnClasses="rotulo, campo, rotulo, campo">
+            <p:outputLabel value="CEP"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.cep}"/>
+            <p:spacer/>
+            <p:spacer/>
+
+            <p:outputLabel value="Logradouro"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.logradouro}"/>
+
+            <p:outputLabel value="Número"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.numero}"/>
+
+            <p:outputLabel value="Complemento"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.complemento}"/>
+
+
+            <p:outputLabel value="Bairro"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.bairro}"/>
+
+            <p:outputLabel value="Estado"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.cidade.estado.nome}"/>
+
+            <p:outputLabel value="Cidade"/>
+            <h:outputText value="#{inscricaoBean.candidato.endereco.cidade.nome}"/>
+        </p:panelGrid>
+    </p:panel>
+    
+    <p:panel header="Contatos" style="margin-top: 15px;">
+        <p:panelGrid columns="2" style="width: 100%;"
+                     columnClasses="rotulo, campo">
+            
+            <p:outputLabel value="Telefones"/>
+            <h:panelGroup>
+                <ui:repeat value="#{inscricaoBean.candidato.telefones}" var="tel">
+                    <h:panelGrid columns="2" columnClasses="campo, campo" style="font-size: 12px;">
+                        <h:outputText value="#{tel.prefixo} #{tel.numero}"/>
+                        <h:outputText value=" - #{tel.tipo.descricao}"/>
+                    </h:panelGrid>
+                </ui:repeat>
+            </h:panelGroup>
+
+            <p:outputLabel value="E-mail"/>
+            <h:outputText value="#{inscricaoBean.candidato.email}"/>
+        </p:panelGrid>
+    </p:panel>
+    
+    <p:panel header="Vagas dos cargos" style="margin-top: 15px;">
+        <p:panelGrid columns="2" style="width: 100%;"
+            columnClasses="rotulo, campo">
+            
+            <p:outputLabel value="Lotação"/>
+            <h:outputText value="#{inscricaoBean.inscricao.cargoConcurso.localidade.nome}"/>
+            
+            <p:outputLabel value="Nível"/>
+            <h:outputText value="#{inscricaoBean.inscricao.cargoConcurso.cargo.nivel}"/>
+            
+            <p:outputLabel value="Cargo"/>
+            <h:outputText value="#{inscricaoBean.inscricao.cargoConcurso.cargo.descricao}"/>
+            
+            <p:outputLabel value="Valor da Inscrição"/>
+            <h:outputText value="#{inscricaoBean.inscricao.cargoConcurso.valor}"/>
+            
+            <p:outputLabel value="É pessoa com necessidade especial?"/>
+            <h:outputText value="#{inscricaoBean.inscricao.necessidadeEspecial.portador}"/>
+            
+            <p:outputLabel value="Qual necessidade especial?"/>
+            <h:outputText value="#{inscricaoBean.inscricao.necessidadeEspecial.qualNecessidadeEspecial}"/>
+            
+            <p:outputLabel value="Necessita de atendimento especial para a prova?" />
+            <h:outputText value="#{inscricaoBean.inscricao.necessidadeEspecial.necessitaAtendimento}"/>
+            
+            <p:outputLabel value="Qual atendimento especial?" />
+            <h:outputText value="#{inscricaoBean.inscricao.necessidadeEspecial.qualAtendimento}"/>
+        </p:panelGrid>
+    </p:panel>
+    <p:panelGrid columns="2" id="painelConcordo" style="margin-top: 15px; margin-bottom: 15px;"
+                 columnClasses="rotulo, campo">
+        <p:outputLabel value="Declaração"/>
+        <h:panelGroup>
+            <p:selectBooleanCheckbox id="concordo" value="#{inscricaoBean.inscricao.concordoEdital}" required="true" />
+            <p:outputLabel for="concordo" value="Declaro sob as penas de Lei que os dados informados nesta solicitação são verdadeiros; que preencho todas as condições exigidas no Edital de Abertura de Inscrições; que, mesmo aprovado, não poderei ser admitido no cargo ao qual estou me candidatando se não comprovar habilitação legal e as demais condições exigidas no Edital; que estou quite com as obrigações eleitorais e militares; que tenho pleno conhecimento das normas e métodos do Processo Seletivo a que me submeto; que ciente de que a inexatidão ou irregularidade destas afirmativas, ainda que verificadas posteriormente, ocasionará minha eliminação do Processo Seletivo, com a anulação de todos os atos praticados, sem prejuízo das demais medidas de ordem administrativa, civil ou criminal." style="margin-left: 10px;text-align: justify;"/>
+        </h:panelGroup>
+
+        <h:outputText value="Observação" style="font-weight: bold" />
+        <h:outputText value="Caso seus dados não estejam no boleto, gere-o novamente. Não nos responsabilizamos por boletos sem dados pessoais."/>
+    </p:panelGrid>
+</ui:composition>

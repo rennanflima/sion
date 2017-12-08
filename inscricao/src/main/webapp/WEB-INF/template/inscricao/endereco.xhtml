@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid id="painelEnd" columns="4" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
+                 columnClasses="rotulo, campo, rotulo, campo">
+        <p:outputLabel value="CEP" for="cep"/>
+        <p:inputMask id="cep" mask="99.999-999" value="#{inscricaoBean.candidato.endereco.cep}">
+            <p:ajax event="blur" listener="#{inscricaoBean.consultaCep()}" update="painelEnd"/>
+        </p:inputMask>
+        <p:spacer/>
+        <p:spacer/>
+
+        <p:outputLabel value="Logradouro" for="logradouro"/>
+        <p:inputText id="logradouro" size="80" maxlength="80" value="#{inscricaoBean.candidato.endereco.logradouro}" />
+
+        <p:outputLabel value="Número" for="numero"/>
+        <p:inputText id="numero" size="10" maxlength="20" value="#{inscricaoBean.candidato.endereco.numero}"/>
+
+        <p:outputLabel value="Complemento" for="complemento"/>
+        <p:inputText id="complemento" size="60" maxlength="60" value="#{inscricaoBean.candidato.endereco.complemento}"/>
+
+        <p:outputLabel value="Bairro" for="bairro"/>
+        <p:inputText id="bairro" size="30" maxlength="60" value="#{inscricaoBean.candidato.endereco.bairro}"/>
+
+        <p:outputLabel value="Estado" for="estado"/>
+        <p:selectOneMenu id="estado" value="#{inscricaoBean.estado}" >
+            <f:selectItem itemLabel="Selecione um estado..."/>
+            <f:selectItems value="#{inscricaoBean.estados}" var="estado"
+                           itemValue="#{estado}" itemLabel="#{estado.nome}"/>
+            <p:ajax event="change" process="@this" update="cidade" listener="#{inscricaoBean.carregarCidades()}"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Cidade" for="cidade"/>
+        <p:selectOneMenu id="cidade" value="#{inscricaoBean.candidato.endereco.cidade}">
+            <f:selectItem itemLabel="Selecione uma cidade..." itemValue=""/>
+            <f:selectItems value="#{inscricaoBean.cidades}" var="cidade"
+                           itemValue="#{cidade}" itemLabel="#{cidade.nome}"/>
+        </p:selectOneMenu>
+    </p:panelGrid>
+
+</ui:composition>

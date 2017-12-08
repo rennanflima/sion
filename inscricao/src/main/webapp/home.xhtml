@@ -10,107 +10,44 @@
     <ui:define name="titulo">Dashboard</ui:define>
 
     <ui:define name="corpo">
+        <h:form id="frmPesquisaConcurso" style="margin-top: 20px;">
+            <h1>Concursos com inscrições abertas</h1>
 
-        <p:panel header="CADASTRO SION">
-            <p:panel header="Dados Pessoais" style="border-bottom: 0px; margin-top: 15px;">
-                <p:panelGrid columns="2" style="width: 100%;"
-                             columnClasses="rotulo, campo">
-                    <p:outputLabel value="Nome"/>
-                    <h:outputText value="#{homeBean.candidato.nome}"/>
+            <p:messages autoUpdate="true" closable="true" />
+            
+            <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoInscricaoAbertaBean.concursos}" rowIndexVar="linha"
+                         style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                    <p:outputLabel value="Data de Nascimento"/>
-                    <h:outputText value="#{homeBean.candidato.dataNascimento}">
-                        <f:converter converterId="localDateConversor"/>
+                <p:column headerText="#" style="text-align: center; width: 20px;">
+                    <h:outputText value="#{linha + 1}"/>
+                </p:column>
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{concurso.titulo}"/>
+                </p:column>
+
+                <p:column headerText="Período de Inscrição" style="text-align: center; width: 300px;">
+                    <h:outputText value="#{concurso.dataInicioInscricao}">
+                        <f:converter converterId="localDateTimeConversor"/>
                     </h:outputText>
+                    -
+                    <h:outputText value="#{concurso.dataTerminoIncricao}">
+                        <f:converter converterId="localDateTimeConversor"/>
+                    </h:outputText>
+                </p:column>
 
-                    <p:outputLabel value="Sexo" />
-                    <h:outputText value="#{homeBean.candidato.sexo.descricao}"/>
-                    
-                    <p:outputLabel value="Estado Civil" />
-                    <h:outputText value="#{homeBean.candidato.estadoCivil.descricao}"/>
+                <p:column headerText="Situação" style="width: 100px; text-align: center;">
+                    <h:outputText value="#{concurso.status.descricao}"/>
+                </p:column>
 
-                    <p:outputLabel value="Escolaridade"/>
-                    <h:outputText value="#{homeBean.candidato.escolaridade.descricao}"/>
-
-                    <p:outputLabel value="Nome do Pai"/>
-                    <h:outputText value="#{homeBean.candidato.pai}"/>
-
-                    <p:outputLabel value="Nome da Mãe"/>
-                    <h:outputText value="#{homeBean.candidato.mae}"/>
-
-                    <p:outputLabel value="Braço Dominante"/>
-                    <h:outputText value="#{homeBean.candidato.bracoDominante.descricao}"/>
-                </p:panelGrid>
-            </p:panel>
-            <p:panel header="Documentos" style="border-bottom: 0px;">
-                <p:panelGrid columns="2" style="width: 100%;"
-                             columnClasses="rotulo, campo">
-
-                    <p:outputLabel value="CPF"/>
-                    <h:outputText value="#{homeBean.candidato.cpf}"/>
-
-
-                    <p:outputLabel value="Identidade"/>
-                    <h:panelGroup>
-                        <h:outputText value="#{homeBean.candidato.rg.numero} #{homeBean.candidato.rg.orgaoExpedidor}"/>
-                        - 
-                        <h:outputText value="#{homeBean.candidato.rg.dataExpedicao}">
-                            <f:converter converterId="localDateConversor"/>
-                        </h:outputText>
-                    </h:panelGroup>
-                </p:panelGrid>
-            </p:panel>
-            <p:panel header="Endereço para Correspondências">
-                <p:panelGrid id="painelEnd" columns="4" style="width: 100%;"
-                             columnClasses="rotulo, campo, rotulo, campo">
-                    <p:outputLabel value="CEP"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.cep}"/>
-                    <p:spacer/>
-                    <p:spacer/>
-
-                    <p:outputLabel value="Logradouro"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.logradouro}"/>
-
-                    <p:outputLabel value="Número"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.numero}"/>
-
-                    <p:outputLabel value="Complemento"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.complemento}"/>
-
-
-                    <p:outputLabel value="Bairro"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.bairro}"/>
-
-                    <p:outputLabel value="Estado"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.cidade.estado.nome}"/>
-
-                    <p:outputLabel value="Cidade"/>
-                    <h:outputText value="#{homeBean.candidato.endereco.cidade.nome}"/>
-                </p:panelGrid>
-                <p:panelGrid columns="2" style="width: 100%;" id="painelTel"
-                             columnClasses="rotulo, campo">
-                    <p:outputLabel value="Telefones"/>
-                    <h:panelGroup>
-                        <ui:repeat value="#{homeBean.candidato.telefones}" var="tel">
-                            <h:panelGrid columns="2" columnClasses="campo, campo" style="font-size: 12px;">
-                                <h:outputText value="#{tel.prefixo} #{tel.numero}"/>
-                                <h:outputText value=" - #{tel.tipo.descricao}"/>
-                            </h:panelGrid>
-                        </ui:repeat>
-                    </h:panelGroup>
-
-                    <p:outputLabel value="E-mail"/>
-                    <h:outputText value="#{homeBean.candidato.email}"/>
-                </p:panelGrid>
-            </p:panel>
-            <div style="text-align: center; margin-top: 15px;">
-                <p:button value="Realizar inscrição" outcome="/concursos/pesquisaConcursoInscricaoAberta"/>
-                <p:button icon="ui-icon-pencil" value="Editar Perfil" outcome="/candidatos/edicaoCandidato">
-                    <f:param name="candidato" value="#{homeBean.candidato.id}"/>
-                </p:button>
-            </div>
-        </p:panel>
-
+                <p:column style="width: 150px; text-align: center;">
+                    <p:button icon="ui-icon-pencil" title="Inscrever" value="Inscrever" outcome="/candidatos/insc">
+                        <f:param name="concurso" value="#{concurso.id}"/>
+                    </p:button>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 
 </ui:composition>

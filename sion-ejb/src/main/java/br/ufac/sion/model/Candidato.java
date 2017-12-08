@@ -222,6 +222,14 @@ public class Candidato implements Serializable {
     public void setInscricoes(List<Inscricao> inscricoes) {
         this.inscricoes = inscricoes;
     }
+    
+    public void adicionaTelefone(Telefone fone, Integer linha){
+        if (linha == null) {
+            this.telefones.add(fone);
+        } else {
+            this.telefones.set(linha, fone);
+        }
+    }
 
     @Override
     public int hashCode() {
