@@ -138,4 +138,5 @@
         <h:outputText value="Observação" style="font-weight: bold" />
         <h:outputText value="Caso seus dados não estejam no boleto, gere-o novamente. Não nos responsabilizamos por boletos sem dados pessoais."/>
     </p:panelGrid>
+    <p:commandButton value="Confirmar" id="botaoConfirmar" action="#{inscricaoBean.salvar()}" update="@form" />
 </ui:composition>

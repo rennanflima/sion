@@ -14,6 +14,7 @@ import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.dao.NivelFacadeLocal;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
+import br.ufac.sion.inscricao.util.jsf.FacesProducer;
 import br.ufac.sion.inscricao.util.jsf.FacesUtil;
 import br.ufac.sion.model.BracoDominante;
 import br.ufac.sion.model.Candidato;
@@ -267,6 +268,7 @@ public class InscricaoBean  implements Serializable{
     public void guardaTelefone(){
         this.candidato.adicionaTelefone(this.telefone, this.linha);
         FacesUtil.addSuccessMessage("Telefone salvo com sucesso!");
+        limpaTelefone();
     }
     
     public void limpaTelefone(){
@@ -313,6 +315,18 @@ public class InscricaoBean  implements Serializable{
         }
     }
 
+    public void salvar(){
+        try {
+            this.inscricao.setCandidato(this.candidato);
+            this.candidato.getInscricoes().add(this.inscricao);
+            this.candidato = this.candidatoService.editar(this.candidato);
+            this.inscricao = this.inscricaoService.salvar(this.inscricao);
+            FacesProducer.getExternalContext().redirect("comprovanteInscricao.xhtml?inscricao=" + this.inscricao.getId());
+        } catch (Exception e) {
+            FacesUtil.addErrorMessage("Erro ao realizar a inscrição: " + e.getMessage());
+        }
+    }
+    
     public void carregarCargos() {
         this.cargosConcurso.clear();
         this.cargosConcurso = cargoConcursoFacade.findByConcursoAndNivelAndLocalidade(concurso, nivel, local);

@@ -84,7 +84,7 @@ public class Candidato implements Serializable {
     private String senha;
     @Column(nullable = false, length = 40)
     private String permissao;
-    @OneToMany(mappedBy = "candidato")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "candidato")
     private List<Inscricao> inscricoes = new ArrayList<>();
 
     public Long getId() {

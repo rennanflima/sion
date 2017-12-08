@@ -22,6 +22,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -56,6 +58,7 @@ public class Inscricao implements Serializable {
     @ManyToOne
     @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "cargo_concurso_id", nullable = false)
     private CargoConcurso cargoConcurso;

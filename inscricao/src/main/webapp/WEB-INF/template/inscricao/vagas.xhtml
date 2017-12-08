@@ -30,7 +30,7 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Cargo" for="cargoC"/>
-        <p:selectOneMenu id="cargoC" value="#{inscricaoBean.inscricao.cargoConcurso}">
+        <p:selectOneMenu id="cargoC" value="#{inscricaoBean.inscricao.cargoConcurso}" required="true">
             <f:selectItem itemLabel="Selecione um cargo..." itemValue=""/>
             <f:selectItems value="#{inscricaoBean.cargosConcurso}" var="cargoConcurso"
                            itemValue="#{cargoConcurso}" itemLabel="#{cargoConcurso.codigo} - #{cargoConcurso.cargo.descricao}"/>

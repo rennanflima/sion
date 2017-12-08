@@ -41,10 +41,18 @@
                     <h:outputText value="#{concurso.status.descricao}"/>
                 </p:column>
 
-                <p:column style="width: 150px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Inscrever" value="Inscrever" outcome="/candidatos/insc">
-                        <f:param name="concurso" value="#{concurso.id}"/>
-                    </p:button>
+                <p:column style="width: 330px; text-align: center;">
+                    <ui:repeat value="#{pesquisaConcursoInscricaoAbertaBean.concursosInscrito}" var="ci">
+                        <p:button icon="ui-icon-pencil" rendered="#{ci.cargoConcurso.concurso.id != concurso.id}" title="Inscrever" value="Inscrever" outcome="/candidatos/insc">
+                            <f:param name="concurso" value="#{concurso.id}"/>
+                        </p:button>
+                        <p:button value="Editar Inscrição" outcome="/candidatos/insc" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}" style="font-size: 0.8em" disabled="#{inscricao.confirmada}">
+                            <f:param name="concurso" value="#{concurso.id}"/>
+                        </p:button>
+                        <p:button value="Comprovante Inscrição" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}" outcome="/candidatos/comprovanteInscricao" style="font-size: 0.8em">
+                            <f:param name="inscricao" value="#{inscricao.id}"/>
+                        </p:button>
+                    </ui:repeat>
                 </p:column>
             </p:dataTable>
         </h:form>
