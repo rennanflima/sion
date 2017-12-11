@@ -20,9 +20,11 @@ public class ConexaoJDBC {
     Connection con = null;
 
     public Connection abreConexao() {
-        String url = "jdbc:mysql://localhost:3306/siondb";//porta do mysql do wamp:3306 e do mamp:8889 
-        String user = "user_sion";
-        String pass = "siondb";
+        String url = "jdbc:mysql://localhost:8889/siondb";//porta do mysql do wamp:3306 e do mamp:8889 
+//        String user = "user_sion";
+//        String pass = "siondb";
+        String user = "root";
+        String pass = "root";
         try {
             Class.forName("com.mysql.jdbc.Driver");
 

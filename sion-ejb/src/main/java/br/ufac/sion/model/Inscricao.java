@@ -19,11 +19,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -37,7 +37,8 @@ public class Inscricao implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="inscricao_id_seq", sequenceName = "inscricao_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inscricao_id_seq")
     private Long id;
     @Column(length = 100)
     private String numero;

@@ -5,3 +5,5 @@
 *.class
 mail.properties
 *.jar
+
+*.class

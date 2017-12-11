@@ -27,5 +27,14 @@ public class GrupoFacade extends AbstractFacade<Grupo, Long> implements GrupoFac
     protected EntityManager getEntityManager() {
         return em;
     }
+
+    @Override
+    public Grupo findGrupoWithPermissoes(Long id) {
+        return em.createQuery("SELECT g from Grupo g JOIN g.permissoes p where g.id = :id", Grupo.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+
     
 }

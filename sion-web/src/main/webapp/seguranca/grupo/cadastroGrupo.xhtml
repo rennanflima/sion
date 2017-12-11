@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroGrupoBean.editando ? 'Edição de grupo' : 'Novo grupo'}</ui:define>
+
+    <ui:define name="corpo">
+
+        <f:metadata>
+            <o:viewParam name="grupo" value="#{cadastroGrupoBean.grupo}" />
+            <f:event listener="#{cadastroGrupoBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+        
+        <h:form>
+            <h1>#{cadastroGrupoBean.editando ? 'Edição de grupo' : 'Novo grupo'}</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+            
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="cadastroGrupo"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroGrupoBean.salvar()}" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="pesquisaGrupos"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                         columnClasses="rotulo, campo">
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText id="nome" size="70" maxlength="100" value="#{cadastroGrupoBean.grupo.nome}"/>
+                
+                <p:outputLabel value="Permissões" for="permissoes"/>
+                <p:pickList id="permissoes" value="#{cadastroGrupoBean.dualListModelPermissoes}" var="permissao" itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
+
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

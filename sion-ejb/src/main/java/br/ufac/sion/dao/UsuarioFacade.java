@@ -6,7 +6,6 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.exception.NegocioException;
-import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Usuario;
 import br.ufac.sion.util.GeraSenha;
 import javax.ejb.Stateless;

@@ -24,5 +24,6 @@ public interface GrupoFacadeLocal {
 
     public List<Grupo> findAll();
 
+    public Grupo findGrupoWithPermissoes(Long id);
     
 }

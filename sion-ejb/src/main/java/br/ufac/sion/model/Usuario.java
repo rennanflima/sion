@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +25,8 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_id_seq")
     private Long id;
     @Column(nullable = false, unique = true, length = 40)
     private String login;
@@ -36,6 +38,10 @@ public class Usuario implements Serializable {
     @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private List<Grupo> grupos = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private List<Permissao> permissoes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -75,6 +81,14 @@ public class Usuario implements Serializable {
 
     public void setGrupos(List<Grupo> grupos) {
         this.grupos = grupos;
+    }
+
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
     }
 
     @Override
