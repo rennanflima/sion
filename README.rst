@@ -50,6 +50,8 @@ Configuração Data Source de Banco
 
 Criar o Pool de conexões (JDBC Connection Pools) ::
 
+MySQL::
+
    Pool Name: SionPool
    Resource Type: javax.sql.DataSource
    DataSource Classname: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
@@ -59,6 +61,19 @@ Criar o Pool de conexões (JDBC Connection Pools) ::
       URL: jdbc:mysql://localhost:3306/siondb
       Port:3306
       ServerName: localhost
+
+PostgreSQL::
+
+   Pool Name: SionPool
+   Resource Type: javax.sql.DataSource
+   DataSource Classname: org.postgresql.ds.PGSimpleDataSource
+   Properties:
+      User: user_sion
+      Password: siondb
+      URL: jdbc:postgresql://localhost:5433/siondb
+      PortNumber: 5433
+      ServerName: localhost
+      DatabaseName: siondb
 
 JDBC Resources ::
 
