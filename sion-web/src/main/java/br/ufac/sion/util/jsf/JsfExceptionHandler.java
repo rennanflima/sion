@@ -66,6 +66,8 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
                     FacesUtil.addErrorMessage(arquivoRetornoException.getMessage());
                 } else {
                     handled = true;
+                    System.out.println("Erro de sistema (sion-web): "+exception+" - "+exception.getMessage());
+                    exception.printStackTrace();
                     log.error("Erro de sistema (sion-web): " + exception.getMessage(), exception);
                     redirect("/Erro.xhtml");
                 }

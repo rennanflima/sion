@@ -7,6 +7,7 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.GrupoFacadeLocal;
 import br.ufac.sion.model.Grupo;
+import br.ufac.sion.model.Permissao;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class PesquisaGrupoBean implements Serializable {
     }
     
      public void buscarGrupoComPermissoes(){
-         this.grupoSelecionado = this.grupoFacade.findGrupoWithPermissoes(this.grupoSelecionado.getId());
+         grupoSelecionado = grupoFacade.findGrupoWithPermissoes(grupoSelecionado.getId());
      }
 
 }

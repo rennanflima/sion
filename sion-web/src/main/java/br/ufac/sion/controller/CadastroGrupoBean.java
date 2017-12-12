@@ -45,8 +45,15 @@ public class CadastroGrupoBean implements Serializable {
             List<Permissao> todasPermissoes = this.permissaoFacade.findAll();
             List<Permissao> permissoesGrupo = new ArrayList<>();
             if(isEditando()){
-                this.grupo = this.grupoFacadeLocal.findGrupoWithPermissoes(this.grupo.getId());
-                permissoesGrupo = grupo.getPermissoes();
+                Grupo g = this.grupoFacadeLocal.findGrupoWithPermissoes(this.grupo.getId());
+                if(g != null){
+                    permissoesGrupo = g.getPermissoes();
+                    for (Permissao p : permissoesGrupo) {
+                        if(todasPermissoes.contains(p)){
+                            todasPermissoes.remove(p);
+                        }
+                    }
+                }
             }
             this.dualListModelPermissoes = new DualListModel<>(todasPermissoes, permissoesGrupo);
         }
@@ -75,7 +82,7 @@ public class CadastroGrupoBean implements Serializable {
 
     public void salvar() {
         try {
-            this.grupo.setPermissoes(dualListModelPermissoes.getTarget());
+            this.grupo.setPermissoes(dualListModelPermissoes.getTarget());;
             this.grupoFacadeLocal.save(grupo);
             FacesUtil.addSuccessMessage("Grupo salvo com sucesso!");
             inicializar();

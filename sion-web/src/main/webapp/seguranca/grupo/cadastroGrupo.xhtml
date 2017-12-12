@@ -34,11 +34,16 @@
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
                          columnClasses="rotulo, campo">
+                
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText id="nome" size="70" maxlength="100" value="#{cadastroGrupoBean.grupo.nome}"/>
                 
+                <p:outputLabel value="Descrição" for="descricao"/>
+                <p:inputText id="descricao" size="70" maxlength="100" value="#{cadastroGrupoBean.grupo.descricao}"/>
+                
                 <p:outputLabel value="Permissões" for="permissoes"/>
-                <p:pickList id="permissoes" value="#{cadastroGrupoBean.dualListModelPermissoes}" var="permissao" itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
+                <p:pickList id="permissoes" value="#{cadastroGrupoBean.dualListModelPermissoes}" var="permissao" 
+                            converter="permissaoConverter" itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
 
             </p:panelGrid>
         </h:form>

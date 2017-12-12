@@ -6,8 +6,8 @@
 package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.PermissaoFacadeLocal;
-import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Permissao;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -17,12 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.primefaces.component.picklist.PickList;
+import org.primefaces.model.DualListModel;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Permissao.class)
+@FacesConverter(forClass = Permissao.class, value="permissaoConverter")
 public class PermissaoConverter implements Converter {
 
     private PermissaoFacadeLocal permissaoFacade;
@@ -37,6 +39,29 @@ public class PermissaoConverter implements Converter {
 
         if (value != null && !value.equals("")) {
             retorno = this.permissaoFacade.findById(new Long(value));
+        }
+        if (component instanceof PickList){
+            Object dualList = ((PickList) component).getValue();
+            DualListModel dl = (DualListModel) dualList;
+            for(Iterator iterator = dl.getSource().iterator(); iterator.hasNext();){
+                Object o = iterator.next();
+                String id = (new StringBuilder()).append(((Permissao) o).getId()).toString();
+                if(value.equals(id)){
+                    retorno = (Permissao) o;
+                    break;
+                }
+            }
+            if(retorno == null){
+                for(Iterator iterator1 = dl.getSource().iterator(); iterator1.hasNext();){
+                    Object o = iterator1.next();
+                    String id = (new StringBuilder()).append(((Permissao) o).getId()).toString();
+                    if(value.equals(id)){
+                        retorno = (Permissao) o;
+                        break;
+                    }
+                }
+                
+            }
         }
         return retorno;
     }

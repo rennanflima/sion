@@ -21,7 +21,7 @@ import javax.naming.NamingException;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Grupo.class, value = "grupoConverter")
+@FacesConverter(forClass = Grupo.class, value ="grupoConverter")
 public class GrupoConverter implements Converter {
 
     private GrupoFacadeLocal grupoFacade;
@@ -45,8 +45,9 @@ public class GrupoConverter implements Converter {
         if (value != null) {
             Long codigo = ((Grupo) value).getId();
             String retorno = (codigo == null ? null : codigo.toString());
-
+            
             return retorno;
+            
         }
         return "";
     }

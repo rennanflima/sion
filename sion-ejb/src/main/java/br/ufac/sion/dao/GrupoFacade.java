@@ -8,6 +8,7 @@ package br.ufac.sion.dao;
 import br.ufac.sion.model.Grupo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -30,9 +31,17 @@ public class GrupoFacade extends AbstractFacade<Grupo, Long> implements GrupoFac
 
     @Override
     public Grupo findGrupoWithPermissoes(Long id) {
-        return em.createQuery("SELECT g from Grupo g JOIN g.permissoes p where g.id = :id", Grupo.class)
+        Grupo g = null;
+        try {
+            g = em.createQuery("SELECT g from Grupo g JOIN FETCH g.permissoes p where g.id = :id", Grupo.class)
                 .setParameter("id", id)
                 .getSingleResult();
+            
+        } catch (NoResultException e) {
+            return g;
+        }
+        return g;
+        
     }
 
 
