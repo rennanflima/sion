@@ -15,14 +15,13 @@ import br.ufac.sion.model.ContaBancaria;
 import br.ufac.sion.model.Empresa;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.util.boleto.EmissorBoleto;
-import br.ufac.sion.util.modulo11.GeradorDigitoVerificador;
-import br.ufac.sion.util.modulo11.GeradorDigitoVerificadorBradesco;
 import java.awt.Desktop;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -60,17 +59,18 @@ public class BopepoEmissorBoletoTest {
         Candidato candidato = new Candidato();
         candidato.setNome("Maria Santos");
         candidato.setCpf("866.646.623-53");
-        
+
         Concurso concurso = new Concurso();
         concurso.setContaBancaria(contaBancaria);
-        
-        Cargo cargo =  new Cargo();
+
+        Cargo cargo = new Cargo();
         cargo.setDescricao("teste");
-        
+
         CargoConcurso cc = new CargoConcurso();
+        cc.setCodigo("COD01");
         cc.setCargo(cargo);
         cc.setConcurso(concurso);
-        
+
         Inscricao sacado = new Inscricao();
         sacado.setNumero("201511");
         sacado.setCargoConcurso(cc);
@@ -78,12 +78,10 @@ public class BopepoEmissorBoletoTest {
         cobrancaSistema.setSacado(sacado);
 
         File boleto = this.emissorBoleto.gerarBoletoEmArquivo("boletoTeste1.pdf", cedenteSistema, cobrancaSistema);
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(boleto);
+        assertTrue(boleto.isFile());
     }
 
-    
-        @Test
+    @Test
     public void deve_gerar_boleto_em_arquivo_banco_do_brasil() throws Exception {
         Empresa cedenteSistema = new Empresa();
         cedenteSistema.setNomeFantasia("AlgaWorks");
@@ -107,17 +105,18 @@ public class BopepoEmissorBoletoTest {
         Candidato candidato = new Candidato();
         candidato.setNome("Maria Santos");
         candidato.setCpf("866.646.623-53");
-        
+
         Concurso concurso = new Concurso();
         concurso.setContaBancaria(contaBancaria);
-        
-        Cargo cargo =  new Cargo();
+
+        Cargo cargo = new Cargo();
         cargo.setDescricao("teste");
-        
+
         CargoConcurso cc = new CargoConcurso();
+        cc.setCodigo("COD01");
         cc.setCargo(cargo);
         cc.setConcurso(concurso);
-        
+
         Inscricao sacado = new Inscricao();
         sacado.setNumero("20152921");
         sacado.setCargoConcurso(cc);
@@ -125,7 +124,6 @@ public class BopepoEmissorBoletoTest {
         cobrancaSistema.setSacado(sacado);
 
         File boleto = this.emissorBoleto.gerarBoletoEmArquivo("boletoTeste2.pdf", cedenteSistema, cobrancaSistema);
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(boleto);
+        assertTrue(boleto.isFile());
     }
 }

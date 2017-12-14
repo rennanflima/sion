@@ -10,7 +10,7 @@
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.engine.transaction.jta.platform.internal.SunOneJtaPlatform"/>
             
                         <!--<property name="javax.persistence.schema-generation.database.action" value="create" />--> 
-            <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+            <property name="javax.persistence.schema-generation.create-source" value="metadata-then-script"/>
             <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/carregar-dados.sql"/>
             
             <!-- validate | update | create | create-drop -->

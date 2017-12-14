@@ -82,7 +82,7 @@ public class CadastroGrupoBean implements Serializable {
 
     public void salvar() {
         try {
-            this.grupo.setPermissoes(dualListModelPermissoes.getTarget());;
+            this.grupo.setPermissoes(dualListModelPermissoes.getTarget());
             this.grupoFacadeLocal.save(grupo);
             FacesUtil.addSuccessMessage("Grupo salvo com sucesso!");
             inicializar();

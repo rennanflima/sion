@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Funcionario;
+import br.ufac.sion.model.Grupo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -65,4 +66,33 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
         return funcionario;
     }
 
+    @Override
+    public Funcionario findFuncionarioWithPermissoes(Long id) {
+        Funcionario funcionario = null;
+        try {
+            funcionario = em.createQuery("SELECT f from Funcionario f JOIN FETCH f.usuario u JOIN FECT u.permissoes p where f.id = :id", Funcionario.class)
+                .setParameter("id", id)
+                .getSingleResult();
+            
+        } catch (NoResultException e) {
+            return funcionario;
+        }
+        return funcionario;
+        
+    }
+    
+    @Override
+    public Funcionario findFuncionarioWithGrupoAndPermissoes(Long id) {
+        Funcionario funcionario = null;
+        try {
+            funcionario = em.createQuery("SELECT f from Funcionario f JOIN FETCH f.usuario u JOIN FECT u.grupos.p JOIN FECT u.permissoes p where f.id = :id", Funcionario.class)
+                .setParameter("id", id)
+                .getSingleResult();
+            
+        } catch (NoResultException e) {
+            return funcionario;
+        }
+        return funcionario;
+        
+    }
 }

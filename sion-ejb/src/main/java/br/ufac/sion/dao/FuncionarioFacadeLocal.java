@@ -27,4 +27,8 @@ public interface FuncionarioFacadeLocal {
     public Funcionario findByLogin(String login);
     
     public Funcionario findByMatricula(Integer matricula);
+
+    public Funcionario findFuncionarioWithPermissoes(Long id);
+    
+    public Funcionario findFuncionarioWithGrupoAndPermissoes(Long id);
 }

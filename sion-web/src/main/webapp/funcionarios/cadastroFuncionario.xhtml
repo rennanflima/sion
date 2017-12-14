@@ -79,12 +79,16 @@
                              requiredMessage="O campo 'Login' é obrigatório">
                 </p:inputText>
 
-                <p:outputLabel for="autorizacao" value="Permissão: "/>
+                <p:outputLabel for="autorizacao" value="Grupo: "/>
                 <p:selectManyCheckbox id="autorizacao" value="#{cadastroFuncionarioBean.funcionario.usuario.grupos}" label="Permissao" converter="grupoConverter">
                     <f:attribute name="collectionType" value="java.util.ArrayList"/>
                     <f:selectItems value="#{cadastroFuncionarioBean.grupos}" var="grupo"
                                    itemValue="#{grupo}" itemLabel="#{grupo.descricao}"/>
                 </p:selectManyCheckbox>
+                
+                <p:outputLabel value="Permissões:" for="permissoes"/>
+                <p:pickList id="permissoes" value="#{cadastroFuncionarioBean.dualListModelPermissoes}" var="permissao" 
+                            converter="permissaoConverter" itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
             </p:panelGrid>
         </h:form>
     </ui:define>

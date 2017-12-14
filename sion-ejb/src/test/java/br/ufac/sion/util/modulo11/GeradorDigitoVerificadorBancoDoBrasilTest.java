@@ -5,8 +5,6 @@
  */
 package br.ufac.sion.util.modulo11;
 
-import br.ufac.sion.model.BancosSuportados;
-import br.ufac.sion.model.ContaBancaria;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
