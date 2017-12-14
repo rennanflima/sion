@@ -11,21 +11,30 @@ import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
+import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.report.ExecutorRelatorio;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import org.hibernate.Session;
 
 /**
  *
@@ -36,6 +45,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class EstatisticaConcursoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @PersistenceContext(unitName = "sionPU")
+    private EntityManager em;
 
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
@@ -45,7 +57,13 @@ public class EstatisticaConcursoBean implements Serializable {
 
     @EJB
     private ConcursoService concursoService;
+    
+    @Inject
+    private HttpServletResponse response;
 
+    @Inject
+    private FacesContext facesContext;
+    
     private Concurso concurso;
 
     private String status = "";
@@ -95,31 +113,43 @@ public class EstatisticaConcursoBean implements Serializable {
     }
 
     public void imprimeEstatistica() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+  
+
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
         
-        String nomeArquivo = "";
-        JasperPrint jasperPrint = null;
+        ExecutorRelatorio executor;
         
         if (status.equals("CONFIRMADA")) {
-            jasperPrint = concursoService.geraRelatorioEstatisticaIncritosConfirmados(concurso);
-            nomeArquivo = "estatistica_inscritos_confirmados_" + concurso.getId();
-        } else {
-            jasperPrint = concursoService.geraRelatorioEstatisticaIncritos(concurso);
-            nomeArquivo = "estatistica_inscritos_" + concurso.getId();
-        }
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-        
-        response.reset();
-        response.setContentType("application/pdf");
-        response.setContentLength(baos.size());
-        response.setHeader("Content-disposition", "inline; filename=" + nomeArquivo + ".pdf");
-        response.getOutputStream().write(baos.toByteArray());
-        response.getOutputStream().flush();
-        response.getOutputStream().close();
 
-        context.responseComplete();
+            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos.jasper", response, parameters, "estatistica_inscritos_confirmados_" + concurso.getId());
+        } else {
+            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos_confirmados.jasper", response, parameters, "estatistica_inscritos_" + concurso.getId());
+        }
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+
+        if (executor.isRelatorioGerado()) {
+                facesContext.responseComplete();
+        } else {
+                FacesUtil.addErrorMessage("A execução do relatório não retornou dados.");
+        }
+//        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+//        
+//        response.reset();
+//        response.setContentType("application/pdf");
+//        response.setContentLength(baos.size());
+//        response.setHeader("Content-disposition", "inline; filename=" + nomeArquivo + ".pdf");
+//        response.getOutputStream().write(baos.toByteArray());
+//        response.getOutputStream().flush();
+//        response.getOutputStream().close();
+//
+//        context.responseComplete();
     }
 
     public void limparFiltro() {

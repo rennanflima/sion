@@ -117,20 +117,20 @@ public class ConcursoService {
         System.out.println("____________________________________________");
     }
 
-    public JasperPrint geraRelatorioEstatisticaIncritosConfirmados(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos_confirmados.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
-    }
+//    public JasperPrint geraRelatorioEstatisticaIncritosConfirmados(Concurso concurso) throws JRException {
+//        this.conexaoJDBC = new ConexaoJDBC();
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos_confirmados.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+//        conexaoJDBC.fechaConexao();
+//        return jp;
+//    }
 
     public JasperPrint geraRelatorioEstatisticaIncritos(Concurso concurso) throws JRException {
         this.conexaoJDBC = new ConexaoJDBC();
@@ -146,78 +146,78 @@ public class ConcursoService {
         conexaoJDBC.fechaConexao();
         return jp;
     }
-    
-    public JasperPrint geraRelatorioInscritos(Concurso concurso) throws JRException {
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-        JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, jrRS);
-        return jp;
-    }
-
-    public JasperPrint geraRelatorioInscritosDeferidos(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_deferidos.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
-    }
-
-    public JasperPrint geraRelatorioInscritosDeferidosPNE(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_confirmada_deficiente.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
-    }
-
-    public JasperPrint geraRelatorioListaPresenca(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_presenca.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
-    }
-
-    public JasperPrint geraRelatorioInscritosIndeferidos(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_indeferidos.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
-    }
+//    
+//    public JasperPrint geraRelatorioInscritos(Concurso concurso) throws JRException {
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//        JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, jrRS);
+//        return jp;
+//    }
+//
+//    public JasperPrint geraRelatorioInscritosDeferidos(Concurso concurso) throws JRException {
+//        this.conexaoJDBC = new ConexaoJDBC();
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_deferidos.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+//        conexaoJDBC.fechaConexao();
+//        return jp;
+//    }
+//
+//    public JasperPrint geraRelatorioInscritosDeferidosPNE(Concurso concurso) throws JRException {
+//        this.conexaoJDBC = new ConexaoJDBC();
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_confirmada_deficiente.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+//        conexaoJDBC.fechaConexao();
+//        return jp;
+//    }
+//
+//    public JasperPrint geraRelatorioListaPresenca(Concurso concurso) throws JRException {
+//        this.conexaoJDBC = new ConexaoJDBC();
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_presenca.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+//        conexaoJDBC.fechaConexao();
+//        return jp;
+//    }
+//
+//    public JasperPrint geraRelatorioInscritosIndeferidos(Concurso concurso) throws JRException {
+//        this.conexaoJDBC = new ConexaoJDBC();
+//        Map<String, Object> parameters = new HashMap<>();
+//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+//        parameters.put("id_concurso", concurso.getId());
+//        parameters.put("logo", logo);
+//
+//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
+//
+//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_indeferidos.jrxml"));
+//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
+//        conexaoJDBC.fechaConexao();
+//        return jp;
+//    }
 }

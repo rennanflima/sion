@@ -333,48 +333,48 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 //                .getSingleResult();
     }
 
-    @Override
-    public ResultSet findInscritosByConcurso(Concurso concurso) {
-        Session session = (Session) em;
-        SessionFactoryImpl sfi = (SessionFactoryImpl) session.getSessionFactory();
-        ResultSet rs = null;
-        try {
-            Connection con = sfi.getConnectionProvider().getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
-                    + "cand.nome AS ficha_inscricao_nome, "
-                    + "cand.cpf AS ficha_inscricao_cpf, "
-                    + "i.data_inscricao AS ficha_inscricao_data_cadastro, "
-                    + "CONCAT(cc.codigo,' - ',c.descricao)  AS ficha_inscricao_cargo, "
-                    + "l.nome AS ficha_inscricao_local, "
-                    + "i.portador  AS ficha_inscricao_possui_deficiencia, "
-                    + "i.`status` AS ficha_inscricao_situacao, "
-                    + "conc.titulo AS concurso_nome "
-                    + "FROM "
-                    + "inscricao i, "
-                    + "candidato cand, "
-                    + "cargo c, "
-                    + "localidade l, "
-                    + "concurso conc, "
-                    + "cargo_concurso cc "
-                    + "WHERE "
-                    + "i.candidato_id = cand.id AND "
-                    + "i.cargo_concurso_id = cc.id AND "
-                    + "cc.cargo_id = c.id AND "
-                    + "cc.localidade_id = l.id AND "
-                    + "cc.concurso_id = conc.id AND "
-                    + "conc.id = ? "
-                    + "ORDER BY "
-                    + "l.nome, "
-                    + "c.descricao, "
-                    + "cand.nome ");
-            ps.setLong(1, concurso.getId());
-            rs = ps.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(InscricaoFacade.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
+//    @Override
+//    public ResultSet findInscritosByConcurso(Concurso concurso) {
+//        Session session = (Session) em;
+//        SessionFactoryImpl sfi = (SessionFactoryImpl) session.getSessionFactory();
+//        ResultSet rs = null;
+//        try {
+//            Connection con = sfi.getConnectionProvider().getConnection();
+//            PreparedStatement ps = con.prepareStatement("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
+//                    + "cand.nome AS ficha_inscricao_nome, "
+//                    + "cand.cpf AS ficha_inscricao_cpf, "
+//                    + "i.data_inscricao AS ficha_inscricao_data_cadastro, "
+//                    + "CONCAT(cc.codigo,' - ',c.descricao)  AS ficha_inscricao_cargo, "
+//                    + "l.nome AS ficha_inscricao_local, "
+//                    + "i.portador  AS ficha_inscricao_possui_deficiencia, "
+//                    + "i.`status` AS ficha_inscricao_situacao, "
+//                    + "conc.titulo AS concurso_nome "
+//                    + "FROM "
+//                    + "inscricao i, "
+//                    + "candidato cand, "
+//                    + "cargo c, "
+//                    + "localidade l, "
+//                    + "concurso conc, "
+//                    + "cargo_concurso cc "
+//                    + "WHERE "
+//                    + "i.candidato_id = cand.id AND "
+//                    + "i.cargo_concurso_id = cc.id AND "
+//                    + "cc.cargo_id = c.id AND "
+//                    + "cc.localidade_id = l.id AND "
+//                    + "cc.concurso_id = conc.id AND "
+//                    + "conc.id = ? "
+//                    + "ORDER BY "
+//                    + "l.nome, "
+//                    + "c.descricao, "
+//                    + "cand.nome ");
+//            ps.setLong(1, concurso.getId());
+//            rs = ps.executeQuery();
+//            return rs;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(InscricaoFacade.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
+//    }
 
     @Override
     public List<Inscricao> findByCargoAndLocalidade(FiltroInscritosRelatorio filtroRelatorio) {
