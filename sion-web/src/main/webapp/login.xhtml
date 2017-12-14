@@ -25,10 +25,10 @@
 
                 <h:panelGrid columns="2" styleClass="grid-login">
                     <p:outputLabel value="Usuário" />
-                    <p:inputText size="30" id="j_username" value="#{loginBean.username}" />
+                    <p:inputText size="30" id="username" value="#{loginBean.username}" />
 
                     <p:outputLabel value="Senha" />
-                    <p:password size="30" id="j_password" />
+                    <p:password size="30" id="password" />
 
                     <p:spacer />
                     <p:commandButton value="Login" action="#{loginBean.login()}" ajax="false" />

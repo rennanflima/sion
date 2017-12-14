@@ -65,7 +65,7 @@ public interface InscricaoFacadeLocal {
 
     public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status);
     
-    public ResultSet findInscritosByConcurso(Concurso concurso); 
+//    public ResultSet findInscritosByConcurso(Concurso concurso); 
     
     public List<Inscricao> findByCargoAndLocalidade(FiltroInscritosRelatorio filtroRelatorio);
     

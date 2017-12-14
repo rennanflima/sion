@@ -30,6 +30,9 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -251,7 +254,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     private Criteria criarCriteriaParaFiltro(FiltroInscritos filtro) {
-        Session session = em.unwrap(Session.class);
+        Session session = (Session) em;
         Criteria criteria = session.createCriteria(Inscricao.class);
 
         criteria.createAlias("cargoConcurso", "cc").add(Restrictions.eq("cc.concurso", filtro.getConcurso()));
@@ -306,11 +309,11 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
         return ((Number) criteria.uniqueResult()).intValue();
     }
-
+    
     @Override
     public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status) {
 
-        Session session = em.unwrap(Session.class);
+        Session session = (Session) em;
         Criteria criteria = session.createCriteria(Inscricao.class);
 
         criteria.add(Restrictions.eq("cargoConcurso", cargoConcurso));
@@ -332,7 +335,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public ResultSet findInscritosByConcurso(Concurso concurso) {
-        Session session = em.unwrap(Session.class);
+        Session session = (Session) em;
         SessionFactoryImpl sfi = (SessionFactoryImpl) session.getSessionFactory();
         ResultSet rs = null;
         try {
