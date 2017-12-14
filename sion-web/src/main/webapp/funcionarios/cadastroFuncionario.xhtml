@@ -43,14 +43,14 @@
                 </p:inputText>
 
                 <p:outputLabel for="nome" value="Nome: "/>
-                <p:inputText id="nome" required="true" value="#{cadastroFuncionarioBean.funcionario.nome}" label="Nome" size="60" maxlength="60"
+                <p:inputText id="nome" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.nome}" label="Nome" size="60" maxlength="60"
                              requiredMessage="O campo 'Nome' é obrigatório"
                              validatorMessage="É permitido apenas letras no campo 'Nome'">
                     <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
                 </p:inputText>
 
                 <p:outputLabel for="email" value="E-mail: "/>
-                <p:inputText id="email" required="true" value="#{cadastroFuncionarioBean.funcionario.email}" label="E-mail" size="50" maxlength="60"
+                <p:inputText id="email" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.email}" label="E-mail" size="50" maxlength="60"
                              
                              requiredMessage="O campo 'E-mail' é obrigatório">
                     <!--

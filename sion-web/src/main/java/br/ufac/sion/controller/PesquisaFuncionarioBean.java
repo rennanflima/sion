@@ -60,7 +60,7 @@ public class PesquisaFuncionarioBean implements Serializable {
     public void excluir() {
         try {
             funcionarioFacade.remove(funcionarioSelecionadoParaExcluir);
-            FacesUtil.addSuccessMessage("O " + funcionarioSelecionadoParaExcluir.getNome() + " foi excluído com sucesso.");
+            FacesUtil.addSuccessMessage("O " + funcionarioSelecionadoParaExcluir.getUsuario().getNome() + " foi excluído com sucesso.");
             inicializar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage(e.getMessage());

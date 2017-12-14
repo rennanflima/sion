@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "usuario")
@@ -25,9 +26,15 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_id_seq")
     private Long id;
+    @Column(nullable = false, length = 100)
+    private String nome;
+    @Email
+    @Column(length = 80)
+    private String email;
     @Column(nullable = false, unique = true, length = 40)
     private String login;
     @Column(nullable = false, length = 45)
@@ -58,7 +65,23 @@ public class Usuario implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+    
+    public String getNome() {
+        return nome;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     public String getSenha() {
         return senha;
     }

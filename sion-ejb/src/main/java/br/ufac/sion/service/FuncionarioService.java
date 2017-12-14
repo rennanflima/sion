@@ -49,9 +49,9 @@ public class FuncionarioService {
                 String senha = geraSenha.geraSenha();
                 funcionario.getUsuario().setSenha(geraSenha.ecripta(senha));
 
-                infoEmail.setPara(funcionario.getEmail());
+                infoEmail.setPara(funcionario.getUsuario().getEmail());
                 infoEmail.setAssunto("Acesso ao SION");
-                infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getNome(), funcionario.getUsuario().getLogin(), senha));
+                infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getUsuario().getNome(), funcionario.getUsuario().getLogin(), senha));
                 enviaEmailService.processaEnvioDeEmail(infoEmail);
             }
             em.merge(funcionario);
@@ -71,9 +71,9 @@ public class FuncionarioService {
                     funcionario.getUsuario().setSenha(geraSenha.ecripta(senha));
                     em.merge(funcionario);
 
-                    infoEmail.setPara(funcionario.getEmail());
+                    infoEmail.setPara(funcionario.getUsuario().getEmail());
                     infoEmail.setAssunto("Recuperação de Senha");
-                    infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getNome(), funcionario.getUsuario().getLogin(), senha));
+                    infoEmail.setCorpo(geraCorpoEmailAcessoAdministrativo(funcionario.getUsuario().getNome(), funcionario.getUsuario().getLogin(), senha));
                     enviaEmailService.processaEnvioDeEmail(infoEmail);
                 } else {
                     throw new NegocioException("O login informado não corresponde ao que foi cadastrado");

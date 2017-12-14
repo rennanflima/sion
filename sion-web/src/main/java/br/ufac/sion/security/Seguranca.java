@@ -24,7 +24,7 @@ public class Seguranca {
             if (usuarioLogado.getUsuario().getLogin().equals("admin")) {
                 nome = "Administrador";
             } else {
-                nome = (funcionarioFacade.findByLogin(usuarioLogado.getUsuario().getLogin())).getNome();
+                nome = usuarioLogado.getUsuario().getNome();
             }
         }
 

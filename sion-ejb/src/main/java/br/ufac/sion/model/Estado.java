@@ -24,6 +24,7 @@ import javax.persistence.Table;
 public class Estado implements Serializable {
 
     @Id
+    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="estado_id_seq", sequenceName = "estado_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estado_id_seq")
     private Long id;

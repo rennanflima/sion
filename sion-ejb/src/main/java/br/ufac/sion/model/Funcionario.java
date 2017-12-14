@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -30,16 +29,12 @@ public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L; 
 
     @Id
+    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="funcionario_id_seq", sequenceName = "funcionario_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_id_seq")
     private Long id;
     @Column(nullable = false, unique = true)
-    private Integer matricula;
-    @Column(nullable = false, length = 60)
-    private String nome;
-    @Email
-    @Column(length = 60)
-    private String email;
+    private String matricula;
     @ManyToOne
     @JoinColumn(name = "setor_id")
     private Setor setor = new Setor();
@@ -58,28 +53,12 @@ public class Funcionario implements Serializable {
         this.id = id;
     }
 
-    public Integer getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(Integer matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Setor getSetor() {

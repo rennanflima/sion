@@ -20,18 +20,19 @@ public class ConexaoJDBC {
     Connection con = null;
 
     public Connection abreConexao() {
-        String url = "jdbc:mysql://localhost:3306/siondb";//porta do mysql do wamp:3306 e do mamp:8889 
+//        String url = "jdbc:mysql://localhost:3306/siondb";//porta do mysql do wamp:3306 e do mamp:8889 
+        String url = "jdbc:postgresql://localhost:5433/siondb"; 
+                
         String user = "user_sion";
         String pass = "siondb";
 //        String user = "root";
 //        String pass = "root";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
 
             con = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConexaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConexaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;

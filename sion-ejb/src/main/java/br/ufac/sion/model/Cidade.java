@@ -26,6 +26,7 @@ import javax.persistence.Table;
 public class Cidade implements Serializable {
 
     @Id
+    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="cidade_id_seq", sequenceName = "cidade_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidade_id_seq")
     private Long id;

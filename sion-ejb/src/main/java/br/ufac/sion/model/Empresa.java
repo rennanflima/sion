@@ -33,6 +33,7 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="empresa_id_seq", sequenceName = "empresa_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empresa_id_seq")
     private Long id;

@@ -38,17 +38,17 @@
                     </f:facet>
                     #{f.matricula}
                 </p:column>
-                <p:column sortBy="#{f.nome}">
+                <p:column sortBy="#{f.usuario.nome}">
                     <f:facet name="header">
                         <h:outputText value="NOME"/>
                     </f:facet>
-                    #{f.nome}
+                    #{f.usuario.nome}
                 </p:column>
                 <p:column style="width: 250px;">
                     <f:facet name="header">
                         <h:outputText value="E-MAIL"/>
                     </f:facet>
-                    #{f.email}
+                    #{f.usuario.email}
                 </p:column>
                 <p:column style="width: 120px; text-align: center;">
                     <f:facet name="header" >
@@ -69,7 +69,7 @@
             </p:dataTable>
 
             <p:confirmDialog header="Exclusão de produto" 
-                             message="Tem certeza que deseja excluir o #{pesquisaFuncionarioBean.funcionarioSelecionadoParaExcluir.nome} ?"
+                             message="Tem certeza que deseja excluir o #{pesquisaFuncionarioBean.funcionarioSelecionadoParaExcluir.usuario.nome} ?"
                              widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                 <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
                                  process="@this" action="#{pesquisaFuncionarioBean.excluir()}"
