@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration>
-<!--    <Appenders>
+    <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%c] %m%n" />
         </Console>
 		
         <RollingFile name="arquivo"
                      fileName="${sys:com.sun.aas.instanceRoot}/logs/sion.log"
-                     filePattern="${sys:com.sun.aas.instanceRoot}/logs/pedido-venda-%d{yyyy-MM-dd}-%i.log">
+                     filePattern="${sys:com.sun.aas.instanceRoot}/logs/sion-%d{yyyy-MM-dd}-%i.log">
 		
             <PatternLayout pattern="%d %-5p [%c] %m%n" />
 			
@@ -23,6 +23,6 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="arquivo" />
         </Root>
-    </Loggers>-->
+    </Loggers>
 	
 </Configuration>

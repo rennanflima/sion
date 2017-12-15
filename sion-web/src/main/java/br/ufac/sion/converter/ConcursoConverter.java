@@ -48,7 +48,7 @@ public class ConcursoConverter implements Converter {
 
             return retorno;
         }
-        return "";
+        return null;
     }
 
     private ConcursoFacadeLocal lookupConcursoFacadeLocal() {

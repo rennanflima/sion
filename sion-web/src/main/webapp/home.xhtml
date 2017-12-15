@@ -19,6 +19,6 @@
         <h2>Seja bem-vindo!</h2>
         <br/><br/><br/>
 
-        <p:chart type="line" style="height: 400px; margin-bottom: 50px;" model="#{dashboardBean.model}" responsive="true" />
+        <p:chart type="line" style="height: 400px; margin-bottom: 50px;" model="#{dashboardBean.model}" responsive="true" rendered="#{empty dashboardBean.model}"/>
     </ui:define>
 </ui:composition>

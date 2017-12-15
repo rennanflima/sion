@@ -48,7 +48,7 @@ public class LocalidadeConverter implements Converter {
 
             return retorno;
         }
-        return "";
+        return null;
     }
 
     private LocalidadeFacadeLocal lookupLocalidadeFacadeLocal() {

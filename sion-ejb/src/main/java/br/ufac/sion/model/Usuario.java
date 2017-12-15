@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
     private String email;
     @Column(nullable = false, unique = true, length = 40)
     private String login;
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false, length = 100)
     private String senha;
     @Column(name = "ultimo_acesso")
     private LocalDateTime ultimoAcesso;
