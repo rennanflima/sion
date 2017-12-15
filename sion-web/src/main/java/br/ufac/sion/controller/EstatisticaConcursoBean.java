@@ -7,34 +7,25 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
-import br.ufac.sion.util.report.ExecutorRelatorio;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import org.hibernate.Session;
 
 /**
  *
@@ -46,9 +37,6 @@ public class EstatisticaConcursoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @PersistenceContext(unitName = "sionPU")
-    private EntityManager em;
-
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
 
@@ -58,10 +46,8 @@ public class EstatisticaConcursoBean implements Serializable {
     @EJB
     private ConcursoService concursoService;
     
-    @Inject
     private HttpServletResponse response;
 
-    @Inject
     private FacesContext facesContext;
     
     private Concurso concurso;
@@ -73,6 +59,8 @@ public class EstatisticaConcursoBean implements Serializable {
 
     public EstatisticaConcursoBean() {
         recuperaConcursoSessao();
+        this.response = FacesProducer.getHttpServletResponse();
+        this.facesContext = FacesProducer.getFacesContext();
     }
 
     @PostConstruct
@@ -112,44 +100,17 @@ public class EstatisticaConcursoBean implements Serializable {
         }
     }
 
-    public void imprimeEstatistica() throws JRException, IOException {
-//        FacesContext context = FacesContext.getCurrentInstance();
+    public void imprimeEstatistica(){
+        try {
+            //        FacesContext context = FacesContext.getCurrentInstance();
 //        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-  
-
-        Map<String, Object> parameters = new HashMap<>();
-        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-        parameters.put("id_concurso", concurso.getId());
-        parameters.put("logo", logo);
-        
-        ExecutorRelatorio executor;
-        
-        if (status.equals("CONFIRMADA")) {
-
-            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos.jasper", response, parameters, "estatistica_inscritos_confirmados_" + concurso.getId());
-        } else {
-            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos_confirmados.jasper", response, parameters, "estatistica_inscritos_" + concurso.getId());
+            concursoService.geraRelatorioEstatisticaIncritos(concurso, status, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
         }
-        
-        Session session = em.unwrap(Session.class);
-        session.doWork(executor);
 
-        if (executor.isRelatorioGerado()) {
-                facesContext.responseComplete();
-        } else {
-                FacesUtil.addErrorMessage("A execução do relatório não retornou dados.");
-        }
-//        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-//        
-//        response.reset();
-//        response.setContentType("application/pdf");
-//        response.setContentLength(baos.size());
-//        response.setHeader("Content-disposition", "inline; filename=" + nomeArquivo + ".pdf");
-//        response.getOutputStream().write(baos.toByteArray());
-//        response.getOutputStream().flush();
-//        response.getOutputStream().close();
-//
-//        context.responseComplete();
     }
 
     public void limparFiltro() {

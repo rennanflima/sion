@@ -7,26 +7,26 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.SituacaoInscricao;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -42,6 +42,8 @@ import org.primefaces.model.chart.PieChartModel;
 @RequestScoped
 public class GerenciarConcursoBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM");
 
     @EJB
@@ -52,6 +54,10 @@ public class GerenciarConcursoBean implements Serializable {
 
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
+
+    private HttpServletResponse response;
+
+    private FacesContext facesContext;
 
     private LineChartModel model;
     private Concurso concurso;
@@ -65,6 +71,8 @@ public class GerenciarConcursoBean implements Serializable {
 
     public GerenciarConcursoBean() {
         recuperaConcursoSessao();
+        this.response = FacesProducer.getHttpServletResponse();
+        this.facesContext = FacesProducer.getFacesContext();
     }
 
     public Concurso getConcurso() {
@@ -152,64 +160,63 @@ public class GerenciarConcursoBean implements Serializable {
         this.model.addSeries(series);
     }
 
-    public void imprimeRelacaoInscritos() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        JasperPrint jasperPrint = concursoService.geraRelatorioInscritos(concurso);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-
-        renderizaPDF(baos, "relacao_inscritos_" + concurso.getId() + ".pdf");
+    public void imprimeRelacaoInscritos() {        
+        try {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            concursoService.geraRelatorioInscritos(concurso, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
+        }
     }
 
-    public void imprimeRelacaoInscritosDeferidos() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosDeferidos(concurso);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-
-        renderizaPDF(baos, "relacao_inscritos_deferidos_" + concurso.getId() + ".pdf");
+    public void imprimeRelacaoInscritosDeferidos(){
+        try {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            concursoService.geraRelatorioInscritosDeferidos(concurso, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
+        }
     }
 
-    public void imprimeRelacaoInscritosDeferidosPNE() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosDeferidosPNE(concurso);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-
-        renderizaPDF(baos, "relacao_inscritos_deferidos_pne_" + concurso.getId() + ".pdf");
+    public void imprimeRelacaoInscritosDeferidosPNE(){
+        try {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            concursoService.geraRelatorioInscritosDeferidosPNE(concurso, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
+        }
     }
 
-    public void imprimeListaPresenca() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        JasperPrint jasperPrint = concursoService.geraRelatorioListaPresenca(concurso);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-        
-        renderizaPDF(baos, "relacao_inscritos_deferidos_pne_" + concurso.getId() + ".pdf");
-        
+    public void imprimeListaPresenca(){
+        try {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            concursoService.geraRelatorioListaPresenca(concurso, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
+        }
     }
 
-    public void imprimeRelacaoInscritosIndeferidos() throws JRException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        
-        JasperPrint jasperPrint = concursoService.geraRelatorioInscritosIndeferidos(concurso);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-        
-        renderizaPDF(baos, "relacao_inscritos_indeferidos_" + concurso.getId() + ".pdf");
-    }
-
-    private void renderizaPDF(ByteArrayOutputStream baos, String nomeArquivo) throws IOException {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-
-        response.reset();
-        response.setContentType("application/pdf");
-        response.setContentLength(baos.size());
-        response.setHeader("Content-disposition", "inline; filename="+nomeArquivo);
-        response.getOutputStream().write(baos.toByteArray());
-        response.getOutputStream().flush();
-        response.getOutputStream().close();
-
-        context.responseComplete();
+    public void imprimeRelacaoInscritosIndeferidos(){
+        try {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            concursoService.geraRelatorioInscritosIndeferidos(concurso, response);
+            facesContext.responseComplete();
+        } catch (NegocioException ex) {
+            Logger.getLogger(EstatisticaConcursoBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.addErrorMessage(ex.getMessage());
+        }
     }
 }

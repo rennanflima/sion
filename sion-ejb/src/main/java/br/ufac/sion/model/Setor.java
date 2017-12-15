@@ -39,7 +39,7 @@ public class Setor implements Serializable {
     private String nome;
     @Column(length = 10, unique = true)
     private String sigla;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cargo_setor", joinColumns = {
         @JoinColumn(name = "setor_id")}, inverseJoinColumns = {
         @JoinColumn(name = "cargo_id")})

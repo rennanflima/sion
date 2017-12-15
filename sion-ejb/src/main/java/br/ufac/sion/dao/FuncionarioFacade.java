@@ -6,7 +6,6 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Funcionario;
-import br.ufac.sion.model.Grupo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

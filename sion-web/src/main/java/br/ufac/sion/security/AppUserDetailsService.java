@@ -20,10 +20,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AppUserDetailsService implements UserDetailsService {
+    
     UsuarioFacadeLocal usuarioFacade = lookupUsuarioFacadeLocal();
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        
         Usuario usuario = usuarioFacade.findByLogin(login);
 
         UsuarioSistema user = null;

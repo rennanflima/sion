@@ -11,6 +11,7 @@ import br.ufac.sion.dao.util.ConexaoJDBC;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.StatusConcurso;
 import br.ufac.sion.exception.NegocioException;
+import br.ufac.sion.util.report.ExecutorRelatorio;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.time.Duration;
@@ -27,12 +28,14 @@ import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import org.hibernate.Session;
 
 /**
  *
@@ -116,108 +119,107 @@ public class ConcursoService {
         }
         System.out.println("____________________________________________");
     }
-
-//    public JasperPrint geraRelatorioEstatisticaIncritosConfirmados(Concurso concurso) throws JRException {
-//        this.conexaoJDBC = new ConexaoJDBC();
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos_confirmados.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-//        conexaoJDBC.fechaConexao();
-//        return jp;
-//    }
-
-    public JasperPrint geraRelatorioEstatisticaIncritos(Concurso concurso) throws JRException {
-        this.conexaoJDBC = new ConexaoJDBC();
+    
+    public void geraRelatorioEstatisticaIncritos(Concurso concurso, String status, HttpServletResponse response) throws NegocioException {
         Map<String, Object> parameters = new HashMap<>();
         InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
         parameters.put("id_concurso", concurso.getId());
         parameters.put("logo", logo);
-
-        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-
-        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/estatistica_inscritos.jrxml"));
-        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-        conexaoJDBC.fechaConexao();
-        return jp;
+        
+        ExecutorRelatorio executor;
+        
+        if (status.equals("CONFIRMADA")) {
+            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos.jasper", response, parameters, "estatistica_inscritos_confirmados_" + concurso.getId() + ".pdf");
+        } else {
+            executor = new ExecutorRelatorio("/relatorios/estatistica_inscritos_confirmados.jasper", response, parameters, "estatistica_inscritos_" + concurso.getId() + ".pdf");
+        }
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
     }
-//    
-//    public JasperPrint geraRelatorioInscritos(Concurso concurso) throws JRException {
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//        JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, jrRS);
-//        return jp;
-//    }
-//
-//    public JasperPrint geraRelatorioInscritosDeferidos(Concurso concurso) throws JRException {
-//        this.conexaoJDBC = new ConexaoJDBC();
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_deferidos.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-//        conexaoJDBC.fechaConexao();
-//        return jp;
-//    }
-//
-//    public JasperPrint geraRelatorioInscritosDeferidosPNE(Concurso concurso) throws JRException {
-//        this.conexaoJDBC = new ConexaoJDBC();
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_confirmada_deficiente.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-//        conexaoJDBC.fechaConexao();
-//        return jp;
-//    }
-//
-//    public JasperPrint geraRelatorioListaPresenca(Concurso concurso) throws JRException {
-//        this.conexaoJDBC = new ConexaoJDBC();
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_presenca.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-//        conexaoJDBC.fechaConexao();
-//        return jp;
-//    }
-//
-//    public JasperPrint geraRelatorioInscritosIndeferidos(Concurso concurso) throws JRException {
-//        this.conexaoJDBC = new ConexaoJDBC();
-//        Map<String, Object> parameters = new HashMap<>();
-//        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
-//        parameters.put("id_concurso", concurso.getId());
-//        parameters.put("logo", logo);
-//
-//        ResultSet rs = inscricaoFacade.findInscritosByConcurso(concurso);
-//
-//        JasperReport jr = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/inscritos_grupo_indeferidos.jrxml"));
-//        JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conexaoJDBC.abreConexao());
-//        conexaoJDBC.fechaConexao();
-//        return jp;
-//    }
+    
+    public void geraRelatorioInscritos(Concurso concurso, HttpServletResponse response) throws NegocioException {
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+        
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/inscritos_grupo.jasper", response, parameters, "relacao_inscritos_" + concurso.getId() + ".pdf");
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
+    }
+
+    public void geraRelatorioInscritosDeferidos(Concurso concurso, HttpServletResponse response) throws NegocioException {
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+        
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/inscritos_grupo_deferidos.jasper", response, parameters, "relacao_inscritos_deferidos_" + concurso.getId() + ".pdf");
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
+    }
+
+    public void geraRelatorioInscritosDeferidosPNE(Concurso concurso, HttpServletResponse response) throws NegocioException {
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+        
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/inscritos_grupo_confirmada_deficiente.jasper", response, parameters, "relacao_inscritos_deferidos_pne_" + concurso.getId() + ".pdf");
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
+    }
+
+    public void geraRelatorioListaPresenca(Concurso concurso, HttpServletResponse response) throws NegocioException {
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+        
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/inscritos_presenca.jasper", response, parameters, "inscritos_presenca_" + concurso.getId() + ".pdf");
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
+    }
+
+    public void geraRelatorioInscritosIndeferidos(Concurso concurso, HttpServletResponse response) throws NegocioException {
+        Map<String, Object> parameters = new HashMap<>();
+        InputStream logo = getClass().getResourceAsStream("/relatorios/topo.jpg");
+        parameters.put("id_concurso", concurso.getId());
+        parameters.put("logo", logo);
+        
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/inscritos_grupo_indeferidos.jasper", response, parameters, "relacao_inscritos_indeferidos_" + concurso.getId() + ".pdf");
+        
+        Session session = em.unwrap(Session.class);
+        session.doWork(executor);
+        
+        if (!executor.isRelatorioGerado()) {
+            throw new NegocioException("A execução do relatório não retornou dados.");
+        }
+    }
+
+
 }
