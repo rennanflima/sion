@@ -115,7 +115,7 @@ public class CadastroEmpresaBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.empresa.getId() != null;
+        return this.empresa != null;
     }
 
     public void carregarCidades() {

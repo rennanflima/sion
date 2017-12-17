@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.NaturalId;
 
 /**
  *
@@ -37,10 +38,10 @@ public class Inscricao implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="inscricao_id_seq", sequenceName = "inscricao_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inscricao_id_seq")
     private Long id;
+    @NaturalId
     @Column(length = 100)
     private String numero;
     @Column(name = "data_inscricao")

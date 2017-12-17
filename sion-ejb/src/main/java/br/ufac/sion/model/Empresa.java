@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -33,7 +34,6 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="empresa_id_seq", sequenceName = "empresa_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empresa_id_seq")
     private Long id;
@@ -44,6 +44,7 @@ public class Empresa implements Serializable {
     @Column(length = 20)
     private String sigla;
     @CNPJ
+    @NaturalId
     @NotBlank
     @Column(nullable = false, unique = true, length = 20)
     private String cnpj;

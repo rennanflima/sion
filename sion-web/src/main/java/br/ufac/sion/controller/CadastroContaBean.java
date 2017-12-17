@@ -84,14 +84,16 @@ public class CadastroContaBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.contaBancaria.getId() != null;
+        return this.contaBancaria != null;
     }
     
     public void mudaConvenio(){
-        if(contaBancaria.getBanco().equals(BancosSuportados.BANCO_DO_BRASIL)){
-            convenioBancoDoBrasil = true;
-        } else {
-            convenioBancoDoBrasil = false;
+        if(contaBancaria != null){
+            if(contaBancaria.getBanco().equals(BancosSuportados.BANCO_DO_BRASIL)){
+                convenioBancoDoBrasil = true;
+            } else {
+                convenioBancoDoBrasil = false;
+            }
         }
     }
 }

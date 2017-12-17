@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.NaturalId;
 
 /**
  *
@@ -29,10 +30,10 @@ public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L; 
 
     @Id
-    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="funcionario_id_seq", sequenceName = "funcionario_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_id_seq")
     private Long id;
+    @NaturalId
     @Column(nullable = false, unique = true)
     private String matricula;
     @ManyToOne

@@ -27,7 +27,7 @@ public class CadastroNivelBean implements Serializable {
     @EJB
     private NivelFacadeLocal nivelFacade;
 
-    private Nivel nivel;
+    private Nivel nivel = new Nivel();
 
     @PostConstruct
     public void inicializar() {
@@ -60,6 +60,6 @@ public class CadastroNivelBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.nivel.getId() != null;
+        return this.nivel != null;
     }
 }

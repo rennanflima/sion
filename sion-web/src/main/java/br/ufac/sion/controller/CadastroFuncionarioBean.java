@@ -146,7 +146,7 @@ public class CadastroFuncionarioBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.funcionario.getId() != null;
+        return this.funcionario != null;
     }
 
 }

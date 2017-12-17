@@ -76,6 +76,6 @@ public class CadastroCargoBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.cargo.getId() != null;
+        return this.cargo != null;
     }
 }

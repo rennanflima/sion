@@ -27,6 +27,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
@@ -42,7 +43,6 @@ public class Candidato implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="candidato_id_seq", sequenceName = "candidato_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidato_id_seq")
     private Long id;
@@ -67,6 +67,7 @@ public class Candidato implements Serializable {
     private LocalDate dataNascimento;
     @CPF
     @NotBlank
+    @NaturalId
     @Column(unique = true, length = 14, nullable = false)
     private String cpf;
     @Enumerated(EnumType.STRING)

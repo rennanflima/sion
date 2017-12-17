@@ -33,8 +33,9 @@ public class CadastroLocalidadeBean implements Serializable {
     public void inicializar() {
         limpar();
     }
-
+    
     public CadastroLocalidadeBean() {
+        limpar();
     }
 
     public Localidade getLocalidade() {
@@ -49,7 +50,7 @@ public class CadastroLocalidadeBean implements Serializable {
         try {
             this.localidadeFacade.save(localidade);
             FacesUtil.addSuccessMessage("Localidade salva com sucesso!");
-            inicializar();
+            limpar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao salvar o localidade: " + e.getMessage());
         }
@@ -60,6 +61,6 @@ public class CadastroLocalidadeBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.localidade.getId() != null;
+        return this.localidade != null;
     }
 }

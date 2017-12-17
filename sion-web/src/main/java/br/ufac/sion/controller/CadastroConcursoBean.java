@@ -353,7 +353,7 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.concurso.getId() != null;
+        return this.concurso != null;
     }
 
     public void limparCargo() {

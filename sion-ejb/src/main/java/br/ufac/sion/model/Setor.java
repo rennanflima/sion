@@ -31,7 +31,6 @@ public class Setor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(columnDefinition = "serial")
     @SequenceGenerator(name="setor_id_seq", sequenceName = "setor_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "setor_id_seq")
     private Long id;

@@ -60,6 +60,6 @@ public class CadastroVagaBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.vaga.getId() != null;
+        return this.vaga != null;
     }
 }
