@@ -7,37 +7,29 @@ package br.ufac.sion.inscricao.converter;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.model.Candidato;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Candidato.class)
+@FacesConverter(forClass = Candidato.class, managed = true)
 public class CandidatoConverter implements Converter {
 
+    @EJB
     private CandidatoFacadeLocal candidatoFacade;
-
-    public CandidatoConverter() {
-        this.candidatoFacade = lookupCandidatoFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Candidato retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.candidatoFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.candidatoFacade.findById(new Long(value));
     }
 
     @Override
@@ -51,13 +43,4 @@ public class CandidatoConverter implements Converter {
         return "";
     }
 
-    private CandidatoFacadeLocal lookupCandidatoFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

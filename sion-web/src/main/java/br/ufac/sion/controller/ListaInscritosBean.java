@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,7 +38,7 @@ import org.primefaces.model.SortOrder;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class ListaInscritosBean implements Serializable {
 

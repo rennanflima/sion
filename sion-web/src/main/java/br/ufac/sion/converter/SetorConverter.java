@@ -7,37 +7,30 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.SetorFacadeLocal;
 import br.ufac.sion.model.Setor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Setor.class)
+@FacesConverter(forClass = Setor.class, managed = true)
 public class SetorConverter implements Converter {
 
+    @EJB
     private SetorFacadeLocal setorFacade;
 
-    public SetorConverter() {
-        this.setorFacade = lookupSetorFacadeLocal();
-    }
-    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-         Setor retorno = null;
 
-        if (value != null && !value.equals("")) {
-            retorno = this.setorFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.setorFacade.findById(new Long(value));
     }
 
     @Override
@@ -50,15 +43,5 @@ public class SetorConverter implements Converter {
         }
         return "";
     }
- 
-    
-    private SetorFacadeLocal lookupSetorFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (SetorFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/SetorFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
+
 }

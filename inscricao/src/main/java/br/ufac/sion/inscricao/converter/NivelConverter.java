@@ -7,37 +7,29 @@ package br.ufac.sion.inscricao.converter;
 
 import br.ufac.sion.dao.NivelFacadeLocal;
 import br.ufac.sion.model.Nivel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Nivel.class)
+@FacesConverter(forClass = Nivel.class, managed = true)
 public class NivelConverter implements Converter {
 
+    @EJB
     private NivelFacadeLocal nivelFacade;
-
-    public NivelConverter() {
-        this.nivelFacade = lookupNivelFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Nivel retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.nivelFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.nivelFacade.findById(new Long(value));
     }
 
     @Override
@@ -50,15 +42,4 @@ public class NivelConverter implements Converter {
         }
         return "";
     }
-
-    private NivelFacadeLocal lookupNivelFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (NivelFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/NivelFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
 }

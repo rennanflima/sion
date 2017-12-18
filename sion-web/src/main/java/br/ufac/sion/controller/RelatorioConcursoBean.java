@@ -8,22 +8,17 @@ package br.ufac.sion.controller;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import net.sf.jasperreports.engine.JRException;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class RelatorioConcursoBean implements Serializable {
 

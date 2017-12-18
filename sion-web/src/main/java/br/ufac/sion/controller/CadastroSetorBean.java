@@ -14,8 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class CadastroSetorBean implements Serializable {
     

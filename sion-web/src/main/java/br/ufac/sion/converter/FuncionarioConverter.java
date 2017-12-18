@@ -7,37 +7,29 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.FuncionarioFacadeLocal;
 import br.ufac.sion.model.Funcionario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Funcionario.class)
+@FacesConverter(forClass = Funcionario.class, managed = true)
 public class FuncionarioConverter implements Converter {
 
+    @EJB
     private FuncionarioFacadeLocal funcionarioFacade;
-
-    public FuncionarioConverter() {
-        this.funcionarioFacade = lookupFuncionarioFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Funcionario retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.funcionarioFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.funcionarioFacade.findById(new Long(value));
     }
 
     @Override
@@ -50,15 +42,4 @@ public class FuncionarioConverter implements Converter {
         }
         return "";
     }
-
-    private FuncionarioFacadeLocal lookupFuncionarioFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/FuncionarioFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
 }

@@ -7,37 +7,31 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.VagaFacadeLocal;
 import br.ufac.sion.model.Vaga;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Vaga.class)
-public class VagaConverter implements Converter {
+@FacesConverter(forClass = Vaga.class, managed = true)
+public class VagaConverter implements Converter{
 
+    @EJB
     private VagaFacadeLocal vagaFacade;
 
-    public VagaConverter() {
-        this.vagaFacade = lookupVagaFacadeLocal();
-    }
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-         Vaga retorno = null;
 
-        if (value != null && !value.equals("")) {
-            retorno = this.vagaFacade.findById(new Long(value));
+        if(StringUtils.isBlank(value)){
+            return null;
         }
-        return retorno;
+        return this.vagaFacade.findById(new Long(value));
     }
 
     @Override
@@ -49,16 +43,5 @@ public class VagaConverter implements Converter {
             return retorno;
         }
         return "";
-    }
- 
-    
-    private VagaFacadeLocal lookupVagaFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (VagaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/VagaFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

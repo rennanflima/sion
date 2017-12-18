@@ -7,37 +7,29 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.EmpresaFacadeLocal;
 import br.ufac.sion.model.Empresa;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Empresa.class)
+@FacesConverter(forClass = Empresa.class, managed = true)
 public class EmpresaConverter implements Converter {
 
+    @EJB
     private EmpresaFacadeLocal empresaFacade;
-
-    public EmpresaConverter() {
-        this.empresaFacade = lookupEmpresaFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Empresa retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.empresaFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.empresaFacade.findById(new Long(value));
     }
 
     @Override
@@ -49,15 +41,5 @@ public class EmpresaConverter implements Converter {
             return retorno;
         }
         return "";
-    }
-
-    private EmpresaFacadeLocal lookupEmpresaFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (EmpresaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/EmpresaFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

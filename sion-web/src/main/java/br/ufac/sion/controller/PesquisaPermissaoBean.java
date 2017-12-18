@@ -5,9 +5,7 @@
  */
 package br.ufac.sion.controller;
 
-import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.dao.PermissaoFacadeLocal;
-import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Permissao;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
@@ -15,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class PesquisaPermissaoBean implements Serializable {
 

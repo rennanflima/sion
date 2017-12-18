@@ -21,10 +21,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.chart.Axis;
@@ -38,7 +37,7 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class GerenciarConcursoBean implements Serializable {
 

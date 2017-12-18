@@ -7,37 +7,29 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.ContaBancariaFacadeLocal;
 import br.ufac.sion.model.ContaBancaria;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = ContaBancaria.class)
+@FacesConverter(forClass = ContaBancaria.class, managed = true)
 public class ContaConverter implements Converter {
 
-    private ContaBancariaFacadeLocal contaFacade;
-
-    public ContaConverter() {
-        this.contaFacade = lookupVagaFacadeLocal();
-    }
+    @EJB
+    private ContaBancariaFacadeLocal contaBancariaFacade;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        ContaBancaria retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.contaFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.contaBancariaFacade.findById(new Long(value));
     }
 
     @Override
@@ -49,15 +41,5 @@ public class ContaConverter implements Converter {
             return retorno;
         }
         return "";
-    }
-
-    private ContaBancariaFacadeLocal lookupVagaFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (ContaBancariaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/ContaBancariaFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

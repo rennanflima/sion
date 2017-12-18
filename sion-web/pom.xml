@@ -27,11 +27,19 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/javax.faces/javax.faces-api -->
+        <!-- Weld (Implementação do CDI) -->
         <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>javax.faces-api</artifactId>
-            <version>2.3</version>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Mojarra (Implementação do JSF 2) -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.3.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -72,6 +80,14 @@
             <scope>compile</scope>
         </dependency>
         
+        <!-- Commons Lang (utilidades) -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- File Upload -->
         <dependency>
             <groupId>commons-fileupload</groupId>

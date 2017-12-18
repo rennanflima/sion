@@ -22,7 +22,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
         </properties>
     </persistence-unit>
 </persistence>

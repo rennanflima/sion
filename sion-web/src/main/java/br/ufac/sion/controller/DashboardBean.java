@@ -12,8 +12,8 @@ import br.ufac.sion.model.SituacaoInscricao;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -24,7 +24,7 @@ import org.primefaces.model.chart.LineChartModel;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class DashboardBean implements Serializable {
 

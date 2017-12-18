@@ -20,10 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -31,7 +30,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class EstatisticaConcursoBean implements Serializable {
 

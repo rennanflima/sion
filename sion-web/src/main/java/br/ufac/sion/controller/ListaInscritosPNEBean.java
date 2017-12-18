@@ -13,13 +13,12 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.util.jsf.FacesProducer;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -28,7 +27,7 @@ import org.primefaces.model.SortOrder;
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class ListaInscritosPNEBean implements Serializable {
 

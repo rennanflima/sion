@@ -11,14 +11,14 @@ import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class CadastroLocalidadeBean implements Serializable {
 
@@ -35,7 +35,6 @@ public class CadastroLocalidadeBean implements Serializable {
     }
     
     public CadastroLocalidadeBean() {
-        limpar();
     }
 
     public Localidade getLocalidade() {

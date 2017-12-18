@@ -7,11 +7,7 @@ package br.ufac.sion.service;
 
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.service.util.InfoEmail;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Lock;

@@ -7,37 +7,29 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Concurso.class)
+@FacesConverter(forClass = Concurso.class, managed = true)
 public class ConcursoConverter implements Converter {
 
+    @EJB
     private ConcursoFacadeLocal concursoFacade;
-
-    public ConcursoConverter() {
-        this.concursoFacade = lookupConcursoFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Concurso retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.concursoFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.concursoFacade.findById(new Long(value));
     }
 
     @Override
@@ -49,15 +41,5 @@ public class ConcursoConverter implements Converter {
             return retorno;
         }
         return null;
-    }
-
-    private ConcursoFacadeLocal lookupConcursoFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (ConcursoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/ConcursoFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

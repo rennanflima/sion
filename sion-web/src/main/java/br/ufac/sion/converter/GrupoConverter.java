@@ -7,37 +7,29 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.GrupoFacadeLocal;
 import br.ufac.sion.model.Grupo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Grupo.class, value ="grupoConverter")
+@FacesConverter(forClass = Grupo.class, managed = true)
 public class GrupoConverter implements Converter {
 
+    @EJB
     private GrupoFacadeLocal grupoFacade;
 
-    public GrupoConverter() {
-        this.grupoFacade = lookupGrupoFacadeLocal();
-    }
-    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-         Grupo retorno = null;
-
-        if (value != null && !value.equals("")) {
-            retorno = this.grupoFacade.findById(new Long(value));
+        if (StringUtils.isBlank(value)) {
+            return null;
         }
-        return retorno;
+        return this.grupoFacade.findById(new Long(value));
     }
 
     @Override
@@ -45,21 +37,10 @@ public class GrupoConverter implements Converter {
         if (value != null) {
             Long codigo = ((Grupo) value).getId();
             String retorno = (codigo == null ? null : codigo.toString());
-            
+
             return retorno;
-            
+
         }
         return "";
-    }
- 
-    
-    private GrupoFacadeLocal lookupGrupoFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/GrupoFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

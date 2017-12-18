@@ -14,12 +14,10 @@ import br.ufac.sion.security.UsuarioSistema;
 import br.ufac.sion.service.FuncionarioService;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -27,7 +25,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class TrocarSenhaBean implements Serializable {
 

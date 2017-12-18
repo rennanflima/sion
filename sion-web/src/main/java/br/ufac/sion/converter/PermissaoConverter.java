@@ -8,15 +8,11 @@ package br.ufac.sion.converter;
 import br.ufac.sion.dao.PermissaoFacadeLocal;
 import br.ufac.sion.model.Permissao;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
@@ -24,14 +20,11 @@ import org.primefaces.model.DualListModel;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Permissao.class, value="permissaoConverter")
+@FacesConverter(forClass = Permissao.class, managed = true)
 public class PermissaoConverter implements Converter {
 
+    @EJB
     private PermissaoFacadeLocal permissaoFacade;
-
-    public PermissaoConverter() {
-        this.permissaoFacade = lookupPermissaoFacadeLocal();
-    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -40,27 +33,27 @@ public class PermissaoConverter implements Converter {
         if (value != null && !value.equals("")) {
             retorno = this.permissaoFacade.findById(new Long(value));
         }
-        if (component instanceof PickList){
+        if (component instanceof PickList) {
             Object dualList = ((PickList) component).getValue();
             DualListModel dl = (DualListModel) dualList;
-            for(Iterator iterator = dl.getSource().iterator(); iterator.hasNext();){
+            for (Iterator iterator = dl.getSource().iterator(); iterator.hasNext();) {
                 Object o = iterator.next();
                 String id = (new StringBuilder()).append(((Permissao) o).getId()).toString();
-                if(value.equals(id)){
+                if (value.equals(id)) {
                     retorno = (Permissao) o;
                     break;
                 }
             }
-            if(retorno == null){
-                for(Iterator iterator1 = dl.getSource().iterator(); iterator1.hasNext();){
+            if (retorno == null) {
+                for (Iterator iterator1 = dl.getSource().iterator(); iterator1.hasNext();) {
                     Object o = iterator1.next();
                     String id = (new StringBuilder()).append(((Permissao) o).getId()).toString();
-                    if(value.equals(id)){
+                    if (value.equals(id)) {
                         retorno = (Permissao) o;
                         break;
                     }
                 }
-                
+
             }
         }
         return retorno;
@@ -75,16 +68,6 @@ public class PermissaoConverter implements Converter {
             return retorno;
         }
         return "";
-    }
-
-    private PermissaoFacadeLocal lookupPermissaoFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (PermissaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/PermissaoFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 
 }
