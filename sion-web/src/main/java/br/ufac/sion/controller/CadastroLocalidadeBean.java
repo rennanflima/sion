@@ -38,7 +38,7 @@ public class CadastroLocalidadeBean implements Serializable {
     }
 
     public Localidade getLocalidade() {
-        return localidade;
+        return this.localidade;
     }
 
     public void setLocalidade(Localidade localidade) {
@@ -46,6 +46,7 @@ public class CadastroLocalidadeBean implements Serializable {
     }
 
     public void salvar() {
+        System.out.println("Salvar");
         try {
             this.localidadeFacade.save(localidade);
             FacesUtil.addSuccessMessage("Localidade salva com sucesso!");

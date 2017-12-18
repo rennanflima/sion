@@ -36,7 +36,7 @@
 
                 <p:column style="width: 100px; text-align: center;">
                     <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroLocalidade">
-                        <f:param name="local" value="#{local.id}"/>
+                        <f:param name="localidade" value="#{local.id}"/>
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
                                      update=":frmPesquisa:confirmacaoExclusaoDialog">
