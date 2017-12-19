@@ -7,22 +7,30 @@ package br.ufac.sion.inscricao.converter;
 
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.model.Cidade;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Cidade.class, managed = true)
+@FacesConverter(forClass = Cidade.class)
 public class CidadeConverter implements Converter {
 
-    @EJB
     private CidadeFacadeLocal cidadeFacade;
+
+    public CidadeConverter() {
+        this.cidadeFacade = lookupCidadeFacadeLocal();
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,5 +49,15 @@ public class CidadeConverter implements Converter {
             return retorno;
         }
         return "";
+    }
+
+    private CidadeFacadeLocal lookupCidadeFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CidadeFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CidadeFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }

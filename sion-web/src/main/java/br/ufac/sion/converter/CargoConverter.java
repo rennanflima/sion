@@ -7,11 +7,15 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.CargoFacadeLocal;
 import br.ufac.sion.model.Cargo;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -21,8 +25,11 @@ import org.apache.commons.lang3.StringUtils;
 @FacesConverter(forClass = Cargo.class)
 public class CargoConverter implements Converter {
 
-    @EJB
     private CargoFacadeLocal cargoFacade;
+
+    public CargoConverter() {
+        this.cargoFacade = lookupVagaFacadeLocal();
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,5 +48,15 @@ public class CargoConverter implements Converter {
             return retorno;
         }
         return "";
+    }
+
+    private CargoFacadeLocal lookupVagaFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CargoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }

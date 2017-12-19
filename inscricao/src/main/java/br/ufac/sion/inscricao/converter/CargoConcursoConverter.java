@@ -7,21 +7,29 @@ package br.ufac.sion.inscricao.converter;
 
 import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.model.CargoConcurso;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = CargoConcurso.class, managed = true)
+@FacesConverter(forClass = CargoConcurso.class)
 public class CargoConcursoConverter implements Converter {
 
-    @EJB
     private CargoConcursoFacadeLocal cargoConcursoFacade;
+
+    public CargoConcursoConverter() {
+        this.cargoConcursoFacade = lookupCargoConcursoFacadeLocal();
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,5 +49,15 @@ public class CargoConcursoConverter implements Converter {
             return (codigo == null ? null : codigo.toString());
         }
         return "";
+    }
+
+    private CargoConcursoFacadeLocal lookupCargoConcursoFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CargoConcursoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoConcursoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }

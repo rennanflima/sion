@@ -9,7 +9,6 @@ import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.model.Localidade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -23,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Localidade.class, managed = true)
+@FacesConverter(forClass = Localidade.class)
 public class LocalidadeConverter implements Converter {
 
     private LocalidadeFacadeLocal localidadeFacade;

@@ -7,22 +7,30 @@ package br.ufac.sion.inscricao.converter;
 
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.model.Inscricao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Inscricao.class, managed = true)
+@FacesConverter(forClass = Inscricao.class)
 public class InscricaoConverter implements Converter {
 
-    @EJB
     private InscricaoFacadeLocal inscricaoFacade;
+
+    public InscricaoConverter() {
+        this.inscricaoFacade = lookupInscricaoFacadeLocal();
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,5 +49,15 @@ public class InscricaoConverter implements Converter {
             return retorno;
         }
         return "";
+    }
+
+    private InscricaoFacadeLocal lookupInscricaoFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (InscricaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/InscricaoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }
