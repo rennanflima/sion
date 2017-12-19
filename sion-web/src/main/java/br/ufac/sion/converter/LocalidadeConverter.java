@@ -7,11 +7,14 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.model.Localidade;
+import br.ufac.sion.util.jsf.FacesUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,10 +36,18 @@ public class LocalidadeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
+        Localidade retorno = null;
+        if (StringUtils.isNotBlank(value)) {
+            retorno = this.localidadeFacade.findById(new Long(value));
+            
+            if(retorno == null){
+                String descricaoErro = "A Localidade não existe.";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        descricaoErro, descricaoErro);
+                throw new ConverterException(message);
+            }
         }
-        return this.localidadeFacade.findById(new Long(value));
+        return retorno;
     }
 
     @Override

@@ -43,6 +43,9 @@ public class CadastroLocalidadeBean implements Serializable {
 
     public void setLocalidade(Localidade localidade) {
         this.localidade = localidade;
+        if(this.localidade == null){
+            this.localidade = new Localidade();
+        }
     }
 
     public void salvar() {
@@ -61,6 +64,6 @@ public class CadastroLocalidadeBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.localidade != null;
+        return this.localidade.getId() != null;
     }
 }
