@@ -100,8 +100,6 @@ JMS Connection Factory ::
 JavaMail Session
 ~~~~~~~~~~~~~~~~
 
-JMS Destination Resource ::
-
    JNDI Name: mail/gmailSMTP
    Mail Host: smtp.gmail.com
    User Default: <email>@gmail.com
