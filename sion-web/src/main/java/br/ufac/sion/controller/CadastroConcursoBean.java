@@ -186,10 +186,20 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public List<CargoConcurso> getCargosConcurso() {
-        if(this.concurso.getCargos() != null || cargosConcurso == null){
+        if (this.concurso.getCargos() != null || cargosConcurso == null) {
             cargosConcurso = this.concurso.getCargos();
+            System.out.println(this.concurso.getCargos().size());
+        }
+        System.out.println("gtCargosConcurso");
+        for (CargoConcurso cc : cargosConcurso) {
+            System.out.println(cc.getCodigo() + " - " + cc.getCargo().getDescricao());
         }
         return cargosConcurso;
+    }
+
+    public void setCargosConcurso(List<CargoConcurso> cargosConcurso) {
+        this.cargosConcurso = cargosConcurso;
+        System.out.println("stCargos_Concurso");
     }
 
     public List<CargoVaga> getCargosVaga() {
@@ -223,8 +233,8 @@ public class CadastroConcursoBean implements Serializable {
     public void setCargoVagaConcursoParaExcluir(CargoVaga cargoVagaConcursoParaExcluir) {
         this.cargoVagaConcursoParaExcluir = cargoVagaConcursoParaExcluir;
     }
-    
-    public void limparAddCargoVaga(){
+
+    public void limparAddCargoVaga() {
         this.addQuantidadeVaga = new AddCargoVaga();
     }
 
@@ -353,7 +363,7 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.concurso != null;
+        return this.concurso.getId() != null;
     }
 
     public void limparCargo() {
@@ -390,12 +400,19 @@ public class CadastroConcursoBean implements Serializable {
         this.contasBancaria.clear();
         this.contasBancaria = contaBancariaFacade.findByEmpresa(empresa);
     }
-    
+
     public String onFlowProcess(FlowEvent event){
-//        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas") || event.getNewStep().equals("confirmacaoConcurso")){
-//            salvar();
-//        }
+        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas")){
+            onFlowProcessSave();
+        }
         return event.getNewStep();
     }
 
+    public void onFlowProcessSave() {
+        try {
+            this.concurso = concursoService.salvar(concurso);
+        } catch (NegocioException e) {
+            FacesUtil.addErrorMessage("Erro ao salvar o concurso: " + e.getMessage());
+        }
+    }
 }

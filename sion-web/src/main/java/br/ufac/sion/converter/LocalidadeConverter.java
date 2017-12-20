@@ -7,7 +7,6 @@ package br.ufac.sion.converter;
 
 import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.model.Localidade;
-import br.ufac.sion.util.jsf.FacesUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;

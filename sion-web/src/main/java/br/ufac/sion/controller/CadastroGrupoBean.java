@@ -96,6 +96,6 @@ public class CadastroGrupoBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.grupo != null;
+        return this.grupo.getId() != null;
     }
 }

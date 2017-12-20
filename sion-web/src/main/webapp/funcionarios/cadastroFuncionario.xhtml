@@ -38,7 +38,6 @@
                              onkeypress="return SomenteNumero(event)" requiredMessage="O campo 'Matrícula' é obrigatório"
                              converterMessage="Digite apenas número na Matrícula!" validatorMessage="O campo 'Matrícula' deve conter no mínimo dois digitos">
                     <f:validateLength minimum="2" /> 
-                    <f:convertNumber integerOnly="true"/>
                 </p:inputText>
 
                 <p:outputLabel for="nome" value="Nome: "/>
@@ -79,7 +78,7 @@
                 </p:inputText>
 
                 <p:outputLabel for="autorizacao" value="Grupo: "/>
-                <p:selectManyCheckbox id="autorizacao" value="#{cadastroFuncionarioBean.funcionario.usuario.grupos}" label="Permissao" converter="grupoConverter">
+                <p:selectManyCheckbox id="autorizacao" value="#{cadastroFuncionarioBean.funcionario.usuario.grupos}" label="Grupo" converter="grupoConverter">
                     <f:attribute name="collectionType" value="java.util.ArrayList"/>
                     <f:selectItems value="#{cadastroFuncionarioBean.grupos}" var="grupo"
                                    itemValue="#{grupo}" itemLabel="#{grupo.descricao}"/>
@@ -87,7 +86,7 @@
                 
                 <p:outputLabel value="Permissões:" for="permissoes"/>
                 <p:pickList id="permissoes" value="#{cadastroFuncionarioBean.dualListModelPermissoes}" var="permissao" 
-                            converter="permissaoConverter" itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
+                            itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
             </p:panelGrid>
         </h:form>
     </ui:define>

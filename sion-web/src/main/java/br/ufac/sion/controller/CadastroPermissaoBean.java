@@ -62,6 +62,6 @@ public class CadastroPermissaoBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.permissao != null;
+        return this.permissao.getId() != null;
     }
 }

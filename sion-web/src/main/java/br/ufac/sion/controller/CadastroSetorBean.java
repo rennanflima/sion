@@ -94,7 +94,7 @@ public class CadastroSetorBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.setor != null;
+        return this.setor.getId() != null;
     }
     
     public void selecionarTodos() {

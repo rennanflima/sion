@@ -84,7 +84,7 @@ public class CadastroContaBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.contaBancaria != null;
+        return this.contaBancaria.getId() != null;
     }
     
     public void mudaConvenio(){

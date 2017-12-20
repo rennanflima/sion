@@ -5,11 +5,10 @@
  */
 package br.ufac.sion.converter;
 
-import br.ufac.sion.dao.GrupoFacadeLocal;
-import br.ufac.sion.model.Grupo;
+import br.ufac.sion.dao.CargoFacadeLocal;
+import br.ufac.sion.model.Cargo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,45 +16,45 @@ import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Grupo.class, value = "grupoConverter")
-public class GrupoConverter implements Converter {
+@FacesConverter(forClass = Cargo.class, value = "cConverter")
+public class CConverter implements Converter {
 
-    private GrupoFacadeLocal grupoFacade;
+    private CargoFacadeLocal cargoFacade;
 
-    public GrupoConverter() {
-        this.grupoFacade = lookupGrupoFacadeLocal();
+    public CConverter() {
+        this.cargoFacade = lookupVagaFacadeLocal();
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
+        Cargo retorno = null;
+
+        if (value != null && !value.equals("")) {
+            retorno = this.cargoFacade.findById(new Long(value));
         }
-        return this.grupoFacade.findById(new Long(value));
+        return retorno;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            Long codigo = ((Grupo) value).getId();
+            Long codigo = ((Cargo) value).getId();
             String retorno = (codigo == null ? null : codigo.toString());
 
             return retorno;
-
         }
         return "";
     }
 
-    private GrupoFacadeLocal lookupGrupoFacadeLocal() {
+    private CargoFacadeLocal lookupVagaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/GrupoFacade");
+            return (CargoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

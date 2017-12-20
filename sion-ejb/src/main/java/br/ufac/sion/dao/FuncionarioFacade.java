@@ -67,31 +67,20 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
 
     @Override
     public Funcionario findFuncionarioWithPermissoes(Long id) {
-        Funcionario funcionario = null;
         try {
-            funcionario = em.createQuery("SELECT f from Funcionario f JOIN FETCH f.usuario u JOIN FECT u.permissoes p where f.id = :id", Funcionario.class)
-                .setParameter("id", id)
-                .getSingleResult();
-            
+            return em.createQuery("SELECT f FROM Funcionario f JOIN FETCH f.usuario u JOIN FETCH u.permissoes p WHERE f.id = :id", Funcionario.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
         } catch (NoResultException e) {
-            return funcionario;
+            return null;
         }
-        return funcionario;
-        
+
     }
-    
+
     @Override
     public Funcionario findFuncionarioWithGrupoAndPermissoes(Long id) {
-        Funcionario funcionario = null;
-        try {
-            funcionario = em.createQuery("SELECT f from Funcionario f JOIN FETCH f.usuario u JOIN FECT u.grupos.p JOIN FECT u.permissoes p where f.id = :id", Funcionario.class)
+        return em.createQuery("SELECT f FROM Funcionario f JOIN FETCH f.usuario u JOIN FETCH u.grupos g JOIN FETCH u.permissoes p WHERE f.id = :id", Funcionario.class)
                 .setParameter("id", id)
                 .getSingleResult();
-            
-        } catch (NoResultException e) {
-            return funcionario;
-        }
-        return funcionario;
-        
     }
 }

@@ -24,7 +24,7 @@ import org.primefaces.model.DualListModel;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Permissao.class)
+@FacesConverter(forClass = Permissao.class, value="permissaoConverter")
 public class PermissaoConverter implements Converter {
 
     private PermissaoFacadeLocal permissaoFacade;

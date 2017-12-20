@@ -48,7 +48,7 @@
                      widgetVar="confirmacaoExclusaoVaga"	id="confirmacaoExclusaoVagaDialog">
         <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusaoVaga').hide();"
                          process="@this" action="#{cadastroConcursoBean.removerCargoVagaConcurso()}"
-                         update=":frmConcurso:cargosConcursoTable" />
+                         update=":frmConcurso:cargosVagaConcursoTable" />
         <p:button value="Não" onclick="PF('confirmacaoExclusaoVaga').hide();
                 return false;" />
 

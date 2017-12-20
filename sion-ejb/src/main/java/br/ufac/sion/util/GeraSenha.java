@@ -5,10 +5,8 @@
  */
 package br.ufac.sion.util;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -31,21 +29,12 @@ public class GeraSenha {
         }
         return new String(pass);
     }
-    
+
     public String ecripta(String pas) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(pas.getBytes());
-            BigInteger hash = new BigInteger(1, md.digest());
-            String ecript = hash.toString(16);
-            return ecript;
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Erro ao ecriptar a senha!!");
-        }
-        return null;
+        return new BCryptPasswordEncoder().encode(pas);
     }
-    
-    public String geraSenhaEncriptada(){
+
+    public String geraSenhaEncriptada() {
         return ecripta(geraSenha());
     }
 }

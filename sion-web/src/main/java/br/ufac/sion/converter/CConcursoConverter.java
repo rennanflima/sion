@@ -9,11 +9,9 @@ import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.model.CargoConcurso;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -23,35 +21,29 @@ import javax.naming.NamingException;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = CargoConcurso.class)
-public class CargoConcursoConverter implements Converter {
+@FacesConverter(forClass = CargoConcurso.class, value = "cConcursoConverter")
+public class CConcursoConverter implements Converter {
 
-    private CargoConcursoFacadeLocal cargoConcursoFacade;
+    private CargoConcursoFacadeLocal cargoConcursoFacade ;
 
-    public CargoConcursoConverter() {
+    public CConcursoConverter() {
         this.cargoConcursoFacade = lookupCargoConcursoFacadeLocal();
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         CargoConcurso retorno = null;
-
-        if (value != null) {
+        
+        if(value != null){
             retorno = cargoConcursoFacade.findById(new Long(value));
-            if(retorno == null){
-                String descricaoErro = "O Cargo do Concurso não existe.";
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        descricaoErro, descricaoErro);
-                throw new ConverterException(message);
-            }
         }
-
+        
         return retorno;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null) {
+        if(value != null){
             Long codigo = ((CargoConcurso) value).getId();
             return (codigo == null ? null : codigo.toString());
         }
@@ -67,4 +59,5 @@ public class CargoConcursoConverter implements Converter {
             throw new RuntimeException(ne);
         }
     }
+
 }

@@ -60,6 +60,6 @@ public class CadastroNivelBean implements Serializable {
     }
 
     public boolean isEditando(){
-        return this.nivel != null;
+        return this.nivel.getId() != null;
     }
 }

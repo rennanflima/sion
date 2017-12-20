@@ -14,10 +14,6 @@ import br.ufac.sion.model.vo.DataQuantidade;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.model.vo.FiltroInscritosRelatorio;
 import br.ufac.sion.util.conversor.DateConversor;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -25,14 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -40,7 +31,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
@@ -239,7 +229,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public Long encontrarQuantidadeDeInscricoesSubJudice(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Long.class)
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.status = :status", Long.class)
                 .setParameter("concurso", concurso)
                 .setParameter("status", SituacaoInscricao.SUB_JUDICE)
                 .getSingleResult();
@@ -247,7 +237,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public Long encontrarQuantidadeDeInscricoesConfirmadas(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :status", Long.class)
+        return em.createQuery("SELECT COUNT(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.status = :status ", Long.class)
                 .setParameter("concurso", concurso)
                 .setParameter("status", SituacaoInscricao.CONFIRMADA)
                 .getSingleResult();
@@ -280,7 +270,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public Long encontrarQuantidadeDeInscricoesConfirmadasESubJudice(Concurso concurso) {
-        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
+        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.status = :confirmada OR i.status = :judice", Long.class)
                 .setParameter("concurso", concurso)
                 .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
                 .setParameter("judice", SituacaoInscricao.SUB_JUDICE)

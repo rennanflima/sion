@@ -13,10 +13,10 @@
             <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" itemLabel="Marcar todos" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                 <p:ajax update="cargosConcurso" listener="#{cadastroConcursoBean.selecionarTodos()}" />
             </p:selectBooleanCheckbox>
-            <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cargoConcursoConverter" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
+            <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cConcursoConverter">
                 <f:attribute name="collectionType" value="java.util.ArrayList"/>
-                <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cc"
-                               itemValue="#{cc}" itemLabel="#{cc.codigo} - #{cc.cargo.descricao}"/>
+                <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cargo"
+                               itemValue="#{cargo}" itemLabel="#{cargo.codigo} - #{cargo.cargo.descricao}"/>
                 <p:ajax update="marcarTodos"/>
             </p:selectManyCheckbox>
         </h:panelGroup>

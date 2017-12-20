@@ -29,5 +29,12 @@ public class SetorFacade extends AbstractFacade<Setor, Long> implements SetorFac
         super(Setor.class);
     }
 
+    @Override
+    public Setor findByIdWithCargo(Long id) {
+        return em.createQuery("SELECT s FROM Setor s JOIN FETCH s.cargos c WHERE s.id = :id", Setor.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
 
 }

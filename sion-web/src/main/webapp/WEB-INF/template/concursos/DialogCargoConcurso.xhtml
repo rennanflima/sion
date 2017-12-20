@@ -33,7 +33,7 @@
                 </p:selectOneMenu>
             </p:panelGrid>
 
-            <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}"
+            <p:commandButton style="margin-top: 10px; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}"
                              process="@form" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" update="inclusaoPanel :frmConcurso:cargosConcursoTable"/>
         </h:form>
     </p:dialog> 

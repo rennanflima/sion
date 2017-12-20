@@ -33,7 +33,7 @@ public class ContaBancariaFacade extends AbstractFacade<ContaBancaria, Long> imp
 
     @Override
     public List<ContaBancaria> findByEmpresa(Empresa empresa) {
-        return em.createQuery("from ContaBancaria where cedente = :empresa", ContaBancaria.class)
+        return em.createQuery("SELECT cb FROM ContaBancaria cb WHERE cb.cedente = :empresa", ContaBancaria.class)
                 .setParameter("empresa", empresa)
                 .getResultList();
     }

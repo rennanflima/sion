@@ -23,4 +23,6 @@ public interface SetorFacadeLocal {
     public Setor findById(Long id);
 
     public List<Setor> findAll();
+    
+    public Setor findByIdWithCargo(Long id);
 }

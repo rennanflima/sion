@@ -36,6 +36,7 @@ public class CargoConverter implements Converter {
         if (StringUtils.isBlank(value)) {
             return null;
         }
+        System.out.println("cargo "+value);
         return this.cargoFacade.findById(new Long(value));
     }
 

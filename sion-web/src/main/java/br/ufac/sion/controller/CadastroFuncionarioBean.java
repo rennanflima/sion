@@ -98,7 +98,7 @@ public class CadastroFuncionarioBean implements Serializable {
         this.funcionario = funcionario;
 
         if (funcionario != null) {
-            setor = funcionario.getSetor();
+            setor = setorFacade.findByIdWithCargo(funcionario.getSetor().getId());
         }
     }
 
@@ -146,7 +146,7 @@ public class CadastroFuncionarioBean implements Serializable {
     }
 
     public boolean isEditando() {
-        return this.funcionario != null;
+        return this.funcionario.getId() != null;
     }
 
 }

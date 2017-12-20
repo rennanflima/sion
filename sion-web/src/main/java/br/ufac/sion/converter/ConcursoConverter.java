@@ -36,7 +36,7 @@ public class ConcursoConverter implements Converter {
         if (StringUtils.isBlank(value)) {
             return null;
         }
-        return this.concursoFacade.findById(new Long(value));
+        return this.concursoFacade.findConcursoWithCargo(new Long(value));
     }
 
     @Override
