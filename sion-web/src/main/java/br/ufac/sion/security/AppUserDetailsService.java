@@ -33,48 +33,40 @@ public class AppUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioFacade.findByLogin(login);
 
         UsuarioSistema user = null;
+        usuario.setUltimoAcesso(LocalDateTime.now());
 
         if (usuario != null) {
-            usuario.setUltimoAcesso(LocalDateTime.now());
             usuario = usuarioFacade.save(usuario);
             user = new UsuarioSistema(usuario, getGrupos(usuario));
         } else {
             throw new UsernameNotFoundException("Usuário não encontrado.");
         }
-
         return user;
     }
 
-    private Collection<GrantedAuthority> getGrupos(Usuario usuario) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        System.out.println("entra metodo");
-        
-        usuario = usuarioFacade.findByLoginWithPermissoes(usuario.getLogin());
-        if (usuario != null && usuario.getPermissoes() != null) {
+    private Collection<? extends GrantedAuthority> getGrupos(Usuario usuario) {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        Usuario user = usuarioFacade.findByLoginWithPermissoes(usuario.getLogin());
+        if (user != null && user.getPermissoes() != null) {
             System.out.println("Permissões");
-            for (Permissao p : usuario.getPermissoes()) {
+            for (Permissao p : user.getPermissoes()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + p.getNome().toUpperCase()));
                 System.out.println("ROLE_" + p.getNome().toUpperCase());
             }
         }
-        usuario = usuarioFacade.findByLoginWithGrupo(usuario.getLogin());
-        System.out.println("Nome usuario: "+usuario.getLogin());
-        System.out.println("QTD grupos: "+usuario.getGrupos().size());
-        if (usuario != null && usuario.getGrupos() != null) {
-            for (Grupo grupo : usuario.getGrupos()) {
-                System.out.println("Grupo");
+
+        user = usuarioFacade.findByLoginWithGrupo(usuario.getLogin());
+        if (user != null && user.getGrupos() != null) {
+            for (Grupo grupo : user.getGrupos()) {
                 Grupo g = grupoFacade.findGrupoWithPermissoes(grupo.getId());
-                System.out.println("Nome Grupo: "+ g.getNome());
-                System.out.println("Qtd permissao: "+g.getPermissoes().size());
                 if (g != null && g.getPermissoes() != null) {
-                    System.out.println("Permissões do Grupo");
                     for (Permissao p : g.getPermissoes()) {
                         authorities.add(new SimpleGrantedAuthority("ROLE_" + p.getNome().toUpperCase()));
                         System.out.println("ROLE_" + p.getNome().toUpperCase());
                     }
                 }
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + grupo.getNome().toUpperCase()));
-                System.out.println("ROLE_" + grupo.getNome().toUpperCase());
             }
         }
         return authorities;
