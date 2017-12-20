@@ -9,7 +9,7 @@ import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.Inscricao;
-import br.ufac.sion.model.SituacaoInscricao;
+import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.model.vo.FiltroInscritosRelatorio;
 import java.sql.ResultSet;

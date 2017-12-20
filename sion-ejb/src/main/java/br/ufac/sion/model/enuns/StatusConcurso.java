@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.model;
+package br.ufac.sion.model.enuns;
 
 /**
  *
  * @author Rennan
  */
-public enum TipoTelefone {
+public enum StatusConcurso {
 
-    RESIDENCIAL("Residencial"),
-    TRABALHO("Trabalho"),
-    CELULAR("Celular"),
-    OUTRO("Outro");
+    AUTORIZADO("Autorizado"), 
+    INSCRICOES_ABERTAS("Inscrições abertas"), 
+    INSCRICOES_ENCERRADAS("Inscrições encerradas"),
+    EM_ANDAMENTO("Em andamento"), 
+    ENCERRADO("Encerrado");
 
     private String descricao;
 
-    TipoTelefone(String descricao) {
+    StatusConcurso(String descricao) {
         this.descricao = descricao;
     }
 

@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,9 +37,10 @@ public class Usuario implements Serializable {
     private String login;
     @Column(nullable = false, length = 100)
     private String senha;
+    private Boolean ativo;
     @Column(name = "ultimo_acesso")
     private LocalDateTime ultimoAcesso;
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private List<Grupo> grupos = new ArrayList<>();
@@ -87,6 +87,14 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public LocalDateTime getUltimoAcesso() {

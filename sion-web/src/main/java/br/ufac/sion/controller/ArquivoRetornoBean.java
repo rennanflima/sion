@@ -6,7 +6,7 @@
 package br.ufac.sion.controller;
 
 import br.ufac.sion.exception.ArquivoRetornoException;
-import br.ufac.sion.model.BancosSuportados;
+import br.ufac.sion.model.enuns.BancosSuportados;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.retorno.ArquivoRetornoBradescoService;
 import br.ufac.sion.service.retorno.ArquivoRetornoCaixaService;

@@ -101,14 +101,14 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
     private Titulo criarTitulo(ContaBancaria contaBancaria, Sacado sacado, Cedente cedente, br.ufac.sion.model.Boleto cobrancaSistema) {
         Titulo titulo = new Titulo(contaBancaria, sacado, cedente);
 
-        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
+        br.ufac.sion.model.enuns.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
         String codigo = this.geradorDigitoVerificador.completarComZeros(cobrancaSistema.getSacado().getNumero());
 
         titulo.setNumeroDoDocumento(cobrancaSistema.getSacado().getNumero());
-        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
+        if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
             titulo.setNossoNumero(contaBancaria.getCarteira().getCodigo() + codigo);
             titulo.setDigitoDoNossoNumero(this.geradorDigitoVerificador.gerarDigito(contaBancaria.getCarteira().getCodigo(), codigo));
-        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+        } else if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_DO_BRASIL)) {
             titulo.setNossoNumero(cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getConvenio() + codigo);
         } else {
             titulo.setNossoNumero(codigo);
@@ -124,10 +124,10 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
     }
 
     private void inicializaGeradorDigitoVerificador(br.ufac.sion.model.Boleto cobrancaSistema) {
-        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
-        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_BRADESCO)) {
+        br.ufac.sion.model.enuns.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
+        if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_BRADESCO)) {
             geradorDigitoVerificador = new GeradorDigitoVerificadorBradesco();
-        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+        } else if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_DO_BRASIL)) {
             System.out.println("crira bb");
             geradorDigitoVerificador = new GeradorDigitoVerificadorBancoDoBrasil();
         } else {
@@ -136,10 +136,10 @@ public class BopepoEmissorBoleto implements EmissorBoleto, Serializable {
     }
 
     private BancosSuportados verficaBanco(br.ufac.sion.model.Boleto cobrancaSistema) {
-        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
-        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_BRADESCO)) {
+        br.ufac.sion.model.enuns.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
+        if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_BRADESCO)) {
             return BancosSuportados.BANCO_BRADESCO;
-        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+        } else if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_DO_BRASIL)) {
             return BancosSuportados.BANCO_DO_BRASIL;
         } else {
             return BancosSuportados.CAIXA_ECONOMICA_FEDERAL;

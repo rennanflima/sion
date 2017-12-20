@@ -5,7 +5,10 @@
  */
 package br.ufac.sion.model;
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import br.ufac.sion.model.enuns.BracoDominante;
+import br.ufac.sion.model.enuns.EstadoCivil;
+import br.ufac.sion.model.enuns.Escolaridade;
+import br.ufac.sion.model.enuns.Sexo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,8 +20,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +30,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
@@ -41,16 +40,12 @@ import org.hibernate.validator.constraints.br.CPF;
  */
 @Entity
 @Table(name = "candidato")
-@TypeDef(
-    name = "pgsql_enum",
-    typeClass = PostgreSQLEnumType.class
-)
 public class Candidato implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="candidato_id_seq", sequenceName = "candidato_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "candidato_id_seq", sequenceName = "candidato_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidato_id_seq")
     private Long id;
     @NotBlank
@@ -64,14 +59,9 @@ public class Candidato implements Serializable {
     @NotNull
     @Column(unique = true, nullable = false)
     private String email;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     private Escolaridade escolaridade;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     private Sexo sexo = Sexo.MASCULINO;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
+    @Column(name = "estado_civil")
     private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
@@ -80,8 +70,6 @@ public class Candidato implements Serializable {
     @NaturalId
     @Column(unique = true, length = 14, nullable = false)
     private String cpf;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     @Column(name = "braco_dominante")
     private BracoDominante bracoDominante = BracoDominante.DESTRO;
     @Embedded
@@ -237,8 +225,8 @@ public class Candidato implements Serializable {
     public void setInscricoes(List<Inscricao> inscricoes) {
         this.inscricoes = inscricoes;
     }
-    
-    public void adicionaTelefone(Telefone fone, Integer linha){
+
+    public void adicionaTelefone(Telefone fone, Integer linha) {
         if (linha == null) {
             this.telefones.add(fone);
         } else {

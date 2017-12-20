@@ -5,15 +5,13 @@
  */
 package br.ufac.sion.model;
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import br.ufac.sion.model.enuns.SituacaoBoleto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 /**
  *
@@ -31,10 +27,6 @@ import org.hibernate.annotations.TypeDef;
  */
 @Entity
 @Table(name = "boleto")
-@TypeDef(
-    name = "pgsql_enum",
-    typeClass = PostgreSQLEnumType.class
-)
 public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +45,6 @@ public class Boleto implements Serializable {
     private LocalDate dataPagamento;
     @Column(name = "valor_pago", precision = 10, scale = 2)
     private BigDecimal valorPago;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     private SituacaoBoleto situacao;
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "inscricao_id", unique = true, nullable = false)

@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.model;
+package br.ufac.sion.model.enuns;
 
 /**
  *
  * @author Rennan
  */
-public enum Sexo {
+public enum BracoDominante {
 
-    MASCULINO("Masculino"),
-    FEMININO("Feminino");
+    DESTRO("Destro"),
+    CANHOTO("Canhoto");
 
     private String descricao;
 
-    Sexo(String descricao) {
+    BracoDominante(String descricao) {
         this.descricao = descricao;
     }
 

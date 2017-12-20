@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.model;
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import br.ufac.sion.model.enuns.StatusConcurso;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,8 +14,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,8 +25,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 /**
  *
@@ -36,10 +32,6 @@ import org.hibernate.annotations.TypeDef;
  */
 @Entity
 @Table(name = "concurso")
-@TypeDef(
-    name = "pgsql_enum",
-    typeClass = PostgreSQLEnumType.class
-)
 public class Concurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,8 +55,6 @@ public class Concurso implements Serializable {
     private LocalDate dataVencimentoBoleto;
     @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CargoConcurso> cargos = new ArrayList<>();
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     private StatusConcurso status = StatusConcurso.AUTORIZADO;
     @ManyToOne
     @JoinColumn(name = "conta_bancaria_id", nullable = false)

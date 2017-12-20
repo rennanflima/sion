@@ -3,27 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.model;
+package br.ufac.sion.model.enuns;
 
 /**
  *
- * @author rennan.lima
+ * @author Rennan
  */
-public enum SituacaoInscricao {
-    
-    AGUARDANDO_PAGAMENTO("Aguardando pagamento"),
-    CONFIRMADA("Confirmada"),
-    SUB_JUDICE("Sub judice"),
-    CANCELADA("Cancelada");
-    
+public enum TipoTelefone {
+
+    RESIDENCIAL("Residencial"),
+    TRABALHO("Trabalho"),
+    CELULAR("Celular"),
+    OUTRO("Outro");
+
     private String descricao;
 
-    SituacaoInscricao(String descricao) {
+    TipoTelefone(String descricao) {
         this.descricao = descricao;
     }
 
     public String getDescricao() {
         return descricao;
     }
-    
 }

@@ -22,7 +22,7 @@
                 <p:selectOneMenu id="cargo" value="#{cadastroConcursoBean.cargoConcurso.cargo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
                     <f:selectItem itemLabel="Selecione um cargo..."/>
                     <f:selectItems value="#{cadastroConcursoBean.cargos}" var="cargo"
-                                   itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
+                                   itemValue="#{cargo}" itemLabel="#{cargo.descricao} (#{cargo.cargaHoraria}h)"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel for="localidade" value="Localidade"/>

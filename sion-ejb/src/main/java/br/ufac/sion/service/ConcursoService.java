@@ -9,7 +9,7 @@ import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.dao.util.ConexaoJDBC;
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.model.StatusConcurso;
+import br.ufac.sion.model.enuns.StatusConcurso;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.util.report.ExecutorRelatorio;
 import java.io.InputStream;

@@ -6,7 +6,7 @@
 package br.ufac.sion.service;
 
 import br.ufac.sion.model.Boleto;
-import br.ufac.sion.model.SituacaoBoleto;
+import br.ufac.sion.model.enuns.SituacaoBoleto;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.util.modulo11.GeradorDigitoVerificador;
 import br.ufac.sion.util.modulo11.GeradorDigitoVerificadorBancoDoBrasil;
@@ -77,11 +77,11 @@ public class BoletoService {
     }
 
     private void inicializaGeradorDigitoVerificador(br.ufac.sion.model.Boleto cobrancaSistema) {
-        br.ufac.sion.model.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
-        if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_BRADESCO)) {
+        br.ufac.sion.model.enuns.BancosSuportados bancoSuportado = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getBanco();
+        if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_BRADESCO)) {
             geradorDigitoVerificador = new GeradorDigitoVerificadorBradesco();
             this.banco = BancosSuportados.BANCO_BRADESCO;
-        } else if (bancoSuportado.equals(br.ufac.sion.model.BancosSuportados.BANCO_DO_BRASIL)) {
+        } else if (bancoSuportado.equals(br.ufac.sion.model.enuns.BancosSuportados.BANCO_DO_BRASIL)) {
             geradorDigitoVerificador = new GeradorDigitoVerificadorBancoDoBrasil();
             this.banco = BancosSuportados.BANCO_DO_BRASIL;
         } else {

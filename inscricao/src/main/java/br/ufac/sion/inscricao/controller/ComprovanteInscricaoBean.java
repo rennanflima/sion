@@ -12,7 +12,7 @@ import br.ufac.sion.service.BoletoService;
 import br.ufac.sion.service.InscricaoService;
 import br.ufac.sion.inscricao.util.jsf.FacesProducer;
 import br.ufac.sion.inscricao.util.jsf.FacesUtil;
-import br.ufac.sion.model.SituacaoInscricao;
+import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.util.boleto.EmissorBoleto;
 import java.io.OutputStream;
 import java.io.Serializable;

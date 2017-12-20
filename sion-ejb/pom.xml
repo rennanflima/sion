@@ -73,13 +73,6 @@
             <scope>compile</scope>
         </dependency>
         
-        <!--Hibernate Types-->
-        <dependency>
-            <groupId>com.vladmihalcea</groupId>
-            <artifactId>hibernate-types-52</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        
         <!-- Driver JDBC do MySQL -->
         <!--        <dependency>
             <groupId>mysql</groupId>

@@ -9,7 +9,7 @@ import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.model.SituacaoInscricao;
+import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.service.ConcursoService;
 import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;

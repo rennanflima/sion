@@ -6,7 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.model.StatusConcurso;
+import br.ufac.sion.model.enuns.StatusConcurso;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

@@ -5,15 +5,13 @@
  */
 package br.ufac.sion.model;
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import br.ufac.sion.model.enuns.SituacaoInscricao;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +24,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 /**
  *
@@ -36,10 +32,6 @@ import org.hibernate.annotations.TypeDef;
 @Entity
 @Table(name = "inscricao", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"candidato_id", "cargo_concurso_id", "numero"})})
-@TypeDef(
-    name = "pgsql_enum",
-    typeClass = PostgreSQLEnumType.class
-)
 public class Inscricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,8 +49,6 @@ public class Inscricao implements Serializable {
     private Insencao insencao;
     @Embedded
     private NecessidadeEspecial necessidadeEspecial;
-    @Enumerated(EnumType.STRING)
-    @Type( type = "pgsql_enum" )
     private SituacaoInscricao status = SituacaoInscricao.AGUARDANDO_PAGAMENTO;
     @Column(length = 100, name = "justificativa_status")
     private String justificativaStatus;

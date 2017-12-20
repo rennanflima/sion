@@ -1,5 +1,6 @@
-INSERT INTO grupo (descricao, nome) VALUES ('Administrador', 'Administradores');
-INSERT INTO usuario(nome, email, senha, login) VALUES ('Administrador', 'mrennan.lima@gmail.com','$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', 'admin');
+INSERT INTO grupo (id, descricao, nome) VALUES (1, 'Administrador', 'Administradores');
+INSERT INTO usuario(id, nome, email, senha, login) VALUES (1, 'Administrador', 'mrennan.lima@gmail.com','$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', 'admin');
+INSERT INTO usuario_grupo(usuario_id, grupo_id) VALUES (1, 1);
 
 INSERT INTO estado (id, nome, sigla) VALUES (1,'Acre','AC');
 INSERT INTO estado (id, nome, sigla) VALUES (2,'Alagoas','AL');

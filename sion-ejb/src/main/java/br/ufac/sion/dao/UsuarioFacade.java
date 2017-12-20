@@ -24,7 +24,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
     private EntityManager em;
 
     private GeraSenha geraSenha;
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -48,7 +48,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
         }
         return usuario;
     }
-    
+
     public void alterarSenha(String oldSenha, String senha, Usuario usuario) throws NegocioException {
         String temp;
         temp = new GeraSenha().ecripta(oldSenha);
@@ -60,4 +60,30 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
         }
     }
 
+    public Usuario findByLoginWithPermissoes(String login) {
+        Usuario usuario = null;
+        try {
+            usuario = em.createQuery("SELECT u FROM Usuario u JOIN FETCH u.permissoes p WHERE LOWER(u.login) = :login", Usuario.class)
+                    .setParameter("login", login.toLowerCase())
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nenhuma permissão econtrada com o login informado.");
+            return null;
+        }
+        return usuario;
+    }
+    
+    public Usuario findByLoginWithGrupo(String login) {
+        Usuario usuario = null;
+        try {
+            usuario = em.createQuery("SELECT u FROM Usuario u JOIN FETCH u.grupos g WHERE LOWER(u.login) = :login", Usuario.class)
+                    .setParameter("login", login.toLowerCase())
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nenhum grupo econtrado com o login informado.");
+            return null;
+        }
+        return usuario;
+    }
+    
 }

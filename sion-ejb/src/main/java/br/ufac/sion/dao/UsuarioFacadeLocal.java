@@ -28,5 +28,10 @@ public interface UsuarioFacadeLocal {
     public Usuario findByLogin(String login);
 
     public void alterarSenha(String oldSenha, String senha, Usuario usuario) throws NegocioException;
+    
+    public Usuario findByLoginWithPermissoes(String login);
+    
+    public Usuario findByLoginWithGrupo(String login);
+    
 
 }

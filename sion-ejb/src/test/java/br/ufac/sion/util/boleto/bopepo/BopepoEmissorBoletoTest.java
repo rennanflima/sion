@@ -5,7 +5,7 @@
  */
 package br.ufac.sion.util.boleto.bopepo;
 
-import br.ufac.sion.model.BancosSuportados;
+import br.ufac.sion.model.enuns.BancosSuportados;
 import br.ufac.sion.model.Boleto;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cargo;

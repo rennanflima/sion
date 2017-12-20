@@ -7,7 +7,7 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.ContaBancariaFacadeLocal;
 import br.ufac.sion.dao.EmpresaFacadeLocal;
-import br.ufac.sion.model.BancosSuportados;
+import br.ufac.sion.model.enuns.BancosSuportados;
 import br.ufac.sion.model.ContaBancaria;
 import br.ufac.sion.model.Empresa;
 import br.ufac.sion.util.jsf.FacesUtil;

@@ -8,7 +8,7 @@ package br.ufac.sion.controller;
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.model.SituacaoInscricao;
+import br.ufac.sion.model.enuns.SituacaoInscricao;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
