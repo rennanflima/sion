@@ -5,6 +5,7 @@
  */
 package br.ufac.sion.model;
 
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
@@ -38,6 +41,10 @@ import org.hibernate.validator.constraints.br.CPF;
  */
 @Entity
 @Table(name = "candidato")
+@TypeDef(
+    name = "pgsql_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 public class Candidato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,10 +65,13 @@ public class Candidato implements Serializable {
     @Column(unique = true, nullable = false)
     private String email;
     @Enumerated(EnumType.STRING)
+    @Type( type = "pgsql_enum" )
     private Escolaridade escolaridade;
     @Enumerated(EnumType.STRING)
+    @Type( type = "pgsql_enum" )
     private Sexo sexo = Sexo.MASCULINO;
     @Enumerated(EnumType.STRING)
+    @Type( type = "pgsql_enum" )
     private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
@@ -71,6 +81,7 @@ public class Candidato implements Serializable {
     @Column(unique = true, length = 14, nullable = false)
     private String cpf;
     @Enumerated(EnumType.STRING)
+    @Type( type = "pgsql_enum" )
     @Column(name = "braco_dominante")
     private BracoDominante bracoDominante = BracoDominante.DESTRO;
     @Embedded

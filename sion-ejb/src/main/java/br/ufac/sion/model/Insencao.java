@@ -5,17 +5,24 @@
  */
 package br.ufac.sion.model;
 
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 /**
  *
  * @author Rennan
  */
 @Embeddable
+@TypeDef(
+    name = "pgsql_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 public class Insencao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +35,7 @@ public class Insencao implements Serializable {
     private String motivoNegacao;
     @Enumerated(EnumType.STRING)
     @Column(name = "percentual_insencao")
+    @Type( type = "pgsql_enum" )
     private PercentualInsencao percentualInsencao;
 
     public boolean isRequerInsencao() {
