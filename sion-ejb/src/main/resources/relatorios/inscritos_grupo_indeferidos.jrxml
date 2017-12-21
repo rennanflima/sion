@@ -176,7 +176,7 @@
        CONCAT(cc.codigo,' - ',c.descricao) AS ficha_inscricao_cargo,
        l.nome AS ficha_inscricao_local,
        i.portador  AS ficha_inscricao_possui_deficiencia,
-       i.`status` AS ficha_inscricao_situacao,
+       i.status AS ficha_inscricao_situacao,
        conc.titulo AS concurso_nome
 FROM
     inscricao i,
@@ -191,7 +191,7 @@ WHERE
      cc.cargo_id = c.id AND
      cc.localidade_id = l.id AND
      cc.concurso_id = conc.id AND
-     i.`status` = 'AGUARDANDO_PAGAMENTO' AND
+     i.status = 'AGUARDANDO_PAGAMENTO' AND
      conc.id = $P{id_concurso}
 ORDER BY
       l.nome,

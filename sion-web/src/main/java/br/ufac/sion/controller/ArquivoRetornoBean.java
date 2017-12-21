@@ -11,12 +11,15 @@ import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.retorno.ArquivoRetornoBradescoService;
 import br.ufac.sion.service.retorno.ArquivoRetornoCaixaService;
 import br.ufac.sion.service.util.ArquivoRetornoDetalhe;
-import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.UploadedFile;
 
@@ -30,9 +33,13 @@ public class ArquivoRetornoBean {
 
     @EJB
     private ArquivoRetornoBradescoService arquivoRetornoBradescoService;
+
     @EJB
     private ArquivoRetornoCaixaService arquivoRetornoCaixaService;
 
+    @Inject  @Sion
+    HttpServletRequest request;
+    
     private ArquivoRetornoDetalhe arquivoRetornoDetalhe;
 
     private Concurso concurso;
@@ -81,7 +88,7 @@ public class ArquivoRetornoBean {
     }
 
     public void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
 

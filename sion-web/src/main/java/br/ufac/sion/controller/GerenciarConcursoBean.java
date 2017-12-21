@@ -11,8 +11,8 @@ import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.service.ConcursoService;
-import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +24,8 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.chart.Axis;
@@ -54,8 +56,13 @@ public class GerenciarConcursoBean implements Serializable {
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
 
+    @Inject  @Sion
     private HttpServletResponse response;
 
+    @Inject  @Sion
+    private HttpServletRequest request;
+    
+    @Inject
     private FacesContext facesContext;
 
     private LineChartModel model;
@@ -70,8 +77,8 @@ public class GerenciarConcursoBean implements Serializable {
 
     public GerenciarConcursoBean() {
         recuperaConcursoSessao();
-        this.response = FacesProducer.getHttpServletResponse();
-        this.facesContext = FacesProducer.getFacesContext();
+//        this.response = FacesProducer.getHttpServletResponse();
+//        this.facesContext = FacesProducer.getFacesContext();
     }
 
     public Concurso getConcurso() {
@@ -120,12 +127,14 @@ public class GerenciarConcursoBean implements Serializable {
     }
 
     public void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
+        System.out.println("Sessão (GerenciarConcursoBean): "+(session==null));
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
+        System.out.println("ID: "+this.concurso.getId());
     }
 
     public void removeConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = request.getSession();
         session.removeAttribute("concursoGerenciado");
     }
 

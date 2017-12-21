@@ -10,6 +10,7 @@ import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Usuario;
+import br.ufac.sion.security.UsuarioLogado;
 import br.ufac.sion.security.UsuarioSistema;
 import br.ufac.sion.service.FuncionarioService;
 import br.ufac.sion.util.jsf.FacesUtil;
@@ -18,8 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import javax.inject.Inject;
 
 /**
  *
@@ -38,6 +38,10 @@ public class TrocarSenhaBean implements Serializable {
     @EJB
     private FuncionarioService funcionarioService;
 
+    @Inject
+    @UsuarioLogado
+    private UsuarioSistema usuarioLogado;
+
     private Funcionario funcionario;
     private String login;
     private Integer mat;
@@ -47,8 +51,8 @@ public class TrocarSenhaBean implements Serializable {
 
     @PostConstruct
     public void inicializar() {
-        if (getUsuarioLogado() != null) {
-            this.usuario = usuarioFacade.findByLogin(getUsuarioLogado().getUsuario().getLogin());
+        if (usuarioLogado != null) {
+            this.usuario = usuarioFacade.findByLogin(usuarioLogado.getUsuario().getLogin());
         }
     }
 
@@ -110,17 +114,17 @@ public class TrocarSenhaBean implements Serializable {
         }
     }
 
-    private UsuarioSistema getUsuarioLogado() {
-        UsuarioSistema usuario = null;
-
-        UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-
-        if (auth != null && auth.getPrincipal() != null) {
-            usuario = (UsuarioSistema) auth.getPrincipal();
-        }
-
-        return usuario;
-    }
+//    private UsuarioSistema getUsuarioLogado() {
+//        UsuarioSistema usuario = null;
+//
+//        UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+//
+//        if (auth != null && auth.getPrincipal() != null) {
+//            usuario = (UsuarioSistema) auth.getPrincipal();
+//        }
+//
+//        return usuario;
+//    }
 
     public void limpar() {
         oldSenha = null;

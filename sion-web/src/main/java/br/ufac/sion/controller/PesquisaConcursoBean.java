@@ -7,14 +7,16 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
-import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -28,9 +30,12 @@ public class PesquisaConcursoBean implements Serializable {
     @EJB
     private ConcursoFacadeLocal concursoFacade;
 
+    @Inject    @Sion
+    private HttpServletRequest request;
+
     private List<Concurso> concursos;
 
-    private Concurso concursoSelecionadoParaExcluir;
+    private Concurso concursoSelecionado;
 
     @PostConstruct
     public void inicializar() {
@@ -49,18 +54,18 @@ public class PesquisaConcursoBean implements Serializable {
         this.concursos = concursos;
     }
 
-    public Concurso getConcursoSelecionadoParaExcluir() {
-        return concursoSelecionadoParaExcluir;
+    public Concurso getConcursoSelecionado() {
+        return concursoSelecionado;
     }
 
-    public void setConcursoSelecionadoParaExcluir(Concurso concursoSelecionadoParaExcluir) {
-        this.concursoSelecionadoParaExcluir = concursoSelecionadoParaExcluir;
+    public void setConcursoSelecionado(Concurso concursoSelecionado) {
+        this.concursoSelecionado = concursoSelecionado;
     }
 
     public void excluir() {
         try {
-            concursoFacade.remove(concursoSelecionadoParaExcluir);
-            FacesUtil.addSuccessMessage("O concurso '" + concursoSelecionadoParaExcluir.getDescricao() + "' foi excluído com sucesso.");
+            concursoFacade.remove(concursoSelecionado);
+            FacesUtil.addSuccessMessage("O concurso '" + concursoSelecionado.getDescricao() + "' foi excluído com sucesso.");
             inicializar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage(e.getMessage());
@@ -68,11 +73,18 @@ public class PesquisaConcursoBean implements Serializable {
     }
 
     private void limpar() {
-        concursoSelecionadoParaExcluir = new Concurso();
+        concursoSelecionado = new Concurso();
     }
-    
-    public void guardaConcursoSessao(Concurso concurso){
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
-        session.setAttribute("concursoGerenciado", concurso);
+
+    public String guardaConcursoSessao() {
+        if (concursoSelecionado != null) {
+            HttpSession session = request.getSession();
+            System.out.println("Sessão: "+session==null);
+            session.setAttribute("concursoGerenciado", concursoSelecionado);
+            System.out.println("valor atribuido na sessao");
+            return "/concursos/gerenciar/home";
+        }
+        FacesUtil.addErrorMessage("Ocorreu um erro ao selecionar o concurso!!");
+        return null;
     }
 }

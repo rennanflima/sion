@@ -176,7 +176,7 @@
        CONCAT(cc.codigo,' - ',c.descricao) AS ficha_inscricao_cargo,
        l.nome AS ficha_inscricao_local,
        i.portador  AS ficha_inscricao_possui_deficiencia,
-       i.`status` AS ficha_inscricao_situacao,
+       i.status AS ficha_inscricao_situacao,
        conc.titulo AS concurso_nome
 FROM
     inscricao i,
@@ -191,8 +191,8 @@ WHERE
      cc.cargo_id = c.id AND
      cc.localidade_id = l.id AND
      cc.concurso_id = conc.id AND
-     i.`status` = 'CONFIRMADA' AND i.`status` = 'SUB_JUDICE' AND
-     i.portador = 1 AND i.necessita_atendimento = 1 AND
+     i.status = 'CONFIRMADA' AND i.status = 'SUB_JUDICE' AND
+     i.portador = true AND i.necessita_atendimento = true AND
      conc.id = $P{id_concurso}
 ORDER BY
       l.nome,
@@ -205,9 +205,8 @@ ORDER BY
 	<field name="ficha_inscricao_data_cadastro" class="java.sql.Timestamp"/>
 	<field name="ficha_inscricao_cargo" class="java.lang.String"/>
 	<field name="ficha_inscricao_local" class="java.lang.String"/>
-	<field name="ficha_inscricao_possui_deficiencia" class="java.lang.String"/>
+	<field name="ficha_inscricao_possui_deficiencia" class="java.lang.Boolean"/>
 	<field name="ficha_inscricao_situacao" class="java.lang.String"/>
-	<field name="ficha_inscricao_necessita_especial" class="java.lang.String"/>
 	<field name="concurso_nome" class="java.lang.String"/>
 	<group name="local">
 		<groupExpression><![CDATA[$F{ficha_inscricao_local}]]></groupExpression>

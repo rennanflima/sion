@@ -175,56 +175,53 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     inscricao.`concordoEdital` AS inscricao_concordoEdital,
-     inscricao.`requer_insencao` AS inscricao_requer_insencao,
-     inscricao.`justificativa_status` AS inscricao_justificativa_status,
-     inscricao.`necessita_atendimento` AS inscricao_necessita_atendimento,
-     inscricao.`portador` AS inscricao_portador,
-     inscricao.`qual_atendimento` AS inscricao_qual_atendimento,
-     inscricao.`qual_pne` AS inscricao_qual_pne,
-     inscricao.`numero` AS inscricao_numero,
-     cargo_concurso.`codigo` AS cargo_concurso_codigo,
-     cargo.`descricao` AS cargo_descricao,
-     candidato.`braco_dominante` AS candidato_braco_dominante,
-     candidato.`cpf` AS candidato_cpf,
-     candidato.`data_nascimento` AS candidato_data_nascimento,
-     candidato.`email` AS candidato_email,
-     candidato.`end_bairro` AS candidato_end_bairro,
-     candidato.`end_cep` AS candidato_end_cep,
-     candidato.`end_complemento` AS candidato_end_complemento,
-     candidato.`end_logradouro` AS candidato_end_logradouro,
-     candidato.`end_numero` AS candidato_end_numero,
-     candidato.`nome_mae` AS candidato_nome_mae,
-     candidato.`nome` AS candidato_nome,
-     candidato.`nome_pai` AS candidato_nome_pai,
-     candidato.`permissao` AS candidato_permissao,
-     candidato.`dataExpedicao` AS candidato_dataExpedicao,
-     candidato.`numero` AS candidato_numero,
-     candidato.`orgaoExpedidor` AS candidato_orgaoExpedidor,
-     candidato.`sexo` AS candidato_sexo,
-     candidato.`escolaridade` AS candidato_escolaridade,
-     candidato.`estadoCivil` AS candidato_estadoCivil,
-     candidato.`rg_data_expedicao` AS candidato_rg_data_expedicao,
-     candidato.`rg_numero` AS candidato_rg_numero,
-     candidato.`rg_orgao_expedidor` AS candidato_rg_orgao_expedidor,
-     localidade.`nome` AS localidade_nome,
-     concurso.`titulo` AS concurso_titulo,
-     inscricao.`percentual_insencao` AS inscricao_percentual_insencao,
-     inscricao.`motivo_negacao` AS inscricao_motivo_negacao,
-     inscricao.`insencao_confirmada` AS inscricao_insencao_confirmada,
-     cidade.`nome` AS cidade_nome,
-     estado.`sigla` AS estado_sigla,
-     candidato.`id` AS candidato_id
+     inscricao.concordoEdital AS inscricao_concordoEdital,
+     inscricao.requer_insencao AS inscricao_requer_insencao,
+     inscricao.justificativa_status AS inscricao_justificativa_status,
+     inscricao.necessita_atendimento AS inscricao_necessita_atendimento,
+     inscricao.portador AS inscricao_portador,
+     inscricao.qual_atendimento AS inscricao_qual_atendimento,
+     inscricao.qual_pne AS inscricao_qual_pne,
+     inscricao.numero AS inscricao_numero,
+     cargo_concurso.codigo AS cargo_concurso_codigo,
+     cargo.descricao AS cargo_descricao,
+     candidato.braco_dominante AS candidato_braco_dominante,
+     candidato.cpf AS candidato_cpf,
+     candidato.data_nascimento AS candidato_data_nascimento,
+     candidato.email AS candidato_email,
+     candidato.end_bairro AS candidato_end_bairro,
+     candidato.end_cep AS candidato_end_cep,
+     candidato.end_complemento AS candidato_end_complemento,
+     candidato.end_logradouro AS candidato_end_logradouro,
+     candidato.end_numero AS candidato_end_numero,
+     candidato.nome_mae AS candidato_nome_mae,
+     candidato.nome AS candidato_nome,
+     candidato.nome_pai AS candidato_nome_pai,
+     candidato.permissao AS candidato_permissao,
+     candidato.sexo AS candidato_sexo,
+     candidato.escolaridade AS candidato_escolaridade,
+     candidato.estado_civil AS candidato_estadoCivil,
+     candidato.rg_data_expedicao AS candidato_rg_data_expedicao,
+     candidato.rg_numero AS candidato_rg_numero,
+     candidato.rg_orgao_expedidor AS candidato_rg_orgao_expedidor,
+     localidade.nome AS localidade_nome,
+     concurso.titulo AS concurso_titulo,
+     inscricao.percentual_insencao AS inscricao_percentual_insencao,
+     inscricao.motivo_negacao AS inscricao_motivo_negacao,
+     inscricao.insencao_confirmada AS inscricao_insencao_confirmada,
+     cidade.nome AS cidade_nome,
+     estado.sigla AS estado_sigla,
+     candidato.id AS candidato_id
 FROM
-     `cargo_concurso` cargo_concurso INNER JOIN `inscricao` inscricao ON cargo_concurso.`id` = inscricao.`cargo_concurso_id`
-     INNER JOIN `cargo` cargo ON cargo_concurso.`cargo_id` = cargo.`id`
-     INNER JOIN `concurso` concurso ON cargo_concurso.`concurso_id` = concurso.`id`
-     INNER JOIN `localidade` localidade ON cargo_concurso.`localidade_id` = localidade.`id`
-     INNER JOIN `candidato` candidato ON inscricao.`candidato_id` = candidato.`id`  AND inscricao.`id` = $P{inscricao_id}
-     INNER JOIN `cidade` cidade ON candidato.`cidade_id` = cidade.`id`
-     INNER JOIN `estado` estado ON cidade.`estado_id` = estado.`id`]]>
+     cargo_concurso cargo_concurso INNER JOIN inscricao inscricao ON cargo_concurso.id = inscricao.cargo_concurso_id
+     INNER JOIN cargo cargo ON cargo_concurso.cargo_id = cargo.id
+     INNER JOIN concurso concurso ON cargo_concurso.concurso_id = concurso.id
+     INNER JOIN localidade localidade ON cargo_concurso.localidade_id = localidade.id
+     INNER JOIN candidato candidato ON inscricao.candidato_id = candidato.id  AND inscricao.id = $P{inscricao_id}
+     INNER JOIN cidade cidade ON candidato.cidade_id = cidade.id
+     INNER JOIN estado estado ON cidade.estado_id = estado.id]]>
 	</queryString>
-	<field name="inscricao_concordoEdital" class="java.lang.Boolean"/>
+	<field name="inscricao_concordoedital" class="java.lang.Boolean"/>
 	<field name="inscricao_requer_insencao" class="java.lang.Boolean"/>
 	<field name="inscricao_justificativa_status" class="java.lang.String"/>
 	<field name="inscricao_necessita_atendimento" class="java.lang.Boolean"/>
@@ -247,12 +244,9 @@ FROM
 	<field name="candidato_nome" class="java.lang.String"/>
 	<field name="candidato_nome_pai" class="java.lang.String"/>
 	<field name="candidato_permissao" class="java.lang.String"/>
-	<field name="candidato_dataExpedicao" class="java.sql.Date"/>
-	<field name="candidato_numero" class="java.lang.String"/>
-	<field name="candidato_orgaoExpedidor" class="java.lang.String"/>
 	<field name="candidato_sexo" class="java.lang.String"/>
 	<field name="candidato_escolaridade" class="java.lang.String"/>
-	<field name="candidato_estadoCivil" class="java.lang.String"/>
+	<field name="candidato_estadocivil" class="java.lang.String"/>
 	<field name="candidato_rg_data_expedicao" class="java.sql.Date"/>
 	<field name="candidato_rg_numero" class="java.lang.String"/>
 	<field name="candidato_rg_orgao_expedidor" class="java.lang.String"/>

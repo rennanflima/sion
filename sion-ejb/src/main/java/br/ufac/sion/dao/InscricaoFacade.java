@@ -17,6 +17,7 @@ import br.ufac.sion.util.conversor.DateConversor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,11 @@ import java.util.TreeMap;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -244,7 +250,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     }
 
     private Criteria criarCriteriaParaFiltro(FiltroInscritos filtro) {
-        Session session = (Session) em;
+        Session session = em.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Inscricao.class);
 
         criteria.createAlias("cargoConcurso", "cc").add(Restrictions.eq("cc.concurso", filtro.getConcurso()));
@@ -303,7 +309,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     @Override
     public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status) {
 
-        Session session = (Session) em;
+        Session session = em.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Inscricao.class);
 
         criteria.add(Restrictions.eq("cargoConcurso", cargoConcurso));

@@ -51,21 +51,21 @@
                 </p:column>
 
                 <p:column style="width: 150px; text-align: center;">
-                    <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="/concursos/gerenciar/home"
-                                     actionListener="#{pesquisaConcursoBean.guardaConcursoSessao(concurso)}" >
+                    <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{pesquisaConcursoBean.guardaConcursoSessao()}">
+                        <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                     </p:commandButton>
                     <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >
                         <f:param name="concurso" value="#{concurso.id}"/>
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
                                      update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel}">
-                        <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionadoParaExcluir}" value="#{concurso}"/>
+                        <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
             <p:confirmDialog header="Exclusão de concurso" 
-                             message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionadoParaExcluir.titulo} ?"
+                             message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionado.titulo} ?"
                              widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                 <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
                                  process="@this" action="#{pesquisaConcursoBean.excluir()}"

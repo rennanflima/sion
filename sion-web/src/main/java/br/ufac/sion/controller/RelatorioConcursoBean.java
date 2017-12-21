@@ -7,11 +7,14 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.ConcursoService;
-import br.ufac.sion.util.jsf.FacesProducer;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,6 +27,9 @@ public class RelatorioConcursoBean implements Serializable {
 
     @EJB
     private ConcursoService concursoService;
+
+    @Inject  @Sion
+    private HttpServletRequest request;
 
     private Concurso concurso;
 
@@ -40,10 +46,8 @@ public class RelatorioConcursoBean implements Serializable {
     }
 
     public void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
-
-
 
 }

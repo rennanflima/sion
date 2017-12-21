@@ -1,7 +1,7 @@
 package br.ufac.sion.controller;
 
-import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,19 +21,22 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Inject
     private FacesContext facesContext;
 
+    @Inject  @Sion
     private HttpServletRequest request;
 
+    @Inject  @Sion
     private HttpServletResponse response;
 
     private String username;
 
     @PostConstruct
     public void init() {
-        facesContext = FacesProducer.getFacesContext();
-        request = FacesProducer.getHttpServletRequest();
-        response = FacesProducer.getHttpServletResponse();
+//        facesContext = FacesProducer.getFacesContext();
+//        request = FacesProducer.getHttpServletRequest();
+//        response = FacesProducer.getHttpServletResponse();
     }
     
     public void preRender() {    

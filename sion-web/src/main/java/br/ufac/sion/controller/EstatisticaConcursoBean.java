@@ -11,8 +11,8 @@ import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.ConcursoService;
-import br.ufac.sion.util.jsf.FacesProducer;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,11 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Context;
 
 /**
  *
@@ -45,8 +48,13 @@ public class EstatisticaConcursoBean implements Serializable {
     @EJB
     private ConcursoService concursoService;
     
+    @Inject  @Sion
     private HttpServletResponse response;
+    
+    @Inject  @Sion
+    private HttpServletRequest request;
 
+    @Inject
     private FacesContext facesContext;
     
     private Concurso concurso;
@@ -58,8 +66,8 @@ public class EstatisticaConcursoBean implements Serializable {
 
     public EstatisticaConcursoBean() {
         recuperaConcursoSessao();
-        this.response = FacesProducer.getHttpServletResponse();
-        this.facesContext = FacesProducer.getFacesContext();
+//        this.response = FacesProducer.getHttpServletResponse();
+//        this.facesContext = FacesProducer.getFacesContext();
     }
 
     @PostConstruct
@@ -87,7 +95,7 @@ public class EstatisticaConcursoBean implements Serializable {
     }
 
     public void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
 

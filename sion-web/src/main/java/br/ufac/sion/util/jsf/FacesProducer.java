@@ -16,31 +16,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rennan.lima
  */
-@SionInject
 public class FacesProducer {
-    
+
     @Produces
     @RequestScoped
-    public static FacesContext getFacesContext() {
+    public FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
 
     @Produces
     @RequestScoped
-    public static ExternalContext getExternalContext() {
+    public ExternalContext getExternalContext() {
         return getFacesContext().getExternalContext();
     }
 
-    @Produces
+    @Produces @Sion
     @RequestScoped
-    public static HttpServletRequest getHttpServletRequest() {
+    public HttpServletRequest getHttpServletRequest() {
         return ((HttpServletRequest) getExternalContext().getRequest());
     }
 
-    @Produces
+    @Produces @Sion
     @RequestScoped
-    public static HttpServletResponse getHttpServletResponse() {
+    public HttpServletResponse getHttpServletResponse() {
         return ((HttpServletResponse) getExternalContext().getResponse());
     }
-
 }

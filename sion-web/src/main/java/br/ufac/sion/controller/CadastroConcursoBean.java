@@ -188,18 +188,12 @@ public class CadastroConcursoBean implements Serializable {
     public List<CargoConcurso> getCargosConcurso() {
         if (this.concurso.getCargos() != null || cargosConcurso == null) {
             cargosConcurso = this.concurso.getCargos();
-            System.out.println(this.concurso.getCargos().size());
-        }
-        System.out.println("gtCargosConcurso");
-        for (CargoConcurso cc : cargosConcurso) {
-            System.out.println(cc.getCodigo() + " - " + cc.getCargo().getDescricao());
         }
         return cargosConcurso;
     }
 
     public void setCargosConcurso(List<CargoConcurso> cargosConcurso) {
         this.cargosConcurso = cargosConcurso;
-        System.out.println("stCargos_Concurso");
     }
 
     public List<CargoVaga> getCargosVaga() {
@@ -402,13 +396,13 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public String onFlowProcess(FlowEvent event){
-        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas")){
+        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas") || event.getNewStep().equals("confirmacaoConcurso")){
             onFlowProcessSave();
         }
         return event.getNewStep();
     }
 
-    public void onFlowProcessSave() {
+    private void onFlowProcessSave() {
         try {
             this.concurso = concursoService.salvar(concurso);
         } catch (NegocioException e) {

@@ -69,7 +69,7 @@ public class CadastroContaBean implements Serializable {
         try {
             this.contaBancariaBancariaFacade.save(contaBancaria);
             FacesUtil.addSuccessMessage("Conta salva com sucesso!");
-            inicializar();
+            limpar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao salvar a conta: " + e.getMessage());
         }

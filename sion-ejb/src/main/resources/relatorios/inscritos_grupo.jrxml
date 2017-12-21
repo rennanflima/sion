@@ -176,7 +176,7 @@
        CONCAT(cc.codigo,' - ',c.descricao) AS ficha_inscricao_cargo,
        l.nome AS ficha_inscricao_local,
        i.portador  AS ficha_inscricao_possui_deficiencia,
-       i.`status` AS ficha_inscricao_situacao,
+       i.status AS ficha_inscricao_situacao,
        conc.titulo AS concurso_nome
 FROM
     inscricao i,

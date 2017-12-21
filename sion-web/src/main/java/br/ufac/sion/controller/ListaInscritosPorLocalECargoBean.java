@@ -15,15 +15,18 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
 import br.ufac.sion.model.vo.FiltroInscritosRelatorio;
-import br.ufac.sion.util.jsf.FacesProducer;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -47,6 +50,9 @@ public class ListaInscritosPorLocalECargoBean implements Serializable {
 
     @EJB
     private NivelFacadeLocal nivelFacade;
+    
+    @Inject  @Sion
+    private HttpServletRequest request;
 
     private Concurso concurso;
     private Localidade local;
@@ -147,7 +153,7 @@ public class ListaInscritosPorLocalECargoBean implements Serializable {
     }
 
     private void recuperaConcursoSessao() {
-        HttpSession session = FacesProducer.getHttpServletRequest().getSession();
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
         this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
     }
 
