@@ -1,44 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    
-    <h:head>
-        <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
-        <title>Login</title>
-        <h:outputStylesheet library="css" name="sistema.css" />
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template2.xhtml">
+    <ui:param name="bodyClass" value="login-body"/>
+
+    <ui:define name="content">
         <f:metadata>
             <f:viewParam name="dummy" />
             <f:event listener="#{loginBean.preRender()}" type="preRenderView" />
         </f:metadata>
 
-        <div id="login-dialog">
-            <h1>Login</h1>
-
+        <div class="card login-panel ui-fluid">
             <h:form id="frm" prependId="false">
-
-                <p:messages id="messages" autoUpdate="true" closable="true" />
-
-                <h:panelGrid columns="2" styleClass="grid-login">
-                    <p:outputLabel value="Usuário" />
-                    <p:inputText size="30" id="username" value="#{loginBean.username}" />
-
-                    <p:outputLabel value="Senha" />
-                    <p:password size="30" id="password" />
-
-                    <p:spacer />
-                    <p:commandButton value="Login" action="#{loginBean.login()}" ajax="false" />
-                </h:panelGrid>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:graphicImage value="#{resource['ultima-layout:images/logo-ultima.svg']}"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:messages id="messages" autoUpdate="true" closable="true" />
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:inputText size="30" id="username" value="#{loginBean.username}" />
+                            <label>Usuário</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:password id="password" />
+                            <label>Senha</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:commandButton value="Entrar" action="#{loginBean.login()}" ajax="false" icon="ui-icon-person"/>
+                        <p:button value="Esqueci a senha" outcome="/recuperaSenha" icon="ui-icon-help" styleClass="secondary"/>
+                    </div>
+                </div>
             </h:form>
-            <div style="float: right">
-                <p:link value="Esqueci a senha" outcome="/recuperaSenha" />
-            </div>
         </div>
-    </h:body>
-</html>
 
+        <div class="login-footer">Sion - Sistema de Inscrição Online</div>
+    </ui:define>
+</ui:composition>

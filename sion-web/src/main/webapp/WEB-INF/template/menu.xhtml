@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pu="http://primefaces.org/ultima">
+    <h:form id="menuform">
+        <div class="layout-menu ">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <h:panelGroup>
+                        <div class="profile">
+                            <div class="profile-image"/>
+                            <a id="profile-options" href="#">
+                                <span class="profile-name">#{seguranca.nomeUsuario}</span>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            </a>
+                        </div>
+
+                        <ul id="profile-menu" class="ultima-menu">
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">person</i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">security</i>
+                                    <span>Privacy</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">settings_applications</i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <p:link href="/logout" value="Sair">
+                                    <i class="material-icons"></i>
+                                </p:link>
+<!--                                <a href="#" class="ripplelink">
+                                    <i class="material-icons"></i>
+                                    <span>Logout</span>
+                                </a>-->
+                            </li>
+                        </ul>
+                    </h:panelGroup>
+
+                    <pu:menu widgetVar="me">
+                        <p:menuitem id="um_dashboards" outcome="/dashboard.xhtml" icon="material-icons " value="Dashboard"/>
+
+                        <p:submenu id="cadastros" label="Cadastros" icon="material-icons list">
+                            <p:menuitem id="cadLocalidade" value="Localidade" icon="material-icons input" outcome="/localidades/pesquisaLocalidades"/>
+                            <p:menuitem id="cadTipo" value="Tipo de vaga" icon="material-icons input" outcome="/vagas/pesquisaVagas"/>
+                            <p:menuitem id="cadNivel" value="Nível" icon="material-icons input" outcome="/niveis/pesquisaNiveis"/>
+                            <p:menuitem id="cadCargo" value="Cargo" icon="material-icons input" outcome="/cargos/pesquisaCargos"/>
+                            <p:menuitem id="idSetor" icon="material-icons input" value="Setor" outcome="/setores/pesquisaSetores"/>
+                        </p:submenu>
+                        <p:menuitem value="Concurso" outcome="/concursos/pesquisaConcursos" />
+                        <p:submenu label="Configurações" icon="material-icons settings">
+                            <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
+                            <p:menuitem value="Contas Bancárias" outcome="/contas/pesquisaContas"/>
+                            
+                        </p:submenu>
+                        <p:submenu id="seguranca" label="Segurança" icon="material-icons security">
+                            <p:menuitem id="secPermissao" value="Permissões" outcome="/seguranca/permissao/pesquisaPermissoes"/>
+                            <p:menuitem id="secGrupos" value="Grupos" outcome="/seguranca/grupo/pesquisaGrupos"/>
+                            <p:menuitem id="secUsuario" value="Usuários" outcome="/funcionarios/pesquisaFuncionarios"/>
+                        </p:submenu>
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

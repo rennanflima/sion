@@ -13,20 +13,33 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+    
+    <!-- Session config, welcome files, error pages and mime types. -->
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+    
     <welcome-file-list>
-        <welcome-file>home.xhtml</welcome-file>
+        <welcome-file>dashboard.xhtml</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <!-- ultima-blue/ultima-blue-grey/ultima-brown/ultima-cyan/
+        ultima-dark-blue/ultima-dark-green/ultima-green/ultima-grey/
+        ultima-indigo/ultima-purple-amber/ultima-purple-cyan/ultima-teal -->
+        <!--<param-value>ultima-indigo</param-value>-->
+        <param-value>ultima-blue</param-value>
     </context-param>    
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
     <filter>
@@ -37,14 +50,46 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-    <ejb-local-ref>
-        <ejb-ref-name>UsuarioFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>br.ufac.sion.dao.UsuarioFacadeLocal</local>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>GrupoFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>br.ufac.sion.dao.GrupoFacadeLocal</local>
-    </ejb-local-ref>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.xhtml</location>
+    </error-page>
+    
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>eot?#iefix</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <!--
+        Not all application servers are aware of new SVG mime type,
+        so we define it here to be sure.
+    -->
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>svg#fontawesomeregular</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>svg#Roboto</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/font-sfnt</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/font-woff2</mime-type>
+    </mime-mapping>
 </web-app>
