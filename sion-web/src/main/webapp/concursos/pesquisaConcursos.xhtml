@@ -1,79 +1,85 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+<ui:composition template="/WEB-INF/template/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa Concursos</ui:define>
+    <ui:define name="title">Pesquisa Concursos</ui:define>
 
-    <ui:define name="corpo">
-        <h:form id="frmPesquisaConcurso">
-            <h1>Pesquisa Concursos</h1>
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                    <h:form id="frmPesquisaConcurso">
+                        <h1>Pesquisa Concursos</h1>
 
-            <p:messages autoUpdate="true" closable="true" />
+                        <p:messages autoUpdate="true" closable="true" />
 
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:commandButton value="Pesquisar" />
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Novo" outcome="cadastroConcurso"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+                        <p:toolbar style="margin-top: 20px">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Pesquisar" />
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:button value="Novo" outcome="cadastroConcurso"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
 
-            <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoBean.concursos}" rowIndexVar="linha"
-                         style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
-                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                        <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoBean.concursos}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20" reflow="true"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                <p:column headerText="#" style="text-align: center; width: 20px;">
-                    <h:outputText value="#{linha + 1}"/>
-                </p:column>
+                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                                <h:outputText value="#{linha + 1}"/>
+                            </p:column>
 
-                <p:column headerText="Título">
-                    <h:outputText value="#{concurso.titulo}"/>
-                </p:column>
+                            <p:column headerText="Título">
+                                <h:outputText value="#{concurso.titulo}"/>
+                            </p:column>
 
-                <p:column headerText="Período de Inscrição" style="text-align: center; width: 300px;">
-                    <h:outputText value="#{concurso.dataInicioInscricao}">
-                        <f:converter converterId="localDateTimeConversor"/>
-                    </h:outputText>
-                    -
-                    <h:outputText value="#{concurso.dataTerminoIncricao}">
-                        <f:converter converterId="localDateTimeConversor"/>
-                    </h:outputText>
-                </p:column>
+                            <p:column headerText="Período de Inscrição" style="text-align: center; width: 300px;">
+                                <h:outputText value="#{concurso.dataInicioInscricao}">
+                                    <f:converter converterId="localDateTimeConversor"/>
+                                </h:outputText>
+                                -
+                                <h:outputText value="#{concurso.dataTerminoIncricao}">
+                                    <f:converter converterId="localDateTimeConversor"/>
+                                </h:outputText>
+                            </p:column>
 
-                <p:column headerText="Situação" style="width: 100px; text-align: center;">
-                    <h:outputText value="#{concurso.status.descricao}"/>
-                </p:column>
+                            <p:column headerText="Situação" style="width: 100px; text-align: center;">
+                                <h:outputText value="#{concurso.status.descricao}"/>
+                            </p:column>
 
-                <p:column style="width: 150px; text-align: center;">
-                    <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{pesquisaConcursoBean.guardaConcursoSessao()}">
-                        <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
-                    </p:commandButton>
-                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >
-                        <f:param name="concurso" value="#{concurso.id}"/>
-                    </p:button>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                     update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel}">
-                        <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
+                            <p:column style="width: 150px; text-align: center;">
+                                <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{pesquisaConcursoBean.guardaConcursoSessao()}">
+                                    <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
+                                </p:commandButton>
+                                <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >
+                                    <f:param name="concurso" value="#{concurso.id}"/>
+                                </p:button>
+                                <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                                 update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel}">
+                                    <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
 
-            <p:confirmDialog header="Exclusão de concurso" 
-                             message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionado.titulo} ?"
-                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
-                                 process="@this" action="#{pesquisaConcursoBean.excluir()}"
-                                 update=":frmPesquisaConcurso:concursosTable" />
-                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide();
-                        return false;" />
+                        <p:confirmDialog header="Exclusão de concurso" 
+                                         message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionado.titulo} ?"
+                                         widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                            <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                             process="@this" action="#{pesquisaConcursoBean.excluir()}"
+                                             update=":frmPesquisaConcurso:concursosTable" />
+                            <p:button value="Não" onclick="PF('confirmacaoExclusao').hide();
+                                    return false;" />
 
-            </p:confirmDialog>
-        </h:form>
+                        </p:confirmDialog>
+                    </h:form>
+                </div>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

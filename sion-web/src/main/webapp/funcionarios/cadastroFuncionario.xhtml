@@ -1,94 +1,99 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+<ui:composition template="/WEB-INF/template/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">#{cadastroFuncionarioBean.editando ? 'Edição de usuário' : 'Novo usuario'}</ui:define>
+    <ui:define name="title">#{cadastroFuncionarioBean.editando ? 'Edição de usuário' : 'Novo usuario'}</ui:define>
 
-    <ui:define name="corpo">
+    <ui:define name="content">
         <f:metadata>
             <f:viewParam name="funcionario" value="#{cadastroFuncionarioBean.funcionario}" />
             <f:event listener="#{cadastroFuncionarioBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                    <h:form>
+                        <h1>#{cadastroFuncionarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h1>
 
-        <h:form>
-            <h1>#{cadastroFuncionarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h1>
+                        <p:messages autoUpdate="true" closable="true" />
 
-            <p:messages autoUpdate="true" closable="true" />
+                        <p:toolbar style="margin-top: 20px">
+                            <p:toolbarGroup>
+                                <p:button value="Novo" outcome="cadastroFuncionario"/>
+                                <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroFuncionarioBean.salvar()}" update="@form"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:button value="Pesquisa" outcome="pesquisaFuncionarios"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
 
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:button value="Novo" outcome="cadastroFuncionario"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroFuncionarioBean.salvar()}" update="@form"/>
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="pesquisaFuncionarios"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+                        <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
+                                     columnClasses="rotulo, campo">
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
+                            <p:outputLabel for="mat" value="Matrícula: "/>
+                            <p:inputText id="mat" required="true" value="#{cadastroFuncionarioBean.funcionario.matricula}" label="Matrícula" size="10"
+                                         onkeypress="return SomenteNumero(event)" requiredMessage="O campo 'Matrícula' é obrigatório"
+                                         converterMessage="Digite apenas número na Matrícula!" validatorMessage="O campo 'Matrícula' deve conter no mínimo dois digitos">
+                                <f:validateLength minimum="2" /> 
+                            </p:inputText>
 
-                <p:outputLabel for="mat" value="Matrícula: "/>
-                <p:inputText id="mat" required="true" value="#{cadastroFuncionarioBean.funcionario.matricula}" label="Matrícula" size="10"
-                             onkeypress="return SomenteNumero(event)" requiredMessage="O campo 'Matrícula' é obrigatório"
-                             converterMessage="Digite apenas número na Matrícula!" validatorMessage="O campo 'Matrícula' deve conter no mínimo dois digitos">
-                    <f:validateLength minimum="2" /> 
-                </p:inputText>
+                            <p:outputLabel for="nome" value="Nome: "/>
+                            <p:inputText id="nome" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.nome}" label="Nome" size="60" maxlength="60"
+                                         requiredMessage="O campo 'Nome' é obrigatório"
+                                         validatorMessage="É permitido apenas letras no campo 'Nome'">
+                                <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
+                            </p:inputText>
 
-                <p:outputLabel for="nome" value="Nome: "/>
-                <p:inputText id="nome" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.nome}" label="Nome" size="60" maxlength="60"
-                             requiredMessage="O campo 'Nome' é obrigatório"
-                             validatorMessage="É permitido apenas letras no campo 'Nome'">
-                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
-                </p:inputText>
+                            <p:outputLabel for="email" value="E-mail: "/>
+                            <p:inputText id="email" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.email}" label="E-mail" size="50" maxlength="60"
 
-                <p:outputLabel for="email" value="E-mail: "/>
-                <p:inputText id="email" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.email}" label="E-mail" size="50" maxlength="60"
-                             
-                             requiredMessage="O campo 'E-mail' é obrigatório">
-                    <!--
-                    validatorMessage="O email digitado não é válido!" 
-                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>-->
-                </p:inputText>
+                                         requiredMessage="O campo 'E-mail' é obrigatório">
+                                <!--
+                                validatorMessage="O email digitado não é válido!" 
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>-->
+                            </p:inputText>
 
-                <p:outputLabel for="setor" value="Setor: "/>
-                <p:selectOneMenu id="setor" value="#{cadastroFuncionarioBean.setor}" >
-                    <f:selectItem itemLabel="Selecione um Setor..." itemValue="" /> 
-                    <f:selectItems value="#{cadastroFuncionarioBean.setores}" var="s"
-                                   itemLabel="#{s.sigla}" itemValue="#{s}" />
-                    <p:ajax update="cargo"/>
-                </p:selectOneMenu>
+                            <p:outputLabel for="setor" value="Setor: "/>
+                            <p:selectOneMenu id="setor" value="#{cadastroFuncionarioBean.setor}" >
+                                <f:selectItem itemLabel="Selecione um Setor..." itemValue="" /> 
+                                <f:selectItems value="#{cadastroFuncionarioBean.setores}" var="s"
+                                               itemLabel="#{s.sigla}" itemValue="#{s}" />
+                                <p:ajax update="cargo"/>
+                            </p:selectOneMenu>
 
-                <p:outputLabel for="cargo" value="Cargo: "/>
-                <p:selectOneMenu id="cargo" value="#{cadastroFuncionarioBean.funcionario.cargo}" >
-                    <f:selectItem itemLabel="Selecione um Cargo..." itemValue="" /> 
-                    <f:selectItems value="#{cadastroFuncionarioBean.setor.cargos }" var="c" 
-                                   itemLabel="#{c.descricao}" itemValue="#{c}" />
-                </p:selectOneMenu>
+                            <p:outputLabel for="cargo" value="Cargo: "/>
+                            <p:selectOneMenu id="cargo" value="#{cadastroFuncionarioBean.funcionario.cargo}" >
+                                <f:selectItem itemLabel="Selecione um Cargo..." itemValue="" /> 
+                                <f:selectItems value="#{cadastroFuncionarioBean.setor.cargos }" var="c" 
+                                               itemLabel="#{c.descricao}" itemValue="#{c}" />
+                            </p:selectOneMenu>
 
-                <p:outputLabel for="login" value="Usuário: "/>
-                <p:inputText id="login" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.login}" 
-                             disabled="#{(cadastroFuncionarioBean.editando) ? true : false}" label="Login" size="30" maxlength="20"
-                             requiredMessage="O campo 'Login' é obrigatório">
-                </p:inputText>
+                            <p:outputLabel for="login" value="Usuário: "/>
+                            <p:inputText id="login" required="true" value="#{cadastroFuncionarioBean.funcionario.usuario.login}" 
+                                         disabled="#{(cadastroFuncionarioBean.editando) ? true : false}" label="Login" size="30" maxlength="20"
+                                         requiredMessage="O campo 'Login' é obrigatório">
+                            </p:inputText>
 
-                <p:outputLabel for="autorizacao" value="Grupo: "/>
-                <p:selectManyCheckbox id="autorizacao" value="#{cadastroFuncionarioBean.funcionario.usuario.grupos}" label="Grupo" converter="grupoConverter">
-                    <f:attribute name="collectionType" value="java.util.ArrayList"/>
-                    <f:selectItems value="#{cadastroFuncionarioBean.grupos}" var="grupo"
-                                   itemValue="#{grupo}" itemLabel="#{grupo.descricao}"/>
-                </p:selectManyCheckbox>
-                
-                <p:outputLabel value="Permissões:" for="permissoes"/>
-                <p:pickList id="permissoes" value="#{cadastroFuncionarioBean.dualListModelPermissoes}" var="permissao" 
-                            itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
-            </p:panelGrid>
-        </h:form>
+                            <p:outputLabel for="autorizacao" value="Grupo: "/>
+                            <p:selectManyCheckbox id="autorizacao" value="#{cadastroFuncionarioBean.funcionario.usuario.grupos}" label="Grupo" converter="grupoConverter">
+                                <f:attribute name="collectionType" value="java.util.ArrayList"/>
+                                <f:selectItems value="#{cadastroFuncionarioBean.grupos}" var="grupo"
+                                               itemValue="#{grupo}" itemLabel="#{grupo.descricao}"/>
+                            </p:selectManyCheckbox>
+
+                            <p:outputLabel value="Permissões:" for="permissoes"/>
+                            <p:pickList id="permissoes" value="#{cadastroFuncionarioBean.dualListModelPermissoes}" var="permissao" 
+                                        itemLabel="#{permissao.nome}" itemValue="#{permissao}" />
+                        </p:panelGrid>
+                    </h:form>
+                </div>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

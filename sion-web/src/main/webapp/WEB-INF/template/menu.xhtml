@@ -3,14 +3,17 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pu="http://primefaces.org/ultima">
+                xmlns:pu="http://primefaces.org/ultima"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:form id="menuform">
         <div class="layout-menu ">
             <div class="nano">
                 <div class="nano-content menu-scroll-content">
                     <h:panelGroup>
                         <div class="profile">
-                            <div class="profile-image"/>
+                            <div style="width: 60px;height: 60px;margin: 0 auto 5px auto; background-size: 60px 60px;">
+                                <i class="material-icons" style="font-size: 65px;">account_circle</i>
+                            </div>
                             <a id="profile-options" href="#">
                                 <span class="profile-name">#{seguranca.nomeUsuario}</span>
                                 <i class="material-icons">keyboard_arrow_down</i>
@@ -25,25 +28,22 @@
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href="#" class="ripplelink">
+                                <a jsf:outcome="/trocarSenha.xhtml" class="ripplelink">
                                     <i class="material-icons">security</i>
-                                    <span>Privacy</span>
+                                    <span>Trocar Senha</span>
                                 </a>
                             </li>
                             <li role="menuitem">
                                 <a href="#" class="ripplelink">
                                     <i class="material-icons">settings_applications</i>
-                                    <span>Settings</span>
+                                    <span>Configurações</span>
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <p:link href="/logout" value="Sair">
-                                    <i class="material-icons"></i>
-                                </p:link>
-<!--                                <a href="#" class="ripplelink">
-                                    <i class="material-icons"></i>
+                                <a href="/sion-web/logout" class="ripplelink">
+                                    <i class="material-icons">power_settings_new</i>
                                     <span>Logout</span>
-                                </a>-->
+                                </a>
                             </li>
                         </ul>
                     </h:panelGroup>
@@ -52,22 +52,22 @@
                         <p:menuitem id="um_dashboards" outcome="/dashboard.xhtml" icon="material-icons " value="Dashboard"/>
 
                         <p:submenu id="cadastros" label="Cadastros" icon="material-icons list">
-                            <p:menuitem id="cadLocalidade" value="Localidade" icon="material-icons input" outcome="/localidades/pesquisaLocalidades"/>
-                            <p:menuitem id="cadTipo" value="Tipo de vaga" icon="material-icons input" outcome="/vagas/pesquisaVagas"/>
-                            <p:menuitem id="cadNivel" value="Nível" icon="material-icons input" outcome="/niveis/pesquisaNiveis"/>
-                            <p:menuitem id="cadCargo" value="Cargo" icon="material-icons input" outcome="/cargos/pesquisaCargos"/>
+                            <p:menuitem id="cadLocalidade" value="Localidade" icon="material-icons location_on" outcome="/localidades/pesquisaLocalidades"/>
+                            <p:menuitem id="cadTipo" value="Tipo de vaga" icon="material-icons description" outcome="/vagas/pesquisaVagas"/>
+                            <p:menuitem id="cadNivel" value="Nível" icon="material-icons label" outcome="/niveis/pesquisaNiveis"/>
+                            <p:menuitem id="cadCargo" value="Cargo" icon="material-icons format_list_bulleted" outcome="/cargos/pesquisaCargos"/>
                             <p:menuitem id="idSetor" icon="material-icons input" value="Setor" outcome="/setores/pesquisaSetores"/>
                         </p:submenu>
-                        <p:menuitem value="Concurso" outcome="/concursos/pesquisaConcursos" />
+                        <p:menuitem value="Concurso" icon="material-icons content_paste" outcome="/concursos/pesquisaConcursos" />
                         <p:submenu label="Configurações" icon="material-icons settings">
-                            <p:menuitem value="Empresa" outcome="/empresas/pesquisaEmpresas"/>
-                            <p:menuitem value="Contas Bancárias" outcome="/contas/pesquisaContas"/>
+                            <p:menuitem value="Empresa" icon="material-icons business" outcome="/empresas/pesquisaEmpresas"/>
+                            <p:menuitem value="Contas Bancárias" icon="material-icons account_balance_wallet" outcome="/contas/pesquisaContas"/>
                             
                         </p:submenu>
                         <p:submenu id="seguranca" label="Segurança" icon="material-icons security">
-                            <p:menuitem id="secPermissao" value="Permissões" outcome="/seguranca/permissao/pesquisaPermissoes"/>
-                            <p:menuitem id="secGrupos" value="Grupos" outcome="/seguranca/grupo/pesquisaGrupos"/>
-                            <p:menuitem id="secUsuario" value="Usuários" outcome="/funcionarios/pesquisaFuncionarios"/>
+                            <p:menuitem id="secPermissao" value="Permissões" icon="material-icons lock" outcome="/seguranca/permissao/pesquisaPermissoes"/>
+                            <p:menuitem id="secGrupos" value="Grupos" icon="material-icons group_add" outcome="/seguranca/grupo/pesquisaGrupos"/>
+                            <p:menuitem id="secUsuario" value="Usuários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
                         </p:submenu>
                     </pu:menu>
                 </div>

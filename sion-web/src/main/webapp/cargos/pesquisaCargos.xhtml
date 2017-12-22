@@ -1,83 +1,103 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+<ui:composition template="/WEB-INF/template/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa Cargos</ui:define>
+    <ui:define name="title">Pesquisa Cargos</ui:define>
 
-    <ui:define name="corpo">
+    <ui:define name="content">
         <h:form id="frmPesquisa">
-            <h1>Pesquisa Cargos</h1>
-            
-            <p:messages autoUpdate="true" closable="true" />
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
 
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:commandButton value="Pesquisar" action="#{pesquisaCargoBean.pesquisar()}" update="@form" />
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Novo" outcome="cadastroCargo"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+                            <h1>Pesquisa Cargos</h1>
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
-                
-                <p:outputLabel value="Descrição" for="descricao"/>
-                <p:inputText id="descricao" size="60" value="#{pesquisaCargoBean.filtro.descricao}"/>
-                
-                <p:outputLabel for="niveis" value="Nível"/>
-                <p:selectOneMenu id="niveis" value="#{pesquisaCargoBean.filtro.nivel}">
-                    <f:selectItem itemLabel="Selecione um nível..."/>
-                    <f:selectItems value="#{pesquisaCargoBean.niveis}" var="nivel"
-                                   itemValue="#{nivel}" itemLabel="#{nivel.descricao}"/>
-                </p:selectOneMenu>
-            </p:panelGrid>
-            
-            <p:dataTable id="cargosTable" var="cargo" value="#{pesquisaCargoBean.cargos}" rowIndexVar="linha"
-                         style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20"
-                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-                
-                <p:column headerText="#" style="text-align: center; width: 20px;">
-                    <h:outputText value="#{linha + 1}"/>
-                </p:column>
-                
-                <p:column headerText="Descrição">
-                    <h:outputText value="#{cargo.descricao}"/>
-                </p:column>
-                
-                <p:column headerText="Carga Horária" style="text-align: center; width: 150px;">
-                    <h:outputText value="#{cargo.cargaHoraria}h"/>
-                </p:column>
-                
-                <p:column headerText="Nível" style="width: 250px;">
-                    <h:outputText value="#{cargo.nivel.descricao}"/>
-                </p:column>
-                
-                <p:column style="width: 100px; text-align: center;">
-                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroCargo">
-                        <f:param name="cargo" value="#{cargo.id}"/>
-                    </p:button>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
-                        <f:setPropertyActionListener target="#{pesquisaCargoBean.cargoSelecionadoParaExcluir}" value="#{cargo}"/>
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
+                            <p:messages autoUpdate="true" closable="true" />
 
-            <p:confirmDialog header="Exclusão de produto" 
-                             message="Tem certeza que deseja excluir o cargo '#{pesquisaCargoBean.cargoSelecionadoParaExcluir.descricao}' ?"
-                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
-                                 process="@this" action="#{pesquisaCargoBean.excluir()}"
-                                 update=":frmPesquisa:cargosTable" />
-                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
-                
-            </p:confirmDialog>
+                            <p:toolbar style="margin-top: 20px">
+                                <f:facet name="left">
+                                    <p:commandButton value="Pesquisar" action="#{pesquisaCargoBean.pesquisar()}" update="@form" icon="ui-icon-search"/>
+                                </f:facet>
+                                <f:facet name="right">
+                                    <p:button value="Novo" outcome="cadastroCargo" icon="ui-icon-plus"/>
+                                </f:facet>
+                            </p:toolbar>
+
+
+                            <p:panelGrid id="painel" columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
+
+                                <p:outputLabel value="Descrição" for="descricao"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="descricao" value="#{pesquisaCargoBean.filtro.descricao}"/>
+                                    <label>Descrição</label>
+                                </h:panelGroup>
+
+                                <p:outputLabel for="niveis" value="Nível"/>
+                                <p:selectOneMenu id="niveis" value="#{pesquisaCargoBean.filtro.nivel}">
+                                    <f:selectItem itemLabel="Selecione um nível..."/>
+                                    <f:selectItems value="#{pesquisaCargoBean.niveis}" var="nivel"
+                                                   itemValue="#{nivel}" itemLabel="#{nivel.descricao}"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </div>
+
+
+                        <div class="card">
+                            <p:dataTable id="cargosTable" var="cargo" value="#{pesquisaCargoBean.cargos}" rowIndexVar="linha"
+                                         style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20" reflow="true"
+                                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                                <p:column headerText="#" style="text-align: center; width: 20px;">
+                                    <h:outputText value="#{linha + 1}"/>
+                                </p:column>
+
+                                <p:column headerText="Descrição">
+                                    <h:outputText value="#{cargo.descricao}"/>
+                                </p:column>
+
+                                <p:column headerText="Carga Horária" style="text-align: center; width: 150px;">
+                                    <h:outputText value="#{cargo.cargaHoraria}h"/>
+                                </p:column>
+
+                                <p:column headerText="Nível" style="width: 250px;">
+                                    <h:outputText value="#{cargo.nivel.descricao}"/>
+                                </p:column>
+
+                                <p:column style="width: 100px; text-align: center;">
+                                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroCargo">
+                                        <f:param name="cargo" value="#{cargo.id}"/>
+                                    </p:button>
+                                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
+                                        <f:setPropertyActionListener target="#{pesquisaCargoBean.cargoSelecionadoParaExcluir}" value="#{cargo}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:confirmDialog header="Exclusão de produto" 
+                                             message="Tem certeza que deseja excluir o cargo '#{pesquisaCargoBean.cargoSelecionadoParaExcluir.descricao}' ?"
+                                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                                 process="@this" action="#{pesquisaCargoBean.excluir()}"
+                                                 update=":frmPesquisa:cargosTable" />
+                                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+                            </p:confirmDialog>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>

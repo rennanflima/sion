@@ -1,16 +1,22 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template2.xhtml">
     
-	<ui:define name="titulo">Acesso negado</ui:define>
-	
-	<ui:define name="corpo">
-		<h1>Você não possui permissão para acessar esta página.</h1>
-	</ui:define>
-	
+    <ui:param name="bodyClass" value="exception-body accessdenied-page"/>
+
+    <ui:define name="content">
+        <div class="exception-type">
+            <p:graphicImage value="#{resource['ultima-layout:images/401.svg']}"/>
+        </div>
+
+        <div class="card exception-panel">
+            <i class="material-icons">security</i>
+            <h1>Acesso Negado</h1>
+            <div class="exception-detail">Você não está autorizado a acessar este recurso.</div>
+            <p:button value="Homepage" outcome="/dashboard.xhtml" styleClass="secondary"/>
+        </div>
+    </ui:define>
 </ui:composition>

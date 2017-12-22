@@ -1,67 +1,88 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+<ui:composition template="/WEB-INF/template/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</ui:define>
+    <ui:define name="title">#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</ui:define>
 
-    <ui:define name="corpo">
+    <ui:define name="content">
         <f:metadata>
             <f:viewParam name="setor" value="#{cadastroSetorBean.setor}" />
             <f:event listener="#{cadastroSetorBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
         <h:form>
-            <h1>#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</h1>
+            <!--<div class="ui-fluid">-->
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
 
-            <p:messages autoUpdate="true" closable="true" />
+                        <h1>#{cadastroSetorBean.editando ? 'Edição de setor' : 'Novo setor'}</h1>
 
-            <p:toolbar style="margin-top: 20px">
-                <p:toolbarGroup>
-                    <p:button value="Novo" outcome="cadastroSetor"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroSetorBean.salvar()}" update="@form"/>
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="pesquisaSetores"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+                        <p:messages autoUpdate="true" closable="true" />
 
-            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                         columnClasses="rotulo, campo">
+                        <p:toolbar style="margin-top: 20px">
+                            <f:facet name="left">
+                                <p:button value="Novo" outcome="cadastroSetor" icon="ui-icon-plus" />
+                                <p:commandButton value="Salvar" id="botaoSalvar" icon="ui-icon-save" action="#{cadastroSetorBean.salvar()}" update="@form"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Pesquisa" outcome="pesquisaSetores" icon="ui-icon-search"/>
+                            </f:facet>
+                        </p:toolbar>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card">
+                            <p:panelGrid id="painel" columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
 
-                <p:outputLabel for="nome" value="Nome: "/>
-                <p:inputText id="nome" required="true" value="#{cadastroSetorBean.setor.nome}" label="Nome" size="80" maxlength="60"
-                             requiredMessage="O campo 'Nome' é obrigatório"
-                             validatorMessage="É permitido apenas letras no campo 'Nome'">
-                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
-                </p:inputText>
+                                <p:outputLabel for="nome" value="Nome: "/>
+                                <p:inputText id="nome" required="true" value="#{cadastroSetorBean.setor.nome}" label="Nome" maxlength="60"
+                                             requiredMessage="O campo 'Nome' é obrigatório"
+                                             validatorMessage="É permitido apenas letras no campo 'Nome'">
+                                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
+                                </p:inputText>
 
-                <p:outputLabel for="sigla" value="Sigla: "/>
-                <p:inputText id="sigla" required="true" value="#{cadastroSetorBean.setor.sigla}" label="Sigla" size="15" maxlength="10"
-                             requiredMessage="O campo 'Sigla' é obrigatório"
-                             validatorMessage="É permitido apenas letras no campo 'Sigla'">
-                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
-                </p:inputText>
+                                <p:outputLabel for="sigla" value="Sigla: "/>
+                                <p:inputText id="sigla" required="true" value="#{cadastroSetorBean.setor.sigla}" label="Sigla" maxlength="10"
+                                             requiredMessage="O campo 'Sigla' é obrigatório"
+                                             validatorMessage="É permitido apenas letras no campo 'Sigla'">
+                                    <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
+                                </p:inputText>
 
-                <p:outputLabel for="cargosSetor" value="Cargos"/>
-                <h:panelGroup>
-                    <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}" itemLabel="Marcar todos">
-                        <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
-                    </p:selectBooleanCheckbox>
-                    <p:selectManyCheckbox id="cargosSetor" layout="grid" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
-                        <f:attribute name="collectionType" value="java.util.ArrayList"/>
-                        <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"
-                                       itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
-                        <p:ajax update="marcarTodos"/>
-                    </p:selectManyCheckbox>
-                </h:panelGroup>
-                
-            </p:panelGrid>
+                                <p:outputLabel for="cargosSetor" value="Cargos"/>
+                                <h:panelGroup>
+                                    
+                                    <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}">
+                                        <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
+                                        <label>Marcar Todos  </label>
+                                    </p:selectBooleanCheckbox>
+                                    <p:selectManyCheckbox id="cargosSetor" layout="grid" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
+                                        <f:attribute name="collectionType" value="java.util.ArrayList"/>
+                                        <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"
+                                                       itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
+                                        <p:ajax update="marcarTodos"/>
+                                    </p:selectManyCheckbox>
+                                </h:panelGroup>
+
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
+
     </ui:define>
 
 </ui:composition>
