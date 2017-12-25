@@ -43,7 +43,7 @@
                         <div class="card">
                             <p:panelGrid id="painel" columns="2"
                                          layout="grid"
-                                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-10"
                                          styleClass="ui-panelgrid-blank form-group"
                                          style="border:0px none; background-color:transparent; padding-top: 20px;">
 
@@ -63,11 +63,12 @@
 
                                 <p:outputLabel for="cargosSetor" value="Cargos"/>
                                 <h:panelGroup>
-                                    
-                                    <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}">
-                                        <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
-                                        <label>Marcar Todos  </label>
-                                    </p:selectBooleanCheckbox>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="marcarTodos" value="Marcar Todos "/>
+                                        <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}" >
+                                            <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
+                                        </p:selectBooleanCheckbox>
+                                    </h:panelGroup>
                                     <p:selectManyCheckbox id="cargosSetor" layout="grid" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
                                         <f:attribute name="collectionType" value="java.util.ArrayList"/>
                                         <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"

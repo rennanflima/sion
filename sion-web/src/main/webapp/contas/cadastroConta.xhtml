@@ -14,68 +14,79 @@
             <f:viewParam name="conta" value="#{cadastroContaBean.contaBancaria}" />
             <f:event listener="#{cadastroContaBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h:form>
+        <h:form>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
                         <h1>#{cadastroContaBean.editando ? 'Edição de conta bancária' : 'Nova conta bancária'}</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:button value="Novo" outcome="cadastroConta"/>
-                                <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroContaBean.salvar()}" update="@form"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Pesquisa" outcome="pesquisaContas"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:button value="Novo" outcome="cadastroConta" icon="ui-icon-plus"/>
+                                <p:commandButton value="Salvar" id="botaoSalvar" icon="ui-icon-save" action="#{cadastroContaBean.salvar()}" update="@form"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Pesquisa" outcome="pesquisaContas" icon="ui-icon-search"/>
+                            </f:facet>
                         </p:toolbar>
-
-                        <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                                     columnClasses="rotulo, campo">
-
-                            <p:outputLabel value="Banco" for="banco"/>
-                            <p:selectOneMenu id="banco" value="#{cadastroContaBean.contaBancaria.banco}">
-                                <f:selectItem itemLabel="Selecione um banco..." />
-                                <f:selectItems value="#{cadastroContaBean.bancos}" var="banco"
-                                               itemValue="#{banco}" itemLabel="#{banco.descricao}" />
-                                <p:ajax event="change" process="@this" update="@form" listener="#{cadastroContaBean.mudaConvenio()}"/>
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Descrição" for="descricao"/>
-                            <p:inputText id="descricao" size="60" maxlength="80" value="#{cadastroContaBean.contaBancaria.descricao}"/>
-
-                            <p:outputLabel value="Agência" for="agencia"/>
-                            <h:panelGroup>
-                                <p:inputText id="agencia" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.agencia}"/>
-                                <p:inputText id="digitoAgencia" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoAgencia}"/>
-                            </h:panelGroup>
-
-                            <p:outputLabel value="Conta" for="conta"/>
-                            <h:panelGroup>
-                                <p:inputText id="conta" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.numero}"/>
-                                <p:inputText id="digitoConta" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoConta}"/>
-                            </h:panelGroup>
-
-                            <p:outputLabel value="Carteira" for="carteira"/>
-                            <p:inputText id="carteira" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.codigoCarteira}"/>
-
-                            <p:outputLabel value="Convênio" for="convenio" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
-                            <p:inputText id="convenio" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.convenio}" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
-
-                            <p:outputLabel value="Empresa" for="empresa"/>
-                            <p:selectOneMenu id="empresa" value="#{cadastroContaBean.contaBancaria.cedente}">
-                                <f:selectItem itemLabel="Selecione uma empresa..." />
-                                <f:selectItems value="#{cadastroContaBean.empresas}" var="empresa"
-                                               itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
-                            </p:selectOneMenu>
-
-                        </p:panelGrid>
-                    </h:form>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card">
+                            <p:panelGrid id="painel" columns="3"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-3"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
+
+                                <p:outputLabel value="Banco" for="banco"/>
+                                <p:selectOneMenu id="banco" value="#{cadastroContaBean.contaBancaria.banco}">
+                                    <f:selectItem itemLabel="Selecione um banco..." />
+                                    <f:selectItems value="#{cadastroContaBean.bancos}" var="banco"
+                                                   itemValue="#{banco}" itemLabel="#{banco.descricao}" />
+                                    <p:ajax event="change" process="@this" update="@form" listener="#{cadastroContaBean.mudaConvenio()}"/>
+                                </p:selectOneMenu>
+                                <p:spacer/>
+
+                                <p:outputLabel value="Descrição" for="descricao"/>
+                                <p:inputText id="descricao" size="60" maxlength="80" value="#{cadastroContaBean.contaBancaria.descricao}"/>
+                                <p:spacer/>
+
+                                <p:outputLabel value="Agência" for="agencia"/>
+                                <p:inputText id="agencia" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.agencia}"/>
+                                <p:inputText id="digitoAgencia" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoAgencia}"/>
+
+                                <p:outputLabel value="Conta" for="conta"/>
+                                <p:inputText id="conta" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.numero}"/>
+                                <p:inputText id="digitoConta" size="5" maxlength="10" style="margin-left: 15px" value="#{cadastroContaBean.contaBancaria.digitoConta}"/>
+
+                                <p:outputLabel value="Carteira" for="carteira"/>
+                                <p:inputText id="carteira" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.codigoCarteira}"/>
+                                <p:spacer/>
+
+                                <p:outputLabel value="Convênio" for="convenio" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
+                                <p:inputText id="convenio" size="10" maxlength="10" value="#{cadastroContaBean.contaBancaria.convenio}" rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
+                                <p:spacer  rendered="#{cadastroContaBean.convenioBancoDoBrasil}"/>
+
+                                <p:outputLabel value="Empresa" for="empresa"/>
+                                <p:selectOneMenu id="empresa" value="#{cadastroContaBean.contaBancaria.cedente}">
+                                    <f:selectItem itemLabel="Selecione uma empresa..." />
+                                    <f:selectItems value="#{cadastroContaBean.empresas}" var="empresa"
+                                                   itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
+                                </p:selectOneMenu>
+                                <p:spacer/>
+
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>

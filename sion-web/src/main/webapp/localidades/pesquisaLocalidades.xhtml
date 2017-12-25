@@ -17,12 +17,12 @@
                         <h1>Pesquisa localidades</h1>
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="cadastroLocalidade"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Novo" outcome="cadastroLocalidade" icon="ui-icon-plus"/>
+                            </f:facet>
                         </p:toolbar>
 
                         <p:dataTable id="localTable" var="local" value="#{pesquisaLocalidadeBean.localidades}" rowIndexVar="linha"
@@ -48,7 +48,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de produto" 
+                        <p:confirmDialog header="Exclusão de produto"  responsive="true"
                                          message="Tem certeza que deseja excluir o local #{pesquisaLocalidadeBean.localidadeSelecionadaParaExcluir.nome}' ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"

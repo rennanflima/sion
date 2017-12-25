@@ -4,15 +4,20 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:panelGrid id="inclusaoVaga" columns="2" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
-                 columnClasses="rotulo, campo">
-
+    <p:panelGrid id="inclusaoVaga" columns="2"
+                 layout="grid"
+                 columnClasses="ui-grid-col-2,ui-grid-col-10"
+                 styleClass="ui-panelgrid-blank form-group"
+                 style="border:0px none; background-color:transparent; padding-top: 20px;">
 
         <p:outputLabel for="cargosConcurso" value="Cargos"/>
         <h:panelGroup>
-            <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" itemLabel="Marcar todos" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
-                <p:ajax update="cargosConcurso" listener="#{cadastroConcursoBean.selecionarTodos()}" />
-            </p:selectBooleanCheckbox>
+            <h:panelGroup>
+                <p:outputLabel for="marcarTodos" value="Marcar Todos "/>
+                <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroConcursoBean.marcarTodos}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
+                    <p:ajax update="cargosConcurso" listener="#{cadastroConcursoBean.selecionarTodos()}"/>
+                </p:selectBooleanCheckbox>
+            </h:panelGroup>
             <p:selectManyCheckbox id="cargosConcurso" layout="grid" columns="3" value="#{cadastroConcursoBean.addQuantidadeVaga.listaCargos}" converter="cConcursoConverter">
                 <f:attribute name="collectionType" value="java.util.ArrayList"/>
                 <f:selectItems value="#{cadastroConcursoBean.cargosConcurso}" var="cargo"
@@ -29,15 +34,15 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Quantidade de Vagas" for="qtdVagas"/>
-        <p:inputText id="qtdVagas" size="10" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"
+        <p:inputText id="qtdVagas" maxlength="10" value="#{cadastroConcursoBean.addQuantidadeVaga.quantidade}"
                      onkeypress="return SomenteNumero(event)" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
         <p:spacer/>
         <h:panelGroup>
             <p:commandButton value="Adicionar" action="#{cadastroConcursoBean.guardaVagaCargoConcurso()}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"
-                             process="@form" update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"/>
+                             process="@form" update="inclusaoVaga :frmConcurso:cargosVagaConcursoTable"  icon="ui-icon-plus"/>
             <p:commandButton value="Limpar" id="botaoLimpar" style="margin-left: 10px;" action="#{cadastroConcursoBean.limparAddCargoVaga()}"
-                             disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" update="@form"/>
+                             disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" update="@form" icon="ui-icon-clear"/>
         </h:panelGroup>
 
     </p:panelGrid>

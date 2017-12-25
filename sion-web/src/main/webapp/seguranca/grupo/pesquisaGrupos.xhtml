@@ -10,19 +10,19 @@
     <ui:define name="title">Pesquisa Grupos</ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h:form id="frmPesquisa">
+        <h:form id="frmPesquisa">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card">
                         <h1>Pesquisa Grupos</h1>
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="cadastroGrupo"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Novo" outcome="cadastroGrupo" icon="ui-icon-plus"/>
+                            </f:facet>
                         </p:toolbar>
 
                         <p:dataTable id="grupoTable" var="grupo" value="#{pesquisaGrupoBean.grupos}" rowIndexVar="linha"
@@ -59,7 +59,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de permissão" 
+                        <p:confirmDialog header="Exclusão de permissão"  responsive="true"
                                          message="Tem certeza que deseja excluir o grupo #{pesquisaGrupoBean.grupoSelecionadoParaExcluir.nome}' ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
@@ -69,16 +69,16 @@
 
                         </p:confirmDialog>
 
-                        <p:dialog id="mostraPermissoesDialog" header="Permissões" widgetVar="mostraPermissões" modal="true" resizable="false" width="200">
+                        <p:dialog id="mostraPermissoesDialog" header="Permissões" widgetVar="mostraPermissões" modal="true"  responsive="true" resizable="false" width="200">
                             <p:dataList value="#{pesquisaGrupoBean.grupoSelecionado.permissoes}" var="permissao" itemType="disc"
                                         rendered="#{not empty pesquisaGrupoBean.grupoSelecionado.permissoes}">
                                 #{permissao.nome}
                             </p:dataList>
                             <h:outputText value="Nenhuma permissão" rendered="#{empty pesquisaGrupoBean.grupoSelecionado.permissoes}"/>
                         </p:dialog>
-                    </h:form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>

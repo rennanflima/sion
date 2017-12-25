@@ -12,10 +12,15 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
         <title><ui:insert name="title">Sion - Sistema de Inscrição Online</ui:insert></title>
+        <h:outputScript library="ultima-layout" name="js/nanoscroller.js"/>
+        <h:outputScript library="ultima-layout" name="js/layout.js"/>
         <h:outputScript library="ultima-layout" name="js/ripple.js"/>
+        <h:outputScript library="ultima-layout" name="js/swipe.js"/>
         <ui:insert name="head"/>
     </h:head>
     <h:body class="#{bodyClass}">
+        <h:outputStylesheet library="ultima-layout" name="css/nanoscroller.css"/>
+        <h:outputStylesheet library="ultima-layout" name="css/animate.css"/>
         <h:outputStylesheet library="ultima-layout" name="css/ripple.css"/>
         <h:outputStylesheet library="ultima-layout" name="css/layout-blue.css"/>
 

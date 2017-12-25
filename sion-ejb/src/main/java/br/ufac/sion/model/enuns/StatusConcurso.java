@@ -10,7 +10,8 @@ package br.ufac.sion.model.enuns;
  * @author Rennan
  */
 public enum StatusConcurso {
-
+    
+    CORFIRMACAO_PENDENTE("Confirmação pendente"),
     AUTORIZADO("Autorizado"), 
     INSCRICOES_ABERTAS("Inscrições abertas"), 
     INSCRICOES_ENCERRADAS("Inscrições encerradas"),

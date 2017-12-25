@@ -25,6 +25,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -40,22 +44,30 @@ public class Concurso implements Serializable {
     @SequenceGenerator(name="concurso_id_seq", sequenceName = "concurso_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "concurso_id_seq")
     private Long id;
+    @NotBlank
+    @Size(max = 100)
     @Column(length = 100)
     private String titulo;
     @Lob
     private String descricao;
+    @NotBlank
     @Lob
     @Column(name = "local_inscricao")
     private String localInscricao;
+    @NotNull
     @Column(name = "data_inicio_inscricao")
     private LocalDateTime dataInicioInscricao;
+    @NotNull
     @Column(name = "data_termino_inscricao")
     private LocalDateTime dataTerminoIncricao;
+    @NotNull
     @Column(name = "data_vencimento_boleto")
     private LocalDate dataVencimentoBoleto;
+    @NotNull
     @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CargoConcurso> cargos = new ArrayList<>();
-    private StatusConcurso status = StatusConcurso.AUTORIZADO;
+    private StatusConcurso status = StatusConcurso.CORFIRMACAO_PENDENTE;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "conta_bancaria_id", nullable = false)
     private ContaBancaria contaBancaria;
@@ -172,6 +184,11 @@ public class Concurso implements Serializable {
         return status.equals(StatusConcurso.INSCRICOES_ENCERRADAS);
     }
     
+    @Transient
+    public boolean isConfirmacaoPendente(){
+        LocalDateTime now = LocalDateTime.now();
+        return status.equals(StatusConcurso.CORFIRMACAO_PENDENTE);
+    }
     
     @Transient
     public boolean isAutorizado() {
@@ -181,7 +198,7 @@ public class Concurso implements Serializable {
 
     @Transient
     public boolean isAlteravel() {
-        return this.isAutorizado();
+        return this.isAutorizado() || this.isConfirmacaoPendente();
     }
 
     @Transient

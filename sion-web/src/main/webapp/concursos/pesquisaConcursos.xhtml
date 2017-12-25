@@ -10,21 +10,21 @@
     <ui:define name="title">Pesquisa Concursos</ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h:form id="frmPesquisaConcurso">
+        <h:form id="frmPesquisaConcurso">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
                         <h1>Pesquisa Concursos</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar" />
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="cadastroConcurso"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Novo" outcome="cadastroConcurso" icon="ui-icon-plus"/>
+                            </f:facet>
                         </p:toolbar>
 
                         <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoBean.concursos}" rowIndexVar="linha"
@@ -61,13 +61,13 @@
                                     <f:param name="concurso" value="#{concurso.id}"/>
                                 </p:button>
                                 <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                                 update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel}">
+                                                 update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel or concurso.autorizado}">
                                     <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de concurso" 
+                        <p:confirmDialog header="Exclusão de concurso"  responsive="true"
                                          message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionado.titulo} ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
@@ -77,9 +77,9 @@
                                     return false;" />
 
                         </p:confirmDialog>
-                    </h:form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>

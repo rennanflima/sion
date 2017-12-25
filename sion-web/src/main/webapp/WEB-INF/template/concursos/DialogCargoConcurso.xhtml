@@ -4,11 +4,16 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog header="#{cadastroConcursoBean.editandoCargo ? 'Edição de cargo' : 'Inclusão de cargo'}" widgetVar="inclusaoCargoDialog" modal="true" resizable="false">
+    <p:dialog header="#{cadastroConcursoBean.editandoCargo ? 'Edição de cargo' : 'Inclusão de cargo'}" widgetVar="inclusaoCargoDialog" modal="true" resizable="false"  responsive="true">
         <h:form id="inclusaoPanel">
-            <p:panelGrid columns="2" columnClasses="rotulo, campo">
+            <p:panelGrid columns="2"
+                         layout="grid"
+                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                         styleClass="ui-panelgrid-blank form-group"
+                         style="border:0px none; background-color:transparent; padding-top: 20px;">
+                
                 <p:outputLabel for="codigo" value="Código"/>
-                <p:inputText id="codigo" size="10" maxlength="20" value="#{cadastroConcursoBean.cargoConcurso.codigo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+                <p:inputText id="codigo" maxlength="20" value="#{cadastroConcursoBean.cargoConcurso.codigo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
                 <p:outputLabel for="nivelCargo" value="Nível"/>
                 <p:selectOneMenu id="nivelCargo" value="#{cadastroConcursoBean.nivel}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
@@ -33,7 +38,7 @@
                 </p:selectOneMenu>
             </p:panelGrid>
 
-            <p:commandButton style="margin-top: 10px; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}"
+            <p:commandButton style="margin-top: 10px; float: right" value="Salvar" action="#{cadastroConcursoBean.guardaCargoConcurso()}" icon="ui-icon-save"
                              process="@form" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" update="inclusaoPanel :frmConcurso:cargosConcursoTable"/>
         </h:form>
     </p:dialog> 

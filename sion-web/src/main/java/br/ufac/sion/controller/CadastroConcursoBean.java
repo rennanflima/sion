@@ -30,6 +30,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.validation.constraints.NotNull;
 import org.primefaces.event.FlowEvent;
 
 /**
@@ -186,7 +187,7 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public List<CargoConcurso> getCargosConcurso() {
-        if (this.concurso.getCargos() != null || cargosConcurso == null) {
+        if (this.concurso.getCargos() != null && cargosConcurso == null) {
             cargosConcurso = this.concurso.getCargos();
         }
         return cargosConcurso;
@@ -196,6 +197,7 @@ public class CadastroConcursoBean implements Serializable {
         this.cargosConcurso = cargosConcurso;
     }
 
+    @NotNull
     public List<CargoVaga> getCargosVaga() {
         return cargosVaga;
     }
@@ -247,6 +249,7 @@ public class CadastroConcursoBean implements Serializable {
         return contasBancaria;
     }
 
+    @NotNull
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -395,16 +398,34 @@ public class CadastroConcursoBean implements Serializable {
         this.contasBancaria = contaBancariaFacade.findByEmpresa(empresa);
     }
 
-    public String onFlowProcess(FlowEvent event){
-        if(event.getNewStep().equals("dadosCargos") || event.getNewStep().equals("dadosVagas") || event.getNewStep().equals("confirmacaoConcurso")){
+    public String onFlowProcess(FlowEvent event) {
+        if (event.getNewStep().equals("dadosCargos")) {
             onFlowProcessSave();
+        }
+        if (event.getNewStep().equals("dadosVagas")) {
+            if (this.concurso.getCargos() == null || this.concurso.getCargos().isEmpty()) {
+                FacesUtil.addErrorMessage("O concurso deve ter no mínimo 1 cargo!");
+                return "dadosCargos";
+            } else {
+                onFlowProcessSave();
+            }
+        }
+        if (event.getNewStep().equals("confirmacaoConcurso")) {
+            if (this.cargosVaga == null || this.cargosVaga.isEmpty()) {
+                FacesUtil.addErrorMessage("O concurso deve ter no mínimo 1 vaga!");
+                return "dadosVagas";
+            } else {
+                onFlowProcessSave();
+            }
         }
         return event.getNewStep();
     }
 
     private void onFlowProcessSave() {
         try {
-            this.concurso = concursoService.salvar(concurso);
+            popularListaCargosVaga();
+            this.concurso = concursoService.salvarOnFlowProcess(concurso);
+            this.cargosVaga = cargoVagaFacade.findByConcurso(concurso);
         } catch (NegocioException e) {
             FacesUtil.addErrorMessage("Erro ao salvar o concurso: " + e.getMessage());
         }

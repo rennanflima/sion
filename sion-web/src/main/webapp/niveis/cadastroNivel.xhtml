@@ -17,7 +17,7 @@
         <h:form>
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <div class="card">
+                    <div class="card card-w-title">
 
                         <h1>#{cadastroNivelBean.editando ? 'Edição de nível' : 'Novo nível'}</h1>
 
@@ -25,7 +25,7 @@
 
                         <p:toolbar style="margin-top: 20px">
                             <f:facet name="left">
-                                <p:button value="Novo" outcome="/niveis/cadastroNivel" icon="ui-icon-plus" />`
+                                <p:button value="Novo" outcome="/niveis/cadastroNivel" icon="ui-icon-plus" />
                                 <p:commandButton value="Salvar" id="botaoSalvar" icon="ui-icon-save" action="#{cadastroNivelBean.salvar()}" update="@form" oncomplete="configurarMoeda()"/>
                             </f:facet>
                             <f:facet name="right">

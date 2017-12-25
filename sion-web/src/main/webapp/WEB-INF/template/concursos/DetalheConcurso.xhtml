@@ -33,7 +33,7 @@
             <h:outputText value="#{cadastroConcursoBean.concurso.localInscricao}"/>
 
             <p:spacer/>
-            <p:commandButton value="Confirmar" id="botaoConfirmar" action="pesquisaConcursos" actionListener="#{cadastroConcursoBean.salvar()}" update="@form" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
+            <p:commandButton value="Confirmar" id="botaoConfirmar" icon="ui-icon-check" action="pesquisaConcursos" actionListener="#{cadastroConcursoBean.salvar()}" update="@form" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
         </p:panelGrid>
 
         <p:dataTable id="cargosConcursoDetalheTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"

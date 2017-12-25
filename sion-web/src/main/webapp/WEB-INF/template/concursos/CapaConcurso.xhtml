@@ -4,11 +4,14 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
-                 columnClasses="rotulo, campo">
+    <p:panelGrid id="painel" columns="2"
+                 layout="grid"
+                 columnClasses="ui-grid-col-2,ui-grid-col-10"
+                 styleClass="ui-panelgrid-blank form-group"
+                 style="border:0px none; background-color:transparent; padding-top: 20px;">
 
         <p:outputLabel value="Título" for="titulo"/>
-        <p:inputText id="titulo" size="60" maxlength="80" value="#{cadastroConcursoBean.concurso.titulo}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+        <p:inputText id="titulo" maxlength="100" value="#{cadastroConcursoBean.concurso.titulo}"  style="width: 100%"/>
 
         <p:outputLabel value="Descrição" for="descricao"/>
         <p:editor id="descricao" widgetVar="descricaoWidget" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
@@ -25,7 +28,7 @@
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
                     pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
-        
+
         <p:outputLabel value="Local de inscrição" for="localInscricao" />
         <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%"  disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
@@ -43,7 +46,7 @@
             <f:selectItems value="#{cadastroConcursoBean.contasBancaria}" var="cb"
                            itemValue="#{cb}" itemLabel="#{cb.descricao}"/>
         </p:selectOneMenu>
-        
+
         <p:outputLabel for="dtVencimentoBoleto" value="Data de vencimento do boleto"/>
         <p:calendar locale="pt_BR" id="dtVencimentoBoleto" value="#{cadastroConcursoBean.concurso.dataVencimentoBoleto}" 
                     pattern="dd/MM/yyyy" converter="localDateConversor" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>

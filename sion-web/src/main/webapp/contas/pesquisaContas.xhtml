@@ -7,24 +7,24 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="title">Pesquisa Níveis</ui:define>
+    <ui:define name="title">Pesquisa Contas Bancárias</ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h1>Pesquisa níveis</h1>
+        <h:form id="frmPesquisa">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card">
+                        <h1>Pesquisa contas bancárias</h1>
 
-                    <h:form id="frmPesquisa">
                         <p:messages id="messages" autoUpdate="true" closable="true"/>
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="cadastroConta"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Novo" outcome="cadastroConta" icon="ui-icon-plus"/>
+                            </f:facet>
                         </p:toolbar>
 
                         <p:dataTable id="contasTable" var="conta" value="#{pesquisaContaBean.contas}" rowIndexVar="linha"
@@ -58,7 +58,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de produto" 
+                        <p:confirmDialog header="Exclusão de produto"  responsive="true"
                                          message="Tem certeza que deseja excluir a conta '#{pesquisaContaBean.contaBancariaParaExcluir.descricao}' ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
@@ -68,9 +68,9 @@
                                     return false;" />
 
                         </p:confirmDialog>
-                    </h:form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>

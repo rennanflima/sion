@@ -41,7 +41,7 @@
         </p:column>
     </p:dataTable>
 
-    <p:confirmDialog header="Exclusão de produto" 
+    <p:confirmDialog header="Exclusão de produto" responsive="true"
                      message="Tem certeza que deseja excluir o tipo de vaga '#{cadastroConcursoBean.cargoVagaConcursoParaExcluir.tipoVaga.tipo}' do cargo 
                      '#{cadastroConcursoBean.cargoVagaConcursoParaExcluir.cargoConcurso.codigo} - #{cadastroConcursoBean.cargoVagaConcursoParaExcluir.cargoConcurso.cargo.descricao}' 
                      para a localidade '#{cadastroConcursoBean.cargoVagaConcursoParaExcluir.cargoConcurso.localidade.nome}' ?"

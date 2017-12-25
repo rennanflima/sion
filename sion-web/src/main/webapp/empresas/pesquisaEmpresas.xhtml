@@ -12,17 +12,17 @@
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
-                <div class="card">
+                <div class="card card-w-title">
                     <h:form id="frmPesquisa">
                         <h1>Pesquisa Empresas</h1>
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="/empresas/cadastroEmpresa"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Novo" outcome="/empresas/cadastroEmpresa" icon="ui-icon-plus" />
+                            </f:facet>
                         </p:toolbar>
 
                         <p:dataTable id="empresaTable" var="empresa" value="#{pesquisaEmpresaBean.empresas}" rowIndexVar="linha"
@@ -56,7 +56,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de produto" 
+                        <p:confirmDialog header="Exclusão de produto"  responsive="true"
                                          message="Tem certeza que deseja excluir a empresa '#{pesquisaEmpresaBean.empresaParaExcluir.nomeFantasia}' ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"

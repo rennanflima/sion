@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:commandButton value="Adicionar cargo" actionListener="#{cadastroConcursoBean.preparaCargoConcurso()}" oncomplete="PF('inclusaoCargoDialog').show(); return false;" 
-                     style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+                      icon="ui-icon-plus" style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
     <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"
                  style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
@@ -43,7 +43,7 @@
         </p:column>
     </p:dataTable>
 
-    <p:confirmDialog header="Exclusão de telefone" 
+    <p:confirmDialog header="Exclusão de telefone" responsive="true"
                      message="Tem certeza que deseja excluir o cargo 
                      '#{cadastroConcursoBean.cargoConcursoParaExcluir.codigo} - #{cadastroConcursoBean.cargoConcursoParaExcluir.cargo.descricao}' ?"
                      widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">

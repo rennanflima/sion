@@ -71,7 +71,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:confirmDialog header="Exclusão de produto" 
+                        <p:confirmDialog header="Exclusão de produto"  responsive="true"
                                          message="Tem certeza que deseja excluir o #{pesquisaFuncionarioBean.funcionarioSelecionadoParaExcluir.usuario.nome} ?"
                                          widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
                             <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
