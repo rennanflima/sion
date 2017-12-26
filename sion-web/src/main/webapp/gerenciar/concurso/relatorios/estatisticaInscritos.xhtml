@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/gerencia/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">#{estatisticaConcursoBean.titulo}</ui:define>
+
+    <ui:define name="content">
+
+
+        <h:form id="frmInscritos" style="margin-top: 20px;">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>#{estatisticaConcursoBean.titulo}</h1>
+
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <p:toolbar style="margin-top: 20px">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Pesquisar" update="cargosConcursoTable @form" process="@form" />
+                                <p:commandButton value="Limpar" update="cargosConcursoTable @form" action="#{estatisticaConcursoBean.limparFiltro()}" />
+                                <p:commandButton value="Gerar PDF" action="#{estatisticaConcursoBean.imprimeEstatistica()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:button value="Página Inicial" outcome="/gerenciar/concurso/home"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="rotulo, campo">
+
+                            <p:outputLabel value="Situação da inscrição" for="status" />
+                            <p:selectOneMenu id="status" value="#{estatisticaConcursoBean.status}">
+                                <f:selectItem itemLabel="Selecione um cargo..." itemValue=""/>
+                                <f:selectItem itemLabel="Sem confirmação" itemValue="AGUARDANDO_PAGAMENTO"/>
+                                <f:selectItem itemLabel="Confirmadas" itemValue="CONFIRMADA"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </div>
+
+                    <div class="card">
+                        <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{estatisticaConcursoBean.cargosConcurso}" reflow="true"
+                                     style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                            <p:column headerText="#">
+                                <h:outputText value="#{cargoConcurso.codigo}" />
+                            </p:column>
+
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{cargoConcurso.cargo.descricao}" />
+                            </p:column>
+
+                            <p:column headerText="Carga Horária">
+                                <h:outputText value="#{cargoConcurso.cargo.cargaHoraria}h"/>
+                            </p:column>
+
+                            <p:column headerText="Nível">
+                                <h:outputText value="#{cargoConcurso.cargo.nivel.descricao}"/>
+                            </p:column>
+
+                            <p:column headerText="Localidade">
+                                <h:outputText value="#{cargoConcurso.localidade.nome}"/>
+                            </p:column>
+
+                            <p:column headerText="Quantidade de Inscritos">
+                                <h:outputText value="#{estatisticaConcursoBean.getQuantidadeInscritosPorCargo(cargoConcurso)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

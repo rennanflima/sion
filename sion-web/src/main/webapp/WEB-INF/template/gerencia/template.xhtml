@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="theme-color" content="#03A9F4" />
+        </f:facet>
+        <title><ui:insert name="title">Sion - Sistema de Inscrição Online</ui:insert></title>
+        <h:outputScript library="ultima-layout" name="js/nanoscroller.js"/>
+        <h:outputScript library="ultima-layout" name="js/layout.js"/>
+        <h:outputScript library="ultima-layout" name="js/ripple.js"/>
+        <h:outputScript library="ultima-layout" name="js/swipe.js"/>
+        <ui:insert name="head"/>
+        <h:outputScript library="js" name="jquery.maskMoney.js"/>
+        <h:outputScript library="js" name="numeros.js"/>
+    </h:head>
+    <h:body class="main-body layout-compact">
+        <h:outputStylesheet library="ultima-layout" name="css/nanoscroller.css"/>
+        <h:outputStylesheet library="ultima-layout" name="css/animate.css"/>
+        <h:outputStylesheet library="ultima-layout" name="css/ripple.css"/>
+        <h:outputStylesheet library="ultima-layout" name="css/layout-blue.css"/>
+
+        <div class="layout-wrapper menu-layout-static">
+            <ui:include src="../topbar.xhtml"/>
+            <ui:include src="./menu.xhtml"/>
+
+            <div class="layout-main">
+                <ui:insert name="content"/>
+
+                <ui:include src="../footer.xhtml"/>
+            </div>
+        </div>
+
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px" onsuccess="configurarMoeda()">
+            <f:facet name="start">
+                <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"/>
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
+        
+        <script>
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
+            }
+
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
+    </h:body>
+</html>

@@ -32,7 +32,7 @@
                                      style="margin-top: 20px;" emptyMessage="Nenhum nível encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
@@ -40,13 +40,13 @@
                                 <h:outputText value="#{nivel.descricao}"/>
                             </p:column>
 
-                            <p:column headerText="Valor" style="text-align: right; width: 120px;">
+                            <p:column headerText="Valor">
                                 <h:outputText value="#{nivel.valor}">
                                     <f:convertNumber type="currency" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column style="width: 100px; text-align: center;">
+                            <p:column>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroNivel">
                                     <f:param name="nivel" value="#{nivel.id}"/>
                                 </p:button>

@@ -31,7 +31,7 @@
                                      style="margin-top: 20px;" emptyMessage="Nenhum nível encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
@@ -47,7 +47,7 @@
                                 <h:outputText value="#{conta.cedente.nomeFantasia}"/>
                             </p:column>
 
-                            <p:column style="width: 100px; text-align: center;">
+                            <p:column>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConta">
                                     <f:param name="conta" value="#{conta.id}"/>
                                 </p:button>

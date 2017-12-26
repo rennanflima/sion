@@ -43,26 +43,26 @@
                     </h:panelGroup>
 
                     <pu:menu widgetVar="me">
-                        <p:menuitem id="um_dashboards" outcome="/dashboard.xhtml" icon="material-icons " value="Dashboard"/>
+                        <p:menuitem id="um_dashboards" outcome="/gerenciar/concurso/home" icon="material-icons " value="Dashboard"/>
 
-                        <p:submenu id="cadastros" label="Cadastros" icon="material-icons list">
-                            <p:menuitem id="cadLocalidade" value="Localidade" icon="material-icons location_on" outcome="/localidades/pesquisaLocalidades"/>
-                            <p:menuitem id="cadTipo" value="Tipo de vaga" icon="material-icons description" outcome="/vagas/pesquisaVagas"/>
-                            <p:menuitem id="cadNivel" value="Nível" icon="material-icons label" outcome="/niveis/pesquisaNiveis"/>
-                            <p:menuitem id="cadCargo" value="Cargo" icon="material-icons format_list_bulleted" outcome="/cargos/pesquisaCargos"/>
-                            <p:menuitem id="idSetor" icon="material-icons input" value="Setor" outcome="/setores/pesquisaSetores"/>
+                        <p:submenu id="inscricao" label="Inscrição">
+                            <p:menuitem id="inscListaInscritos" value="Lista de Inscritos" outcome="/gerenciar/concurso/inscricao/listaInscritos"/>
+                            <p:menuitem id="inscConfirmados" value="Inscrições confirmadas" outcome="/gerenciar/concurso/inscricao/listaInscritosConfirmados"/>
+                            <p:menuitem id="inscPNE" value="Nessidades Especiais" outcome="/gerenciar/concurso/inscricao/listaInscritosPNE"/>
                         </p:submenu>
-                        <p:menuitem value="Concurso" icon="material-icons content_paste" outcome="/concursos/pesquisaConcursos" />
-                        <p:submenu label="Configurações" icon="material-icons settings">
-                            <p:menuitem value="Empresa" icon="material-icons business" outcome="/empresas/pesquisaEmpresas"/>
-                            <p:menuitem value="Contas Bancárias" icon="material-icons account_balance_wallet" outcome="/contas/pesquisaContas"/>
-                            
+                        <p:menuitem value="Cobrança" outcome="/gerenciar/concurso/inscricao/arquivoRetorno"/>
+                        <p:submenu label="Relatórios">
+                            <p:submenu label="Lista de inscritos">
+                                <p:menuitem value="Geral" action="#{gerenciarConcursoBean.imprimeRelacaoInscritos()}" ajax="false" target="_blank"/>
+                                <p:menuitem value="Por cargo e cidade" outcome="/gerenciar/concurso/relatorios/listaInscritosPorLocalECargo"/>
+                                <p:menuitem value="Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidos()}" ajax="false" target="_blank"/>
+                                <p:menuitem value="Não Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosIndeferidos()}" ajax="false" target="_blank"/>
+                                <p:menuitem value="Necessidades Especiais" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidosPNE()}" ajax="false" target="_blank"/>
+                            </p:submenu>
+                            <p:menuitem value="Lista de presença" action="#{gerenciarConcursoBean.imprimeListaPresenca()}" ajax="false" target="_blank"/>
+                            <p:menuitem value="Estastisticas de Inscritos" outcome="/gerenciar/concurso/relatorios/estatisticaInscritos"/>
                         </p:submenu>
-                        <p:submenu id="seguranca" label="Segurança" icon="material-icons security">
-                            <p:menuitem id="secPermissao" value="Permissões" icon="material-icons lock" outcome="/seguranca/permissao/pesquisaPermissoes"/>
-                            <p:menuitem id="secGrupos" value="Grupos" icon="material-icons group_add" outcome="/seguranca/grupo/pesquisaGrupos"/>
-                            <p:menuitem id="secUsuario" value="Usuários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
-                        </p:submenu>
+                        <p:menuitem value="Sair" outcome="/dashboard.xhtml" actionListener="#{gerenciarConcursoBean.removeConcursoSessao()}" />
                     </pu:menu>
                 </div>
             </div>

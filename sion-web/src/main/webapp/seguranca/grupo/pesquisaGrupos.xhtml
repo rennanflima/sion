@@ -29,7 +29,7 @@
                                      style="margin-top: 20px;" emptyMessage="Nenhum grupo encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
@@ -41,14 +41,14 @@
                                 <h:outputText value="#{grupo.descricao}"/>
                             </p:column>
 
-                            <p:column headerText="Permissões" style="width: 100px; text-align: center">
+                            <p:column headerText="Permissões">
                                 <p:commandButton icon="ui-icon-content-copy" title="Permissões" action="#{pesquisaGrupoBean.buscarGrupoComPermissoes()}"
                                                  process="@this" oncomplete="PF('mostraPermissões').show()" update=":frmPesquisa:mostraPermissoesDialog">
                                     <f:setPropertyActionListener target="#{pesquisaGrupoBean.grupoSelecionado}" value="#{grupo}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width: 100px; text-align: center;">
+                            <p:column>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroGrupo">
                                     <f:param name="grupo" value="#{grupo.id}"/>
                                 </p:button>

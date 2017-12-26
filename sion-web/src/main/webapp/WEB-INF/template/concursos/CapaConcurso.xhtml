@@ -22,7 +22,7 @@
         <p:outputLabel for="dtInicioInscricao" value="Data de início"/>
         <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor"
                     disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" >
-            <p:ajax event="blur" process="@this" update="dtTerminoInscricao"/>
+            <!--<p:ajax event="blur" process="@this" update="dtTerminoInscricao"/>-->
         </p:calendar>
 
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>

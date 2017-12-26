@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <p:dataTable id="cargosVagaConcursoTable" var="cargoVaga" value="#{cadastroConcursoBean.cargosVaga}"
+    <p:dataTable id="cargosVagaConcursoTable" var="cargoVaga" value="#{cadastroConcursoBean.cargosVaga}"  reflow="true"
                  style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
                  paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -14,7 +14,7 @@
         </p:column>
 
         <p:column headerText="Descrição">
-            <h:outputText value="#{cargoVaga.cargoConcurso.cargo.descricao}" />
+            <h:outputText value="#{cargoVaga.cargoConcurso.codigo} - #{cargoVaga.cargoConcurso.cargo.descricao}" />
         </p:column>
 
         <p:column headerText="Localidade">
@@ -53,7 +53,7 @@
                 return false;" />
 
     </p:confirmDialog>
-    
-     <ui:include src="/WEB-INF/template/concursos/DialogCargoVagaConcurso.xhtml" /> 
+
+    <ui:include src="/WEB-INF/template/concursos/DialogCargoVagaConcurso.xhtml" /> 
 
 </ui:composition>

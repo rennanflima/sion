@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,10 +22,16 @@ public class RG implements Serializable {
 
     @Column(name = "rg_numero", length = 20)
     private String numero;
-    @Column(name = "rg_orgao_expedidor", length = 20)
-    private String orgaoExpedidor;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "rg_orgao_expedidor_id", nullable = false)
+    private OrgaoExpedidor orgaoExpedidor;
     @Column(name = "rg_data_expedicao")
     private LocalDate dataExpedicao;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "rg_estado_id", nullable = false)
+    private Estado estado = new Estado();
 
     public String getNumero() {
         return numero;
@@ -32,11 +41,11 @@ public class RG implements Serializable {
         this.numero = numero;
     }
 
-    public String getOrgaoExpedidor() {
+    public OrgaoExpedidor getOrgaoExpedidor() {
         return orgaoExpedidor;
     }
 
-    public void setOrgaoExpedidor(String orgaoExpedidor) {
+    public void setOrgaoExpedidor(OrgaoExpedidor orgaoExpedidor) {
         this.orgaoExpedidor = orgaoExpedidor;
     }
 
@@ -46,6 +55,14 @@ public class RG implements Serializable {
 
     public void setDataExpedicao(LocalDate dataExpedicao) {
         this.dataExpedicao = dataExpedicao;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
 }

@@ -57,7 +57,7 @@
                                          style="margin-top: 20px;" emptyMessage="Nenhum cargo encontrado." rows="20" reflow="true"
                                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                                <p:column headerText="#" style="text-align: center; width: 20px;">
+                                <p:column headerText="#">
                                     <h:outputText value="#{linha + 1}"/>
                                 </p:column>
 
@@ -65,15 +65,15 @@
                                     <h:outputText value="#{cargo.descricao}"/>
                                 </p:column>
 
-                                <p:column headerText="Carga Horária" style="text-align: center; width: 150px;">
+                                <p:column headerText="Carga Horária">
                                     <h:outputText value="#{cargo.cargaHoraria}h"/>
                                 </p:column>
 
-                                <p:column headerText="Nível" style="width: 250px;">
+                                <p:column headerText="Nível">
                                     <h:outputText value="#{cargo.nivel.descricao}"/>
                                 </p:column>
 
-                                <p:column style="width: 100px; text-align: center;">
+                                <p:column>
                                     <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroCargo">
                                         <f:param name="cargo" value="#{cargo.id}"/>
                                     </p:button>

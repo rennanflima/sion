@@ -31,36 +31,24 @@
                                      style="margin-top: 20px;" emptyMessage="Nenhum nível encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
-                            <p:column sortBy="#{f.matricula}" style="width: 120px; text-align: center;">
-                                <f:facet name="header">
-                                    <h:outputText value="MATRÍCULA"/>
-                                </f:facet>
+                            <p:column sortBy="#{f.matricula}" headerText="Matrícula">
                                 #{f.matricula}
                             </p:column>
-                            <p:column sortBy="#{f.usuario.nome}">
-                                <f:facet name="header">
-                                    <h:outputText value="NOME"/>
-                                </f:facet>
+                            <p:column sortBy="#{f.usuario.nome}" headerText="Nome">
                                 #{f.usuario.nome}
                             </p:column>
-                            <p:column style="width: 250px;">
-                                <f:facet name="header">
-                                    <h:outputText value="E-MAIL"/>
-                                </f:facet>
+                            <p:column headerText="E-mail">
                                 #{f.usuario.email}
                             </p:column>
-                            <p:column style="width: 120px; text-align: center;">
-                                <f:facet name="header" >
-                                    <h:outputText value="SETOR"/>
-                                </f:facet>
+                            <p:column headerText="Setor">
                                 #{f.setor.sigla}
                             </p:column>
 
-                            <p:column style="width: 100px; text-align: center;">
+                            <p:column>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroFuncionario">
                                     <f:param name="funcionario" value="#{f.id}"/>
                                 </p:button>

@@ -29,7 +29,7 @@
                                      style="margin-top: 20px;" emptyMessage="Nenhuma localidade encontrada." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
@@ -37,7 +37,7 @@
                                 <h:outputText value="#{local.nome}"/>
                             </p:column>
 
-                            <p:column style="width: 100px; text-align: center;">
+                            <p:column>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroLocalidade">
                                     <f:param name="localidade" value="#{local.id}"/>
                                 </p:button>

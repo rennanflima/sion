@@ -5,9 +5,9 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:commandButton value="Adicionar cargo" actionListener="#{cadastroConcursoBean.preparaCargoConcurso()}" oncomplete="PF('inclusaoCargoDialog').show(); return false;" 
-                      icon="ui-icon-plus" style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+                     icon="ui-icon-plus" style="margin-top: 20px;" update=":frmConcurso:inclusaoPanel" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
 
-    <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"
+    <p:dataTable id="cargosConcursoTable" var="cargoConcurso" value="#{cadastroConcursoBean.concurso.cargos}"  reflow="true"
                  style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum cargo encontrado." rows="20" rowIndexVar="linha"
                  paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 

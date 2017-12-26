@@ -9,10 +9,14 @@ import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.util.jsf.FacesUtil;
 import br.ufac.sion.util.jsf.Sion;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -30,12 +34,16 @@ public class PesquisaConcursoBean implements Serializable {
     @EJB
     private ConcursoFacadeLocal concursoFacade;
 
-    @Inject    @Sion
+    @Inject
+    @Sion
     private HttpServletRequest request;
 
     private List<Concurso> concursos;
 
     private Concurso concursoSelecionado;
+
+    @Inject
+    private ExternalContext context;
 
     @PostConstruct
     public void inicializar() {
@@ -65,7 +73,7 @@ public class PesquisaConcursoBean implements Serializable {
     public void excluir() {
         try {
             concursoFacade.remove(concursoSelecionado);
-            FacesUtil.addSuccessMessage("O concurso '" + concursoSelecionado.getDescricao() + "' foi excluído com sucesso.");
+            FacesUtil.addSuccessMessage("O concurso '" + concursoSelecionado.getTitulo() + "' foi excluído com sucesso.");
             inicializar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage(e.getMessage());
@@ -79,10 +87,9 @@ public class PesquisaConcursoBean implements Serializable {
     public String guardaConcursoSessao() {
         if (concursoSelecionado != null) {
             HttpSession session = request.getSession();
-            System.out.println("Sessão: "+session==null);
             session.setAttribute("concursoGerenciado", concursoSelecionado);
             System.out.println("valor atribuido na sessao");
-            return "/concursos/gerenciar/home";
+            return "/gerenciar/concurso/home";
         }
         FacesUtil.addErrorMessage("Ocorreu um erro ao selecionar o concurso!!");
         return null;

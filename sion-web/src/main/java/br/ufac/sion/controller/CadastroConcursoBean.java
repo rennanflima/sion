@@ -187,7 +187,9 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public List<CargoConcurso> getCargosConcurso() {
-        if (this.concurso.getCargos() != null && cargosConcurso == null) {
+        System.out.println("!this.concurso.getCargos().isEmpty() "+!this.concurso.getCargos().isEmpty());
+        System.out.println("cargosConcurso.isEmpty() "+cargosConcurso.isEmpty());
+        if (!this.concurso.getCargos().isEmpty() && cargosConcurso.isEmpty()) {
             cargosConcurso = this.concurso.getCargos();
         }
         return cargosConcurso;
@@ -366,6 +368,7 @@ public class CadastroConcursoBean implements Serializable {
     public void limparCargo() {
         this.cargoConcurso = new CargoConcurso();
         this.nivel = new Nivel();
+        this.cargos = new ArrayList<>();
         this.linha = null;
     }
 
