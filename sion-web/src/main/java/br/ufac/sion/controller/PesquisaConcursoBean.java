@@ -89,7 +89,7 @@ public class PesquisaConcursoBean implements Serializable {
             HttpSession session = request.getSession();
             session.setAttribute("concursoGerenciado", concursoSelecionado);
             System.out.println("valor atribuido na sessao");
-            return "/gerenciar/concurso/home";
+            return "/gerenciar/concurso/home.xhtml";
         }
         FacesUtil.addErrorMessage("Ocorreu um erro ao selecionar o concurso!!");
         return null;

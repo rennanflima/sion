@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufac.sion.security;
+package br.ufac.sion.inscricao.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AppUserDetailsService userDetailsService() {
         return new AppUserDetailsService();
     }
-    
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -39,28 +39,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         JsfLoginUrlAuthenticationEntryPoint jsfLoginEntry = new JsfLoginUrlAuthenticationEntryPoint();
         jsfLoginEntry.setLoginFormUrl("/login.xhtml");
         jsfLoginEntry.setRedirectStrategy(new JsfRedirectStrategy());
-        
+
         JsfAccessDeniedHandler jsfDeniedEntry = new JsfAccessDeniedHandler();
         jsfDeniedEntry.setLoginPath("/AcessoNegado.xhtml");
         jsfDeniedEntry.setContextRelative(true);
-        
+
         http
             .csrf().disable()
             .headers().frameOptions().sameOrigin()
             .and()
-                
+        
         .authorizeRequests()
-            .antMatchers("/login.xhtml", "/recuperaSenha.xhtml", "/Erro.xhtml", "/javax.faces.resource/**", "/404.xhtml").permitAll()
-            .antMatchers("/dashboard.xhtml", "/AcessoNegado.xhtml", "/trocarSenha.xhtml").authenticated()
-            .antMatchers("/cargos/**", "/concursos/**", "/localidades/**", "/niveis/**", "/funcionarios/**", "/setores/**", 
-                    "/vagas/**", "/seguranca/**", "/gerenciar/**").hasAnyRole("ADMINISTRADORES")
-            .antMatchers("/empresas/**", "/contas/**").hasAnyRole("ADMINISTRADORES","FINANCEIRO")
+            .antMatchers("/login.xhtml", "/recuperaSenha.xhtml", "/Erro.xhtml", "/javax.faces.resource/**", "/alterarSenha.xhtml", "/cadastroCandidato.xhtml", "/404.xhtml").permitAll()
+            .antMatchers("/dashboard.xhtml", "/AcessoNegado.xhtml","/seguranca/**").authenticated()
+            .antMatchers("/candidatos/**","/concursos/**" ).hasAnyRole("CANDIDATO")
             .antMatchers("/**").denyAll()
             .and()
         
@@ -76,9 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
             .accessDeniedPage("/AcessoNegado.xhtml")
             .authenticationEntryPoint(jsfLoginEntry)
-            .accessDeniedHandler(jsfDeniedEntry);
+            .accessDeniedHandler(jsfDeniedEntry);        
                 
     }
-    
-    
 }

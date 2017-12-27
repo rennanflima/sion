@@ -1,73 +1,70 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta http-equiv="Content-Type" content="tex t/html; charset=UTF-8" />
-        <title>Novo candidato</title>
-        <h:outputStylesheet library="css" name="sistema.css" />
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template2.xhtml">
+    
+    <ui:param name="bodyClass" value="login-body"/>
+
+    <ui:define name="content">
         <f:metadata>
-            <f:event listener="#{cadastroCandidatoBean.inicializar()}" type="preRenderView"/>
+            <f:viewParam name="dummy" />
+            <f:event listener="#{loginBean.preRender()}" type="preRenderView" />
         </f:metadata>
 
-        <header>
-            <div style="float: left">
-                <h:link outcome="/home">
-                    <h:graphicImage library="images" name="logo_sesc.png" height="30" />
-                </h:link>
-            </div>
-            <div style="clear: both"></div>
-        </header>
-
-        <div style="padding: 0px 8px">
-            <h:form style="padding-bottom: 30px">
-                <h1>#{cadastroCandidatoBean.editando ? 'Edição de candidato' : 'Novo candidato'}</h1>
-
-                <p:messages autoUpdate="true" closable="true" />
-
-                <p:panelGrid columns="2" style="width: 100%;"
-                             columnClasses="rotulo, campo">
-                    <p:outputLabel value="Nome" for="nome"/>
-                    <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroCandidatoBean.candidato.nome}"/>
-
-                    <p:outputLabel value="CPF" for="cpf"/>
-                    <p:inputMask id="cpf" mask="999.999.999-99" value="#{cadastroCandidatoBean.candidato.cpf}"/>
-
-
-                    <p:outputLabel value="E-mail"/>
-                    <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.email}" label="E-mail" size="50" maxlength="60" />
-
-                    <p:outputLabel for="senha" value="Senha: "/>
-                    <p:password id="senha" value="#{cadastroCandidatoBean.candidato.senha}" feedback="true" inline="true"  maxlength="45" size="40"
+        <div class="card cad-panel ui-fluid">
+            <h:form id="frm" prependId="false">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:graphicImage value="#{resource['ultima-layout:images/logo-ultima.svg']}"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:messages id="messages" autoUpdate="true" closable="true" />
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:inputText id="nome" maxlength="80" value="#{cadastroCandidatoBean.candidato.nome}"/>
+                            <label>Nome</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:inputMask id="cpf" mask="999.999.999-99" value="#{cadastroCandidatoBean.candidato.cpf}"/>
+                            <label>CPF</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.email}" maxlength="60" />
+                            <label>E-mail</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:password id="senha" value="#{cadastroCandidatoBean.candidato.senha}" feedback="true" inline="true"
                                 promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
                                 goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
                                 validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>
-                    <p:outputLabel for="confirmaSenha" value="Confirme a senha: "/>
-                    <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45" size="40"
+                            <label>Senha</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:password id="confirmaSenha" required="true"
                                 requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
-                </p:panelGrid>
-
-
-
-                <div style="float: right; margin-top: 15px">
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="login" actionListener="#{cadastroCandidatoBean.salvar()}" update="@form"/>
-                    <p:commandButton value="Limpar" id="botaoLimpar" style="margin-left: 10px;" action="#{cadastroCandidatoBean.limpar()}" update="@form"/>
-                    <p:button value="Cancelar" outcome="login" style="margin-left: 10px;" />
+                            <label>Confirme a senha</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:commandButton value="Enviar" update="@form" icon="ui-icon-send"  action="#{cadastroCandidatoBean.salvar()}"/>
+                        <p:commandButton value="Limpar" update="@form" icon="ui-icon-clear" action="#{cadastroCandidatoBean.limpar()}" immediate="true" process="@this" styleClass="secondary"/>
+                        <p:button value="Cancelar" outcome="/login.xhtml" icon="ui-icon-arrow-back" styleClass="red-btn"/>
+                    </div>
                 </div>
             </h:form>
         </div>
 
-        <p:separator style="margin-top: 20px"/>
-
-        <footer>
-            Sistema de Inscricao Online (SION) -
-            <a href="http://www.sescacre.com.br" target="_blank">www.sescacre.com.br</a>
-        </footer>
-
-    </h:body>
-</html>
+        <div class="login-footer">Sion - Sistema de Inscrição Online</div>
+    </ui:define>
+</ui:composition>

@@ -21,14 +21,14 @@
                         <p:messages autoUpdate="true" closable="true" />
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar" update="cargosConcursoTable @form" process="@form" />
-                                <p:commandButton value="Limpar" update="cargosConcursoTable @form" action="#{estatisticaConcursoBean.limparFiltro()}" />
-                                <p:commandButton value="Gerar PDF" action="#{estatisticaConcursoBean.imprimeEstatistica()}" ajax="false" onclick="this.form.target = '_blank'"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Página Inicial" outcome="/gerenciar/concurso/home"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" update="cargosConcursoTable @form" process="@form" icon="ui-icon-search"/>
+                                <p:commandButton value="Limpar" icon="fa fa-eraser" update="cargosConcursoTable @form" action="#{estatisticaConcursoBean.limparFiltro()}" />
+                                <p:commandButton value="Gerar PDF" icon="fa fa-file-pdf-o" action="#{estatisticaConcursoBean.imprimeEstatistica()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Página Inicial" outcome="/gerenciar/concurso/home" icon="ui-icon-dashboard"/>
+                            </f:facet>
                         </p:toolbar>
 
                         <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="rotulo, campo">

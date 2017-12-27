@@ -4,17 +4,17 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template/template2.xhtml">
-    <ui:param name="bodyClass" value="exception-body error-page"/>
+    <ui:param name="bodyClass" value="exception-body notfound-page"/>
 
     <ui:define name="content">
         <div class="exception-type">
-            <p:graphicImage value="#{resource['ultima-layout:images/error.svg']}"/>
+            <p:graphicImage value="#{resource['ultima-layout:images/404.svg']}"/>
         </div>
 
         <div class="card exception-panel">
-            <i class="material-icons">error</i>
-            <h1>Ocorreu uma Exceção</h1>
-            <div class="exception-detail">Entre em contato com o administrador do sistema</div>
+            <i class="material-icons">error_outline</i>
+            <h1>Página Não Encontrada</h1>
+            <div class="exception-detail">O recurso que você está procurando não existe.</div>
             <p:button value="Dashboard" outcome="/dashboard.xhtml" styleClass="secondary"/>
         </div>
     </ui:define>

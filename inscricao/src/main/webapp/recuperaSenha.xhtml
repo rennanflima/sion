@@ -1,54 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Recuperar Senha</title>
-        <h:outputStylesheet library="css" name="sistema.css" />
-        <h:outputScript library="js" name="numeros.js"/>
-    </h:head>
-    <h:body>
-        <p:ajaxStatus styleClass="ajax-status">
-            <f:facet name="start">
-                <h:graphicImage library="images" name="carregando.gif"/>
-            </f:facet>
-            <f:facet name="complete">
-                <h:outputText value=""/>
-            </f:facet>
-        </p:ajaxStatus>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template2.xhtml">
+    <ui:param name="bodyClass" value="login-body"/>
 
-        <div id="reenvia-dialog">
-            <h1>Recuperação de Senha</h1>
-
+    <ui:define name="content">
+        <div class="card cad-panel ui-fluid">
             <h:form id="reenviaSenha" prependId="false">
-
-                <p:messages id="messages" autoUpdate="true" closable="true" />
-
-                <h:panelGrid columns="1" styleClass="grid-login" width="500">
-                    <h:outputText value="Para recuperar sua senha digite o e-mail cadastrado:"  style=""/>
-
-                    <p:spacer />
-                    <h:panelGrid columns="2" style="width: 100%">
-
-                        <p:outputLabel for="email" value="E-mail: "/>
-                        <p:inputText id="email" required="true" value="#{recuperaSenhaBean.email}" 
-                                     label="E-mail" size="50" maxlength="60"
-                                     requiredMessage="O campo 'E-mail' é obrigatório">
-                        </p:inputText>
-
-                        <p:spacer />
-                        <h:panelGroup >
-                            <p:commandButton value="Enviar" update="@form" action="#{recuperaSenhaBean.esqueceuSenha()}"/>
-                            <p:commandButton value="Limpar" update="@form" action="#{recuperaSenhaBean.limparSolicitacaoNovaSenha()}" immediate="true" process="@this"/>
-                            <p:button value="Cancelar" outcome="/login" />
-                        </h:panelGroup>
-                    </h:panelGrid>
-                </h:panelGrid>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:graphicImage value="#{resource['ultima-layout:images/logo-ultima.svg']}"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:messages id="messages" autoUpdate="true" closable="true" />
+                    </div>
+                    <div class="ui-g-12">
+                        <h:outputText value="Para recuperar sua senha digite o e-mail cadastrado:"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <span class="md-inputfield">
+                            <p:inputText id="email" required="true" value="#{recuperaSenhaBean.email}" 
+                                     label="E-mail" maxlength="60"
+                                     requiredMessage="O campo 'E-mail' é obrigatório"/>
+                            <label>Usuário</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:commandButton value="Enviar" update="@form" icon="ui-icon-send" action="#{recuperaSenhaBean.esqueceuSenha()}"/>
+                        <p:commandButton value="Limpar" update="@form" icon="ui-icon-clear" action="#{recuperaSenhaBean.limparSolicitacaoNovaSenha()}" immediate="true" process="@this" styleClass="secondary"/>
+                        <p:button value="Cancelar" outcome="/login.xhtml" icon="ui-icon-arrow-back" styleClass="red-btn"/>
+                    </div>
+                </div>
             </h:form>
         </div>
-    </h:body>
-</html>
+
+        <div class="login-footer">Sion - Sistema de Inscrição Online</div>
+    </ui:define>
+</ui:composition>

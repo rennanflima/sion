@@ -54,7 +54,7 @@
                             </p:column>
 
                             <p:column>
-                                <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{pesquisaConcursoBean.guardaConcursoSessao()}">
+                                <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{pesquisaConcursoBean.guardaConcursoSessao()}" ajax="false">
                                     <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                                 </p:commandButton>
                                 <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >

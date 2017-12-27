@@ -45,24 +45,24 @@
                     <pu:menu widgetVar="me">
                         <p:menuitem id="um_dashboards" outcome="/gerenciar/concurso/home" icon="material-icons " value="Dashboard"/>
 
-                        <p:submenu id="inscricao" label="Inscrição">
-                            <p:menuitem id="inscListaInscritos" value="Lista de Inscritos" outcome="/gerenciar/concurso/inscricao/listaInscritos"/>
-                            <p:menuitem id="inscConfirmados" value="Inscrições confirmadas" outcome="/gerenciar/concurso/inscricao/listaInscritosConfirmados"/>
-                            <p:menuitem id="inscPNE" value="Nessidades Especiais" outcome="/gerenciar/concurso/inscricao/listaInscritosPNE"/>
+                        <p:submenu id="inscricao" label="Inscrição" icon="fa fa-pencil-square-o">
+                            <p:menuitem id="inscListaInscritos" value="Lista de Inscritos" outcome="/gerenciar/concurso/inscricao/listaInscritos" icon="material-icons list"/>
+                            <p:menuitem id="inscConfirmados" value="Inscrições confirmadas" outcome="/gerenciar/concurso/inscricao/listaInscritosConfirmados" icon="material-icons playlist_add_check"/>
+                            <p:menuitem id="inscPNE" value="Nessidades Especiais" outcome="/gerenciar/concurso/inscricao/listaInscritosPNE" icon="fa fa-wheelchair"/>
                         </p:submenu>
-                        <p:menuitem value="Cobrança" outcome="/gerenciar/concurso/inscricao/arquivoRetorno"/>
-                        <p:submenu label="Relatórios">
-                            <p:submenu label="Lista de inscritos">
-                                <p:menuitem value="Geral" action="#{gerenciarConcursoBean.imprimeRelacaoInscritos()}" ajax="false" target="_blank"/>
-                                <p:menuitem value="Por cargo e cidade" outcome="/gerenciar/concurso/relatorios/listaInscritosPorLocalECargo"/>
-                                <p:menuitem value="Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidos()}" ajax="false" target="_blank"/>
-                                <p:menuitem value="Não Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosIndeferidos()}" ajax="false" target="_blank"/>
-                                <p:menuitem value="Necessidades Especiais" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidosPNE()}" ajax="false" target="_blank"/>
+                        <p:menuitem value="Cobrança" outcome="/gerenciar/concurso/inscricao/arquivoRetorno" icon="material-icons account_balance"/>
+                        <p:submenu label="Relatórios" icon="fa fa-file-text-o">
+                            <p:submenu label="Lista de inscritos" icon="material-icons menu">
+                                <p:menuitem value="Geral" action="#{gerenciarConcursoBean.imprimeRelacaoInscritos()}" ajax="false" target="_blank" icon="material-icons format_list_bulleted"/>
+                                <p:menuitem value="Por cargo e cidade" outcome="/gerenciar/concurso/relatorios/listaInscritosPorLocalECargo" icon="material-icons location_on"/>
+                                <p:menuitem value="Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidos()}" ajax="false" target="_blank"  icon="material-icons playlist_add_check"/>
+                                <p:menuitem value="Não Confirmados" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosIndeferidos()}" ajax="false" target="_blank" icon="fa fa-minus-square-o"/>
+                                <p:menuitem value="Necessidades Especiais" action="#{gerenciarConcursoBean.imprimeRelacaoInscritosDeferidosPNE()}" ajax="false" target="_blank" icon="fa fa-wheelchair"/>
                             </p:submenu>
-                            <p:menuitem value="Lista de presença" action="#{gerenciarConcursoBean.imprimeListaPresenca()}" ajax="false" target="_blank"/>
-                            <p:menuitem value="Estastisticas de Inscritos" outcome="/gerenciar/concurso/relatorios/estatisticaInscritos"/>
+                            <p:menuitem value="Lista de presença" action="#{gerenciarConcursoBean.imprimeListaPresenca()}" ajax="false" target="_blank" icon="fa fa-list-alt"/>
+                            <p:menuitem value="Estastisticas de Inscritos" outcome="/gerenciar/concurso/relatorios/estatisticaInscritos" icon="fa fa-bar-chart"/>
                         </p:submenu>
-                        <p:menuitem value="Sair" outcome="/dashboard.xhtml" actionListener="#{gerenciarConcursoBean.removeConcursoSessao()}" />
+                        <p:menuitem value="Sair" outcome="/dashboard.xhtml" icon="material-icons power_settings_new" actionListener="#{gerenciarConcursoBean.removeConcursoSessao()}" />
                     </pu:menu>
                 </div>
             </div>
