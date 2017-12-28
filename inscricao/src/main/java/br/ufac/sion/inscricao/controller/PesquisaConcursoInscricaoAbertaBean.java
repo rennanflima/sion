@@ -48,7 +48,7 @@ public class PesquisaConcursoInscricaoAbertaBean implements Serializable {
     public void inicializar() {
         this.inscricao = null;
         this.concursosInscrito = new ArrayList<>();
-        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
         this.concursos = concursoFacade.findByInscricoesAbertas();
         for (Concurso c : concursos) {
             System.out.println("Concurso: "+c.getTitulo());

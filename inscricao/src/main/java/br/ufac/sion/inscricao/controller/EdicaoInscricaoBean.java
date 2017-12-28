@@ -75,7 +75,7 @@ public class EdicaoInscricaoBean implements Serializable {
 
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
-            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
             this.concurso = inscricao.getCargoConcurso().getConcurso();
             this.localidades = localidadeFacade.findByConcurso(concurso);
             this.local = inscricao.getCargoConcurso().getLocalidade();

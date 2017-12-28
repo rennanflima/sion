@@ -39,7 +39,7 @@ public class InscricoesRealizadasBean implements Serializable {
 
     @PostConstruct
     public void inicializar() {
-        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
         this.inscricoes = inscricaoFacade.findByCandidato(candidato);
     }
 

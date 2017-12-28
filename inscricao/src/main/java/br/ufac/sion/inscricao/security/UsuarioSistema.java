@@ -10,15 +10,15 @@ public class UsuarioSistema extends User {
 
     private static final long serialVersionUID = 1L;
 
-    private Candidato usuario;
+    private Candidato candidato;
 
-    public UsuarioSistema(Candidato usuario, Collection<? extends GrantedAuthority> authorities) {
-        super(usuario.getCpf(), usuario.getSenha(), authorities);
-        this.usuario = usuario;
+    public UsuarioSistema(Candidato candidato, Collection<? extends GrantedAuthority> authorities) {
+        super(candidato.getUsuario().getLogin(), candidato.getUsuario().getSenha(), authorities);
+        this.candidato = candidato;
     }
 
-    public Candidato getUsuario() {
-        return usuario;
+    public Candidato getCandidato() {
+        return candidato;
     }
 
 }

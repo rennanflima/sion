@@ -1,0 +1,60 @@
+ <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Alterar Senha</title>
+        <h:outputStylesheet library="css" name="sistema.css" />
+        <h:outputScript library="js" name="numeros.js"/>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:viewParam name="token" value="#{recuperaSenhaBean.token}" />
+            <f:event listener="#{recuperaSenhaBean.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <h1><h:outputText value="O link que você está tentando acessar expirou!" rendered="#{recuperaSenhaBean.expirado}"/></h1>
+
+        <p:ajaxStatus styleClass="ajax-status">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="carregando.gif"/>
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
+
+        <div id="reenvia-dialog" >
+            <h:form rendered="#{!recuperaSenhaBean.expirado}">
+                <h1>Redefinir Senha</h1>
+
+                <p:messages autoUpdate="true" closable="true" />
+
+                <h:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;" styleClass="grid-login">
+
+                    <p:outputLabel for="senha" value="Digite uma nova senha: "/>
+                    <p:password id="senha" value="#{recuperaSenhaBean.senha}" feedback="true" inline="true"  maxlength="45" size="40"
+                                promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
+                                goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
+                                validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>
+
+                    <p:outputLabel for="confirmaSenha" value="Confirme a senha: "/>
+                    <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45" size="40"
+                                requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
+
+                    <p:spacer />
+                    <h:panelGroup>
+                        <p:commandButton value="Salvar" id="botaoSalvar" action="#{recuperaSenhaBean.trocarSenha()}" update="@form"/>
+                        <p:commandButton value="Limpar" id="botaoLimpar" action="#{recuperaSenhaBean.limparAlterarSenha()}" update="@form"/>
+                        <p:button value="Entrar" outcome="/login" />
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </h:body>
+</html>

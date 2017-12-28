@@ -43,7 +43,7 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
         }
         
         try {
-            candidato = em.createQuery("from Candidato where cpf = :cpf", Candidato.class)
+            candidato = em.createQuery("SELECT c FROM Candidato c JOIN FETCH c.usuario u WHERE c.cpf = :cpf", Candidato.class)
                     .setParameter("cpf", cpf_formatado)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -61,7 +61,7 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
     public Candidato findByEmail(String email) {
         Candidato candidato = null;
         try {
-            candidato = em.createQuery("from Candidato where email = :email", Candidato.class)
+            candidato = em.createQuery("SELECT c FROM Candidato JOIN FETCH c.usuario u WHERE u.email = :email", Candidato.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {

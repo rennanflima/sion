@@ -5,14 +5,13 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:o="http://omnifaces.org/ui">
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">Inscrição</ui:define>
     
     <ui:define name="corpo">
         <f:metadata>
-            <o:viewParam name="concurso" value="#{inscricaoBean.concurso}" />
+            <f:viewParam name="concurso" value="#{inscricaoBean.concurso}" />
             <f:event listener="#{inscricaoBean.inicializar()}" type="preRenderView" />
         </f:metadata>
         <h:form id="frmInscricao">

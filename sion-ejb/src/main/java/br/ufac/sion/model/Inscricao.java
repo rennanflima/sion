@@ -56,6 +56,7 @@ public class Inscricao implements Serializable {
     private LocalDateTime dataJustificativaStatus;
     @OneToOne(mappedBy = "sacado", cascade = CascadeType.ALL)
     private Boleto boleto;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;

@@ -118,7 +118,7 @@ public class InscricaoBean  implements Serializable{
         this.bracosDominante = Arrays.asList(BracoDominante.values());
         this.tiposTelefone = Arrays.asList(TipoTelefone.values());
         if (FacesUtil.isNotPostback()) {
-            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
             if (this.candidato != null) {
                 if(this.candidato.getRg() == null) {
                     this.candidato.setRg(new RG());

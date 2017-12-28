@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -26,11 +27,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -49,16 +50,12 @@ public class Candidato implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidato_id_seq")
     private Long id;
     @NotBlank
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String nome;
     @Column(name = "nome_mae", length = 100)
     private String mae;
     @Column(name = "nome_pai", length = 100)
     private String pai;
-    @Email
-    @NotNull
-    @Column(unique = true, nullable = false)
-    private String email;
     private Escolaridade escolaridade;
     private Sexo sexo = Sexo.MASCULINO;
     @Column(name = "estado_civil")
@@ -83,12 +80,11 @@ public class Candidato implements Serializable {
         @AttributeOverride(name = "numero", column = @Column(name = "num_telefone"))
     })
     private List<Telefone> telefones = new ArrayList<>();
-    @Column(nullable = false, length = 45)
-    private String senha;
-    @Column(nullable = false, length = 40)
-    private String permissao;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidato")
     private List<Inscricao> inscricoes = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -120,14 +116,6 @@ public class Candidato implements Serializable {
 
     public void setPai(String pai) {
         this.pai = pai;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Escolaridade getEscolaridade() {
@@ -202,28 +190,20 @@ public class Candidato implements Serializable {
         this.telefones = telefones;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getPermissao() {
-        return permissao;
-    }
-
-    public void setPermissao(String permissao) {
-        this.permissao = permissao;
-    }
-
     public List<Inscricao> getInscricoes() {
         return inscricoes;
     }
 
     public void setInscricoes(List<Inscricao> inscricoes) {
         this.inscricoes = inscricoes;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void adicionaTelefone(Telefone fone, Integer linha) {

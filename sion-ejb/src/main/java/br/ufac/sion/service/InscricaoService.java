@@ -76,7 +76,7 @@ public class InscricaoService {
                 assunto = "Solicitação de inscrição no " + inscricao.getCargoConcurso().getConcurso().getTitulo();
             }
 
-            infoEmail.setPara(inscricao.getCandidato().getEmail());
+            infoEmail.setPara(inscricao.getCandidato().getUsuario().getEmail());
             infoEmail.setAssunto(assunto);
             infoEmail.setCorpo(geraCorpoEmailSolicitacaoInscricao(inscricao));
             enviaEmailService.processaEnvioDeEmail(infoEmail);

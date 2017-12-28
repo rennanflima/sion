@@ -19,12 +19,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AppUserDetailsService implements UserDetailsService {
 
-    CandidatoFacadeLocal usuarioFacade = lookupCandidatoFacadeLocal();
+    CandidatoFacadeLocal candidatoFacade = lookupCandidatoFacadeLocal();
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         
-        Candidato usuario = usuarioFacade.findByCPF(login);
+        Candidato usuario = candidatoFacade.findByCPF(login);
 
         UsuarioSistema user = null;
 
@@ -36,7 +36,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> getGrupos(Candidato usuario) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + usuario.getPermissao().toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_CANDIDATO"));
         return authorities;
     }
 

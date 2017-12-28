@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -29,10 +31,12 @@ public class Cidade implements Serializable {
     @SequenceGenerator(name="cidade_id_seq", sequenceName = "cidade_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidade_id_seq")
     private Long id;
+    @NotBlank
     @Column(nullable = false, length = 60)
     private String nome;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "estado_id",nullable = false)
+    @JoinColumn(name = "estado_id")
     private Estado estado = new Estado();
     private boolean capital;
 

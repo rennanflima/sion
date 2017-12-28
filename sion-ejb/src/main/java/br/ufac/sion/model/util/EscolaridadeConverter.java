@@ -14,16 +14,19 @@ import javax.persistence.Converter;
  * @author rennan.lima
  */
 @Converter(autoApply = true)
-public class EscolaridadeConverter implements AttributeConverter<Escolaridade, String>{
+public class EscolaridadeConverter implements AttributeConverter<Escolaridade, String> {
 
     @Override
     public String convertToDatabaseColumn(Escolaridade attribute) {
-        return attribute.toString();
+        if (attribute != null) {
+            return attribute.toString();
+        }
+        return "";
     }
 
     @Override
     public Escolaridade convertToEntityAttribute(String dbData) {
         return Escolaridade.valueOf(dbData);
     }
-    
+
 }

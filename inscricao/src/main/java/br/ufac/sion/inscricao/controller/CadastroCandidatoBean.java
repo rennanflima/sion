@@ -9,6 +9,7 @@ import br.ufac.sion.inscricao.util.jsf.FacesUtil;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Endereco;
 import br.ufac.sion.model.RG;
+import br.ufac.sion.model.Usuario;
 import br.ufac.sion.service.CandidatoService;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -42,7 +43,7 @@ public class CadastroCandidatoBean implements Serializable {
 
     public void salvar() {
         try {
-            this.candidato = this.candidatoService.salvar(candidato);
+             this.candidatoService.salvar(candidato);
             FacesUtil.addSuccessMessage("Candidato salvo com sucesso!");
            limpar();
         } catch (Exception e) {
@@ -52,8 +53,7 @@ public class CadastroCandidatoBean implements Serializable {
 
     public void limpar() {
         this.candidato = new Candidato();
-        this.candidato.setRg(new RG());
-        this.candidato.setEndereco(new Endereco());
+        this.candidato.setUsuario(new Usuario());
     }
 
     public boolean isEditando() {

@@ -36,13 +36,13 @@
                     </div>
                     <div class="ui-g-12">
                         <span class="md-inputfield">
-                            <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.email}" maxlength="60" />
+                            <p:inputText id="email" required="true" value="#{cadastroCandidatoBean.candidato.usuario.email}" maxlength="60" />
                             <label>E-mail</label>
                         </span>
                     </div>
                     <div class="ui-g-12">
                         <span class="md-inputfield">
-                            <p:password id="senha" value="#{cadastroCandidatoBean.candidato.senha}" feedback="true" inline="true"
+                            <p:password id="senha" value="#{cadastroCandidatoBean.candidato.usuario.senha}" feedback="true" inline="true"
                                 promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
                                 goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
                                 validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>

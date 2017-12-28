@@ -24,13 +24,13 @@ public class RG implements Serializable {
     private String numero;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "rg_orgao_expedidor_id", nullable = false)
+    @JoinColumn(name = "rg_orgao_expedidor_id")
     private OrgaoExpedidor orgaoExpedidor;
     @Column(name = "rg_data_expedicao")
     private LocalDate dataExpedicao;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "rg_estado_id", nullable = false)
+    @JoinColumn(name = "rg_estado_id")
     private Estado estado = new Estado();
 
     public String getNumero() {

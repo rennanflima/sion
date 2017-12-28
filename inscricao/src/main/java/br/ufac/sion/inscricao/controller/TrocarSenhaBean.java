@@ -41,7 +41,7 @@ public class TrocarSenhaBean implements Serializable {
 
     @PostConstruct
     public void inicializar() {
-        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+        this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
     }
 
     public String getLogin() {

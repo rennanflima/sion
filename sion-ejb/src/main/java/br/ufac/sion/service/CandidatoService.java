@@ -23,6 +23,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import br.ufac.sion.dao.TokenRecuperacaoFacadeLocal;
+import br.ufac.sion.model.Usuario;
 
 /**
  *
@@ -47,14 +48,14 @@ public class CandidatoService {
 
     private InfoEmail infoEmail;
 
-    public Candidato salvar(Candidato candidato) throws NegocioException {
+    public void salvar(Candidato candidato) throws NegocioException {
         geraSenha = new GeraSenha();
-
-        candidato.setPermissao("CANDIDATO");
-        candidato.setSenha(geraSenha.ecripta(candidato.getSenha()));
+        
+        candidato.getUsuario().setNome(candidato.getNome());
+        candidato.getUsuario().setSenha(geraSenha.ecripta(candidato.getUsuario().getSenha()));
+        candidato.getUsuario().setLogin(candidato.getCpf());
         try {
             candidato = em.merge(candidato);
-            return candidato;
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
         }
@@ -72,8 +73,8 @@ public class CandidatoService {
     public void alterarSenha(String oldSenha, String senha, Candidato candidato) throws NegocioException {
         String temp;
         temp = new GeraSenha().ecripta(oldSenha);
-        if (temp.equals(candidato.getSenha())) {
-            candidato.setSenha(new GeraSenha().ecripta(senha));
+        if (temp.equals(candidato.getUsuario().getSenha())) {
+            candidato.getUsuario().setSenha(new GeraSenha().ecripta(senha));
             em.merge(candidato);
         } else {
             throw new NegocioException("Sua senha antiga não corresponde a que está cadastrada");
@@ -86,13 +87,13 @@ public class CandidatoService {
         TokenRecuperacao tokenRecuperacao = new TokenRecuperacao();
         if (candidato != null) {
             try {
-                tokenRecuperacao.setToken(Base64.getEncoder().encodeToString(candidato.getEmail().getBytes("utf-8")));
+                tokenRecuperacao.setToken(Base64.getEncoder().encodeToString(candidato.getUsuario().getEmail().getBytes("utf-8")));
                 tokenRecuperacao.setCandidato(candidato);
                 tokenRecuperacao.setDataVencimento(LocalDateTime.now().plusHours(5));
 
                 tokenRecuperacao = tokenRecuperacaoFacade.save(tokenRecuperacao);
 
-                infoEmail.setPara(candidato.getEmail());
+                infoEmail.setPara(candidato.getUsuario().getEmail());
                 infoEmail.setAssunto("Solicitação de Recuperação de Senha - SION");
                 infoEmail.setCorpo(geraCorpoEmailSolicitacaoRecuperacaoSenha(candidato.getNome(), tokenRecuperacao.getToken()));
                 enviaEmailService.processaEnvioDeEmail(infoEmail);
@@ -115,10 +116,10 @@ public class CandidatoService {
         infoEmail = new InfoEmail();
         try {
             Candidato candidato = tokenRecuperacao.getCandidato();
-            candidato.setSenha(new GeraSenha().ecripta(senha));
+            candidato.getUsuario().setSenha(new GeraSenha().ecripta(senha));
             em.merge(candidato);
             tokenRecuperacaoFacade.remove(tokenRecuperacao);
-            infoEmail.setPara(candidato.getEmail());
+            infoEmail.setPara(candidato.getUsuario().getEmail());
             infoEmail.setAssunto("Confirmação de Alteração de Senha - SION");
             infoEmail.setCorpo(geraCorpoEmailConfirmacaoAlteracaoSenha(candidato.getNome()));
             enviaEmailService.processaEnvioDeEmail(infoEmail);

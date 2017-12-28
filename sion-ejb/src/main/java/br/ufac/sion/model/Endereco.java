@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -18,18 +20,24 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class Endereco implements Serializable {
 
+    @NotBlank
     @Column(name = "end_logradouro", length = 100)
     private String logradouro;
+    @NotNull
     @Column(name = "end_numero")
     private Integer numero;
+    @NotBlank
     @Column(name = "end_complemento", length = 60)
     private String complemento;
+    @NotBlank
     @Column(name = "end_bairro", length = 30)
     private String bairro;
+    @NotBlank
     @Column(name = "end_cep", length = 10)
     private String cep;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "cidade_id", nullable = false)
+    @JoinColumn(name = "cidade_id")
     private Cidade cidade = new Cidade();
 
     public String getLogradouro() {

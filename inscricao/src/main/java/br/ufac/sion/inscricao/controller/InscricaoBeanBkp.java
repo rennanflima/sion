@@ -75,7 +75,7 @@ public class InscricaoBeanBkp implements Serializable {
 
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
-            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getUsuario().getCpf());
+            this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
             this.concurso = concursoFacade.findById(concurso.getId());
             this.localidades = localidadeFacade.findByConcurso(concurso);
         }

@@ -21,7 +21,7 @@ public class Seguranca {
         UsuarioSistema usuarioLogado = getUsuarioLogado();
 
         if (usuarioLogado != null) {
-            nome = (candidatoFacade.findByCPF(usuarioLogado.getUsuario().getCpf())).getNome();
+            nome = (candidatoFacade.findByCPF(usuarioLogado.getCandidato().getCpf())).getNome();
         }
 
         return nome;
