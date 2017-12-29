@@ -43,9 +43,9 @@ public class CadastroCandidatoBean implements Serializable {
 
     public void salvar() {
         try {
-             this.candidatoService.salvar(candidato);
+            this.candidato = this.candidatoService.salvar(candidato);
             FacesUtil.addSuccessMessage("Candidato salvo com sucesso!");
-           limpar();
+            limpar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao salvar o candidato: " + e.getMessage());
         }

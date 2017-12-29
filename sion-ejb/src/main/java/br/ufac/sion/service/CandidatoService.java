@@ -48,7 +48,7 @@ public class CandidatoService {
 
     private InfoEmail infoEmail;
 
-    public void salvar(Candidato candidato) throws NegocioException {
+    public Candidato salvar(Candidato candidato) throws NegocioException {
         geraSenha = new GeraSenha();
         
         candidato.getUsuario().setNome(candidato.getNome());
@@ -56,6 +56,7 @@ public class CandidatoService {
         candidato.getUsuario().setLogin(candidato.getCpf());
         try {
             candidato = em.merge(candidato);
+            return candidato;
         } catch (Exception e) {
             throw new NegocioException(e.getMessage());
         }

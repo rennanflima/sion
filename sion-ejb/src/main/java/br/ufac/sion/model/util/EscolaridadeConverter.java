@@ -18,10 +18,7 @@ public class EscolaridadeConverter implements AttributeConverter<Escolaridade, S
 
     @Override
     public String convertToDatabaseColumn(Escolaridade attribute) {
-        if (attribute != null) {
-            return attribute.toString();
-        }
-        return "";
+        return attribute.toString();
     }
 
     @Override

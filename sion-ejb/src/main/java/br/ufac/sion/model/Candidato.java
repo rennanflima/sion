@@ -56,7 +56,7 @@ public class Candidato implements Serializable {
     private String mae;
     @Column(name = "nome_pai", length = 100)
     private String pai;
-    private Escolaridade escolaridade;
+    private Escolaridade escolaridade = Escolaridade.NIVEL_FUNDAMENTAL;
     private Sexo sexo = Sexo.MASCULINO;
     @Column(name = "estado_civil")
     private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
@@ -82,8 +82,9 @@ public class Candidato implements Serializable {
     private List<Telefone> telefones = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidato")
     private List<Inscricao> inscricoes = new ArrayList<>();
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
     public Long getId() {
