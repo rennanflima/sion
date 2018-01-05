@@ -70,4 +70,27 @@ public class CandidatoFacade extends AbstractFacade<Candidato, Long> implements 
         return candidato;
     }
 
+    @Override
+    public Candidato findByCPFWithInscricoes(String cpf) {
+        
+        Candidato candidato = null;
+        String cpf_formatado = "";
+        
+        if(cpf.length() == 11){
+            cpf_formatado = cpf.substring(0,3) + "." + cpf.substring(3,6) + "." + cpf.substring(6,9) + "-" + cpf.substring(9,11);
+        } else {
+            cpf_formatado = cpf;
+        }
+        
+        try {
+            candidato = em.createQuery("SELECT c FROM Candidato c JOIN FETCH c.usuario u LEFT JOIN FETCH c.inscricoes i WHERE c.cpf = :cpf", Candidato.class)
+                    .setParameter("cpf", cpf_formatado)
+                    .getSingleResult();
+            System.out.println("Candidato = "+candidato.getId());
+        } catch (NoResultException e) {
+            System.out.println("Nenhum candidato econtrado com o CPF informado.");
+        }
+        return candidato;
+    }
+
 }

@@ -40,7 +40,6 @@ public class Inscricao implements Serializable {
     @SequenceGenerator(name="inscricao_id_seq", sequenceName = "inscricao_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inscricao_id_seq")
     private Long id;
-    @NaturalId
     @Column(length = 100)
     private String numero;
     @Column(name = "data_inscricao")

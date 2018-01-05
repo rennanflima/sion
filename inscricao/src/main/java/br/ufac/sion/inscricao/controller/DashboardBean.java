@@ -6,42 +6,65 @@
 package br.ufac.sion.inscricao.controller;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
+import br.ufac.sion.dao.ConcursoFacadeLocal;
+import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.inscricao.security.UsuarioLogado;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.Concurso;
+import br.ufac.sion.model.Inscricao;
+import br.ufac.sion.service.InscricaoService;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**
  *
- * @author rennan.lima
+ * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
-public class HomeBean implements Serializable {
+public class DashboardBean implements Serializable {
+
+    @EJB
+    private InscricaoFacadeLocal inscricaoFacade;
+
+    @EJB
+    private InscricaoService inscricaoService;
+
+    @EJB
+    private ConcursoFacadeLocal concursoFacade;
 
     @EJB
     private CandidatoFacadeLocal candidatoFacade;
 
+    @UsuarioLogado
+    private UsuarioSistema usuario;
+
+    private List<Concurso> concursos;
     private Candidato candidato;
+    private List<Inscricao> inscricoes;
 
     @PostConstruct
     public void inicializar() {
         this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
+        this.concursos = concursoFacade.findByInscricoesAbertas();
+        this.inscricoes = inscricaoFacade.findByCandidato(candidato);
     }
 
-    public Candidato getCandidato() {
-        return candidato;
+    public List<Concurso> getConcursos() {
+        return concursos;
     }
 
-    public void setCandidato(Candidato candidato) {
-        this.candidato = candidato;
+    public List<Inscricao> getInscricoes() {
+        return inscricoes;
     }
-
+    
     private UsuarioSistema getUsuarioLogado() {
         UsuarioSistema usuario = null;
 

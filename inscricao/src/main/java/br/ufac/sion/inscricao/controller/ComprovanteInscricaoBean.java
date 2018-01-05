@@ -17,16 +17,16 @@ import br.ufac.sion.util.boleto.EmissorBoleto;
 import java.io.OutputStream;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class ComprovanteInscricaoBean implements Serializable {
 

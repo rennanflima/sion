@@ -68,7 +68,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
                     handled = true;
                     exception.printStackTrace();
                     log.error("Erro de sistema (inscricao): " + exception.getMessage(), exception);
-                    //redirect("/Erro.xhtml");
+                    redirect("/Erro.xhtml");
                 }
             } finally {
                 if (handled) {

@@ -11,16 +11,16 @@ import br.ufac.sion.model.TokenRecuperacao;
 import br.ufac.sion.service.CandidatoService;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import br.ufac.sion.dao.TokenRecuperacaoFacadeLocal;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class RecuperaSenhaBean implements Serializable {
     

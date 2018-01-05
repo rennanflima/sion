@@ -27,5 +27,7 @@ public interface CandidatoFacadeLocal {
     public Candidato findByCPF(String cpf);
     
     public Candidato findByEmail(String email);
+    
+    public Candidato findByCPFWithInscricoes(String cpf);
 
 }

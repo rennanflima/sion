@@ -7,6 +7,7 @@ package br.ufac.sion.inscricao.controller;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.dao.InscricaoFacadeLocal;
+import br.ufac.sion.inscricao.security.UsuarioLogado;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Inscricao;
@@ -14,16 +15,16 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class PaginaAcompanhamentoBean implements Serializable {
 
@@ -32,6 +33,9 @@ public class PaginaAcompanhamentoBean implements Serializable {
 
     @EJB
     private InscricaoFacadeLocal inscricaoFacade;
+
+    @UsuarioLogado
+    private UsuarioSistema usuario;
 
     private Candidato candidato;
 
@@ -62,4 +66,5 @@ public class PaginaAcompanhamentoBean implements Serializable {
 
         return usuario;
     }
+
 }

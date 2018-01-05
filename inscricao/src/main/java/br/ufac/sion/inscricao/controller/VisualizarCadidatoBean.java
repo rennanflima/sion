@@ -6,74 +6,34 @@
 package br.ufac.sion.inscricao.controller;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
-import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
-import br.ufac.sion.inscricao.util.jsf.FacesUtil;
 import br.ufac.sion.model.Candidato;
-import br.ufac.sion.service.CandidatoService;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Named
 @ViewScoped
-public class TrocarSenhaBean implements Serializable {
+public class VisualizarCadidatoBean implements Serializable {
 
     @EJB
     private CandidatoFacadeLocal candidatoFacade;
 
-    @EJB
-    private CandidatoService candidatoService;
-
     private Candidato candidato;
-    private String login;
-    private Integer mat;
-    private String senha;
-    private String oldSenha;
 
-    @PostConstruct
     public void inicializar() {
         this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public Integer getMat() {
-        return mat;
-    }
-
-    public void setMat(Integer mat) {
-        this.mat = mat;
-    }
-
-    public String getOldSenha() {
-        return oldSenha;
-    }
-
-    public void setOldSenha(String oldSenha) {
-        this.oldSenha = oldSenha;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public VisualizarCadidatoBean() {
+        candidato = new Candidato();
     }
 
     public Candidato getCandidato() {
@@ -82,16 +42,6 @@ public class TrocarSenhaBean implements Serializable {
 
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
-    }
-
-    public void trocarSenha() {
-        try {
-            candidatoService.alterarSenha(oldSenha, senha, candidato);
-            FacesUtil.addSuccessMessage("Sua senha foi alterada com sucesso.");
-        } catch (NegocioException ex) {
-            FacesUtil.addErrorMessage(ex.getMessage());
-        }
-
     }
 
     private UsuarioSistema getUsuarioLogado() {
@@ -104,10 +54,5 @@ public class TrocarSenhaBean implements Serializable {
         }
 
         return usuario;
-    }
-
-    public void limpar() {
-        oldSenha = null;
-        senha = null;
     }
 }

@@ -7,14 +7,14 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@ManagedBean
+@Named
 @SessionScoped
 public class LoginBean implements Serializable {
 

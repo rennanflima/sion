@@ -17,7 +17,6 @@ import br.ufac.sion.util.conversor.DateConversor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +24,6 @@ import java.util.TreeMap;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -87,9 +81,6 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public List<Inscricao> findByConcurso(FiltroInscritos filtro) {
-//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso", Inscricao.class)
-//                .setParameter("concurso", concurso)
-//                .getResultList();
         Criteria criteria = criarCriteriaParaFiltro(filtro);
 
         criteria.setFirstResult(filtro.getPrimeiroRegistro());
@@ -100,17 +91,9 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public List<Inscricao> findByConcursoAndConfirmadasESubJudice(FiltroInscritos filtro) {
-//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Inscricao.class)
-//                .setParameter("concurso", concurso)
-//                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
-//                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
-//                .setFirstResult(first)
-//                .setMaxResults(pageSize)
-//                .getResultList();
 
         Criteria criteria = criarCriteriaParaFiltro(filtro);
 
-        //criteria.createAlias("candidato", "c");
         criteria.setFirstResult(filtro.getPrimeiroRegistro());
         criteria.setMaxResults(filtro.getQuantidadeRegistros());
 
@@ -118,21 +101,13 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
         criteria.add(Restrictions.or(confirmada, judice));
 
-        //criteria.addOrder(Order.asc("c.nome"));
         return criteria.list();
     }
 
     @Override
     public List<Inscricao> findByConcursoAndPNE(FiltroInscritos filtro) {
-//        return em.createQuery("SELECT i FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND i.NecessidadeEspecial.portador = :portador OR i.NecessidadeEspecial.necessitaAtendimento = :necessitaAtendimento", Inscricao.class)
-//                .setParameter("concurso", concurso)
-//                .setParameter("portador", true)
-//                .setParameter("necessitaAtendimento", true)
-//                .getResultList();
-
         Criteria criteria = criarCriteriaParaFiltro(filtro);
 
-        //criteria.createAlias("necessidadeEspecial", "ne");
         criteria.setFirstResult(filtro.getPrimeiroRegistro());
         criteria.setMaxResults(filtro.getQuantidadeRegistros());
 
@@ -140,7 +115,6 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         Criterion necessitaAtendimento = Restrictions.eq("necessidadeEspecial.necessitaAtendimento", true);
         criteria.add(Restrictions.or(portador, necessitaAtendimento));
 
-        //criteria.addOrder(Order.asc("c.nome"));
         return criteria.list();
     }
 
@@ -193,12 +167,6 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
     @Override
     public int contaInscricoesConfirmadasESubJudice(FiltroInscritos filtro) {
-//        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso.concurso = :concurso AND status = :confirmada OR status = :judice", Long.class)
-//                .setParameter("concurso", concurso)
-//                .setParameter("confirmada", SituacaoInscricao.CONFIRMADA)
-//                .setParameter("judice", SituacaoInscricao.SUB_JUDICE)
-//                .getSingleResult();
-
         Criteria criteria = criarCriteriaParaFiltro(filtro);
         Criterion confirmada = Restrictions.eq("status", SituacaoInscricao.CONFIRMADA);
         Criterion judice = Restrictions.eq("status", SituacaoInscricao.SUB_JUDICE);
@@ -296,7 +264,6 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
     public int contaInscricoesPNE(FiltroInscritos filtro) {
         Criteria criteria = criarCriteriaParaFiltro(filtro);
 
-        //criteria.createAlias("necessidadeEspecial", "ne");
         Criterion portador = Restrictions.eq("necessidadeEspecial.portador", true);
         Criterion necessitaAtendimento = Restrictions.eq("necessidadeEspecial.necessitaAtendimento", true);
         criteria.add(Restrictions.or(portador, necessitaAtendimento));
@@ -305,7 +272,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
 
         return ((Number) criteria.uniqueResult()).intValue();
     }
-    
+
     @Override
     public Long encontrarQuatidadeDeInscricoesPorCargo(CargoConcurso cargoConcurso, String status) {
 
@@ -324,53 +291,7 @@ public class InscricaoFacade extends AbstractFacade<Inscricao, Long> implements 
         criteria.setProjection(Projections.rowCount());
 
         return ((Number) criteria.uniqueResult()).longValue();
-//        return em.createQuery("SELECT count(i) FROM Inscricao i WHERE i.cargoConcurso = :cargo", Long.class)
-//                .setParameter("cargo", cargoConcurso)
-//                .getSingleResult();
     }
-
-//    @Override
-//    public ResultSet findInscritosByConcurso(Concurso concurso) {
-//        Session session = (Session) em;
-//        SessionFactoryImpl sfi = (SessionFactoryImpl) session.getSessionFactory();
-//        ResultSet rs = null;
-//        try {
-//            Connection con = sfi.getConnectionProvider().getConnection();
-//            PreparedStatement ps = con.prepareStatement("SELECT i.numero AS ficha_inscricao_numero_inscricao, "
-//                    + "cand.nome AS ficha_inscricao_nome, "
-//                    + "cand.cpf AS ficha_inscricao_cpf, "
-//                    + "i.data_inscricao AS ficha_inscricao_data_cadastro, "
-//                    + "CONCAT(cc.codigo,' - ',c.descricao)  AS ficha_inscricao_cargo, "
-//                    + "l.nome AS ficha_inscricao_local, "
-//                    + "i.portador  AS ficha_inscricao_possui_deficiencia, "
-//                    + "i.`status` AS ficha_inscricao_situacao, "
-//                    + "conc.titulo AS concurso_nome "
-//                    + "FROM "
-//                    + "inscricao i, "
-//                    + "candidato cand, "
-//                    + "cargo c, "
-//                    + "localidade l, "
-//                    + "concurso conc, "
-//                    + "cargo_concurso cc "
-//                    + "WHERE "
-//                    + "i.candidato_id = cand.id AND "
-//                    + "i.cargo_concurso_id = cc.id AND "
-//                    + "cc.cargo_id = c.id AND "
-//                    + "cc.localidade_id = l.id AND "
-//                    + "cc.concurso_id = conc.id AND "
-//                    + "conc.id = ? "
-//                    + "ORDER BY "
-//                    + "l.nome, "
-//                    + "c.descricao, "
-//                    + "cand.nome ");
-//            ps.setLong(1, concurso.getId());
-//            rs = ps.executeQuery();
-//            return rs;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(InscricaoFacade.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//    }
 
     @Override
     public List<Inscricao> findByCargoAndLocalidade(FiltroInscritosRelatorio filtroRelatorio) {

@@ -26,7 +26,7 @@ public class Insencao implements Serializable {
     @Column(name = "motivo_negacao")
     private String motivoNegacao;
     @Column(name = "percentual_insencao")
-    private PercentualInsencao percentualInsencao;
+    private PercentualInsencao percentualInsencao = PercentualInsencao.ZERO_POR_CENTO;
 
     public boolean isRequerInsencao() {
         return requerInsencao;

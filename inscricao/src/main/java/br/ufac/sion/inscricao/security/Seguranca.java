@@ -2,13 +2,14 @@ package br.ufac.sion.inscricao.security;
 
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class Seguranca {
 
@@ -27,6 +28,8 @@ public class Seguranca {
         return nome;
     }
 
+    @Produces
+    @UsuarioLogado
     private UsuarioSistema getUsuarioLogado() {
         UsuarioSistema usuario = null;
 

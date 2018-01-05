@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="title">Dashboard</ui:define>
@@ -13,16 +13,53 @@
         <h:form id="frmPesquisaConcurso" style="margin-top: 20px;">
             <div class="ui-g">
                 <div class="ui-g-12">
+                    <div class="card  card-w-title ui-fluid">
+                        <h1>Minhas Inscrições</h1>
+
+                        <p:dataTable id="inscricoesTable" var="inscricao" value="#{dashboardBean.inscricoes}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum inscrição encontrada." rows="20" reflow="true"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                            <p:column headerText="#">
+                                <h:outputText value="#{linha + 1}"/>
+                            </p:column>
+
+                            <p:column headerText="Número Inscrição">
+                                <h:outputText value="#{inscricao.numero}"/>
+                            </p:column>
+
+                            <p:column headerText="Concurso">
+                                <h:outputText value="#{inscricao.cargoConcurso.concurso.titulo}"/>
+                            </p:column>
+
+                            <p:column headerText="Situação do concurso">
+                                <h:outputText value="#{inscricao.cargoConcurso.concurso.status.descricao}"/>
+                            </p:column>
+
+                            <p:column headerText="Situação da Inscrição">
+                                <h:outputText value="#{inscricao.status.descricao}"/>
+                            </p:column>
+
+                            <p:column>
+                                <p:button icon="ui-icon-pencil" value="Editar Inscrição" styleClass="cyan-btn" outcome="/candidatos/inscricao" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}" style="font-size: 0.8em" disabled="#{inscricao.confirmada}">
+                                    <f:param name="inscricao" value="#{inscricao.id}"/>
+                                </p:button>
+                                <p:button value="Comprovante Inscrição" styleClass="teal-btn" icon="ui-icon-print" outcome="/candidatos/comprovanteInscricao" style="font-size: 0.8em">
+                                    <f:param name="inscricao" value="#{inscricao.id}"/>
+                                </p:button>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
                     <div class="card  card-w-title">
                         <h1>Concursos com inscrições abertas</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
 
-                        <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoInscricaoAbertaBean.concursos}" rowIndexVar="linha"
-                                     style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20"
+                        <p:dataTable id="concursosTable" var="concurso" value="#{dashboardBean.concursos}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                            <p:column headerText="#" style="text-align: center; width: 20px;">
+                            <p:column headerText="#">
                                 <h:outputText value="#{linha + 1}"/>
                             </p:column>
 
@@ -30,7 +67,7 @@
                                 <h:outputText value="#{concurso.titulo}"/>
                             </p:column>
 
-                            <p:column headerText="Período de Inscrição" style="text-align: center; width: 300px;">
+                            <p:column headerText="Período de Inscrição">
                                 <h:outputText value="#{concurso.dataInicioInscricao}">
                                     <f:converter converterId="localDateTimeConversor"/>
                                 </h:outputText>
@@ -40,21 +77,17 @@
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Situação" style="width: 100px; text-align: center;">
+                            <p:column headerText="Situação">
                                 <h:outputText value="#{concurso.status.descricao}"/>
                             </p:column>
 
-                            <p:column style="width: 330px; text-align: center;">
-                                <ui:repeat value="#{pesquisaConcursoInscricaoAbertaBean.concursosInscrito}" var="ci">
-                                    <p:button icon="ui-icon-pencil" rendered="#{ci.cargoConcurso.concurso.id != concurso.id}" title="Inscrever" value="Inscrever" outcome="/candidatos/insc">
+                            <p:column>
+                                <ui:repeat value="#{dashboardBean.inscricoes}" var="ci">
+                                    <p:button icon="ui-icon-pencil" styleClass="green-btn"  title="Inscrever-se" rendered="#{ci.cargoConcurso.concurso.id != concurso.id}" value="Inscrever-se" outcome="/candidatos/inscricao">
                                         <f:param name="concurso" value="#{concurso.id}"/>
                                     </p:button>
-                                    <p:button value="Editar Inscrição" outcome="/candidatos/insc" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}" style="font-size: 0.8em" disabled="#{inscricao.confirmada}">
-                                        <f:param name="concurso" value="#{concurso.id}"/>
-                                    </p:button>
-                                    <p:button value="Comprovante Inscrição" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}" outcome="/candidatos/comprovanteInscricao" style="font-size: 0.8em">
-                                        <f:param name="inscricao" value="#{inscricao.id}"/>
-                                    </p:button>
+
+                                    <p:button icon="ui-icon-pencil" disabled="true" styleClass="green-btn" value="Inscrição já realizada" rendered="#{ci.cargoConcurso.concurso.id == concurso.id}"/>
                                 </ui:repeat>
                             </p:column>
                         </p:dataTable>

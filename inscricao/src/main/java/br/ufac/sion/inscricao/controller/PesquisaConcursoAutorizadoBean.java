@@ -11,14 +11,14 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class PesquisaConcursoAutorizadoBean implements Serializable {
 

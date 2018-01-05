@@ -10,10 +10,10 @@
     <ui:define name="title">Redefinir Senha</ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h:form>
+        <h:form>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card">
                         <h1>Redefinir Senha</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
@@ -24,28 +24,38 @@
                                 <p:commandButton value="Limpar" id="botaoLimpar" action="#{trocarSenhaBean.limpar()}" update="@form"/>
                             </p:toolbarGroup>
                         </p:toolbar>
-
-                        <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
-                                     columnClasses="rotulo, campo">
-                            <p:outputLabel for="oldSenha" value="Senha Antiga: "/>
-                            <p:password id="oldSenha" value="#{trocarSenhaBean.oldSenha}" required="true" label="Senha Antiga" maxlength="45" size="40"
-                                        requiredMessage="O campo 'Senha Antiga' é obrigatório"/>
-
-                            <p:outputLabel for="senha" value="Digite uma nova senha: "/>
-                            <p:password id="senha" value="#{trocarSenhaBean.senha}" feedback="true" inline="true"  maxlength="45" size="40"
-                                        promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
-                                        goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
-                                        validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>
-
-                            <p:outputLabel for="confirmaSenha" value="Confirme a senha: "/>
-                            <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45" size="40"
-                                        requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
-
-                        </p:panelGrid>
-                    </h:form>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card">
+                            <p:panelGrid id="painel" columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-3,ui-grid-col-5"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
+                                <p:outputLabel for="oldSenha" value="Senha Antiga: "/>
+                                <p:password id="oldSenha" value="#{trocarSenhaBean.oldSenha}" required="true" label="Senha Antiga" maxlength="45"
+                                            requiredMessage="O campo 'Senha Antiga' é obrigatório"/>
+
+                                <p:outputLabel for="senha" value="Digite uma nova senha: "/>
+                                <p:password id="senha" value="#{trocarSenhaBean.senha}" feedback="true" inline="true"  maxlength="45"
+                                            promptLabel="Por favor, digite uma senha!" weakLabel="Fraca"
+                                            goodLabel="Boa" strongLabel="Forte" match="confirmaSenha" label="Digite uma nova senha" required="true"
+                                            validatorMessage="As senhas não correspondem" requiredMessage="O campo 'Digite uma nova senha' é obrigatório"/>
+
+                                <p:outputLabel for="confirmaSenha" value="Confirme a senha: "/>
+                                <p:password id="confirmaSenha" label="Confirme a senha" required="true" maxlength="45"
+                                            requiredMessage="O campo 'Confirme a senha' é obrigatório"/>
+
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>

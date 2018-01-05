@@ -4,8 +4,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:panelGrid id="painelEnd" columns="4" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
-                 columnClasses="rotulo, campo, rotulo, campo">
+    <p:panelGrid id="painelEnd" columns="4"
+                 layout="grid"
+                 columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                 styleClass="ui-panelgrid-blank form-group ui-fluid"
+                 style="border:0px none; background-color:transparent; padding-top: 20px;">
+    
         <p:outputLabel value="CEP" for="cep"/>
         <p:inputMask id="cep" mask="99.999-999" value="#{inscricaoBean.candidato.endereco.cep}">
             <p:ajax event="blur" listener="#{inscricaoBean.consultaCep()}" update="painelEnd"/>

@@ -12,7 +12,6 @@ import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.model.vo.FiltroInscritos;
 import br.ufac.sion.model.vo.FiltroInscritosRelatorio;
-import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public interface InscricaoFacadeLocal {
     public void remove(Inscricao inscricao);
 
     public Inscricao findById(Long id);
-
+    
     public List<Inscricao> findAll();
 
     public List<Inscricao> findByCandidato(Candidato candidato);

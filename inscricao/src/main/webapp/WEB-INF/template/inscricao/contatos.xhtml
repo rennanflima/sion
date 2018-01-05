@@ -3,24 +3,24 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-              
-    
-    <p:commandButton value="Adicionar telefone" oncomplete="PF('inclusaoTelefoneDialog').show(); return false;" 
-                     style="margin-top: 20px;" update=":frmInscricao:inclusaoPanel"/>
 
-    <p:dataTable id="telefonesTable" var="telefone" value="#{inscricaoBean.candidato.telefones}"
+
+    <p:commandButton value="Adicionar telefone" oncomplete="PF('inclusaoTelefoneDialog').show(); return false;" 
+                     style="margin-top: 20px;" update=":frmInscricao:inclusaoPanel"  icon="ui-icon-plus"/>
+
+    <p:dataTable id="telefonesTable" var="telefone" value="#{inscricaoBean.candidato.telefones}" reflow="true"
                  style="margin-top: 20px; margin-bottom: 10px;" emptyMessage="Nenhum telefone encontrado." rows="20" rowIndexVar="linha"
                  paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
         <p:column headerText="Telefone">
             <h:outputText value="#{telefone.prefixo} #{telefone.numero}" />
         </p:column>
-        
-        <p:column headerText="Tipo" style="width: 140px;">
-            <h:outputText value="#{telefone.tipo}"/>
+
+        <p:column headerText="Tipo">
+            <h:outputText value="#{telefone.tipo.descricao}"/>
         </p:column>
-        
-        <p:column style="width: 100px; text-align: center;">
+
+        <p:column>
             <p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('inclusaoTelefoneDialog').show()"
                              update=":frmInscricao:inclusaoPanel" actionListener="#{inscricaoBean.atualizaLinha(linha)}">
                 <f:setPropertyActionListener target="#{inscricaoBean.telefone}" value="#{telefone}"/>
@@ -31,8 +31,8 @@
             </p:commandButton>
         </p:column>
     </p:dataTable>
-    
-    <p:confirmDialog header="Exclusão de telefone" 
+
+    <p:confirmDialog header="Exclusão de telefone" responsive="true"
                      message="Tem certeza que deseja excluir o telefone 
                      '#{inscricaoBean.telefoneParaExcluir.prefixo} #{inscricaoBean.telefoneParaExcluir.numero} - #{inscricaoBean.telefoneParaExcluir.tipo}' ?"
                      widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
@@ -43,11 +43,15 @@
                 return false;" />
 
     </p:confirmDialog>
-    
-    <p:dialog header="#{inscricaoBean.editandoTelefone ? 'Edição de telefone' : 'Inclusão de telefone'}" widgetVar="inclusaoTelefoneDialog" modal="true" resizable="false">
+
+    <p:dialog header="#{inscricaoBean.editandoTelefone ? 'Edição de telefone' : 'Inclusão de telefone'}" widgetVar="inclusaoTelefoneDialog"
+              modal="true" resizable="false" responsive="true">
         <h:form id="inclusaoPanel">
-            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px; margin-bottom: 10px" 
-                         columnClasses="rotulo, campo">
+            <p:panelGrid columns="2"
+                         layout="grid"
+                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                         styleClass="ui-panelgrid-blank form-group"
+                         style="border:0px none; background-color:transparent; padding-top: 20px;">
 
                 <p:outputLabel value="Telefone"/>
                 <p:panelGrid columns="2" style="width: 100%;"
@@ -59,10 +63,10 @@
                 <p:selectOneMenu id="estadoCivil" value="#{inscricaoBean.telefone.tipo}">
                     <f:selectItem itemLabel="Selecione um tipo de telefone..."/>
                     <f:selectItems value="#{inscricaoBean.tiposTelefone}" var="tt"
-                                  itemLabel="#{tt.descricao}" itemValue="#{tt}" />
+                                   itemLabel="#{tt.descricao}" itemValue="#{tt}" />
                 </p:selectOneMenu>
             </p:panelGrid>
-            <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{inscricaoBean.guardaTelefone()}"
+            <p:commandButton style="margin-top: 10; float: right" value="Salvar" action="#{inscricaoBean.guardaTelefone()}"  icon="ui-icon-save"
                              process="@form" update="inclusaoPanel :frmInscricao:telefonesTable"/>
         </h:form>
     </p:dialog>

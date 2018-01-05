@@ -10,8 +10,10 @@ import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.dao.ConcursoFacadeLocal;
 import br.ufac.sion.dao.EstadoFacadeLocal;
+import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.dao.LocalidadeFacadeLocal;
 import br.ufac.sion.dao.NivelFacadeLocal;
+import br.ufac.sion.dao.OrgaoExpedidorFacadeLocal;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.inscricao.security.UsuarioSistema;
 import br.ufac.sion.inscricao.util.jsf.FacesProducer;
@@ -30,6 +32,7 @@ import br.ufac.sion.model.Insencao;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.NecessidadeEspecial;
 import br.ufac.sion.model.Nivel;
+import br.ufac.sion.model.OrgaoExpedidor;
 import br.ufac.sion.model.RG;
 import br.ufac.sion.model.enuns.Sexo;
 import br.ufac.sion.model.Telefone;
@@ -42,9 +45,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -52,9 +55,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
-public class InscricaoBean  implements Serializable{
+public class InscricaoBean implements Serializable {
+
+    @EJB
+    private InscricaoFacadeLocal inscricaoFacade;
+
+    @EJB
+    private OrgaoExpedidorFacadeLocal orgaoExpedidorFacade;
+
     @EJB
     private CepService cepService;
 
@@ -63,16 +73,16 @@ public class InscricaoBean  implements Serializable{
 
     @EJB
     private ConcursoFacadeLocal concursoFacade;
-    
+
     @EJB
     private EstadoFacadeLocal estadoFacade;
-    
+
     @EJB
     private CandidatoFacadeLocal candidatoFacade;
 
     @EJB
     private CandidatoService candidatoService;
-    
+
     @EJB
     private LocalidadeFacadeLocal localidadeFacade;
 
@@ -89,7 +99,7 @@ public class InscricaoBean  implements Serializable{
 
     private Inscricao inscricao;
     private Concurso concurso;
-    
+
     private Candidato candidato;
     private Localidade local;
 
@@ -97,7 +107,8 @@ public class InscricaoBean  implements Serializable{
     private Telefone telefone;
     private Telefone telefoneParaExcluir;
     private Integer linha;
-    
+
+    private List<OrgaoExpedidor> orgaosExpedidores;
     private List<Estado> estados;
     private List<Cidade> cidades;
     private List<Sexo> sexos;
@@ -105,12 +116,12 @@ public class InscricaoBean  implements Serializable{
     private List<Escolaridade> escolaridades;
     private List<BracoDominante> bracosDominante;
     private List<TipoTelefone> tiposTelefone;
-    
+
     private List<Nivel> niveis;
     private List<Localidade> localidades;
 
     private List<CargoConcurso> cargosConcurso;
-    
+
     public void inicializar() {
         this.sexos = Arrays.asList(Sexo.values());
         this.estadosCivil = Arrays.asList(EstadoCivil.values());
@@ -119,22 +130,29 @@ public class InscricaoBean  implements Serializable{
         this.tiposTelefone = Arrays.asList(TipoTelefone.values());
         if (FacesUtil.isNotPostback()) {
             this.candidato = candidatoFacade.findByCPF(getUsuarioLogado().getCandidato().getCpf());
+            this.orgaosExpedidores = orgaoExpedidorFacade.findAll();
             if (this.candidato != null) {
-                if(this.candidato.getRg() == null) {
+                if (this.candidato.getRg() == null) {
                     this.candidato.setRg(new RG());
                 }
-                this.estado = this.candidato.getEndereco().getCidade().getEstado();
+                if (this.candidato.getEndereco() == null) {
+                    this.candidato.setEndereco(new Endereco());
+                } else {
+                    this.estado = this.candidato.getEndereco().getCidade().getEstado();
+                }
+
             }
-            this.concurso = concursoFacade.findById(concurso.getId());
-            this.inscricao = inscricaoService.pesquisarPorCandidatoEConcurso(candidato, concurso);
-            this.localidades = localidadeFacade.findByConcurso(concurso);
-            if(this.inscricao != null){
+            if (concurso.getId() != null && inscricao.getId() == null) {
+                this.concurso = concursoFacade.findById(concurso.getId());
+                this.localidades = localidadeFacade.findByConcurso(concurso);
+            } else if (concurso.getId() == null && inscricao.getId() != null) {
+                this.inscricao = inscricaoFacade.findById(inscricao.getId());
+                this.concurso = concursoFacade.findById(this.inscricao.getCargoConcurso().getConcurso().getId());
+                this.localidades = localidadeFacade.findByConcurso(concurso);
                 this.local = inscricao.getCargoConcurso().getLocalidade();
                 this.nivel = inscricao.getCargoConcurso().getCargo().getNivel();
                 carregarNiveis();
                 carregarCargos();
-            } else {
-                limparInscricao();
             }
             this.estados = estadoFacade.findAll();
             if (this.estado != null) {
@@ -148,7 +166,7 @@ public class InscricaoBean  implements Serializable{
         limpaTelefone();
         limparInscricao();
     }
-        
+
     public Candidato getCandidato() {
         return candidato;
     }
@@ -164,7 +182,7 @@ public class InscricaoBean  implements Serializable{
     public void setConcurso(Concurso concurso) {
         this.concurso = concurso;
     }
-    
+
     public Estado getEstado() {
         return estado;
     }
@@ -197,6 +215,10 @@ public class InscricaoBean  implements Serializable{
         return bracosDominante;
     }
 
+    public List<OrgaoExpedidor> getOrgaosExpedidores() {
+        return orgaosExpedidores;
+    }
+
     public Telefone getTelefone() {
         return telefone;
     }
@@ -216,7 +238,7 @@ public class InscricaoBean  implements Serializable{
     public List<TipoTelefone> getTiposTelefone() {
         return tiposTelefone;
     }
-    
+
     public List<Nivel> getNiveis() {
         return niveis;
     }
@@ -240,7 +262,7 @@ public class InscricaoBean  implements Serializable{
     public void setLocal(Localidade local) {
         this.local = local;
     }
-    
+
     public Inscricao getInscricao() {
         return inscricao;
     }
@@ -256,46 +278,45 @@ public class InscricaoBean  implements Serializable{
     public void atualizaLinha(int linha) {
         this.linha = linha;
     }
-    
+
     public boolean isEditandoInsc() {
         return this.inscricao != null && this.inscricao.getId() != null;
     }
-    
+
     public boolean isEditandoTelefone() {
         return this.linha != null;
     }
-    
-    public void guardaTelefone(){
+
+    public void guardaTelefone() {
         this.candidato.adicionaTelefone(this.telefone, this.linha);
         FacesUtil.addSuccessMessage("Telefone salvo com sucesso!");
         limpaTelefone();
     }
-    
-    public void limpaTelefone(){
+
+    public void limpaTelefone() {
         this.telefone = new Telefone();
         this.linha = null;
     }
-    
+
     public void removerCargoConcurso() {
         int index = linha;
         this.candidato.getTelefones().remove(index);
         FacesUtil.addSuccessMessage("Telefone excluído com sucesso!");
         limpaTelefone();
     }
-    
+
     public void limpar() {
         this.concurso = new Concurso();
         this.candidato = new Candidato();
         this.candidato.setRg(new RG());
-        this.candidato.setEndereco(new Endereco());
         this.estado = null;
         this.cidades = new ArrayList<>();
         this.localidades = new ArrayList<>();
         this.cargosConcurso = new ArrayList<>();
         this.niveis = new ArrayList<>();
     }
-    
-    public void limparInscricao(){
+
+    public void limparInscricao() {
         this.nivel = new Nivel();
         this.inscricao = new Inscricao();
         this.inscricao.setCargoConcurso(new CargoConcurso());
@@ -303,22 +324,22 @@ public class InscricaoBean  implements Serializable{
         this.inscricao.setInsencao(new Insencao());
         this.local = new Localidade();
     }
-    
+
     public void carregarNiveis() {
-        if(this.inscricao == null){
+        if (this.inscricao == null) {
             this.nivel = new Nivel();
             this.niveis.clear();
             this.niveis = nivelFacade.findByLocalidadeAndConcurso(local, concurso);
         } else {
             this.niveis.clear();
-            this.niveis = nivelFacade.findByLocalidadeAndConcurso(local,concurso);
+            this.niveis = nivelFacade.findByLocalidadeAndConcurso(local, concurso);
         }
     }
 
-    public void salvar(){
+    public void salvar() {
         try {
             this.inscricao.setCandidato(this.candidato);
-            this.candidato.getInscricoes().add(this.inscricao);
+//            this.candidato.getInscricoes().add(this.inscricao);
             this.candidato = this.candidatoService.editar(this.candidato);
             this.inscricao = this.inscricaoService.salvar(this.inscricao);
             FacesProducer.getExternalContext().redirect("comprovanteInscricao.xhtml?inscricao=" + this.inscricao.getId());
@@ -326,12 +347,12 @@ public class InscricaoBean  implements Serializable{
             FacesUtil.addErrorMessage("Erro ao realizar a inscrição: " + e.getMessage());
         }
     }
-    
+
     public void carregarCargos() {
         this.cargosConcurso.clear();
         this.cargosConcurso = cargoConcursoFacade.findByConcursoAndNivelAndLocalidade(concurso, nivel, local);
     }
-    
+
     public void carregarCidades() {
         this.cidades.clear();
         this.cidades = cidadeFacade.findByEstado(estado);
@@ -343,7 +364,7 @@ public class InscricaoBean  implements Serializable{
         this.estado = this.candidato.getEndereco().getCidade().getEstado();
         carregarCidades();
     }
-    
+
     private UsuarioSistema getUsuarioLogado() {
         UsuarioSistema usuario = null;
 
@@ -355,8 +376,20 @@ public class InscricaoBean  implements Serializable{
 
         return usuario;
     }
-    
-    public String onFlowProcess(FlowEvent event){
+
+    public String onFlowProcess(FlowEvent event) {
+        if (event.getNewStep().equals("dadosEndereco") || event.getNewStep().equals("dadosContatos") || event.getNewStep().equals("dadosVagas")) {
+            try {
+                this.candidato = this.candidatoService.editar(this.candidato);
+                if (event.getNewStep().equals("dadosEndereco")) {
+                    if (this.candidato.getEndereco() == null) {
+                        this.candidato.setEndereco(new Endereco());
+                    }
+                }
+            } catch (Exception e) {
+                FacesUtil.addErrorMessage("Erro ao salvar os dados do candidato: " + e.getMessage());
+            }
+        }
         return event.getNewStep();
     }
 }

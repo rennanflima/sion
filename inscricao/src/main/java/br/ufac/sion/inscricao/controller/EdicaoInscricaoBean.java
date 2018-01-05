@@ -26,16 +26,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**
  *
  * @author rennan.lima
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class EdicaoInscricaoBean implements Serializable {
     

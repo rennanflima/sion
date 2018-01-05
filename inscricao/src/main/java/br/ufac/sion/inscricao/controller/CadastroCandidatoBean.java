@@ -7,20 +7,18 @@ package br.ufac.sion.inscricao.controller;
 
 import br.ufac.sion.inscricao.util.jsf.FacesUtil;
 import br.ufac.sion.model.Candidato;
-import br.ufac.sion.model.Endereco;
-import br.ufac.sion.model.RG;
 import br.ufac.sion.model.Usuario;
 import br.ufac.sion.service.CandidatoService;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Rennan
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class CadastroCandidatoBean implements Serializable {
 
