@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/login.xhtml", "/recuperaSenha.xhtml", "/Erro.xhtml", "/javax.faces.resource/**", "/404.xhtml").permitAll()
             .antMatchers("/dashboard.xhtml", "/AcessoNegado.xhtml", "/trocarSenha.xhtml").authenticated()
             .antMatchers("/cargos/**", "/concursos/**", "/localidades/**", "/niveis/**", "/funcionarios/**", "/setores/**", 
-                    "/vagas/**", "/seguranca/**", "/gerenciar/**").hasAnyRole("ADMINISTRADORES")
+                    "/vagas/**", "/seguranca/**", "/gerenciar/**", "/candidatos/**").hasAnyRole("ADMINISTRADORES")
             .antMatchers("/empresas/**", "/contas/**").hasAnyRole("ADMINISTRADORES","FINANCEIRO")
             .antMatchers("/**").denyAll()
             .and()

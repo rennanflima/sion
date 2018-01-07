@@ -12,13 +12,16 @@ import br.ufac.sion.service.BoletoService;
 import br.ufac.sion.service.InscricaoService;
 import br.ufac.sion.inscricao.util.jsf.FacesProducer;
 import br.ufac.sion.inscricao.util.jsf.FacesUtil;
+import br.ufac.sion.inscricao.util.jsf.Sion;
 import br.ufac.sion.model.enuns.SituacaoInscricao;
 import br.ufac.sion.util.boleto.EmissorBoleto;
 import java.io.OutputStream;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,6 +42,9 @@ public class ComprovanteInscricaoBean implements Serializable {
     @EJB
     private EmissorBoleto bopepoEmissorBoleto;
 
+    @Inject @Sion
+    private HttpServletResponse response;
+    
     private Inscricao inscricao;
     private Empresa empresa;
 
@@ -113,7 +119,7 @@ public class ComprovanteInscricaoBean implements Serializable {
 
     private void enviarBoleto(byte[] pdf) {
         System.out.println("");
-        HttpServletResponse response = FacesProducer.getHttpServletResponse();
+//        HttpServletResponse response = FacesProducer.getHttpServletResponse();
         try {
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=boleto" + cobranca.getSacado().getNumero() + ".pdf");

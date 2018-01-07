@@ -30,6 +30,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -56,11 +57,10 @@ public class ArquivoRetornoBradescoService {
             ArquivoRetornoBradesco arquivoRetorno = criarArquivoRetorno(fileName, inputstream);
             this.ard = new ArquivoRetornoDetalhe();
             this.ar = new ArquivoRetorno();
-            if (ar == null) {
-                System.out.println("arquivo retorno null");
-            }
+
             this.ar.setNome(fileName);
             this.ar.setDataUpload(LocalDateTime.now());
+            this.ar.setArquivo(IOUtils.toByteArray(inputstream));
             this.ar = em.merge(ar);
 
             carregarMensagens(arquivoRetorno);
@@ -82,7 +82,6 @@ public class ArquivoRetornoBradescoService {
         int totalTitulosPagos = 0;
         for (TransacaoTitulo t : titulosPorOcorrencia.get(TransacaoTitulo.LIQUIDACAO)) {
             br.ufac.sion.model.Boleto cobranca = this.boletoFacade.findByNossoNumero(t.getNossoNumeroComDigito());
-            System.out.println("Nosso numero: " + t.getNossoNumeroComDigito());
             if (cobranca != null) {
                 if (t.getValorPago().compareTo(cobranca.getValor()) >= 0) {
                     cobranca.getSacado().setStatus(SituacaoInscricao.CONFIRMADA);

@@ -16,10 +16,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "usuario")
+@Audited
+@AuditTable(value = "usuario_AUD", schema = "auditing")
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,10 +48,12 @@ public class Usuario implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+    @AuditJoinTable(schema = "auditing")
     private List<Grupo> grupos = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    @AuditJoinTable(schema = "auditing")
     private List<Permissao> permissoes = new ArrayList<>();
 
     public Long getId() {

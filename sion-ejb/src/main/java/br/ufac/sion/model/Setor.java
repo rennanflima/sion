@@ -19,6 +19,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -26,6 +29,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "setor")
+@Audited
+@AuditTable(value = "setor_AUD", schema = "auditing")
 public class Setor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +47,7 @@ public class Setor implements Serializable {
     @JoinTable(name = "cargo_setor", joinColumns = {
         @JoinColumn(name = "setor_id")}, inverseJoinColumns = {
         @JoinColumn(name = "cargo_id")})
+    @AuditJoinTable(schema = "auditing")
     private List<Cargo> cargos = new ArrayList<>();
 
     public Long getId() {

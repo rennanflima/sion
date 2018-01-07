@@ -39,12 +39,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario, Long> implements Usua
         Usuario usuario = null;
 
         try {
-            usuario = em.createQuery("from Usuario where lower(login) = :login", Usuario.class)
+            usuario = em.createQuery("from Usuario where lower(login) = :login and ativo = :ativo", Usuario.class)
                     .setParameter("login", login.toLowerCase())
+                    .setParameter("ativo", Boolean.TRUE)
                     .getSingleResult();
         } catch (NoResultException e) {
             //nenhum usuário econtrado com o e-mail informado
-            System.out.println("Nenhum usuário econtrado com o e-mail informado.");
+            System.out.println("Nenhum usuário econtrado com o login informado.");
         }
         return usuario;
     }

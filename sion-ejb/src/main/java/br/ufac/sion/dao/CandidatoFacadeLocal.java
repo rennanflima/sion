@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Candidato;
+import br.ufac.sion.model.vo.FiltroCandidatos;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,7 @@ public interface CandidatoFacadeLocal {
     
     public Candidato findByCPFWithInscricoes(String cpf);
 
+    public List<Candidato> buscaTodosComPaginacao(FiltroCandidatos filtro);
+    
+    public int contaCandidatos(FiltroCandidatos filtro);
 }

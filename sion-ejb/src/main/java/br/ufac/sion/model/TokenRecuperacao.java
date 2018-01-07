@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -21,6 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "token_recuperacao")
+@Audited
+@AuditTable(value = "token_recuperacao_AUD", schema = "auditing")
 public class TokenRecuperacao implements Serializable {
 
     private static final long serialVersionUID = 1L;

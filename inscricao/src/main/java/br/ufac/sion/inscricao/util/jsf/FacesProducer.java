@@ -5,6 +5,8 @@
  */
 package br.ufac.sion.inscricao.util.jsf;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,20 +18,29 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FacesProducer {
 
-    public static FacesContext getFacesContext() {
+    @Produces
+    @RequestScoped
+    public FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
 
-    public static ExternalContext getExternalContext() {
+    @Produces
+    @RequestScoped
+    public ExternalContext getExternalContext() {
         return getFacesContext().getExternalContext();
     }
 
-    public static HttpServletRequest getHttpServletRequest() {
+    @Produces
+    @Sion
+    @RequestScoped
+    public HttpServletRequest getHttpServletRequest() {
         return ((HttpServletRequest) getExternalContext().getRequest());
     }
 
-    public static HttpServletResponse getHttpServletResponse() {
+    @Produces
+    @Sion
+    @RequestScoped
+    public HttpServletResponse getHttpServletResponse() {
         return ((HttpServletResponse) getExternalContext().getResponse());
     }
-
 }

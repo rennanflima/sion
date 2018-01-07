@@ -18,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -25,6 +27,8 @@ import org.hibernate.annotations.NaturalId;
  */
 @Entity
 @Table(name = "funcionario")
+@Audited
+@AuditTable(value = "funcionario_AUD", schema = "auditing")
 public class Funcionario implements Serializable {
 
     private static final long serialVersionUID = 1L; 

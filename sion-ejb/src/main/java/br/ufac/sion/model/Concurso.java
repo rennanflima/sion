@@ -27,8 +27,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.envers.AuditMappedBy;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -36,6 +39,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "concurso")
+@Audited
+@AuditTable(value = "concurso_AUD", schema = "auditing")
 public class Concurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +70,7 @@ public class Concurso implements Serializable {
     private LocalDate dataVencimentoBoleto;
     @NotNull
     @OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @AuditMappedBy(mappedBy = "concurso")
     private List<CargoConcurso> cargos = new ArrayList<>();
     private StatusConcurso status = StatusConcurso.CORFIRMACAO_PENDENTE;
     @NotNull

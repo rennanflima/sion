@@ -36,6 +36,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\util\ArquivoRetornoDetalhe.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\enuns\Sexo.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\audit\CustomRevisionEntityListener.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\ConcursoService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoConcursoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\util\BracoDominanteConverter.java
@@ -118,6 +119,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\exception\NegocioException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\modulo11\GeradorDigitoVerificador.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\FuncionarioService.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\audit\CustomRevisionEntity.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\CandidatoService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoVagaFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Permissao.java
@@ -132,6 +134,7 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\InscricaoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CidadeFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\OrgaoExpedidor.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\vo\FiltroCandidatos.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Concurso.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\GrupoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\modulo11\GeradorDigitoVerificadorBancoDoBrasil.java

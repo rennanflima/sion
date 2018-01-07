@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -27,6 +29,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "boleto")
+@Audited
+@AuditTable(value = "boleto_AUD", schema = "auditing")
 public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1L;

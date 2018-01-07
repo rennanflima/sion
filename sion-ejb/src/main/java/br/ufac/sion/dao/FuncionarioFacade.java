@@ -37,11 +37,12 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario, Long> impleme
         Funcionario funcionario = null;
 
         try {
-            funcionario = em.createQuery("from Funcionario where usuario.login = :login", Funcionario.class)
+            funcionario = em.createQuery("SELECT f FROM Funcionario f JOIN FETCH f.usuario u WHERE u.login = :login AND u.ativo = :ativo", Funcionario.class)
                     .setParameter("login", login)
+                    .setParameter("ativo", Boolean.TRUE)
                     .getSingleResult();
         } catch (NoResultException e) {
-            System.out.println("Nenhum funcionario encontrado com o e-mail informado.");
+            System.out.println("Nenhum funcionario encontrado com o login informado.");
         }
         return funcionario;
     }

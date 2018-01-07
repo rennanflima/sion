@@ -42,7 +42,7 @@
             <version>5.2.12.Final</version>
             <scope>compile</scope>
         </dependency>
-
+        
         <!-- Implementação de EntityManager da JPA -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -55,6 +55,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.2.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- Hibernate Envers - Auditoria(Histórico) -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>5.2.12.Final</version>
             <scope>compile</scope>
         </dependency>
         

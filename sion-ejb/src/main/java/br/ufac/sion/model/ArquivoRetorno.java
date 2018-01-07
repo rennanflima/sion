@@ -12,8 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -21,12 +24,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "arquivo_retorno")
+@Audited
+@AuditTable(value = "arquivo_retorno_AUD", schema = "auditing")
 public class ArquivoRetorno implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="arquivo_retorno_id_seq", sequenceName = "arquivo_retorno_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "arquivo_retorno_id_seq", sequenceName = "arquivo_retorno_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arquivo_retorno_id_seq")
     private Long id;
     @Column(unique = true, nullable = false)
@@ -34,6 +39,8 @@ public class ArquivoRetorno implements Serializable {
     private Integer numero;
     @Column(name = "data_upload", nullable = false)
     private LocalDateTime dataUpload;
+    @Lob
+    private byte[] arquivo;
 
     public Long getId() {
         return id;
@@ -65,6 +72,14 @@ public class ArquivoRetorno implements Serializable {
 
     public void setDataUpload(LocalDateTime dataUpload) {
         this.dataUpload = dataUpload;
+    }
+
+    public byte[] getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(byte[] arquivo) {
+        this.arquivo = arquivo;
     }
 
     @Override

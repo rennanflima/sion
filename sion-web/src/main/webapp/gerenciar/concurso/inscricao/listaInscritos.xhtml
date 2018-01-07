@@ -19,13 +19,10 @@
                         <p:messages autoUpdate="true" closable="true" />
 
                         <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar" update="inscricoesTable" process="@form" />
-                                <p:commandButton value="Limpar" update="inscricoesTable @form" action="#{listaInscritosBean.limparFiltro()}" />
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Página Inicial" outcome="/gerenciar/concurso/home"/>
-                            </p:toolbarGroup>
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" update="inscricoesTable" process="@form" icon="ui-icon-search" />
+                                <p:commandButton value="Limpar" update="inscricoesTable @form"  icon="fa fa-eraser" action="#{listaInscritosBean.limparFiltro()}" />
+                            </f:facet>
                         </p:toolbar>
 
                         <p:panelGrid columns="2"

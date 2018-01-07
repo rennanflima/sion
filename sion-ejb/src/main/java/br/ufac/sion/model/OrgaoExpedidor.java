@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -24,6 +26,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "orgao_expedidor", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"nome", "sigla"})})
+@Audited
+@AuditTable(value = "orgao_expedidor_AUD", schema = "auditing")
 public class OrgaoExpedidor implements Serializable {
 
     private static final long serialVersionUID = 1L;

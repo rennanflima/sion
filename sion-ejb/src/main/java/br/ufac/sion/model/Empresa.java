@@ -20,6 +20,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.envers.AuditMappedBy;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -29,6 +33,8 @@ import org.hibernate.validator.constraints.br.CNPJ;
  */
 @Entity
 @Table(name = "empresa")
+@Audited
+@AuditTable(value = "empresa", schema = "auditing")
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +57,7 @@ public class Empresa implements Serializable {
     @Embedded
     private Endereco endereco;
     @OneToMany(mappedBy = "cedente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @AuditMappedBy(mappedBy = "cedente")
     private List<ContaBancaria> contasBancaria = new ArrayList<>();
 
     public Long getId() {

@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -20,6 +22,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "vaga")
+@Audited
+@AuditTable(value = "vaga_AUD", schema = "auditing")
 public class Vaga implements Serializable {
 
     private static final long serialVersionUID = 1L;

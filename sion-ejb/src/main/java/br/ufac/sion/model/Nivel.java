@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -24,6 +26,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "nivel")
 @NamedQuery(name = "Nivel.buscarTodos", query = "from Nivel")
+@Audited
+@AuditTable(value = "nivel_AUD", schema = "auditing")
 public class Nivel implements Serializable {
 
     private static final long serialVersionUID = 1L;

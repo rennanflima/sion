@@ -18,6 +18,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 /**
  *
@@ -25,6 +28,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cargo")
+@Audited
+@AuditTable(value = "cargo_AUD", schema = "auditing")
 public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +44,7 @@ public class Cargo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "nivel_id", nullable = false)
     private Nivel nivel;
+    @NotAudited
     @ManyToMany(mappedBy = "cargos")
     private List<Setor> setores = new ArrayList<>();
 

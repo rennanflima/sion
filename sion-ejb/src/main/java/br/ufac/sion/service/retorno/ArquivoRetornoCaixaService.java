@@ -32,6 +32,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -58,11 +59,11 @@ public class ArquivoRetornoCaixaService{
             ArquivoRetornoCaixa arquivoRetorno = criarArquivoRetorno(fileName, inputstream);
             this.ard = new ArquivoRetornoDetalhe();
             this.ar = new ArquivoRetorno();
-
             
             this.ar.setNome(fileName);
             this.ar.setDataUpload(LocalDateTime.now());
             this.ar.setNumero(arquivoRetorno.getCabecalhoLote().getNumeroRetorno());
+            this.ar.setArquivo(IOUtils.toByteArray(inputstream));
             this.ar = em.merge(ar);
 
             carregarMensagens(arquivoRetorno);
@@ -84,8 +85,6 @@ public class ArquivoRetornoCaixaService{
         int totalTitulosPagos = 0;
         for (SegmentoT t : titulosPorOcorrencia.get(SegmentoU.LIQUIDACAO)) {
             br.ufac.sion.model.Boleto cobranca = this.boletoFacade.findByNossoNumero(t.getNossoNumero());
-            System.out.println("Nosso numero: " + t.getNossoNumero());
-            System.out.println("Numero do documento: " + t.getNumeroDoDocumento());
             if (cobranca != null) {
                 if (t.getSegmentoU().getValorPago().compareTo(cobranca.getValor()) >= 0) {
                     cobranca.getSacado().setStatus(SituacaoInscricao.CONFIRMADA);

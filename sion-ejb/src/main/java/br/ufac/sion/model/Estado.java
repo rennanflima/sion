@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -21,6 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "estado")
+@Audited
+@AuditTable(value = "estado_AUD", schema = "auditing")
 public class Estado implements Serializable {
 
     @Id

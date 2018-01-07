@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">Pesquisa Candidatos</ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmPesquisa">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+
+                        <h1>Pesquisa Candidatos</h1>
+
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <p:toolbar style="margin-top: 20px">
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" update="candidatosTable" process="@form"  icon="ui-icon-search" />
+                                <p:commandButton value="Limpar" update="candidatosTable @form" icon="fa fa-eraser" action="#{pesquisaCandidatosBean.limparFiltro()}" />
+                            </f:facet>
+                        </p:toolbar>
+
+
+                        <p:panelGrid id="painel" columns="2"
+                                     layout="grid"
+                                     columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                     styleClass="ui-panelgrid-blank form-group ui-fluid"
+                                     style="border:0px none; background-color:transparent; padding-top: 20px;">
+
+                            <p:outputLabel value="Nome" for="nome"/>
+                            <p:inputText id="nome" value="#{pesquisaCandidatosBean.filtro.nome}"/>
+
+                            <p:outputLabel value="CPF" for="cpf"/>
+                            <p:inputMask id="cpf" mask="999.999.999-99" value="#{pesquisaCandidatosBean.filtro.cpf}"/>
+                        </p:panelGrid>
+                    </div>
+
+
+                    <div class="card">
+                        <p:dataTable id="candidatosTable" var="candidato" value="#{pesquisaCandidatosBean.candidatosLazy}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum candidato encontrado." rows="20" reflow="true" lazy="true"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                            <p:column headerText="#">
+                                <h:outputText value="#{linha + 1}"/>
+                            </p:column>
+
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{candidato.nome}"/>
+                            </p:column>
+
+                            <p:column headerText="CPF">
+                                <h:outputText value="#{candidato.cpf}"/>
+                            </p:column>
+
+                            <p:column headerText="E-mail">
+                                <h:outputText value="#{candidato.usuario.email}"/>
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton icon="ui-icon-send" title="Reenviar e-mail" oncomplete="PF('confirmacaoEnvio').show()" value="Reenviar e-mail"
+                                                 update=":frmPesquisa:confirmacaoEnvioDialog">
+                                    <f:setPropertyActionListener target="#{pesquisaCandidatosBean.candidatoSelecionado}" value="#{candidato}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:confirmDialog header="Confirmação de Reenvio de E-mail"  responsive="true"
+                                         message="Tem certeza que deseja reenviar o e-mail de recuperação de senha para o candidato '#{pesquisaCandidatosBean.candidatoSelecionado.nome}' ?"
+                                         widgetVar="confirmacaoEnvio" id="confirmacaoEnvioDialog">
+                            <p:commandButton value="Sim" oncomplete="PF('confirmacaoEnvio').hide();"
+                                             process="@this" action="#{pesquisaCandidatosBean.reeviaEmailRecuperacao()}"
+                                             update=":frmPesquisa:candidatosTable" />
+                            <p:button value="Não" onclick="PF('confirmacaoEnvio').hide(); return false;" />
+
+                        </p:confirmDialog>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

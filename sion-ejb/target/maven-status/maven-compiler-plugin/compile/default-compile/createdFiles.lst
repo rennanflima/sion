@@ -13,6 +13,7 @@ br\ufac\sion\dao\InscricaoFacadeLocal.class
 br\ufac\sion\dao\InscricaoFacade.class
 br\ufac\sion\model\enuns\SituacaoBoleto.class
 br\ufac\sion\dao\LocalidadeFacadeLocal.class
+br\ufac\sion\audit\CustomRevisionEntity.class
 br\ufac\sion\model\Estado.class
 br\ufac\sion\model\util\EstadoCivilConverter.class
 br\ufac\sion\model\enuns\TipoTelefone.class
@@ -29,6 +30,7 @@ br\ufac\sion\dao\EstadoFacade.class
 br\ufac\sion\util\WebServiceCep$Xml.class
 br\ufac\sion\model\util\BancosSuportadosConverter.class
 br\ufac\sion\service\ConcursoService.class
+br\ufac\sion\audit\CustomRevisionEntityListener.class
 br\ufac\sion\model\OrgaoExpedidor.class
 br\ufac\sion\model\Vaga.class
 br\ufac\sion\model\RG.class
@@ -142,6 +144,7 @@ br\ufac\sion\dao\TokenRecuperacaoFacade.class
 br\ufac\sion\util\retorno\bradesco\Sumario.class
 br\ufac\sion\util\WebServiceCep$Xml$4.class
 br\ufac\sion\model\CargoConcurso.class
+br\ufac\sion\model\vo\FiltroCandidatos.class
 br\ufac\sion\service\retorno\ArquivoRetornoCaixaService.class
 br\ufac\sion\model\Endereco.class
 br\ufac\sion\util\WebServiceCep$IterableElement.class

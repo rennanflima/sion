@@ -1,5 +1,6 @@
 package br.ufac.sion.security;
 
+import br.ufac.sion.dao.FuncionarioFacadeLocal;
 import br.ufac.sion.dao.GrupoFacadeLocal;
 import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.model.Grupo;
@@ -23,19 +24,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AppUserDetailsService implements UserDetailsService {
 
+    FuncionarioFacadeLocal funcionarioFacade = lookupFuncionarioFacadeLocal();
+
     GrupoFacadeLocal grupoFacade = lookupGrupoFacadeLocal();
 
     UsuarioFacadeLocal usuarioFacade = lookupUsuarioFacadeLocal();
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-
-        Usuario usuario = usuarioFacade.findByLogin(login);
-
+        
+        Usuario usuario = null;
+        
+        if (login.equals("admin")) {
+            usuario = usuarioFacade.findByLogin(login);
+        }else{
+            usuario = funcionarioFacade.findByLogin(login).getUsuario();
+        }
+        
         UsuarioSistema user = null;
-        usuario.setUltimoAcesso(LocalDateTime.now());
 
         if (usuario != null) {
+            usuario.setUltimoAcesso(LocalDateTime.now());
             usuario = usuarioFacade.save(usuario);
             user = new UsuarioSistema(usuario, getGrupos(usuario));
         } else {
@@ -86,6 +95,16 @@ public class AppUserDetailsService implements UserDetailsService {
         try {
             Context c = new InitialContext();
             return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/GrupoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private FuncionarioFacadeLocal lookupFuncionarioFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/FuncionarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

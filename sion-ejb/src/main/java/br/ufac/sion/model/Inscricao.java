@@ -23,7 +23,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.NaturalId;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -32,6 +34,8 @@ import org.hibernate.annotations.NaturalId;
 @Entity
 @Table(name = "inscricao", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"candidato_id", "cargo_concurso_id", "numero"})})
+@Audited
+@AuditTable(value = "inscricao_AUD", schema = "auditing")
 public class Inscricao implements Serializable {
 
     private static final long serialVersionUID = 1L;

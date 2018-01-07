@@ -23,6 +23,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.envers.AuditMappedBy;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -31,6 +35,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "cargo_concurso")
+@Audited
+@AuditTable(value = "cargo_concurso_AUD", schema = "auditing")
 public class CargoConcurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,9 +59,11 @@ public class CargoConcurso implements Serializable {
     @ManyToOne
     @JoinColumn(name = "localidade_id", nullable = false)
     private Localidade localidade;
+    @NotAudited
     @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true,
             fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
     @Fetch(value = FetchMode.SUBSELECT)
+    @AuditMappedBy(mappedBy = "cargoConcurso")
     private List<CargoVaga> vagas = new ArrayList<>();
 
     public Long getId() {

@@ -15,9 +15,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "grupo")
+@Audited
+@AuditTable(value = "grupo_AUD", schema = "auditing")
 public class Grupo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +38,7 @@ public class Grupo implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    @AuditJoinTable(schema = "auditing")
     private List<Permissao> permissoes = new ArrayList<>();
     
 

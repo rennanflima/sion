@@ -32,6 +32,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -41,6 +44,8 @@ import org.hibernate.validator.constraints.br.CPF;
  */
 @Entity
 @Table(name = "candidato")
+@Audited
+@AuditTable(value = "candidato_AUD", schema = "auditing")
 public class Candidato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -79,6 +84,7 @@ public class Candidato implements Serializable {
     @AttributeOverrides({
         @AttributeOverride(name = "numero", column = @Column(name = "num_telefone"))
     })
+    @AuditJoinTable(schema = "auditing")
     private List<Telefone> telefones = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidato")
     private List<Inscricao> inscricoes = new ArrayList<>();

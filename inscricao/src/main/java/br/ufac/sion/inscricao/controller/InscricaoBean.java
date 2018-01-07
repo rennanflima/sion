@@ -45,8 +45,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -94,6 +96,9 @@ public class InscricaoBean implements Serializable {
 
     @EJB
     private CargoConcursoFacadeLocal cargoConcursoFacade;
+    
+    @Inject
+    private ExternalContext context;
 
     private Nivel nivel;
 
@@ -342,7 +347,7 @@ public class InscricaoBean implements Serializable {
 //            this.candidato.getInscricoes().add(this.inscricao);
             this.candidato = this.candidatoService.editar(this.candidato);
             this.inscricao = this.inscricaoService.salvar(this.inscricao);
-            FacesProducer.getExternalContext().redirect("comprovanteInscricao.xhtml?inscricao=" + this.inscricao.getId());
+            context.redirect("comprovanteInscricao.xhtml?inscricao=" + this.inscricao.getId());
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao realizar a inscrição: " + e.getMessage());
         }

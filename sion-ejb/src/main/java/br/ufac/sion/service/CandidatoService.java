@@ -23,7 +23,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import br.ufac.sion.dao.TokenRecuperacaoFacadeLocal;
-import br.ufac.sion.model.Usuario;
 
 /**
  *
@@ -54,6 +53,8 @@ public class CandidatoService {
         candidato.getUsuario().setNome(candidato.getNome());
         candidato.getUsuario().setSenha(geraSenha.ecripta(candidato.getUsuario().getSenha()));
         candidato.getUsuario().setLogin(candidato.getCpf());
+        candidato.getUsuario().setAtivo(Boolean.TRUE);
+                
         try {
             candidato = em.merge(candidato);
             return candidato;
