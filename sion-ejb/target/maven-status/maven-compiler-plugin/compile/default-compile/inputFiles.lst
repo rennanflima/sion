@@ -1,6 +1,7 @@
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\util\BancosSuportadosConverter.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\NonexistentEntityException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\LocalidadeFacade.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\util\FiltroAuditoria.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\EmpresaFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\util\LocalDateTimeConverter.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\PermissaoFacadeLocal.java
@@ -10,11 +11,13 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ConcursoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\CepService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoVagaFacadeLocal.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dto\AuditoriaDTO.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\util\InfoEmail.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\UsuarioFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ArquivoRetornoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Vaga.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Usuario.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\AuditoriaService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\exception\ArquivoRetornoException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\OrgaoExpedidorFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Endereco.java

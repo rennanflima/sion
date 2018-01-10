@@ -69,7 +69,7 @@
                                             <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
                                         </p:selectBooleanCheckbox>
                                     </h:panelGroup>
-                                    <p:selectManyCheckbox id="cargosSetor" layout="grid" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
+                                    <p:selectManyCheckbox id="cargosSetor" layout="responsive" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
                                         <f:attribute name="collectionType" value="java.util.ArrayList"/>
                                         <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"
                                                        itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>

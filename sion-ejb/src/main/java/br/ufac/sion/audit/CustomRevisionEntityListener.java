@@ -28,7 +28,7 @@ public class CustomRevisionEntityListener implements RevisionListener {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("authentication == null : " + (authentication == null));
             if (authentication == null) {
-                customRevisionEntity.setUsername("Usuário ainda nao logou!");
+                customRevisionEntity.setUsername("Sion - tarefa automatizada!");
             } else {
                 customRevisionEntity.setUsername(authentication.getName());
             }

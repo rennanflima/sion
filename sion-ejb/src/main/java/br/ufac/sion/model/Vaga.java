@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Vaga implements Serializable {
     @SequenceGenerator(name="vaga_id_seq", sequenceName = "vaga_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vaga_id_seq")
     private Long id;
+    @NotBlank
     @Column(length = 60)
     private String tipo;
 

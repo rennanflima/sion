@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">Auditória</ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmPesquisa">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+
+                        <h1>Auditória - Candidato</h1>
+
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <p:toolbar style="margin-top: 20px">
+                            <f:facet name="left">
+                                <p:commandButton value="Pesquisar" action="#{auditoriaCandidatosBean.pesquisarHistorico()}" update="@form" icon="ui-icon-search"/>
+                                <p:commandButton value="Limpar" action="#{auditoriaCandidatosBean.limparFiltro()}" update="@form" icon="fa fa-eraser"/>
+                            </f:facet>
+                        </p:toolbar>
+
+                        <p:panelGrid id="painel" columns="2"
+                                     layout="grid"
+                                     columnClasses="ui-grid-col-3,ui-grid-col-7"
+                                     styleClass="ui-panelgrid-blank form-group ui-fluid"
+                                     style="border:0px none; background-color:transparent; padding-top: 20px;">
+
+                            
+                            <p:outputLabel value="Candidato" for="candidatos"/>
+                            <p:selectOneMenu id="candidatos" value="#{auditoriaCandidatosBean.filtroAuditoria.login}" required="true"
+                                             filter="true" filterMatchMode="startsWith" effect="fade">
+                                <f:selectItem itemLabel="Selecione um candidato..."/>
+                                <f:selectItems value="#{auditoriaCandidatosBean.candidatos}" var="candidato"
+                                               itemValue="#{candidato.usuario.login}" itemLabel="#{candidato.usuario.nome}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="dtInicio" value="Data de início"/>
+                            <p:calendar locale="pt_BR" id="dtInicio" value="#{auditoriaCandidatosBean.filtroAuditoria.dataInicio}" 
+                                        pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor"/>
+
+                            <p:outputLabel for="dtTermino" value="Data de termino"/>
+                            <p:calendar locale="pt_BR" id="dtTermino" value="#{auditoriaCandidatosBean.filtroAuditoria.dataFim}"
+                                        pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor"/>
+                            
+                            <p:outputLabel for="acao" value="Ação"/>
+                            <h:panelGroup>
+                                <p:selectManyCheckbox id="acao" layout="responsive" columns="3" value="#{auditoriaCandidatosBean.filtroAuditoria.tiposRevisao}">
+                                    <f:selectItems value="#{auditoriaCandidatosBean.tiposRevisao}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}"/>
+                                </p:selectManyCheckbox>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </div>
+
+                    <div class="card">
+                        <p:dataTable id="auditoriaTable" var="revisao" value="#{auditoriaCandidatosBean.auditoriasDTO}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum histórico encontrado." rows="20" reflow="true"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                            <p:column headerText="#">
+                                <h:outputText value="#{linha + 1}"/>
+                            </p:column>
+
+                            <p:column headerText="Código do registro">
+                                <h:outputText value="#{revisao.entityId}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo de Alteração">
+                                <h:outputText value="#{revisao.tipoAlterecao}"/>
+                            </p:column>
+
+                            <p:column headerText="Data da Alteração">
+                                <h:outputText value="#{revisao.dataAlteracao}">
+                                    <f:converter converterId="localDateTimeConversor"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Tabela">
+                                <h:outputText value="#{revisao.entity}"/>
+                            </p:column>
+
+                            <p:column headerText="Login do Candidato">
+                                <h:outputText value="#{revisao.nomeUsuario}"/>
+                            </p:column>
+
+                            <p:column headerText="IP do Candidato">
+                                <h:outputText value="#{revisao.ipUsuario}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

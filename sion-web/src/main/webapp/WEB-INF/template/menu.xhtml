@@ -64,6 +64,10 @@
                             <p:menuitem id="secUsuario" value="Usuários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
                             <p:menuitem id="secCandidato" value="Candidatos" icon="material-icons person" outcome="/candidatos/pesquisaCandidatos"/>
                         </p:submenu>
+                        <p:submenu id="auditoria" label="Auditoria" icon="material-icons find_in_page">
+                            <p:menuitem value="Funcionário" icon="fa fa-id-card-o" outcome="/auditoria/auditoriaFuncionarios" />
+                            <p:menuitem value="Candidato" icon="material-icons person" outcome="/auditoria/auditoriaCandidatos" />
+                        </p:submenu>
                     </pu:menu>
                 </div>
             </div>

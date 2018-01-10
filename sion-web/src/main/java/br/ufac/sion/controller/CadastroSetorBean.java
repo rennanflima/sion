@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
 @Named
 @ViewScoped
 public class CadastroSetorBean implements Serializable {
-    
+
     private static Log log = LogFactory.getLog(CadastroSetorBean.class);
 
     @EJB
@@ -36,7 +36,7 @@ public class CadastroSetorBean implements Serializable {
     private SetorFacadeLocal setorFacade;
 
     private List<Cargo> cargos = new ArrayList<>();
-    
+
     private boolean marcarTodos;
 
     private Setor setor;
@@ -68,8 +68,10 @@ public class CadastroSetorBean implements Serializable {
     }
 
     public boolean isMarcarTodos() {
-        if (setor.getCargos().size() < cargos.size()) {
+        if (setor.getCargos().size() < cargos.size() || cargos.isEmpty()) {
             marcarTodos = false;
+        } else if (setor.getCargos().size() == cargos.size()) {
+            marcarTodos = true;
         }
         return marcarTodos;
     }
@@ -93,10 +95,10 @@ public class CadastroSetorBean implements Serializable {
         setor = new Setor();
     }
 
-    public boolean isEditando(){
+    public boolean isEditando() {
         return this.setor.getId() != null;
     }
-    
+
     public void selecionarTodos() {
         if (marcarTodos) {
             this.setor.setCargos(cargos);

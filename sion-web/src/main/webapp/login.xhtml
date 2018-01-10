@@ -19,7 +19,8 @@
                         <p:graphicImage value="#{resource['ultima-layout:images/logo-ultima.svg']}"/>
                     </div>
                     <div class="ui-g-12">
-                        <p:messages id="messages" autoUpdate="true" closable="true" />
+                        <!--<p:messages id="messages" autoUpdate="true" closable="true"  />-->
+                        <h:outputText value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
                     </div>
                     <div class="ui-g-12">
                         <span class="md-inputfield">

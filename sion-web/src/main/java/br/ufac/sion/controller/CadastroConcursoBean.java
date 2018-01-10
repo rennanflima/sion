@@ -187,8 +187,8 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public List<CargoConcurso> getCargosConcurso() {
-        System.out.println("!this.concurso.getCargos().isEmpty() "+!this.concurso.getCargos().isEmpty());
-        System.out.println("cargosConcurso.isEmpty() "+cargosConcurso.isEmpty());
+        System.out.println("!this.concurso.getCargos().isEmpty() " + !this.concurso.getCargos().isEmpty());
+        System.out.println("cargosConcurso.isEmpty() " + cargosConcurso.isEmpty());
         if (!this.concurso.getCargos().isEmpty() && cargosConcurso.isEmpty()) {
             cargosConcurso = this.concurso.getCargos();
         }
@@ -237,9 +237,12 @@ public class CadastroConcursoBean implements Serializable {
     }
 
     public boolean isMarcarTodos() {
-        if (this.addQuantidadeVaga.getListaCargos().size() < cargosConcurso.size()) {
+        if (this.addQuantidadeVaga.getListaCargos().size() < cargosConcurso.size() || cargosConcurso.isEmpty()) {
             marcarTodos = false;
+        } else if (this.addQuantidadeVaga.getListaCargos().size() == cargosConcurso.size()) {
+            marcarTodos = true;
         }
+
         return marcarTodos;
     }
 
