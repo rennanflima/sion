@@ -54,4 +54,9 @@ public class Telefone implements Serializable {
         this.tipo = tipo;
     }
 
+    @Override
+    public String toString() {
+        return "(" + prefixo + ") " + numero + ", Tipo: " + tipo;
+    }
+
 }

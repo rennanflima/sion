@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.envers.AuditJoinTable;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "grupo")
@@ -31,9 +32,10 @@ public class Grupo implements Serializable {
     @SequenceGenerator(name="grupo_id_seq", sequenceName = "grupo_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grupo_id_seq")
     private Long id;
-    @Column(nullable = false, length = 40)
+    @NotBlank
+    @Column(nullable = false, length = 60)
     private String nome;
-    @Column(nullable = false, length = 80)
+    @Column(length = 150)
     private String descricao;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),

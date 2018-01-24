@@ -7,7 +7,6 @@ package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cargo;
 import br.ufac.sion.model.Nivel;
-import br.ufac.sion.model.Setor;
 import java.util.List;
 import javax.ejb.Local;
 

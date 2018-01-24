@@ -2,6 +2,7 @@ br\ufac\sion\model\util\SituacaoBoletoConverter.class
 br\ufac\sion\util\WebServiceCep.class
 br\ufac\sion\util\retorno\caixa\SegmentoU.class
 br\ufac\sion\dao\CargoFacadeLocal.class
+br\ufac\sion\model\MembroComissao.class
 br\ufac\sion\dao\ArquivoRetornoFacade.class
 br\ufac\sion\dao\SetorFacadeLocal.class
 br\ufac\sion\model\enuns\SituacaoInscricao.class
@@ -11,6 +12,7 @@ br\ufac\sion\model\enuns\Escolaridade.class
 br\ufac\sion\model\Candidato.class
 br\ufac\sion\dao\InscricaoFacadeLocal.class
 br\ufac\sion\dao\InscricaoFacade.class
+br\ufac\sion\dao\MembroComissaoFacade.class
 br\ufac\sion\model\enuns\SituacaoBoleto.class
 br\ufac\sion\dao\LocalidadeFacadeLocal.class
 br\ufac\sion\audit\CustomRevisionEntity.class
@@ -28,12 +30,15 @@ br\ufac\sion\util\retorno\caixa\ArquivoRetornoCaixa.class
 br\ufac\sion\dao\CidadeFacadeLocal.class
 br\ufac\sion\dao\EstadoFacade.class
 br\ufac\sion\util\WebServiceCep$Xml.class
+br\ufac\sion\dao\MembroComissaoFacadeLocal.class
+br\ufac\sion\dao\PermissaoComissaoFacadeLocal.class
 br\ufac\sion\model\util\BancosSuportadosConverter.class
 br\ufac\sion\service\ConcursoService.class
 br\ufac\sion\audit\CustomRevisionEntityListener.class
 br\ufac\sion\model\OrgaoExpedidor.class
 br\ufac\sion\model\Vaga.class
 br\ufac\sion\model\RG.class
+br\ufac\sion\dao\PermissaoComissaoFacade.class
 br\ufac\sion\model\enuns\Sexo.class
 br\ufac\sion\dao\PermissaoFacadeLocal.class
 br\ufac\sion\model\Usuario.class
@@ -128,6 +133,7 @@ br\ufac\sion\dao\CargoVagaFacade.class
 br\ufac\sion\model\Permissao.class
 br\ufac\sion\dao\EstadoFacadeLocal.class
 br\ufac\sion\dto\AuditoriaDTO.class
+br\ufac\sion\model\PermissaoComissao.class
 br\ufac\sion\service\InscricaoService.class
 br\ufac\sion\dao\ContaBancariaFacadeLocal.class
 br\ufac\sion\dao\FuncionarioFacadeLocal.class

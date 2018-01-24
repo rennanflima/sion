@@ -5,14 +5,11 @@
  */
 package br.ufac.sion.controller;
 
-import br.ufac.sion.dao.CargoFacadeLocal;
 import br.ufac.sion.dao.SetorFacadeLocal;
-import br.ufac.sion.model.Cargo;
 import br.ufac.sion.model.Setor;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -30,33 +27,17 @@ public class CadastroSetorBean implements Serializable {
     private static Log log = LogFactory.getLog(CadastroSetorBean.class);
 
     @EJB
-    private CargoFacadeLocal cargoFacade;
-
-    @EJB
     private SetorFacadeLocal setorFacade;
-
-    private List<Cargo> cargos = new ArrayList<>();
-
-    private boolean marcarTodos;
 
     private Setor setor;
 
     public CadastroSetorBean() {
-        limpar();
+
     }
 
+    @PostConstruct
     public void inicializar() {
-        if (FacesUtil.isNotPostback()) {
-            this.cargos = cargoFacade.findAll();
-        }
-    }
-
-    public List<Cargo> getCargos() {
-        return cargos;
-    }
-
-    public void setCargos(List<Cargo> cargos) {
-        this.cargos = cargos;
+        limpar();
     }
 
     public Setor getSetor() {
@@ -65,19 +46,6 @@ public class CadastroSetorBean implements Serializable {
 
     public void setSetor(Setor setor) {
         this.setor = setor;
-    }
-
-    public boolean isMarcarTodos() {
-        if (setor.getCargos().size() < cargos.size() || cargos.isEmpty()) {
-            marcarTodos = false;
-        } else if (setor.getCargos().size() == cargos.size()) {
-            marcarTodos = true;
-        }
-        return marcarTodos;
-    }
-
-    public void setMarcarTodos(boolean marcarTodos) {
-        this.marcarTodos = marcarTodos;
     }
 
     public void salvar() {
@@ -97,14 +65,5 @@ public class CadastroSetorBean implements Serializable {
 
     public boolean isEditando() {
         return this.setor.getId() != null;
-    }
-
-    public void selecionarTodos() {
-        if (marcarTodos) {
-            this.setor.setCargos(cargos);
-        } else {
-            this.setor.getCargos().clear();
-            this.cargos = cargoFacade.findAll();
-        }
     }
 }

@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="card">
-                        <p:dataTable id="auditoriaTable" var="revisao" value="#{auditoriaCandidatosBean.auditoriasDTO}" rowIndexVar="linha"
+                        <p:dataTable id="auditoriaTable" var="auditoria" value="#{auditoriaCandidatosBean.auditoriasDTO}" rowIndexVar="linha"
                                      style="margin-top: 20px;" emptyMessage="Nenhum histórico encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -68,29 +68,29 @@
                             </p:column>
 
                             <p:column headerText="Código do registro">
-                                <h:outputText value="#{revisao.entityId}"/>
+                                <h:outputText value="#{auditoria.entidadeID}"/>
                             </p:column>
 
                             <p:column headerText="Tipo de Alteração">
-                                <h:outputText value="#{revisao.tipoAlterecao}"/>
+                                <h:outputText value="#{auditoria.tipoAlterecao}"/>
                             </p:column>
 
                             <p:column headerText="Data da Alteração">
-                                <h:outputText value="#{revisao.dataAlteracao}">
+                                <h:outputText value="#{auditoria.dataAlteracao}">
                                     <f:converter converterId="localDateTimeConversor"/>
                                 </h:outputText>
                             </p:column>
 
                             <p:column headerText="Tabela">
-                                <h:outputText value="#{revisao.entity}"/>
+                                <h:outputText value="#{auditoria.nomeEntidade}"/>
                             </p:column>
 
                             <p:column headerText="Login do Candidato">
-                                <h:outputText value="#{revisao.nomeUsuario}"/>
+                                <h:outputText value="#{auditoria.revisao.username}"/>
                             </p:column>
 
                             <p:column headerText="IP do Candidato">
-                                <h:outputText value="#{revisao.ipUsuario}"/>
+                                <h:outputText value="#{auditoria.revisao.ip}"/>
                             </p:column>
                         </p:dataTable>
                     </div>

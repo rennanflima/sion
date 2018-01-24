@@ -8,6 +8,8 @@ package br.ufac.sion.converter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -30,7 +32,6 @@ public class LocalDateTimeConversor implements Converter {
     }
 
     public String getAsString(FacesContext ctx, UIComponent component, Object value) {
-
         if (value != null && !"".equals(value)) {
             LocalDateTime data = (LocalDateTime) value;
             if (data != null) {

@@ -33,23 +33,26 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class CadastroFuncionarioBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @EJB
+    private CargoFacadeLocal cargoFacade1;
+
     @EJB
     private FuncionarioFacadeLocal funcionarioFacade;
-    
+
     @EJB
     private FuncionarioService funcionarioService;
 
     @EJB
     private CargoFacadeLocal cargoFacade;
 
-    private static final long serialVersionUID = 1L;
-
     @EJB
     private SetorFacadeLocal setorFacade;
 
     @EJB
     private GrupoFacadeLocal grupoFacade;
-    
+
     @EJB
     private PermissaoFacadeLocal permissaoFacade;
 
@@ -58,25 +61,24 @@ public class CadastroFuncionarioBean implements Serializable {
     private List<Grupo> grupos = new ArrayList<>();
 
     private List<Cargo> cargos = new ArrayList<>();
-    
+
     private DualListModel<Permissao> dualListModelPermissoes;
 
     private Funcionario funcionario;
-
-    private Setor setor;
 
     public void inicializar() {
         if (FacesUtil.isNotPostback()) {
             setores = setorFacade.findAll();
             grupos = grupoFacade.findAll();
+            cargos = cargoFacade.findAll();
             List<Permissao> todasPermissoes = this.permissaoFacade.findAll();
             List<Permissao> permissoesUsuario = new ArrayList<>();
-            if(isEditando()){
+            if (isEditando()) {
                 Funcionario f = this.funcionarioFacade.findFuncionarioWithPermissoes(funcionario.getId());
-                if(f != null){
+                if (f != null) {
                     permissoesUsuario = f.getUsuario().getPermissoes();
                     for (Permissao p : permissoesUsuario) {
-                        if(todasPermissoes.contains(p)){
+                        if (todasPermissoes.contains(p)) {
                             todasPermissoes.remove(p);
                         }
                     }
@@ -96,10 +98,6 @@ public class CadastroFuncionarioBean implements Serializable {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
-
-        if (funcionario != null) {
-            setor = setorFacade.findByIdWithCargo(funcionario.getSetor().getId());
-        }
     }
 
     public List<Setor> getSetores() {
@@ -117,31 +115,23 @@ public class CadastroFuncionarioBean implements Serializable {
     public void setDualListModelPermissoes(DualListModel<Permissao> dualListModelPermissoes) {
         this.dualListModelPermissoes = dualListModelPermissoes;
     }
-    
-    public Setor getSetor() {
-        return setor;
-    }
 
-    public void setSetor(Setor setor) {
-        this.setor = setor;
+    public List<Cargo> getCargos() {
+        return cargos;
     }
-    
-    
 
     public void salvar() {
         try {
             this.funcionario.getUsuario().setPermissoes(dualListModelPermissoes.getTarget());
-            this.funcionario.setSetor(setor);
             this.funcionarioService.salvar(funcionario);
             FacesUtil.addSuccessMessage("Funcionário salvo com sucesso!");
-            inicializar();
+            limpar();
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao salvar o funcionário: " + e.getMessage());
         }
     }
 
     public void limpar() {
-        this.setor = null;
         this.funcionario = new Funcionario();
     }
 

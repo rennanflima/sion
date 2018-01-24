@@ -23,7 +23,6 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -34,13 +33,13 @@ import org.hibernate.validator.constraints.br.CNPJ;
 @Entity
 @Table(name = "empresa")
 @Audited
-@AuditTable(value = "empresa", schema = "auditing")
+@AuditTable(value = "empresa_AUD", schema = "auditing")
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="empresa_id_seq", sequenceName = "empresa_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "empresa_id_seq", sequenceName = "empresa_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empresa_id_seq")
     private Long id;
     @Column(name = "nome_fantasia", length = 80)

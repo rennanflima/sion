@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">#{cadastroMembroComissaoBean.editando ? 'Edição de Membro da Comissão' : 'Novo Membro da Comissão'}</ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="membro" value="#{cadastroMembroComissaoBean.membroComissao}" />
+            <f:viewAction action="#{cadastroMembroComissaoBean.inicializar()}"/>
+        </f:metadata>
+        <h:form>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+
+                        <h1>#{cadastroMembroComissaoBean.editando ? 'Edição de Membro da Comissão' : 'Novo Membro da Comissão'}</h1>
+
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <p:toolbar style="margin-top: 20px">
+                            <f:facet name="left">
+                                <p:button value="Novo" outcome="cadastroMembroComissao" icon="ui-icon-plus"/>
+                                <p:commandButton value="Salvar" id="botaoSalvar" icon="ui-icon-save" action="#{cadastroMembroComissaoBean.salvar()}" update="@form"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:button value="Pesquisa" outcome="pesquisaMembrosComissao" icon="ui-icon-search"/>
+                            </f:facet>
+                        </p:toolbar>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card">
+                            <p:panelGrid id="painel" columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
+
+                                <p:outputLabel value="Funcionário" for="funcionarios"/>
+                                <p:selectOneMenu id="funcionarios" value="#{cadastroMembroComissaoBean.membroComissao.funcionario}">
+                                    <f:selectItem itemLabel="Selecione um funcionário..."/>
+                                    <f:selectItems value="#{cadastroMembroComissaoBean.funcionarios}" var="funcionario"
+                                                   itemValue="#{funcionario.usuario.login}" itemLabel="#{funcionario.usuario.nome}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Concurso" for="concursos"/>
+                                <p:selectOneMenu id="concursos" value="#{cadastroMembroComissaoBean.membroComissao.concurso}">
+                                    <f:selectItem itemLabel="Selecione um concurso..."/>
+                                    <f:selectItems value="#{cadastroMembroComissaoBean.concursos}" var="concurso"
+                                                   itemValue="#{concurso}" itemLabel="#{concurso.titulo}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Gerente?" for="gerente"/>
+                                <p:selectBooleanButton id="gerente" value="#{cadastroMembroComissaoBean.membroComissao.gerente}" onLabel="Sim" offLabel="Não" style="width:60px"/>
+                                
+                                <p:outputLabel value="Permissões:" for="permissoes"/>
+                                <p:pickList id="permissoes" value="#{cadastroMembroComissaoBean.dualListModelPermissoes}" var="permissao"
+                                            itemLabel="#{permissao.nome}" itemValue="#{permissao}"
+                                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true">
+                                    <f:facet name="sourceCaption">Permissões</f:facet>
+                                    <f:facet name="targetCaption">Permissões do Membro</f:facet>
+                                </p:pickList>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

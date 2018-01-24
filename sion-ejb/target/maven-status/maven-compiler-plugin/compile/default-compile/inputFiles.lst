@@ -11,6 +11,8 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\ConcursoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\CepService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoVagaFacadeLocal.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\MembroComissaoFacade.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\PermissaoComissaoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dto\AuditoriaDTO.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\util\InfoEmail.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\UsuarioFacadeLocal.java
@@ -39,7 +41,9 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\util\ArquivoRetornoDetalhe.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\enuns\Sexo.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\MembroComissao.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\audit\CustomRevisionEntityListener.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\MembroComissaoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\ConcursoService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\CargoConcursoFacadeLocal.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\util\BracoDominanteConverter.java
@@ -59,6 +63,8 @@ C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\s
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\SetorFacade.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\exceptions\RollbackFailureException.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Empresa.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\dao\PermissaoComissaoFacade.java
+C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\PermissaoComissao.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\model\Estado.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\service\EnviaEmailService.java
 C:\Users\Rennan\Documents\NetBeansProjects\sion\sion-ejb\src\main\java\br\ufac\sion\util\retorno\bradesco\ArquivoRetornoBradesco.java

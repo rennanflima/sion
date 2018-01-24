@@ -69,17 +69,16 @@
                                 </p:inputText>
 
                                 <p:outputLabel for="setor" value="Setor: "/>
-                                <p:selectOneMenu id="setor" value="#{cadastroFuncionarioBean.setor}" >
+                                <p:selectOneMenu id="setor" value="#{cadastroFuncionarioBean.funcionario.setor}" >
                                     <f:selectItem itemLabel="Selecione um Setor..." itemValue="" /> 
                                     <f:selectItems value="#{cadastroFuncionarioBean.setores}" var="s"
                                                    itemLabel="#{s.sigla}" itemValue="#{s}" />
-                                    <p:ajax update="cargo"/>
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="cargo" value="Cargo: "/>
                                 <p:selectOneMenu id="cargo" value="#{cadastroFuncionarioBean.funcionario.cargo}" >
                                     <f:selectItem itemLabel="Selecione um Cargo..." itemValue="" /> 
-                                    <f:selectItems value="#{cadastroFuncionarioBean.setor.cargos }" var="c" 
+                                    <f:selectItems value="#{cadastroFuncionarioBean.cargos }" var="c" 
                                                    itemLabel="#{c.descricao}" itemValue="#{c}" />
                                 </p:selectOneMenu>
 

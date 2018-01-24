@@ -6,21 +6,17 @@
 package br.ufac.sion.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 /**
  *
@@ -44,9 +40,6 @@ public class Cargo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "nivel_id", nullable = false)
     private Nivel nivel;
-    @NotAudited
-    @ManyToMany(mappedBy = "cargos")
-    private List<Setor> setores = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -80,14 +73,6 @@ public class Cargo implements Serializable {
         this.nivel = nivel;
     }
 
-    public List<Setor> getSetores() {
-        return setores;
-    }
-
-    public void setSetores(List<Setor> setores) {
-        this.setores = setores;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,7 +95,7 @@ public class Cargo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ufac.sion.model.Cargo[ id=" + id + " ]";
+        return this.descricao+" ("+this.cargaHoraria+"h)";
     }
 
 }

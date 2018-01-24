@@ -37,7 +37,7 @@ public class SetorConverter implements Converter {
         if (StringUtils.isBlank(value)) {
             return null;
         }
-        return this.setorFacade.findByIdWithCargo(new Long(value));
+        return this.setorFacade.findById(new Long(value));
     }
 
     @Override

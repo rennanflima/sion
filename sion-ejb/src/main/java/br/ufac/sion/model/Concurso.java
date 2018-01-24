@@ -9,8 +9,11 @@ import br.ufac.sion.model.enuns.StatusConcurso;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +33,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -46,7 +48,7 @@ public class Concurso implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="concurso_id_seq", sequenceName = "concurso_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "concurso_id_seq", sequenceName = "concurso_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "concurso_id_seq")
     private Long id;
     @NotBlank
@@ -183,19 +185,18 @@ public class Concurso implements Serializable {
         return now.isEqual(dataTerminoIncricao) || now.isAfter(dataTerminoIncricao);
     }
 
-    
     @Transient
     public boolean isAlteravelInscricoesFechadas() {
         LocalDateTime now = LocalDateTime.now();
         return status.equals(StatusConcurso.INSCRICOES_ENCERRADAS);
     }
-    
+
     @Transient
-    public boolean isConfirmacaoPendente(){
+    public boolean isConfirmacaoPendente() {
         LocalDateTime now = LocalDateTime.now();
         return status.equals(StatusConcurso.CORFIRMACAO_PENDENTE);
     }
-    
+
     @Transient
     public boolean isAutorizado() {
         LocalDateTime now = LocalDateTime.now();
@@ -210,6 +211,12 @@ public class Concurso implements Serializable {
     @Transient
     public boolean isNaoAlteravel() {
         return !this.isAlteravel();
+    }
+
+    @Transient
+    public String getPeriodoInscricao() {
+        DateTimeFormatter formatador = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("pt", "BR"));
+        return this.dataInicioInscricao.format(formatador) + " - " + this.dataTerminoIncricao.format(formatador);
     }
 
     @Override

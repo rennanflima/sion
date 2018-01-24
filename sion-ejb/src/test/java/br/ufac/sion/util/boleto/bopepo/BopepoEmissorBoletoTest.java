@@ -45,7 +45,7 @@ public class BopepoEmissorBoletoTest {
         ContaBancaria contaBancaria = new ContaBancaria();
         contaBancaria.setAgencia(1111);
         contaBancaria.setDigitoAgencia("0");
-        contaBancaria.setNumero(2222);
+        contaBancaria.setNumeroConta(2222);
         contaBancaria.setDigitoConta("9");
         contaBancaria.setCodigoCarteira(6);
         contaBancaria.setBanco(BancosSuportados.BANCO_BRADESCO);
@@ -90,7 +90,7 @@ public class BopepoEmissorBoletoTest {
         ContaBancaria contaBancaria = new ContaBancaria();
         contaBancaria.setAgencia(3022);
         contaBancaria.setDigitoAgencia("8");
-        contaBancaria.setNumero(3374);
+        contaBancaria.setNumeroConta(3374);
         contaBancaria.setDigitoConta("x");
         contaBancaria.setCodigoCarteira(18);
         contaBancaria.setBanco(BancosSuportados.BANCO_DO_BRASIL);

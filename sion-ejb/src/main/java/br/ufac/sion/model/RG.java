@@ -65,4 +65,9 @@ public class RG implements Serializable {
         this.estado = estado;
     }
 
+    @Override
+    public String toString() {
+        return this.numero + " " + this.orgaoExpedidor + "/" + this.getEstado().getSigla() + " - " +this.dataExpedicao;
+    }
+
 }

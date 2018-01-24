@@ -43,12 +43,6 @@ public class Setor implements Serializable {
     private String nome;
     @Column(length = 10, unique = true)
     private String sigla;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "cargo_setor", joinColumns = {
-        @JoinColumn(name = "setor_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "cargo_id")})
-    @AuditJoinTable(schema = "auditing")
-    private List<Cargo> cargos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -72,14 +66,6 @@ public class Setor implements Serializable {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-
-    public List<Cargo> getCargos() {
-        return cargos;
-    }
-
-    public void setCargos(List<Cargo> cargos) {
-        this.cargos = cargos;
     }
 
     @Override

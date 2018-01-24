@@ -52,17 +52,27 @@
                             <p:menuitem id="cadCargo" value="Cargo" icon="material-icons format_list_bulleted" outcome="/cargos/pesquisaCargos"/>
                             <p:menuitem id="idSetor" icon="material-icons input" value="Setor" outcome="/setores/pesquisaSetores"/>
                         </p:submenu>
-                        <p:menuitem value="Concurso" icon="material-icons content_paste" outcome="/concursos/pesquisaConcursos" />
+                        <p:submenu label="Concurso" icon="material-icons content_paste">
+                            <p:menuitem value="Cadastrar" icon="material-icons add" outcome="/concursos/pesquisaConcursos" />
+                            <p:menuitem value="Gerenciar" icon="material-icons settings" outcome="/concursos/selecaoConcurso"/>
+                            <p:menuitem value="Membros da Comissão" outcome="/comissoes/pesquisaMembrosComissao" icon="material-icons group"/>
+                        </p:submenu>
                         <p:submenu label="Configurações" icon="material-icons settings">
                             <p:menuitem value="Empresa" icon="material-icons business" outcome="/empresas/pesquisaEmpresas"/>
                             <p:menuitem value="Contas Bancárias" icon="material-icons account_balance_wallet" outcome="/contas/pesquisaContas"/>
-                            
+
                         </p:submenu>
+                        <p:menuitem value="Arquivo Retorno" outcome="/financeiro/arquivoRetorno" icon="material-icons account_balance"/>
                         <p:submenu id="seguranca" label="Segurança" icon="material-icons security">
                             <p:menuitem id="secPermissao" value="Permissões" icon="material-icons lock" outcome="/seguranca/permissao/pesquisaPermissoes"/>
                             <p:menuitem id="secGrupos" value="Grupos" icon="material-icons group_add" outcome="/seguranca/grupo/pesquisaGrupos"/>
-                            <p:menuitem id="secUsuario" value="Usuários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
+                            <p:menuitem id="secUsuario" value="Funcionários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
                             <p:menuitem id="secCandidato" value="Candidatos" icon="material-icons person" outcome="/candidatos/pesquisaCandidatos"/>
+                        </p:submenu>
+                        <p:submenu label="Parâmetros" icon="material-icons build">
+                            <p:menuitem value="Estado" icon="material-icons local_offer"/>
+                            <p:menuitem value="Cidade" icon="material-icons pin_drop"/>
+                            <p:menuitem value="Orgão Expedidor do RG" icon="material-icons queue"/>
                         </p:submenu>
                         <p:submenu id="auditoria" label="Auditoria" icon="material-icons find_in_page">
                             <p:menuitem value="Funcionário" icon="fa fa-id-card-o" outcome="/auditoria/auditoriaFuncionarios" />

@@ -36,7 +36,7 @@
                             <p:selectBooleanButton id="sistema" value="#{auditoriaFuncionariosBean.sistema}" onLabel="Sim" offLabel="Não" style="width:60px">
                                 <p:ajax event="change" process="@this" update="administrador funcionarios"/>
                             </p:selectBooleanButton>
-                            
+
                             <p:outputLabel for="administrador" value="Auditar Administrador?"/>
                             <p:selectBooleanButton id="administrador" value="#{auditoriaFuncionariosBean.admin}" onLabel="Sim" offLabel="Não" style="width:60px"
                                                    disabled="#{auditoriaFuncionariosBean.sistema}">
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="card">
-                        <p:dataTable id="auditoriaTable" var="revisao" value="#{auditoriaFuncionariosBean.auditoriasDTO}" rowIndexVar="linha"
+                        <p:dataTable id="auditoriaTable" var="auditoria" value="#{auditoriaFuncionariosBean.auditoriasDTO}" rowIndexVar="linha"
                                      style="margin-top: 20px;" emptyMessage="Nenhum histórico encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -91,31 +91,66 @@
                             </p:column>
 
                             <p:column headerText="Código do registro">
-                                <h:outputText value="#{revisao.entityId}"/>
+                                <h:outputText value="#{auditoria.entidadeID}"/>
                             </p:column>
 
                             <p:column headerText="Tipo de Alteração">
-                                <h:outputText value="#{revisao.tipoAlterecao}"/>
+                                <h:outputText value="#{auditoria.tipoAlterecao}"/>
                             </p:column>
 
                             <p:column headerText="Data da Alteração">
-                                <h:outputText value="#{revisao.dataAlteracao}">
-                                    <f:converter converterId="localDateTimeConversor"/>
-                                </h:outputText>
+                                <h:outputText value=" #{auditoria.dataAlteracaoFormatada}"/>
                             </p:column>
 
                             <p:column headerText="Tabela">
-                                <h:outputText value="#{revisao.entity}"/>
+                                <h:outputText value="#{auditoria.nomeEntidade}"/>
                             </p:column>
 
                             <p:column headerText="Login do Funcionário">
-                                <h:outputText value="#{revisao.nomeUsuario}"/>
+                                <h:outputText value="#{auditoria.revisao.username}"/>
                             </p:column>
 
                             <p:column headerText="IP do Funcionario">
-                                <h:outputText value="#{revisao.ipUsuario}"/>
+                                <h:outputText value="#{auditoria.revisao.ip}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="ui-icon-search" title="Detalhar" oncomplete="PF('detalheAuditoria').show()"
+                                                 update=":frmPesquisa:detalheDialog">
+                                    <f:setPropertyActionListener target="#{auditoriaFuncionariosBean.auditoriaSelecionada}" value="#{auditoria}"/>
+                                </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                        <p:dialog id="detalheDialog" header="Detalhe da Revisão" resizable="false" responsive="true" modal="true" widgetVar="detalheAuditoria" width="500">
+                            <p:panel id="basic" header="Entidade: #{auditoriaFuncionariosBean.auditoriaSelecionada.nomeEntidade}" style="margin-bottom:20px">
+                                <div class="ui-panelgrid ui-widget ui-panelgrid-blank form-group ui-fluid" style="border:0px none; background-color:transparent; padding-top: 15px;">
+                                    <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                        <h:outputText value="#{auditoriaFuncionariosBean.auditoriaSelecionada}" escape="false"/>
+                                    </div>
+                                </div>
+                                <p:fieldset legend="Dados da Revisão" style="margin-bottom:20px">
+                                    <p:panelGrid columns="2"
+                                                 layout="grid"
+                                                 columnClasses="ui-grid-col-5,ui-grid-col-7"
+                                                 styleClass="ui-panelgrid-blank form-group ui-fluid"
+                                                 style="border:0px none; background-color:transparent; ">
+
+                                        <p:outputLabel value="Tipo de Alteração" style="font-weight: bold"/>
+                                        <h:outputText value="#{auditoriaFuncionariosBean.auditoriaSelecionada.tipoAlterecao}"/>
+
+                                        <p:outputLabel value="Login do Funcionário" style="font-weight: bold"/>
+                                        <h:outputText value="#{auditoriaFuncionariosBean.auditoriaSelecionada.revisao.username}"/>
+
+                                        <p:outputLabel value="IP do Funcionario" style="font-weight: bold"/>
+                                        <h:outputText value="#{auditoriaFuncionariosBean.auditoriaSelecionada.revisao.ip}"/>
+
+                                        <p:outputLabel value="Data da Modificação" style="font-weight: bold"/>
+
+                                        <h:outputText value="#{auditoriaFuncionariosBean.auditoriaSelecionada.dataAlteracaoFormatada}"/>
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </p:panel>
+                            <p:button value="Fechar" onclick="PF('detalheAuditoria').hide(); return false;"/>
+                        </p:dialog>
                     </div>
                 </div>
             </div>

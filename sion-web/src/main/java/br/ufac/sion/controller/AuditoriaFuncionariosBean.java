@@ -60,12 +60,12 @@ public class AuditoriaFuncionariosBean implements Serializable {
     private List<AuditoriaDTO> auditoriasDTO;
     private List<Funcionario> funcionarios;
     private Map<String, Class> mapClasses;
-
     private List<String> listaClasses;
-
     private List<String> classesSelecionadas;
 
     private FiltroAuditoria filtroAuditoria;
+    
+    private AuditoriaDTO auditoriaSelecionada;
 
     private boolean admin;
     
@@ -75,6 +75,7 @@ public class AuditoriaFuncionariosBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        auditoriaSelecionada = new AuditoriaDTO();
         auditoriasDTO = new ArrayList<>();
         classesSelecionadas = new ArrayList<>();
         formatador = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("pt", "BR"));
@@ -139,6 +140,14 @@ public class AuditoriaFuncionariosBean implements Serializable {
 
     public void setMarcarTodos(boolean marcarTodos) {
         this.marcarTodos = marcarTodos;
+    }
+
+    public AuditoriaDTO getAuditoriaSelecionada() {
+        return auditoriaSelecionada;
+    }
+
+    public void setAuditoriaSelecionada(AuditoriaDTO auditoriaSelecionada) {
+        this.auditoriaSelecionada = auditoriaSelecionada;
     }
 
     public void pesquisarHistorico() {

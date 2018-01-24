@@ -94,7 +94,7 @@ public class BoletoService {
         ContaBancaria contaBancaria = new ContaBancaria(banco.create());
         Integer agencia = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getAgencia();
         String digitoAgencia = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getDigitoAgencia();
-        Integer numeroConta = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getNumero();
+        Integer numeroConta = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getNumeroConta();
         String digitoConta = cobrancaSistema.getSacado().getCargoConcurso().getConcurso().getContaBancaria().getDigitoConta();
         contaBancaria.setAgencia(new Agencia(agencia, digitoAgencia));
         contaBancaria.setNumeroDaConta(new NumeroDaConta(numeroConta, digitoConta));

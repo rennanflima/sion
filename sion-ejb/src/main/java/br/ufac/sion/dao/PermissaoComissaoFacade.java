@@ -5,17 +5,17 @@
  */
 package br.ufac.sion.dao;
 
-import br.ufac.sion.model.Setor;
+import br.ufac.sion.model.PermissaoComissao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author rennan.lima
+ * @author Rennan
  */
 @Stateless
-public class SetorFacade extends AbstractFacade<Setor, Long> implements SetorFacadeLocal {
+public class PermissaoComissaoFacade extends AbstractFacade<PermissaoComissao, Long> implements PermissaoComissaoFacadeLocal {
 
     @PersistenceContext(unitName = "sionPU")
     private EntityManager em;
@@ -25,8 +25,7 @@ public class SetorFacade extends AbstractFacade<Setor, Long> implements SetorFac
         return em;
     }
 
-    public SetorFacade() {
-        super(Setor.class);
+    public PermissaoComissaoFacade() {
+        super(PermissaoComissao.class);
     }
-
 }

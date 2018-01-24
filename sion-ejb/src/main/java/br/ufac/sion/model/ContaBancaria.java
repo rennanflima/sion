@@ -40,7 +40,8 @@ public class ContaBancaria implements Serializable {
     private Integer agencia;
     @Column(name = "digito_agencia")
     private String digitoAgencia;
-    private Integer numero;
+    @Column(name = "numero_conta")
+    private Integer numeroConta;
     @Column(name = "digito_conta")
     private String digitoConta;
     private Integer convenio;
@@ -83,12 +84,12 @@ public class ContaBancaria implements Serializable {
         this.digitoAgencia = digitoAgencia;
     }
 
-    public Integer getNumero() {
-        return numero;
+    public Integer getNumeroConta() {
+        return numeroConta;
     }
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
+    public void setNumeroConta(Integer numeroConta) {
+        this.numeroConta = numeroConta;
     }
 
     public String getDigitoConta() {

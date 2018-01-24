@@ -26,7 +26,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -42,7 +41,7 @@ public class CargoConcurso implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="cargo_concurso_id_seq", sequenceName = "cargo_concurso_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "cargo_concurso_id_seq", sequenceName = "cargo_concurso_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cargo_concurso_id_seq")
     private Long id;
     @NotBlank
@@ -59,7 +58,6 @@ public class CargoConcurso implements Serializable {
     @ManyToOne
     @JoinColumn(name = "localidade_id", nullable = false)
     private Localidade localidade;
-    @NotAudited
     @OneToMany(mappedBy = "cargoConcurso", cascade = CascadeType.ALL, orphanRemoval = true,
             fetch = FetchType.EAGER, targetEntity = CargoVaga.class)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -152,7 +150,7 @@ public class CargoConcurso implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ufac.sion.model.CargoConcurso[ id=" + id + " ]";
+        return this.codigo + " - " + this.cargo.getDescricao();
     }
 
 }

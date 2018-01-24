@@ -92,19 +92,21 @@ public class AuditoriaService {
 
         for (Object[] o : result) {
             try {
+//                Object instancia = filtro.getClass().cast(o[0]);
                 Object instancia = Class.forName(filtro.getClasse().getName()).cast(o[0]);
-                Method metodo;
-                metodo = instancia.getClass().getMethod("getId");
+//                Method metodo;
+//                metodo = instancia.getClass().getMethod("getId");
+//                Long id = (Long) metodo.invoke(instancia);
 
                 CustomRevisionEntity revision = (CustomRevisionEntity) o[1];
                 RevisionType revisionType = (RevisionType) o[2];
 
                 Instant instant = Instant.ofEpochMilli(revision.getTimestamp());
 
-                AuditoriaDTO dto = new AuditoriaDTO((Long) metodo.invoke(instancia), revisionType, LocalDateTime.ofInstant(instant, ZONE), filtro.getEntidade(), revision.getUsername(), revision.getIp());
+                AuditoriaDTO dto = new AuditoriaDTO(instancia, revisionType, filtro.getEntidade(), revision);
 
                 dtos.add(dto);
-            } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
+            } catch (Exception ex) {
                 throw new NegocioException(ex.getMessage());
             }
         }

@@ -35,6 +35,7 @@ public class Permissao implements Serializable {
     private Long id;
     @Column(nullable = false, length = 100)
     private String nome;
+    
 
     public Long getId() {
         return id;

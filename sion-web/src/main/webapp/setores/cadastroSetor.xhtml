@@ -12,7 +12,6 @@
     <ui:define name="content">
         <f:metadata>
             <f:viewParam name="setor" value="#{cadastroSetorBean.setor}" />
-            <f:event listener="#{cadastroSetorBean.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
         <h:form>
@@ -60,23 +59,6 @@
                                              validatorMessage="É permitido apenas letras no campo 'Sigla'">
                                     <f:validateRegex pattern="([A-Za-zÀ-ú ]+)"/>
                                 </p:inputText>
-
-                                <p:outputLabel for="cargosSetor" value="Cargos"/>
-                                <h:panelGroup>
-                                    <h:panelGroup>
-                                        <p:outputLabel for="marcarTodos" value="Marcar Todos "/>
-                                        <p:selectBooleanCheckbox id="marcarTodos" value="#{cadastroSetorBean.marcarTodos}" >
-                                            <p:ajax update="cargosSetor" listener="#{cadastroSetorBean.selecionarTodos()}" />
-                                        </p:selectBooleanCheckbox>
-                                    </h:panelGroup>
-                                    <p:selectManyCheckbox id="cargosSetor" layout="responsive" columns="3" value="#{cadastroSetorBean.setor.cargos}" converter="cConverter">
-                                        <f:attribute name="collectionType" value="java.util.ArrayList"/>
-                                        <f:selectItems value="#{cadastroSetorBean.cargos}" var="cargo"
-                                                       itemValue="#{cargo}" itemLabel="#{cargo.descricao}"/>
-                                        <p:ajax update="marcarTodos"/>
-                                    </p:selectManyCheckbox>
-                                </h:panelGroup>
-
                             </p:panelGrid>
                         </div>
                     </div>

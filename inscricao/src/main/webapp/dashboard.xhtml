@@ -68,13 +68,7 @@
                             </p:column>
 
                             <p:column headerText="Período de Inscrição">
-                                <h:outputText value="#{concurso.dataInicioInscricao}">
-                                    <f:converter converterId="localDateTimeConversor"/>
-                                </h:outputText>
-                                -
-                                <h:outputText value="#{concurso.dataTerminoIncricao}">
-                                    <f:converter converterId="localDateTimeConversor"/>
-                                </h:outputText>
+                                <h:outputText value="#{concurso.periodoInscricao}"/>
                             </p:column>
 
                             <p:column headerText="Situação">

@@ -7,14 +7,14 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="title">Pesquisa Concursos</ui:define>
+    <ui:define name="title">Seleção do Concurso</ui:define>
 
     <ui:define name="content">
-        <h:form id="frmPesquisaConcurso">
+        <h:form id="frmSelecaoConcurso">
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="card card-w-title">
-                        <h1>Pesquisa Concursos</h1>
+                        <h1>Seleção do Concurso</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
 
@@ -23,11 +23,11 @@
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
                             </f:facet>
                             <f:facet name="right">
-                                <p:button value="Novo" outcome="cadastroConcurso" icon="ui-icon-plus"/>
+                                <p:button value="Novo" outcome="pesquisaConcursos" icon="ui-icon-plus"/>
                             </f:facet>
                         </p:toolbar>
 
-                        <p:dataTable id="concursosTable" var="concurso" value="#{pesquisaConcursoBean.concursos}" rowIndexVar="linha"
+                        <p:dataTable id="concursosTable" var="concurso" value="#{selecaoConcursoBean.concursos}" rowIndexVar="linha"
                                      style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -48,26 +48,11 @@
                             </p:column>
 
                             <p:column>
-                                <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroConcurso" >
-                                    <f:param name="concurso" value="#{concurso.id}"/>
-                                </p:button>
-                                <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                                 update=":frmPesquisaConcurso:confirmacaoExclusaoDialog" disabled="#{concurso.naoAlteravel or concurso.autorizado}">
-                                    <f:setPropertyActionListener target="#{pesquisaConcursoBean.concursoSelecionado}" value="#{concurso}"/>
+                                <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{selecaoConcursoBean.guardaConcursoSessao()}" ajax="false">
+                                    <f:setPropertyActionListener target="#{selecaoConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
-
-                        <p:confirmDialog header="Exclusão de concurso"  responsive="true"
-                                         message="Tem certeza que deseja excluir o #{pesquisaConcursoBean.concursoSelecionado.titulo} ?"
-                                         widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                            <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
-                                             process="@this" action="#{pesquisaConcursoBean.excluir()}"
-                                             update=":frmPesquisaConcurso:concursosTable" />
-                            <p:button value="Não" onclick="PF('confirmacaoExclusao').hide();
-                                    return false;" />
-
-                        </p:confirmDialog>
                     </div>
                 </div>
             </div>

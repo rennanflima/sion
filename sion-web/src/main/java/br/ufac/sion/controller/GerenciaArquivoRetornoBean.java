@@ -6,24 +6,30 @@
 package br.ufac.sion.controller;
 
 import br.ufac.sion.exception.ArquivoRetornoException;
-import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.model.enuns.BancosSuportados;
+import br.ufac.sion.model.Concurso;
 import br.ufac.sion.service.retorno.ArquivoRetornoBradescoService;
 import br.ufac.sion.service.retorno.ArquivoRetornoCaixaService;
 import br.ufac.sion.service.util.ArquivoRetornoDetalhe;
 import br.ufac.sion.util.jsf.FacesUtil;
+import br.ufac.sion.util.jsf.Sion;
 import java.io.IOException;
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.UploadedFile;
 
 /**
  *
- * @author Rennan
+ * @author rennan.lima
  */
 @Named
-public class ArquivoRetornoBean implements Serializable {
+@RequestScoped
+public class GerenciaArquivoRetornoBean {
 
     @EJB
     private ArquivoRetornoBradescoService arquivoRetornoBradescoService;
@@ -31,18 +37,22 @@ public class ArquivoRetornoBean implements Serializable {
     @EJB
     private ArquivoRetornoCaixaService arquivoRetornoCaixaService;
 
+    @Inject  @Sion
+    HttpServletRequest request;
+    
     private ArquivoRetornoDetalhe arquivoRetornoDetalhe;
+
+    private Concurso concurso;
 
     private UploadedFile arquivo;
 
-    private BancosSuportados banco;
-
-    public ArquivoRetornoBean() {
+    public GerenciaArquivoRetornoBean() {
         this.arquivoRetornoDetalhe = null;
+        recuperaConcursoSessao();
     }
 
-    public BancosSuportados[] getBancos() {
-        return BancosSuportados.values();
+    public ArquivoRetornoDetalhe getArquivoRetornoDetalhe() {
+        return arquivoRetornoDetalhe;
     }
 
     public UploadedFile getArquivo() {
@@ -53,31 +63,15 @@ public class ArquivoRetornoBean implements Serializable {
         this.arquivo = arquivo;
     }
 
-    public BancosSuportados getBanco() {
-        return banco;
-    }
-
-    public void setBanco(BancosSuportados banco) {
-        this.banco = banco;
-    }
-
-    public ArquivoRetornoDetalhe getArquivoRetornoDetalhe() {
-        return arquivoRetornoDetalhe;
-    }
-
     public void upload() {
+        BancosSuportados banco = concurso.getContaBancaria().getBanco();
         try {
             if (arquivo != null) {
                 System.out.println("Arquivo: " + arquivo.getFileName());
-                switch (this.banco) {
-                    case BANCO_BRADESCO:
-                        this.arquivoRetornoDetalhe = this.arquivoRetornoBradescoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
-                        break;
-                    case CAIXA_ECONOMICA_FEDERAL:
-                        this.arquivoRetornoDetalhe = this.arquivoRetornoCaixaService.carregar(arquivo.getFileName(), arquivo.getInputstream());
-                        break;
-                    default:
-                        throw new ArquivoRetornoException("Banco não suportado!");
+                if (banco.equals(BancosSuportados.BANCO_BRADESCO)) {
+                    this.arquivoRetornoDetalhe = this.arquivoRetornoBradescoService.carregar(arquivo.getFileName(), arquivo.getInputstream());
+                } else if (banco.equals(BancosSuportados.CAIXA_ECONOMICA_FEDERAL)) {
+                    this.arquivoRetornoDetalhe = this.arquivoRetornoCaixaService.carregar(arquivo.getFileName(), arquivo.getInputstream());
                 }
                 // this.arquivoRetornoDetalhe = processaArquivoRetorno.carregar(concurso, arquivo.getFileName(), arquivo.getInputstream());
                 FacesUtil.addSuccessMessage("Inscrições confirmadas com sucesso!");
@@ -92,4 +86,10 @@ public class ArquivoRetornoBean implements Serializable {
     public boolean isDetalhe() {
         return this.arquivoRetornoDetalhe != null;
     }
+
+    public void recuperaConcursoSessao() {
+        HttpSession session = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession();
+        this.concurso = (Concurso) session.getAttribute("concursoGerenciado");
+    }
+
 }
