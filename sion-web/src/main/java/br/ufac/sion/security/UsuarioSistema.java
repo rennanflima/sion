@@ -21,4 +21,10 @@ public class UsuarioSistema extends User {
         return usuario;
     }
 
+    @Override
+    public boolean isEnabled() {
+        return this.usuario.getAtivo();
+    }
+    
+
 }
