@@ -84,7 +84,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private UsuarioFacadeLocal lookupUsuarioFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/UsuarioFacade");
+            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/UsuarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -94,7 +94,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private GrupoFacadeLocal lookupGrupoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/GrupoFacade");
+            return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/GrupoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -104,7 +104,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private FuncionarioFacadeLocal lookupFuncionarioFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/FuncionarioFacade");
+            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/FuncionarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

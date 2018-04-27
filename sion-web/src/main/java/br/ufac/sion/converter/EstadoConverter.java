@@ -53,7 +53,7 @@ public class EstadoConverter implements Converter {
     private EstadoFacadeLocal lookupEstadoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (EstadoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/EstadoFacade");
+            return (EstadoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/EstadoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

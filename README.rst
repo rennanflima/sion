@@ -34,7 +34,7 @@ SGBD (banco de dados)::
 
 Servidor de aplicação::
 
-   GlassFish Server Open Source Edition 4.0
+   GlassFish Server Open Source Edition 5.0
 
 Glassfish Configuration
 -----------------------

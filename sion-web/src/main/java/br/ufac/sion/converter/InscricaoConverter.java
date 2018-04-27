@@ -9,7 +9,6 @@ import br.ufac.sion.dao.InscricaoFacadeLocal;
 import br.ufac.sion.model.Inscricao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -54,7 +53,7 @@ public class InscricaoConverter implements Converter {
     private InscricaoFacadeLocal lookupInscricaoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (InscricaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/InscricaoFacade");
+            return (InscricaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/InscricaoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

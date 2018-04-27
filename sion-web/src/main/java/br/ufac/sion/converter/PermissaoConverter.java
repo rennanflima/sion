@@ -80,7 +80,7 @@ public class PermissaoConverter implements Converter {
     private PermissaoFacadeLocal lookupPermissaoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (PermissaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/PermissaoFacade");
+            return (PermissaoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/PermissaoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

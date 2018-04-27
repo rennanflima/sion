@@ -4,12 +4,12 @@
     <parent>
         <artifactId>sion</artifactId>
         <groupId>br.ufac</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0</version>
     </parent>
 
     <groupId>br.ufac</groupId>
     <artifactId>sion-ear</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0</version>
     <packaging>ear</packaging>
 
     <name>sion-ear</name>
@@ -55,21 +55,21 @@
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>sion-ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0</version>
             <type>ejb</type>
         </dependency>
     
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>sion-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0</version>
             <type>war</type>
         </dependency>
         
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>inscricao</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0</version>
             <type>war</type>
         </dependency>
         

@@ -4,12 +4,12 @@
     <parent>
         <artifactId>sion</artifactId>
         <groupId>br.ufac</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0</version>
     </parent>
 
     <groupId>br.ufac</groupId>
     <artifactId>sion-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0</version>
     <packaging>war</packaging>
 
     <name>sion-web</name>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>br.ufac</groupId>
             <artifactId>sion-ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0</version>
             <scope>provided</scope>
         </dependency>
         

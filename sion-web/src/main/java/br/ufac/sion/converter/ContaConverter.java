@@ -53,7 +53,7 @@ public class ContaConverter implements Converter {
     private ContaBancariaFacadeLocal lookupVagaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (ContaBancariaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/ContaBancariaFacade");
+            return (ContaBancariaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/ContaBancariaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

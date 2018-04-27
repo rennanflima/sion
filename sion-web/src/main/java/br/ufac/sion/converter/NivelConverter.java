@@ -53,7 +53,7 @@ public class NivelConverter implements Converter {
     private NivelFacadeLocal lookupNivelFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (NivelFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/NivelFacade");
+            return (NivelFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/NivelFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

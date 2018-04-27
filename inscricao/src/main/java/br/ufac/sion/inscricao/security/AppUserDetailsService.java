@@ -3,7 +3,6 @@ package br.ufac.sion.inscricao.security;
 import br.ufac.sion.dao.CandidatoFacadeLocal;
 import br.ufac.sion.dao.UsuarioFacadeLocal;
 import br.ufac.sion.model.Candidato;
-import br.ufac.sion.model.Usuario;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +50,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private CandidatoFacadeLocal lookupCandidatoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CandidatoFacade");
+            return (CandidatoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/CandidatoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -61,7 +60,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private UsuarioFacadeLocal lookupUsuarioFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/UsuarioFacade");
+            return (UsuarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/UsuarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -53,7 +53,7 @@ public class EmpresaConverter implements Converter {
     private EmpresaFacadeLocal lookupEmpresaFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (EmpresaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/EmpresaFacade");
+            return (EmpresaFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/EmpresaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

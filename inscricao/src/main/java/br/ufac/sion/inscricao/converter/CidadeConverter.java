@@ -9,7 +9,6 @@ import br.ufac.sion.dao.CidadeFacadeLocal;
 import br.ufac.sion.model.Cidade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -54,7 +53,7 @@ public class CidadeConverter implements Converter {
     private CidadeFacadeLocal lookupCidadeFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CidadeFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CidadeFacade");
+            return (CidadeFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/CidadeFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

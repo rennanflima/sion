@@ -9,39 +9,6 @@
         <div class="layout-menu ">
             <div class="nano">
                 <div class="nano-content menu-scroll-content">
-                    <h:panelGroup>
-                        <div class="profile">
-                            <div style="width: 60px;height: 60px;margin: 0 auto 5px auto; background-size: 60px 60px;">
-                                <h:graphicImage library="images" name="account_circle.png" height="70" />
-                            </div>
-                            <a id="profile-options" href="#">
-                                <span class="profile-name">#{seguranca.nomeUsuario}</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </a>
-                        </div>
-
-                        <ul id="profile-menu" class="ultima-menu">
-                            <li role="menuitem">
-                                <a href="#" class="ripplelink">
-                                    <i class="material-icons">person</i>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a jsf:outcome="/trocarSenha.xhtml" class="ripplelink">
-                                    <i class="material-icons">security</i>
-                                    <span>Trocar Senha</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="/sion-web/logout" class="ripplelink">
-                                    <i class="material-icons">power_settings_new</i>
-                                    <span>Sair</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </h:panelGroup>
-
                     <pu:menu widgetVar="me">
                         <p:menuitem id="um_dashboards" outcome="/dashboard.xhtml" icon="material-icons " value="Dashboard"/>
 
@@ -64,15 +31,15 @@
                         </p:submenu>
                         <p:menuitem value="Arquivo Retorno" outcome="/financeiro/arquivoRetorno" icon="material-icons account_balance"/>
                         <p:submenu id="seguranca" label="Segurança" icon="material-icons security">
-                            <p:menuitem id="secPermissao" value="Permissões" icon="material-icons lock" outcome="/seguranca/permissao/pesquisaPermissoes"/>
                             <p:menuitem id="secGrupos" value="Grupos" icon="material-icons group_add" outcome="/seguranca/grupo/pesquisaGrupos"/>
                             <p:menuitem id="secUsuario" value="Funcionários" icon="material-icons person_add" outcome="/funcionarios/pesquisaFuncionarios"/>
                             <p:menuitem id="secCandidato" value="Candidatos" icon="material-icons person" outcome="/candidatos/pesquisaCandidatos"/>
                         </p:submenu>
                         <p:submenu label="Parâmetros" icon="material-icons build">
-                            <p:menuitem value="Estado" icon="material-icons local_offer"/>
-                            <p:menuitem value="Cidade" icon="material-icons pin_drop"/>
-                            <p:menuitem value="Orgão Expedidor do RG" icon="material-icons queue"/>
+                            <p:menuitem value="Estado" icon="material-icons local_offer" outcome="/parametros/estado/pesquisaEstados"/>
+                            <p:menuitem value="Cidade" icon="material-icons pin_drop" outcome="/parametros/cidade/pesquisaCidades"/>
+                            <p:menuitem value="Orgão Expedidor do RG" icon="material-icons queue" outcome="/parametros/orgaoExpedidor/pesquisaOrgaosExpedidores"/>
+                            <p:menuitem id="secPermissao" value="Permissões" icon="material-icons lock" outcome="/parametros/permissao/pesquisaPermissoes"/>
                         </p:submenu>
                         <p:submenu id="auditoria" label="Auditoria" icon="material-icons find_in_page">
                             <p:menuitem value="Funcionário" icon="fa fa-id-card-o" outcome="/auditoria/auditoriaFuncionarios" />

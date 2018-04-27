@@ -55,7 +55,7 @@ public class SetorConverter implements Converter {
     private SetorFacadeLocal lookupSetorFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (SetorFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/SetorFacade");
+            return (SetorFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/SetorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -4,6 +4,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+
     <div class="topbar clearfix">
         <div class="topbar-left">
             <div class="logo"/>
@@ -13,6 +14,44 @@
             <a id="menu-button" href="#">
                 <i/>
             </a>
+
+            <a id="topbar-menu-button" href="#">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="topbar-items fadeInDown animated">
+                <h:panelGroup rendered="true">
+                    <li class="profile-item">
+                        <a href="#">
+                            <div style="width: 38px; height: 38px; margin: 0 auto 5px auto; background-size: 38px 38px;">
+                                <h:graphicImage library="images" name="account_circle.png" height="38" />
+                            </div>
+                            <span class="topbar-item-name">#{seguranca.nomeUsuario}</span>
+                        </a>
+
+                        <ul class="ultima-menu animated">
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="material-icons">person</i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a jsf:outcome="/trocarSenha.xhtml" class="ripplelink">
+                                    <i class="material-icons">security</i>
+                                    <span>Trocar Senha</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="/sion-web/logout" class="ripplelink">
+                                    <i class="material-icons">power_settings_new</i>
+                                    <span>Sair</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </h:panelGroup>
+
+            </ul>
         </div>
     </div>
 </ui:composition>

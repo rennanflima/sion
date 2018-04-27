@@ -53,7 +53,7 @@ public class FuncionarioConverter implements Converter {
     private FuncionarioFacadeLocal lookupFuncionarioFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/FuncionarioFacade");
+            return (FuncionarioFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/FuncionarioFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

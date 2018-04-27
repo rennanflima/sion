@@ -9,7 +9,6 @@ import br.ufac.sion.dao.CargoConcursoFacadeLocal;
 import br.ufac.sion.model.CargoConcurso;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -54,7 +53,7 @@ public class CargoConcursoConverter implements Converter {
     private CargoConcursoFacadeLocal lookupCargoConcursoFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (CargoConcursoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-1.0-SNAPSHOT/CargoConcursoFacade");
+            return (CargoConcursoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/CargoConcursoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

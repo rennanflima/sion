@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">Pesquisa estados</ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                    <h:form id="frmPesquisa">
+                        <h1>Pesquisa estados</h1>
+
+                        <p:toolbar style="margin-top: 20px">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Pesquisar"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:button value="Novo" outcome="cadastroEstado"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="estadoTable" var="estado" value="#{pesquisaEstadoBean.estados}" rowIndexVar="linha"
+                                     style="margin-top: 20px;" emptyMessage="Nenhum estado encontrado." rows="20" reflow="true"
+                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                            <p:column headerText="#">
+                                <h:outputText value="#{linha + 1}"/>
+                            </p:column>
+
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{estado.nome}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Sigla">
+                                <h:outputText value="#{estado.sigla}"/>
+                            </p:column>
+
+                            <p:column>
+                                <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroEstado">
+                                    <f:param name="estado" value="#{estado.id}"/>
+                                </p:button>
+                                <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                                 update=":frmPesquisa:confirmacaoExclusaoDialog">
+                                    <f:setPropertyActionListener target="#{pesquisaEstadoBean.estadoSelecionadoParaExcluir}" value="#{estado}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:confirmDialog header="Exclusão de estado" 
+                                         message="Tem certeza que deseja excluir o estado '#{pesquisaEstadoBean.estadoSelecionadoParaExcluir.nome}' ?"
+                                         widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                            <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                             process="@this" action="#{pesquisaEstadoBean.excluir()}"
+                                             update=":frmPesquisa:estadoTable" />
+                            <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+                        </p:confirmDialog>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

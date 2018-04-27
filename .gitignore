@@ -5,6 +5,4 @@
 *.class
 mail.properties
 *.jar
-
-*.class
 /sion-ejb/nbproject/

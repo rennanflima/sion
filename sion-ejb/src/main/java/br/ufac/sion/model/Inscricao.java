@@ -23,7 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import org.hibernate.envers.AuditJoinTable;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 

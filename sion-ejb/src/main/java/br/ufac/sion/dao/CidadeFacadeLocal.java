@@ -7,6 +7,7 @@ package br.ufac.sion.dao;
 
 import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Estado;
+import br.ufac.sion.model.vo.FiltroCidades;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,4 +30,8 @@ public interface CidadeFacadeLocal {
     public Cidade findByNomeAndIdEstado(String nome, Long id);
     
     public List<Cidade> findByEstado(Estado estado);
+    
+    public List<Cidade> buscaTodosComPaginacao(FiltroCidades filtro);
+    
+    public int contaCidades(FiltroCidades filtro);
 }
