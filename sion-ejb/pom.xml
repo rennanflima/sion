@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.12.Final</version>
+            <version>5.2.16.Final</version>
             <scope>compile</scope>
         </dependency>
         
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.12.Final</version>
+            <version>5.2.16.Final</version>
         </dependency>
 
         <!-- Implementação do Bean Validation -->
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>5.2.12.Final</version>
+            <version>5.2.16.Final</version>
             <scope>compile</scope>
         </dependency>
         
@@ -73,21 +73,13 @@
             <version>1.1</version>
         </dependency>
 
-        <!--         PostgreSQL 9.4 -->
+        <!--         PostgreSQL 10 -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.1.4.jre7</version>
+            <version>42.2.2</version>
             <scope>compile</scope>
         </dependency>
-        
-        <!-- Driver JDBC do MySQL -->
-        <!--        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.34</version>
-            <scope>compile</scope>
-        </dependency>-->
         
         <!-- Commons Lang (utilidades) -->
         <dependency>

@@ -9,11 +9,8 @@ import br.ufac.sion.audit.CustomRevisionEntity;
 import br.ufac.sion.dto.AuditoriaDTO;
 import br.ufac.sion.exception.NegocioException;
 import br.ufac.sion.service.util.FiltroAuditoria;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -85,6 +82,7 @@ public class AuditoriaService {
         }
 
         if (filtro.getTiposRevisao().length > 0) {
+            System.out.println("entra id tipo revisao");
             query.add(AuditEntity.property("REVTYPE").in(filtro.getTiposRevisao()));
         }
 

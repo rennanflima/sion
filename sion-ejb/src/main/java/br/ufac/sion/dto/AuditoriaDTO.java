@@ -13,14 +13,17 @@ import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cargo;
 import br.ufac.sion.model.CargoConcurso;
 import br.ufac.sion.model.CargoVaga;
+import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.ContaBancaria;
 import br.ufac.sion.model.Empresa;
+import br.ufac.sion.model.Estado;
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Grupo;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
+import br.ufac.sion.model.OrgaoExpedidor;
 import br.ufac.sion.model.Permissao;
 import br.ufac.sion.model.Setor;
 import br.ufac.sion.model.Telefone;
@@ -1007,6 +1010,75 @@ public class AuditoriaDTO implements Comparable<AuditoriaDTO> {
                         retorno.append("O funcionario não possui permissão.");
                     }
                     retorno.append("</div>")
+                            .append("</div>");
+                    break;
+                case "Estado":
+                    Estado e = (Estado) entidade;
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Id</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(e.getId()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Nome</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(e.getNome()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Sigla</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(e.getSigla()).append("</div>")
+                            .append("</div>");
+                    break;
+                case "Cidade":
+                    Cidade c = (Cidade) entidade;
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Id</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(c.getId()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Nome</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(c.getNome()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Estado</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(c.getEstado().getNome()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">É uma capital?</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(c.isCapital()).append("</div>")
+                            .append("</div>");
+                    break;
+                case "Órgão Expedidor do RG":
+                    OrgaoExpedidor oe = (OrgaoExpedidor) entidade;
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Id</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(oe.getId()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Nome</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(oe.getNome()).append("</div>")
+                            .append("</div>");
+                    retorno.append("<div class=\"ui-grid-row\">")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-5\">")
+                            .append("<label class=\"ui-outputlabel ui-widget\" style=\"font-weight: bold\">Sigla</label>")
+                            .append("</div>")
+                            .append("<div class=\"ui-panelgrid-cell ui-grid-col-6\">").append(oe.getSigla()).append("</div>")
                             .append("</div>");
                     break;
             }

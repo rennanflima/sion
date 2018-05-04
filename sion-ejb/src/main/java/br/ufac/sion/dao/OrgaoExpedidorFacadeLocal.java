@@ -6,6 +6,7 @@
 package br.ufac.sion.dao;
 
 import br.ufac.sion.model.OrgaoExpedidor;
+import br.ufac.sion.model.vo.FiltroOrgaoExpedidor;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -23,4 +24,6 @@ public interface OrgaoExpedidorFacadeLocal {
     public OrgaoExpedidor findById(Long id);
 
     public List<OrgaoExpedidor> findAll();
+    
+    public List<OrgaoExpedidor> findByNomeAndSigla(FiltroOrgaoExpedidor filtro);
 }

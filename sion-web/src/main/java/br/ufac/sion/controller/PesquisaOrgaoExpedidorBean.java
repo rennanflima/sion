@@ -7,6 +7,7 @@ package br.ufac.sion.controller;
 
 import br.ufac.sion.dao.OrgaoExpedidorFacadeLocal;
 import br.ufac.sion.model.OrgaoExpedidor;
+import br.ufac.sion.model.vo.FiltroOrgaoExpedidor;
 import br.ufac.sion.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,13 +33,16 @@ public class PesquisaOrgaoExpedidorBean implements Serializable {
     private List<OrgaoExpedidor> orgaosExpedidores = new ArrayList<>();
     
     private OrgaoExpedidor orgaoExpedidorSelecionadoParaExcluir;
+    
+    private FiltroOrgaoExpedidor filtro;
 
     public PesquisaOrgaoExpedidorBean() {
     }
     
     @PostConstruct
     public void inicializar() {
-        this.orgaosExpedidores = orgaoExpedidorFacade.findAll();
+        this.filtro = new FiltroOrgaoExpedidor();
+        pesquisar();
     }
 
     public List<OrgaoExpedidor> getOrgaosExpedidores() {
@@ -56,6 +60,14 @@ public class PesquisaOrgaoExpedidorBean implements Serializable {
     public void setOrgaoExpedidorSelecionadoParaExcluir(OrgaoExpedidor orgaoExpedidorSelecionadoParaExcluir) {
         this.orgaoExpedidorSelecionadoParaExcluir = orgaoExpedidorSelecionadoParaExcluir;
     }
+
+    public FiltroOrgaoExpedidor getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(FiltroOrgaoExpedidor filtro) {
+        this.filtro = filtro;
+    }
     
     public void excluir() {
         try {
@@ -65,5 +77,9 @@ public class PesquisaOrgaoExpedidorBean implements Serializable {
         } catch (Exception e) {
             FacesUtil.addErrorMessage(e.getMessage());
         }
+    }
+    
+    public void pesquisar(){
+        this.orgaosExpedidores = orgaoExpedidorFacade.findByNomeAndSigla(filtro);
     }
 }

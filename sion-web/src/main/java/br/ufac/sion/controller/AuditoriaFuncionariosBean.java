@@ -12,14 +12,17 @@ import br.ufac.sion.model.ArquivoRetorno;
 import br.ufac.sion.model.Boleto;
 import br.ufac.sion.model.Candidato;
 import br.ufac.sion.model.Cargo;
+import br.ufac.sion.model.Cidade;
 import br.ufac.sion.model.Concurso;
 import br.ufac.sion.model.ContaBancaria;
 import br.ufac.sion.model.Empresa;
+import br.ufac.sion.model.Estado;
 import br.ufac.sion.model.Funcionario;
 import br.ufac.sion.model.Grupo;
 import br.ufac.sion.model.Inscricao;
 import br.ufac.sion.model.Localidade;
 import br.ufac.sion.model.Nivel;
+import br.ufac.sion.model.OrgaoExpedidor;
 import br.ufac.sion.model.Setor;
 import br.ufac.sion.model.TokenRecuperacao;
 import br.ufac.sion.model.Usuario;
@@ -199,6 +202,10 @@ public class AuditoriaFuncionariosBean implements Serializable {
         listaClasses.add("Tipo de Vaga");
         listaClasses.add("Token de Recuperação");
         listaClasses.add("Usuário");
+        listaClasses.add("Cidade");
+        listaClasses.add("Estado");
+        listaClasses.add("Órgão Expedidor do RG");
+        
     }
 
     private void populaMapClasses() {
@@ -219,6 +226,9 @@ public class AuditoriaFuncionariosBean implements Serializable {
         mapClasses.put("Tipo de Vaga", Vaga.class);
         mapClasses.put("Token de Recuperação", TokenRecuperacao.class);
         mapClasses.put("Usuário", Usuario.class);
+        mapClasses.put("Cidade", Cidade.class);
+        mapClasses.put("Estado", Estado.class);
+        mapClasses.put("Órgão Expedidor do RG", OrgaoExpedidor.class);
     }
 
     public void limparFiltro() {

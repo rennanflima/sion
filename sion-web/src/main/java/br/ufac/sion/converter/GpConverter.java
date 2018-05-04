@@ -22,12 +22,12 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Grupo.class, value = "grupoConverter")
-public class GrupoConverter implements Converter {
+@FacesConverter(forClass = Grupo.class)
+public class GpConverter implements Converter {
 
     private GrupoFacadeLocal grupoFacade;
 
-    public GrupoConverter() {
+    public GpConverter() {
         this.grupoFacade = lookupGrupoFacadeLocal();
     }
 

@@ -7,37 +7,47 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="title">#{cadastroPermissaoBean.editando ? 'Edição de cidade' : 'Nova cidade'}</ui:define>
+    <ui:define name="title">#{cadastroCidadeBean.editando ? 'Edição de cidade' : 'Nova cidade'}</ui:define>
 
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="cidade" value="#{cadastroPermissaoBean.permissao}" />
+            <f:viewParam name="cidade" value="#{cadastroCidadeBean.cidade}" />
         </f:metadata>
         
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card">
                     <h:form>
-                        <h1>#{cadastroPermissaoBean.editando ? 'Edição de cidade' : 'Nova cidade'}</h1>
+                        <h1>#{cadastroCidadeBean.editando ? 'Edição de cidade' : 'Nova cidade'}</h1>
 
                         <p:messages autoUpdate="true" closable="true" />
 
                         <p:toolbar style="margin-top: 20px">
                             <p:toolbarGroup>
-                                <p:button value="Novo" outcome="cadastroCidade"/>
-                                <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroPermissaoBean.salvar()}" update="@form"/>
+                                <p:button value="Novo" outcome="cadastroCidade" icon="ui-icon-plus"/>
+                                <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroCidadeBean.salvar()}" update="@form" icon="ui-icon-save"/>
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
-                                <p:button value="Pesquisa" outcome="pesquisaCidades"/>
+                                <p:button value="Pesquisa" outcome="pesquisaCidades" icon="ui-icon-search"/>
                             </p:toolbarGroup>
                         </p:toolbar>
 
                         <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px;"
                                      columnClasses="rotulo, campo">
+                            
                             <p:outputLabel value="Nome" for="nome"/>
-                            <p:inputText id="nome" size="70" maxlength="100" value="#{cadastroPermissaoBean.permissao.nome}"/>
+                            <p:inputText id="nome" size="70" maxlength="60" value="#{cadastroCidadeBean.cidade.nome}"/>
 
+                            <p:outputLabel value="Estado" for="estado"/>
+                            <p:selectOneMenu id="estado" value="#{cadastroCidadeBean.cidade.estado}">
+                                <f:selectItem itemLabel="Selecione um estado..."/>
+                                <f:selectItems value="#{cadastroCidadeBean.estados}" var="estado"
+                                               itemValue="#{estado}" itemLabel="#{estado.nome}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="É capital?" for="capital"/>
+                            <p:selectBooleanButton id="capital" value="#{cadastroCidadeBean.cidade.capital}" onLabel="Sim" offLabel="Não" style="width:60px" />
                         </p:panelGrid>
                     </h:form>
                 </div>

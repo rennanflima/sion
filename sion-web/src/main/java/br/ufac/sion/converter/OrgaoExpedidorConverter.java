@@ -5,8 +5,8 @@
  */
 package br.ufac.sion.converter;
 
-import br.ufac.sion.dao.GrupoFacadeLocal;
-import br.ufac.sion.model.Grupo;
+import br.ufac.sion.dao.OrgaoExpedidorFacadeLocal;
+import br.ufac.sion.model.OrgaoExpedidor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -22,13 +22,13 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rennan.lima
  */
-@FacesConverter(forClass = Grupo.class, value = "grupoConverter")
-public class GrupoConverter implements Converter {
+@FacesConverter(forClass = OrgaoExpedidor.class)
+public class OrgaoExpedidorConverter implements Converter {
 
-    private GrupoFacadeLocal grupoFacade;
+    private OrgaoExpedidorFacadeLocal orgaoExpedidorFacade;
 
-    public GrupoConverter() {
-        this.grupoFacade = lookupGrupoFacadeLocal();
+    public OrgaoExpedidorConverter() {
+        this.orgaoExpedidorFacade = lookupOrgaoExpedidorFacadeLocal();
     }
 
     @Override
@@ -36,25 +36,24 @@ public class GrupoConverter implements Converter {
         if (StringUtils.isBlank(value)) {
             return null;
         }
-        return this.grupoFacade.findById(new Long(value));
+        return this.orgaoExpedidorFacade.findById(new Long(value));
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            Long codigo = ((Grupo) value).getId();
+            Long codigo = ((OrgaoExpedidor) value).getId();
             String retorno = (codigo == null ? null : codigo.toString());
 
             return retorno;
-
         }
         return "";
     }
 
-    private GrupoFacadeLocal lookupGrupoFacadeLocal() {
+    private OrgaoExpedidorFacadeLocal lookupOrgaoExpedidorFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (GrupoFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/GrupoFacade");
+            return (OrgaoExpedidorFacadeLocal) c.lookup("java:global/sion-ear/sion-ejb-2.0/OrgaoExpedidorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

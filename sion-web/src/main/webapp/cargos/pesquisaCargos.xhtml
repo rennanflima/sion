@@ -37,10 +37,7 @@
                                          style="border:0px none; background-color:transparent; padding-top: 20px;">
 
                                 <p:outputLabel value="Descrição" for="descricao"/>
-                                <h:panelGroup styleClass="md-inputfield">
-                                    <p:inputText id="descricao" value="#{pesquisaCargoBean.filtro.descricao}"/>
-                                    <label>Descrição</label>
-                                </h:panelGroup>
+                                <p:inputText id="descricao" value="#{pesquisaCargoBean.filtro.descricao}"/>
 
                                 <p:outputLabel for="niveis" value="Nível"/>
                                 <p:selectOneMenu id="niveis" value="#{pesquisaCargoBean.filtro.nivel}">

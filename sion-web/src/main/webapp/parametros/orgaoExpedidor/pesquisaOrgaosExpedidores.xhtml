@@ -10,60 +10,79 @@
     <ui:define name="title">Pesquisa Órgãos Expedidores</ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h:form id="frmPesquisa">
-                        <h1>Pesquisa Órgãos Expedidores</h1>
+        <h:form id="frmPesquisa">
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
 
-                        <p:toolbar style="margin-top: 20px">
-                            <p:toolbarGroup>
-                                <p:commandButton value="Pesquisar"/>
-                            </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:button value="Novo" outcome="cadastroOrgaoExpedidor"/>
-                            </p:toolbarGroup>
-                        </p:toolbar>
+                            <h1>Pesquisa Órgãos Expedidores</h1>
 
-                        <p:dataTable id="orgaoExpedidorTable" var="orgaoExpedidor" value="#{pesquisaOrgaoExpedidorBean.orgaosExpedidores}" rowIndexVar="linha"
-                                     style="margin-top: 20px;" emptyMessage="Nenhuma permissão encontrada." rows="20" reflow="true"
-                                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                            <p:toolbar style="margin-top: 20px">
+                                <p:toolbarGroup>
+                                    <p:commandButton value="Pesquisar" action="#{pesquisaOrgaoExpedidorBean.pesquisar()}" update="@form" icon="ui-icon-search"/>
+                                </p:toolbarGroup>
+                                <p:toolbarGroup align="right">
+                                    <p:button value="Novo" outcome="cadastroOrgaoExpedidor" icon="ui-icon-plus"/>
+                                </p:toolbarGroup>
 
-                            <p:column headerText="#">
-                                <h:outputText value="#{linha + 1}"/>
-                            </p:column>
+                            </p:toolbar>
 
-                            <p:column headerText="Nome">
-                                <h:outputText value="#{orgaoExpedidor.nome}"/>
-                            </p:column>
-                            
-                            <p:column headerText="Sigla">
-                                <h:outputText value="#{orgaoExpedidor.sigla}"/>
-                            </p:column>
+                            <p:panelGrid id="painel" columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-2,ui-grid-col-5"
+                                         styleClass="ui-panelgrid-blank form-group"
+                                         style="border:0px none; background-color:transparent; padding-top: 20px;">
 
-                            <p:column>
-                                <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroOrgaoExpedidor">
-                                    <f:param name="orgaoExpedidor" value="#{orgaoExpedidor.id}"/>
-                                </p:button>
-                                <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
-                                                 update=":frmPesquisa:confirmacaoExclusaoDialog">
-                                    <f:setPropertyActionListener target="#{pesquisaOrgaoExpedidorBean.orgaoExpedidorSelecionadoParaExcluir}" value="#{orgaoExpedidor}"/>
-                                </p:commandButton>
-                            </p:column>
-                        </p:dataTable>
+                                <p:outputLabel value="Nome" for="nome"/>
+                                <p:inputText id="nome" value="#{pesquisaOrgaoExpedidorBean.filtro.nome}"/>
 
-                        <p:confirmDialog header="Exclusão de orgaoExpedidor" 
-                                         message="Tem certeza que deseja excluir o orgaoExpedidor '#{pesquisaOrgaoExpedidorBean.orgaoExpedidorSelecionadoParaExcluir.sigla}' ?"
-                                         widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                            <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
-                                             process="@this" action="#{pesquisaPermissaoBean.excluir()}"
-                                             update=":frmPesquisa:orgaoExpedidorTable" />
-                            <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+                                <p:outputLabel for="sigla" value="Sigla"/>
+                                <p:inputText id="sigla" value="#{pesquisaOrgaoExpedidorBean.filtro.sigla}"/>
+                            </p:panelGrid>
+                        </div>
+                        <div class="card">
+                            <p:dataTable id="orgaoExpedidorTable" var="orgaoExpedidor" value="#{pesquisaOrgaoExpedidorBean.orgaosExpedidores}" rowIndexVar="linha"
+                                         style="margin-top: 20px;" emptyMessage="Nenhuma permissão encontrada." rows="20" reflow="true"
+                                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                        </p:confirmDialog>
-                    </h:form>
+                                <p:column headerText="#">
+                                    <h:outputText value="#{linha + 1}"/>
+                                </p:column>
+
+                                <p:column headerText="Nome">
+                                    <h:outputText value="#{orgaoExpedidor.nome}"/>
+                                </p:column>
+
+                                <p:column headerText="Sigla">
+                                    <h:outputText value="#{orgaoExpedidor.sigla}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:button icon="ui-icon-pencil" title="Editar" outcome="cadastroOrgaoExpedidor">
+                                        <f:param name="orgaoExpedidor" value="#{orgaoExpedidor.id}"/>
+                                    </p:button>
+                                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+                                                     update=":frmPesquisa:confirmacaoExclusaoDialog">
+                                        <f:setPropertyActionListener target="#{pesquisaOrgaoExpedidorBean.orgaoExpedidorSelecionadoParaExcluir}" value="#{orgaoExpedidor}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:confirmDialog header="Exclusão de orgaoExpedidor" 
+                                             message="Tem certeza que deseja excluir o orgaoExpedidor '#{pesquisaOrgaoExpedidorBean.orgaoExpedidorSelecionadoParaExcluir.sigla}' ?"
+                                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+                                                 process="@this" action="#{pesquisaPermissaoBean.excluir()}"
+                                                 update=":frmPesquisa:orgaoExpedidorTable" />
+                                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+                            </p:confirmDialog>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>

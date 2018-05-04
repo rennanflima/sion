@@ -76,6 +76,7 @@ br\ufac\sion\model\util\LocalDateTimeConverter.class
 br\ufac\sion\model\util\LocalDateConverter.class
 br\ufac\sion\util\boleto\EmissorBoleto.class
 br\ufac\sion\model\Nivel.class
+br\ufac\sion\model\vo\FiltroOrgaoExpedidor.class
 br\ufac\sion\dao\CargoVagaFacadeLocal.class
 br\ufac\sion\util\retorno\caixa\CabecalhoLote.class
 br\ufac\sion\service\util\InfoEmail.class
