@@ -23,11 +23,26 @@
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search"/>
                             </f:facet>
                             <f:facet name="right">
-                                <p:button value="Novo" outcome="pesquisaConcursos" icon="ui-icon-plus"/>
+                                <p:button value="Cadastrar" outcome="pesquisaConcursos" icon="ui-icon-plus"/>
                             </f:facet>
                         </p:toolbar>
 
-                        <p:dataTable id="concursosTable" var="concurso" value="#{selecaoConcursoBean.concursos}" rowIndexVar="linha"
+                        <p:dataGrid id="concursosTable" var="concurso" value="#{selecaoConcursoBean.concursos}" layout="grid" paginator="true" paginatorAlwaysVisible="false"
+                                    paginatorPosition="bottom" rows="15" style="margin-top: 20px;" rowIndexVar="linha" emptyMessage="Nenhum concurso encontrado." columns="3">
+                            
+                            <p:panel header="#{concurso.titulo}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <h:outputText value="#{concurso.titulo}"/>
+                                    <h:outputText value="#{concurso.periodoInscricao}"/>
+                                    <h:outputText value="#{concurso.status.descricao}"/>
+                                    <p:commandButton icon="ui-icon-gear" title="Gerenciar" action="#{selecaoConcursoBean.guardaConcursoSessao()}" ajax="false">
+                                        <f:setPropertyActionListener target="#{selecaoConcursoBean.concursoSelecionado}" value="#{concurso}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid>
+                        
+<!--                        <p:dataTable  var="concurso" value="#{selecaoConcursoBean.concursos}" rowIndexVar="linha"
                                      style="margin-top: 20px;" emptyMessage="Nenhum concurso encontrado." rows="20" reflow="true"
                                      paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
@@ -52,7 +67,7 @@
                                     <f:setPropertyActionListener target="#{selecaoConcursoBean.concursoSelecionado}" value="#{concurso}"/>
                                 </p:commandButton>
                             </p:column>
-                        </p:dataTable>
+                        </p:dataTable>-->
                     </div>
                 </div>
             </div>

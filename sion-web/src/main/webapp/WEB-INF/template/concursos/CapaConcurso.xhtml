@@ -6,12 +6,12 @@
 
     <p:panelGrid id="painel" columns="2"
                  layout="grid"
-                 columnClasses="ui-grid-col-2,ui-grid-col-10"
+                 columnClasses="ui-grid-col-3,ui-grid-col-9"
                  styleClass="ui-panelgrid-blank form-group"
-                 style="border:0px none; background-color:transparent; padding-top: 20px;">
+                 style="border:0px none; background-color:transparent;">
 
         <p:outputLabel value="Título" for="titulo"/>
-        <p:inputText id="titulo" maxlength="100" value="#{cadastroConcursoBean.concurso.titulo}"  style="width: 100%"/>
+        <p:inputText id="titulo" maxlength="100" value="#{cadastroConcursoBean.concurso.titulo}"  style="width: 100%" required="true"/>
 
         <p:outputLabel value="Descrição" for="descricao"/>
         <p:editor id="descricao" widgetVar="descricaoWidget" value="#{cadastroConcursoBean.concurso.descricao}" style="width: 100%" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
@@ -21,35 +21,52 @@
 
         <p:outputLabel for="dtInicioInscricao" value="Data de início"/>
         <p:calendar locale="pt_BR" id="dtInicioInscricao" value="#{cadastroConcursoBean.concurso.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor"
-                    disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" >
+                    disabled="#{cadastroConcursoBean.concurso.naoAlteravel}" required="true" >
             <!--<p:ajax event="blur" process="@this" update="dtTerminoInscricao"/>-->
         </p:calendar>
 
         <p:outputLabel for="dtTerminoInscricao" value="Data de termino"/>
         <p:calendar locale="pt_BR" id="dtTerminoInscricao" value="#{cadastroConcursoBean.concurso.dataTerminoIncricao}" 
-                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"/>
+                    pattern="dd/MM/yyyy HH:mm" converter="localDateTimeConversor" disabled="#{cadastroConcursoBean.concurso.alteravelInscricoesFechadas}"  required="true"/>
 
         <p:outputLabel value="Local de inscrição" for="localInscricao" />
-        <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%"  disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+        <p:inputTextarea id="localInscricao" value="#{cadastroConcursoBean.concurso.localInscricao}" style="width: 100%"  disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"  required="true"/>
 
-        <p:outputLabel value="Empresa" for="empresa"/>
-        <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
+        <p:outputLabel value="Haverá taxa de inscrição?" for="pagamento"/>
+        <h:panelGroup>
+            <p:selectBooleanButton id="pagamento" value="#{cadastroConcursoBean.concurso.taxaInscricao}" onLabel="Sim" offLabel="Não" style="width:60px" required="true">
+                <p:ajax event="change" process="@this" update="painelPagamento"/>
+            </p:selectBooleanButton>
+            <h:outputText value="(Clique para alterar)" style="margin-left: 15px; font-size: 11px;" />
+        </h:panelGroup>
+    </p:panelGrid>
+        
+    <p:panelGrid id="painelPagamento" columns="2"
+                 layout="grid"
+                 columnClasses="ui-grid-col-3,ui-grid-col-9"
+                 styleClass="ui-panelgrid-blank form-group"
+                 style="border:0px none; background-color:transparent; padding-top: 20px;">
+        
+        <p:outputLabel value="Empresa" for="empresa" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}"/>
+        <p:selectOneMenu id="empresa" value="#{cadastroConcursoBean.empresa}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"  required="#{cadastroConcursoBean.concurso.taxaInscricao}" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}">
             <f:selectItem itemLabel="Selecione uma empresa..."/>
             <f:selectItems value="#{cadastroConcursoBean.empresas}" var="empresa"
                            itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}"/>
             <p:ajax event="change" process="@this" update="conta" listener="#{cadastroConcursoBean.carregarContasBancaria()}"/>
         </p:selectOneMenu>
 
-        <p:outputLabel value="Conta Bancária" for="conta"/>
-        <p:selectOneMenu id="conta" value="#{cadastroConcursoBean.concurso.contaBancaria}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}">
+        <p:outputLabel value="Conta Bancária" for="conta" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}"/>
+        <p:selectOneMenu id="conta" value="#{cadastroConcursoBean.concurso.contaBancaria}" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"  required="#{cadastroConcursoBean.concurso.taxaInscricao}" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}">
             <f:selectItem itemLabel="Selecione uma conta bancária..." itemValue=""/>
             <f:selectItems value="#{cadastroConcursoBean.contasBancaria}" var="cb"
                            itemValue="#{cb}" itemLabel="#{cb.descricao}"/>
         </p:selectOneMenu>
 
-        <p:outputLabel for="dtVencimentoBoleto" value="Data de vencimento do boleto"/>
-        <p:calendar locale="pt_BR" id="dtVencimentoBoleto" value="#{cadastroConcursoBean.concurso.dataVencimentoBoleto}" 
+        <p:outputLabel for="dtVencimentoBoleto" value="Data de vencimento do boleto" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}"/>
+        <p:calendar locale="pt_BR" id="dtVencimentoBoleto" value="#{cadastroConcursoBean.concurso.dataVencimentoBoleto}"  required="#{cadastroConcursoBean.concurso.taxaInscricao}" rendered="#{cadastroConcursoBean.concurso.taxaInscricao}"
                     pattern="dd/MM/yyyy" converter="localDateConversor" disabled="#{cadastroConcursoBean.concurso.naoAlteravel}"/>
+        
     </p:panelGrid>
+    
 
 </ui:composition>

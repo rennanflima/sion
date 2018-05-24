@@ -75,9 +75,10 @@ public class Concurso implements Serializable {
     @AuditMappedBy(mappedBy = "concurso")
     private List<CargoConcurso> cargos = new ArrayList<>();
     private StatusConcurso status = StatusConcurso.CORFIRMACAO_PENDENTE;
-    @NotNull
+    @Column(name = "taxa_inscricao")
+    private boolean taxaInscricao = true;
     @ManyToOne
-    @JoinColumn(name = "conta_bancaria_id", nullable = false)
+    @JoinColumn(name = "conta_bancaria_id", nullable = true)
     private ContaBancaria contaBancaria;
 
     public Long getId() {
@@ -150,6 +151,14 @@ public class Concurso implements Serializable {
 
     public void setStatus(StatusConcurso status) {
         this.status = status;
+    }
+
+    public boolean isTaxaInscricao() {
+        return taxaInscricao;
+    }
+
+    public void setTaxaInscricao(boolean taxaInscricao) {
+        this.taxaInscricao = taxaInscricao;
     }
 
     public ContaBancaria getContaBancaria() {

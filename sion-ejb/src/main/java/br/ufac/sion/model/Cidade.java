@@ -15,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
@@ -27,8 +25,6 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Rennan Francisco
  */
 @Entity
-@Table(name = "cidade", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"estado_id", "capital"})})
 @Audited
 @AuditTable(value = "cidade_AUD", schema = "auditing")
 public class Cidade implements Serializable {

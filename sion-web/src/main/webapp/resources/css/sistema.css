@@ -8,3 +8,6 @@
     border-style: solid;
     border-color: transparent transparent black transparent;
 }
+.ui-steps .ui-steps-item {
+    width: 25%;
+}

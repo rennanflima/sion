@@ -30,18 +30,41 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="card">
-                        <p:wizard widgetVar="concursoWizard" flowListener="#{cadastroConcursoBean.onFlowProcess}" style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar">
+                        <p:wizard widgetVar="concursoWizard" flowListener="#{cadastroConcursoBean.onFlowProcess}" style="margin-top: 20px;" nextLabel="Avançar" backLabel="Voltar" showStepStatus="">
                             <p:tab id="dadosConcurso"  title="Dados Gerais">
+                                <p:steps activeIndex="0">
+                                    <p:menuitem value="Dados Gerais"/>
+                                    <p:menuitem value="Cargos do concurso"/>
+                                    <p:menuitem value="Vagas dos cargos"/>
+                                    <p:menuitem value="Confirmação"/>
+                                </p:steps>
                                 <ui:include src="/WEB-INF/template/concursos/CapaConcurso.xhtml" />
                             </p:tab>
                             <p:tab id="dadosCargos" title="Cargos do concurso">
+                                <p:steps activeIndex="1">
+                                    <p:menuitem value="Dados Gerais"/>
+                                    <p:menuitem value="Cargos do concurso"/>
+                                    <p:menuitem value="Vagas dos cargos"/>
+                                    <p:menuitem value="Confirmação"/>
+                                </p:steps>
                                 <ui:include src="/WEB-INF/template/concursos/CargosConcurso.xhtml" />
                             </p:tab>
                             <p:tab id="dadosVagas" title="Vagas dos cargos">
+                                <p:steps activeIndex="2">
+                                    <p:menuitem value="Dados Gerais"/>
+                                    <p:menuitem value="Cargos do concurso"/>
+                                    <p:menuitem value="Vagas dos cargos"/>
+                                    <p:menuitem value="Confirmação"/>
+                                </p:steps>
                                 <ui:include src="/WEB-INF/template/concursos/VagasCargosConcurso.xhtml" />
                             </p:tab>
-
                             <p:tab id="confirmacaoConcurso" title="Confirmação">
+                                <p:steps activeIndex="3">
+                                    <p:menuitem value="Dados Gerais"/>
+                                    <p:menuitem value="Cargos do concurso"/>
+                                    <p:menuitem value="Vagas dos cargos"/>
+                                    <p:menuitem value="Confirmação"/>
+                                </p:steps>
                                 <ui:include src="/WEB-INF/template/concursos/DetalheConcurso.xhtml" />
                             </p:tab>
                         </p:wizard>
