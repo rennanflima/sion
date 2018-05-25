@@ -65,15 +65,15 @@ MySQL::
 PostgreSQL::
 
    Pool Name: SionPool
-   Resource Type: javax.sql.DataSource
-   DataSource Classname: org.postgresql.ds.PGSimpleDataSource
+   Resource Type: javax.sql.ConnectionPoolDataSource
+   DataSource Classname: org.postgresql.ds.PGConnectionPoolDataSource
    Properties:
-      User: user_sion
-      Password: siondb
-      URL: jdbc:postgresql://localhost:5433/siondb
-      PortNumber: 5433
-      ServerName: localhost
-      DatabaseName: siondb
+      user: user_sion
+      password: siondb
+      portNumber: 5433
+      serverName: localhost
+      databaseName: siondb
+      ssl:false
 
 JDBC Resources ::
 
